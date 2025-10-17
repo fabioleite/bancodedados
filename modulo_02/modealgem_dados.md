@@ -292,10 +292,6 @@ Neste [link](https://medium.com/@ericgcc/dont-get-wrong-explained-guide-to-choos
   </tr>
 </table>
 
-# NOTAÇÕES 
-Neste link podemos encontrar um resumo sobre as notações mais utilizadas.
-* É comum também encontrarmos autores, softwares, ferramentas cases, ides, etc. que usam notação própria ou uma mistura das notações mais conhecidas. Portanto, ao procurarem modelos ou ao estudarem material adicional podem encontrar exemplos de modelos ER que são construídos com símbolos de mais de uma dessas notações.
-* Nesse outro link encontramos uma análise das notações Chen, Chen-alternativa, James Martin (IE ou Pé de Galinha), UML e Barker's mostrando softwares que possibilitam o design de cada uma delas.
 
 ---
 ## James Martin
@@ -309,9 +305,10 @@ Neste link podemos encontrar um resumo sobre as notações mais utilizadas.
 </div>
  
 ---
+
 <table border="0">
   <tr>
-    <td valign="top" style="width: 50%;">
+    <td valign="top" style="width: 40%;">
       <img src="image/depart_func.png" alt="Símbolo de Entidade Fraca" width="100%" />
     </td>
     <td valign="top" style="width: 75%; padding-left: 15px;">
