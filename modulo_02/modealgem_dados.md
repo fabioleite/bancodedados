@@ -196,7 +196,7 @@ A imagem acima é uma visualização direta do Conjunto de Relacionamento, ilust
 
 <table border="0">
   <tr>
-    <td valign="top" style="width: 50%;">
+    <td valign="top" style="width: 40%;">
       <img src="image/cardinalidade.png" alt="Símbolo de Entidade Fraca" width="100%" />
       <img src="image/cardinalidade1.png" alt="Símbolo de Entidade Fraca" width="100%" />
     </td>
