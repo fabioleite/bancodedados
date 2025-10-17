@@ -306,19 +306,19 @@ Neste [link](https://medium.com/@ericgcc/dont-get-wrong-explained-guide-to-choos
  
 ---
 
-<table border="0">
-  <tr>
-    <td valign="top" style="width: 40%;">
-      <img src="image/depart_func.png" alt="Símbolo de Entidade Fraca" width="100%" />
-    </td>
-    <td valign="top" style="width: 75%; padding-left: 15px;">
-      <ul>
-        <li>Cardinalidade <strong>N:N</strong></li>
-        <li>Cardinalidade <strong>1:N</strong></li>
-        <li>Cardinalidade <strong>1:1</strong></li>
-      </ul>
-    </td>
-  </tr>
+<table border="0" style="width: 70%; margin: 0 auto;">
+  <tr>
+    <td valign="top" style="width: 60%;">
+      <img src="image/depart_func.png" alt="Símbolo de Entidade Fraca" width="100%" />
+    </td>
+    <td valign="top" style="width: 60%; padding-left: 15px;">
+      <ul>
+        <li>Cardinalidade <strong>N:N</strong></li>
+        <li>Cardinalidade <strong>1:N</strong></li>
+        <li>Cardinalidade <strong>1:1</strong></li>
+      </ul>
+    </td>
+  </tr>
 </table>
 
 
