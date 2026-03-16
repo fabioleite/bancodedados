@@ -154,7 +154,7 @@ Edgar F. Codd
 * Descreve o BD no nível do SGBD, ou seja, depende do tipo particular de SGBD que será usado. O tipo de SGBD que o modelo lógico trata é se o mesmo é relacional, orientado a objetos, hierárquico, etc.
 
 <div align="center">
-    <img src="image/independencia-dados.png" width="60%" />
+    <img src="image/independencia_dados.png" width="60%" />
 </div>
 
 
