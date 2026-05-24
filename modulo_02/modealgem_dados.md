@@ -1,4 +1,4 @@
-# INTRODUÇÃO A MODELEGEM DE DADOS
+# INTRODUÇÃO A MODELAGEM DE DADOS
 *Apresentação: Fábio Leite*
 
 ## AGENDA
