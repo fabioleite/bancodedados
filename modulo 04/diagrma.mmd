@@ -1,0 +1,237 @@
+erDiagram
+    PACIENTE {
+        int id_paciente PK
+        varchar nome_completo
+        varchar cpf
+        varchar rg
+        date data_nascimento
+        varchar sexo
+        varchar telefone
+        varchar email
+        varchar endereco
+        varchar cidade
+        varchar estado
+        varchar cep
+        varchar contato_emergencia
+        varchar telefone_emergencia
+        varchar profissao
+        decimal altura
+        decimal peso_inicial
+        text objetivo_principal
+        text restricoes_fisicas
+        text restricoes_alimentares
+        text doencas_preexistentes
+        text alergias
+        text medicamentos_uso
+        date data_cadastro
+        varchar status_paciente
+    }
+
+    EDUCADOR_FISICO {
+        int id_educador_fisico PK
+        varchar nome_completo
+        varchar cpf
+        varchar cref
+        varchar especialidade
+        varchar telefone
+        varchar email
+        varchar endereco_profissional
+        date data_contratacao
+        varchar disponibilidade_atendimento
+        varchar status_profissional
+    }
+
+    NUTRICIONISTA {
+        int id_nutricionista PK
+        varchar nome_completo
+        varchar cpf
+        varchar crn
+        varchar especialidade
+        varchar telefone
+        varchar email
+        varchar endereco_profissional
+        date data_contratacao
+        varchar disponibilidade_atendimento
+        varchar status_profissional
+    }
+
+    CONSULTA_FISICA {
+        int id_consulta_fisica PK
+        int id_paciente FK "referencia"
+        int id_educador_fisico FK "referencia"
+        date data_consulta
+        time horario
+        varchar tipo_consulta
+        text objetivo_paciente
+        text avaliacao_fisica
+        decimal frequencia_cardiaca
+        varchar pressao_arterial
+        decimal percentual_gordura
+        decimal imc
+        varchar condicionamento_fisico
+        text observacoes_gerais
+        text recomendacoes
+        date proxima_consulta
+    }
+
+    PLANO_TREINO {
+        int id_plano_treino PK
+        int id_paciente FK "referencia"
+        int id_educador_fisico FK "referencia"
+        date data_inicio
+        date data_termino
+        text objetivo_treino
+        varchar nivel_dificuldade
+        int frequencia_semanal
+        decimal duracao_media_treino
+        text observacoes_gerais
+        varchar status_plano
+    }
+
+    EXERCICIO_TREINO {
+        int nr_exercicio PK
+        int id_plano_treino PK, FK "compoe a chave primaria (entidade fraca)"
+        varchar nome_exercicio
+        varchar grupo_muscular
+        int series
+        int repeticoes
+        decimal carga
+        varchar tempo_execucao
+        varchar intervalo
+        varchar modalidade
+        text observacoes_tecnicas
+    }
+
+    EVOLUCAO_FISICA {
+        int id_evolucao_fisica PK
+        int id_paciente FK "referencia"
+        int id_educador_fisico FK "referencia"
+        date data_avaliacao
+        decimal peso
+        decimal percentual_gordura
+        decimal massa_muscular
+        decimal imc
+        decimal circunferencia_abdominal
+        decimal circunferencia_toracica
+        text medidas_corporais
+        text desempenho_fisico
+        text observacoes
+        text metas_alcancadas
+    }
+
+    CONSULTA_NUTRICIONAL {
+        int id_consulta_nutricional PK
+        int id_paciente FK "referencia"
+        int id_nutricionista FK "referencia"
+        date data_consulta
+        time horario
+        text objetivo_nutricional
+        text habitos_alimentares
+        decimal consumo_agua
+        text restricoes_alimentares
+        text alergias
+        text intolerancias
+        text suplementacao
+        text observacoes_clinicas
+        text recomendacoes
+        date proxima_consulta
+    }
+
+    PLANO_ALIMENTAR {
+        int id_plano_alimentar PK
+        int id_paciente FK "referencia"
+        int id_nutricionista FK "referencia"
+        date data_inicio
+        date data_termino
+        text objetivo_nutricional
+        decimal calorias_diarias
+        decimal proteinas
+        decimal carboidratos
+        decimal gorduras
+        text observacoes_gerais
+        varchar status_plano
+    }
+
+    ITEM_PLANO_ALIMENTAR {
+        int nr_item PK
+        int id_plano_alimentar PK, FK "compoe a chave primaria (entidade fraca)"
+        varchar refeicao
+        time horario
+        varchar alimento
+        decimal quantidade
+        varchar unidade_medida
+        text substituicoes_permitidas
+        text observacoes
+    }
+
+    EVOLUCAO_NUTRICIONAL {
+        int id_evolucao_nutricional PK
+        int id_paciente FK "referencia"
+        int id_nutricionista FK "referencia"
+        date data_avaliacao
+        decimal peso
+        decimal imc
+        decimal percentual_gordura
+        text medidas_corporais
+        varchar aderencia_alimentar
+        decimal consumo_calorico_estimado
+        text evolucao_clinica
+        text observacoes
+        text metas_nutricionais_alcancadas
+    }
+
+    PAGAMENTO {
+        int id_pagamento PK
+        int id_paciente FK "referencia"
+        int id_adesao FK "referencia (opcional)"
+        varchar tipo_cobranca
+        varchar descricao
+        decimal valor
+        date data_vencimento
+        date data_pagamento
+        varchar forma_pagamento
+        varchar situacao_pagamento
+        decimal desconto
+        decimal multa
+        text observacoes_financeiras
+    }
+
+    PLANO_ACOMPANHAMENTO {
+        int id_plano_acompanhamento PK
+        varchar nome_plano
+        text descricao
+        decimal valor_mensal
+        varchar periodicidade
+        text servicos_inclusos
+        date data_inicio_vigencia
+        date data_termino_vigencia
+        varchar situacao_plano
+    }
+
+    ADESAO_PLANO {
+        int id_adesao PK
+        int id_paciente FK "referencia"
+        int id_plano_acompanhamento FK "referencia"
+        date data_adesao
+        varchar status_contratacao
+        text observacoes_contratuais
+    }
+
+    PACIENTE ||--o{ CONSULTA_FISICA : "realiza"
+    EDUCADOR_FISICO ||--o{ CONSULTA_FISICA : "atende"
+    PACIENTE ||--o{ PLANO_TREINO : "possui"
+    EDUCADOR_FISICO ||--o{ PLANO_TREINO : "prescreve"
+    PLANO_TREINO ||--o{ EXERCICIO_TREINO : "contem"
+    PACIENTE ||--o{ EVOLUCAO_FISICA : "apresenta"
+    EDUCADOR_FISICO ||--o{ EVOLUCAO_FISICA : "registra"
+    PACIENTE ||--o{ CONSULTA_NUTRICIONAL : "realiza"
+    NUTRICIONISTA ||--o{ CONSULTA_NUTRICIONAL : "atende"
+    PACIENTE ||--o{ PLANO_ALIMENTAR : "possui"
+    NUTRICIONISTA ||--o{ PLANO_ALIMENTAR : "prescreve"
+    PLANO_ALIMENTAR ||--o{ ITEM_PLANO_ALIMENTAR : "contem"
+    PACIENTE ||--o{ EVOLUCAO_NUTRICIONAL : "apresenta"
+    NUTRICIONISTA ||--o{ EVOLUCAO_NUTRICIONAL : "registra"
+    PACIENTE ||--o{ PAGAMENTO : "efetua"
+    PACIENTE ||--o{ ADESAO_PLANO : "adere"
+    PLANO_ACOMPANHAMENTO ||--o{ ADESAO_PLANO : "contratado_em"
+    ADESAO_PLANO ||--o{ PAGAMENTO : "gera"

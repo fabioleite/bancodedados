@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>2.1 Roteiro_pratico_restricoes.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h2 id="7-roteiro-prático-1--construindo-o-esquema-com-constraints">7. Roteiro Prático 1 — Construindo o Esquema com Constraints</h2>
+<p><strong>Objetivo:</strong> criar o esquema completo do modelo de referência no SSMS, com todas as constraints comentadas.</p>
+<p><strong>Passo a passo:</strong></p>
+<ol>
+<li>No SSMS, abra uma nova <em>Query</em> sobre o banco <code>curso_integridade_fiscal</code> (ver seção 5.3).</li>
+<li>Execute o script abaixo por partes, tabela a tabela (selecione cada bloco e pressione F5), observando o painel <strong>Messages</strong>.</li>
+<li>Após cada <code>CREATE TABLE</code>, use o <strong>Object Explorer</strong> (clique direito na tabela → <strong>Refresh</strong>) para visualizar a tabela recém-criada e conferir suas <em>Keys</em> e <em>Constraints</em>.</li>
+<li>Para cada constraint, escreva num caderno de anotações <strong>qual tipo de integridade ela protege</strong> (domínio, entidade, referencial ou regra de negócio).</li>
+</ol>
+<pre class="hljs"><code><div>USE curso_integridade_fiscal;
+GO
+
+<span class="hljs-comment">-- 1. CONTRIBUINTE</span>
+<span class="hljs-keyword">CREATE TABLE</span> contribuinte (
+    id_contribuinte     <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT NULL</span>,
+    cnpj_cpf            <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">14</span>)  <span class="hljs-keyword">NOT NULL</span>,
+    razao_social        <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">150</span>) <span class="hljs-keyword">NOT NULL</span>,
+    uf                  <span class="hljs-type">CHAR</span>(<span class="hljs-number">2</span>)      <span class="hljs-keyword">NOT NULL</span>,
+    situacao_cadastral  <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>)  <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">CONSTRAINT</span> df_contribuinte_situacao <span class="hljs-keyword">DEFAULT</span> (<span class="hljs-string">&#x27;ATIVO&#x27;</span>),
+    <span class="hljs-keyword">CONSTRAINT</span> pk_contribuinte <span class="hljs-keyword">PRIMARY KEY</span> (id_contribuinte),
+    <span class="hljs-keyword">CONSTRAINT</span> uq_contribuinte_doc <span class="hljs-keyword">UNIQUE</span> (cnpj_cpf),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_cnpj_cpf_tamanho <span class="hljs-keyword">CHECK</span> (LEN(cnpj_cpf) <span class="hljs-keyword">IN</span> (<span class="hljs-number">11</span>,<span class="hljs-number">14</span>)),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_situacao <span class="hljs-keyword">CHECK</span> (situacao_cadastral <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;ATIVO&#x27;</span>,<span class="hljs-string">&#x27;SUSPENSO&#x27;</span>,<span class="hljs-string">&#x27;BAIXADO&#x27;</span>,<span class="hljs-string">&#x27;INAPTO&#x27;</span>))
+);
+GO
+
+<span class="hljs-comment">-- 2. NF-e</span>
+<span class="hljs-keyword">CREATE TABLE</span> nfe (
+    id_nfe                          <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT NULL</span>,
+    chave_acesso                    <span class="hljs-type">CHAR</span>(<span class="hljs-number">44</span>)        <span class="hljs-keyword">NOT NULL</span>,
+    id_contribuinte_emitente        <span class="hljs-type">BIGINT</span>          <span class="hljs-keyword">NOT NULL</span>,
+    id_contribuinte_destinatario    <span class="hljs-type">BIGINT</span>          <span class="hljs-keyword">NOT NULL</span>,
+    data_emissao                    <span class="hljs-type">DATE</span>            <span class="hljs-keyword">NOT NULL</span>,
+    valor_total                     <span class="hljs-type">NUMERIC</span>(<span class="hljs-number">15</span>,<span class="hljs-number">2</span>)   <span class="hljs-keyword">NOT NULL</span>,
+    situacao                        <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>)     <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">CONSTRAINT</span> df_nfe_situacao <span class="hljs-keyword">DEFAULT</span> (<span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>),
+    <span class="hljs-keyword">CONSTRAINT</span> pk_nfe <span class="hljs-keyword">PRIMARY KEY</span> (id_nfe),
+    <span class="hljs-keyword">CONSTRAINT</span> uq_nfe_chave <span class="hljs-keyword">UNIQUE</span> (chave_acesso),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_nfe_chave_formato <span class="hljs-keyword">CHECK</span> (
+        LEN(chave_acesso) <span class="hljs-operator">=</span> <span class="hljs-number">44</span> <span class="hljs-keyword">AND</span> chave_acesso <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%[^0-9]%&#x27;</span>
+    ),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_nfe_valor_positivo <span class="hljs-keyword">CHECK</span> (valor_total <span class="hljs-operator">&gt;=</span> <span class="hljs-number">0</span>),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_nfe_data <span class="hljs-keyword">CHECK</span> (data_emissao <span class="hljs-operator">&lt;=</span> <span class="hljs-built_in">CAST</span>(GETDATE() <span class="hljs-keyword">AS</span> <span class="hljs-type">DATE</span>)),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_nfe_situacao <span class="hljs-keyword">CHECK</span> (situacao <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>,<span class="hljs-string">&#x27;CANCELADA&#x27;</span>,<span class="hljs-string">&#x27;DENEGADA&#x27;</span>,<span class="hljs-string">&#x27;INUTILIZADA&#x27;</span>)),
+    <span class="hljs-keyword">CONSTRAINT</span> fk_nfe_emitente <span class="hljs-keyword">FOREIGN KEY</span> (id_contribuinte_emitente)
+        <span class="hljs-keyword">REFERENCES</span> contribuinte (id_contribuinte),
+    <span class="hljs-keyword">CONSTRAINT</span> fk_nfe_destinatario <span class="hljs-keyword">FOREIGN KEY</span> (id_contribuinte_destinatario)
+        <span class="hljs-keyword">REFERENCES</span> contribuinte (id_contribuinte)
+);
+GO
+
+<span class="hljs-comment">-- 3. ITEM DA NF-e</span>
+<span class="hljs-keyword">CREATE TABLE</span> item_nfe (
+    id_item        <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT NULL</span>,
+    id_nfe         <span class="hljs-type">BIGINT</span>          <span class="hljs-keyword">NOT NULL</span>,
+    ncm            <span class="hljs-type">CHAR</span>(<span class="hljs-number">8</span>)         <span class="hljs-keyword">NOT NULL</span>,
+    cfop           <span class="hljs-type">CHAR</span>(<span class="hljs-number">4</span>)         <span class="hljs-keyword">NOT NULL</span>,
+    valor_item     <span class="hljs-type">NUMERIC</span>(<span class="hljs-number">15</span>,<span class="hljs-number">2</span>)   <span class="hljs-keyword">NOT NULL</span>,
+    <span class="hljs-keyword">CONSTRAINT</span> pk_item_nfe <span class="hljs-keyword">PRIMARY KEY</span> (id_item),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_item_valor_positivo <span class="hljs-keyword">CHECK</span> (valor_item <span class="hljs-operator">&gt;=</span> <span class="hljs-number">0</span>),
+    <span class="hljs-keyword">CONSTRAINT</span> fk_item_nfe <span class="hljs-keyword">FOREIGN KEY</span> (id_nfe)
+        <span class="hljs-keyword">REFERENCES</span> nfe (id_nfe) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> CASCADE
+);
+GO
+
+<span class="hljs-comment">-- 4. NFC-e (estrutura semelhante à NF-e, sem destinatário obrigatório)</span>
+<span class="hljs-keyword">CREATE TABLE</span> nfce (
+    id_nfce                    <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT NULL</span>,
+    chave_acesso               <span class="hljs-type">CHAR</span>(<span class="hljs-number">44</span>)        <span class="hljs-keyword">NOT NULL</span>,
+    id_contribuinte_emitente   <span class="hljs-type">BIGINT</span>          <span class="hljs-keyword">NOT NULL</span>,
+    data_emissao                <span class="hljs-type">DATE</span>           <span class="hljs-keyword">NOT NULL</span>,
+    valor_total                 <span class="hljs-type">NUMERIC</span>(<span class="hljs-number">15</span>,<span class="hljs-number">2</span>)  <span class="hljs-keyword">NOT NULL</span>,
+    situacao                    <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>)    <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">CONSTRAINT</span> df_nfce_situacao <span class="hljs-keyword">DEFAULT</span> (<span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>),
+    <span class="hljs-keyword">CONSTRAINT</span> pk_nfce <span class="hljs-keyword">PRIMARY KEY</span> (id_nfce),
+    <span class="hljs-keyword">CONSTRAINT</span> uq_nfce_chave <span class="hljs-keyword">UNIQUE</span> (chave_acesso),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_nfce_chave_formato <span class="hljs-keyword">CHECK</span> (
+        LEN(chave_acesso) <span class="hljs-operator">=</span> <span class="hljs-number">44</span> <span class="hljs-keyword">AND</span> chave_acesso <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%[^0-9]%&#x27;</span>
+    ),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_nfce_valor_positivo <span class="hljs-keyword">CHECK</span> (valor_total <span class="hljs-operator">&gt;=</span> <span class="hljs-number">0</span>),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_nfce_situacao <span class="hljs-keyword">CHECK</span> (situacao <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>,<span class="hljs-string">&#x27;CANCELADA&#x27;</span>,<span class="hljs-string">&#x27;DENEGADA&#x27;</span>)),
+    <span class="hljs-keyword">CONSTRAINT</span> fk_nfce_emitente <span class="hljs-keyword">FOREIGN KEY</span> (id_contribuinte_emitente)
+        <span class="hljs-keyword">REFERENCES</span> contribuinte (id_contribuinte)
+);
+GO
+
+<span class="hljs-comment">-- 5. ITEM DA NFC-e</span>
+<span class="hljs-keyword">CREATE TABLE</span> item_nfce (
+    id_item        <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT NULL</span>,
+    id_nfce        <span class="hljs-type">BIGINT</span>          <span class="hljs-keyword">NOT NULL</span>,
+    ncm            <span class="hljs-type">CHAR</span>(<span class="hljs-number">8</span>)         <span class="hljs-keyword">NOT NULL</span>,
+    cfop           <span class="hljs-type">CHAR</span>(<span class="hljs-number">4</span>)         <span class="hljs-keyword">NOT NULL</span>,
+    valor_item     <span class="hljs-type">NUMERIC</span>(<span class="hljs-number">15</span>,<span class="hljs-number">2</span>)   <span class="hljs-keyword">NOT NULL</span>,
+    <span class="hljs-keyword">CONSTRAINT</span> pk_item_nfce <span class="hljs-keyword">PRIMARY KEY</span> (id_item),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_item_nfce_valor_positivo <span class="hljs-keyword">CHECK</span> (valor_item <span class="hljs-operator">&gt;=</span> <span class="hljs-number">0</span>),
+    <span class="hljs-keyword">CONSTRAINT</span> fk_item_nfce <span class="hljs-keyword">FOREIGN KEY</span> (id_nfce)
+        <span class="hljs-keyword">REFERENCES</span> nfce (id_nfce) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> CASCADE
+);
+GO
+
+<span class="hljs-comment">-- 6. CT-e</span>
+<span class="hljs-keyword">CREATE TABLE</span> cte (
+    id_cte                       <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT NULL</span>,
+    chave_acesso                 <span class="hljs-type">CHAR</span>(<span class="hljs-number">44</span>)        <span class="hljs-keyword">NOT NULL</span>,
+    id_contribuinte_emitente     <span class="hljs-type">BIGINT</span>          <span class="hljs-keyword">NOT NULL</span>,
+    id_nfe_vinculada             <span class="hljs-type">BIGINT</span>          <span class="hljs-keyword">NULL</span>,   <span class="hljs-comment">-- pode ser NULL: nem todo CT-e vincula uma única NF-e</span>
+    valor_frete                  <span class="hljs-type">NUMERIC</span>(<span class="hljs-number">15</span>,<span class="hljs-number">2</span>)   <span class="hljs-keyword">NOT NULL</span>,
+    situacao                     <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>)     <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">CONSTRAINT</span> df_cte_situacao <span class="hljs-keyword">DEFAULT</span> (<span class="hljs-string">&#x27;AUTORIZADO&#x27;</span>),
+    <span class="hljs-keyword">CONSTRAINT</span> pk_cte <span class="hljs-keyword">PRIMARY KEY</span> (id_cte),
+    <span class="hljs-keyword">CONSTRAINT</span> uq_cte_chave <span class="hljs-keyword">UNIQUE</span> (chave_acesso),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_cte_frete_positivo <span class="hljs-keyword">CHECK</span> (valor_frete <span class="hljs-operator">&gt;=</span> <span class="hljs-number">0</span>),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_cte_situacao <span class="hljs-keyword">CHECK</span> (situacao <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;AUTORIZADO&#x27;</span>,<span class="hljs-string">&#x27;CANCELADO&#x27;</span>,<span class="hljs-string">&#x27;DENEGADO&#x27;</span>)),
+    <span class="hljs-keyword">CONSTRAINT</span> fk_cte_emitente <span class="hljs-keyword">FOREIGN KEY</span> (id_contribuinte_emitente)
+        <span class="hljs-keyword">REFERENCES</span> contribuinte (id_contribuinte),
+    <span class="hljs-comment">-- NO ACTION: nfe já recebe cascade/participação de outras FKs (item_nfe) — evita erro de múltiplos caminhos</span>
+    <span class="hljs-keyword">CONSTRAINT</span> fk_cte_nfe <span class="hljs-keyword">FOREIGN KEY</span> (id_nfe_vinculada)
+        <span class="hljs-keyword">REFERENCES</span> nfe (id_nfe) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">NO</span> ACTION
+);
+GO
+
+<span class="hljs-comment">-- 7. REGISTRO DE EFD</span>
+<span class="hljs-keyword">CREATE TABLE</span> efd_registro (
+    id_registro              <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT NULL</span>,
+    id_contribuinte          <span class="hljs-type">BIGINT</span>          <span class="hljs-keyword">NOT NULL</span>,
+    tipo_registro            <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">10</span>)     <span class="hljs-keyword">NOT NULL</span>,   <span class="hljs-comment">-- ex.: &#x27;C100&#x27;, &#x27;C170&#x27;</span>
+    periodo_apuracao         <span class="hljs-type">CHAR</span>(<span class="hljs-number">7</span>)         <span class="hljs-keyword">NOT NULL</span>,    <span class="hljs-comment">-- formato &#x27;MM/AAAA&#x27;</span>
+    id_nfe_referenciada      <span class="hljs-type">BIGINT</span>          <span class="hljs-keyword">NULL</span>,
+    <span class="hljs-keyword">CONSTRAINT</span> pk_efd_registro <span class="hljs-keyword">PRIMARY KEY</span> (id_registro),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_periodo_formato <span class="hljs-keyword">CHECK</span> (
+        <span class="hljs-built_in">SUBSTRING</span>(periodo_apuracao,<span class="hljs-number">3</span>,<span class="hljs-number">1</span>) <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;/&#x27;</span>
+        <span class="hljs-keyword">AND</span> LEN(periodo_apuracao) <span class="hljs-operator">=</span> <span class="hljs-number">7</span>
+        <span class="hljs-keyword">AND</span> <span class="hljs-built_in">CAST</span>(<span class="hljs-keyword">LEFT</span>(periodo_apuracao,<span class="hljs-number">2</span>) <span class="hljs-keyword">AS</span> <span class="hljs-type">INT</span>) <span class="hljs-keyword">BETWEEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">AND</span> <span class="hljs-number">12</span>
+    ),
+    <span class="hljs-keyword">CONSTRAINT</span> fk_efd_contribuinte <span class="hljs-keyword">FOREIGN KEY</span> (id_contribuinte)
+        <span class="hljs-keyword">REFERENCES</span> contribuinte (id_contribuinte),
+    <span class="hljs-keyword">CONSTRAINT</span> fk_efd_nfe <span class="hljs-keyword">FOREIGN KEY</span> (id_nfe_referenciada)
+        <span class="hljs-keyword">REFERENCES</span> nfe (id_nfe) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">NO</span> ACTION
+);
+GO
+</div></code></pre>
+<p><strong>Checkpoint de discussão em turma:</strong> por que <code>item_nfe</code> e <code>item_nfce</code> usam <code>ON DELETE CASCADE</code>, mas as demais FKs usam <code>NO ACTION</code>? (Resposta esperada: um item não existe fora do documento que o contém — é parte do &quot;todo&quot;; já um contribuinte, ou uma NF-e vinculada a CT-e/EFD, não deve ser excluído silenciosamente, sob risco de perda de histórico fiscal.)</p>
+<hr>
+<h2 id="8-roteiro-prático-2--testando-violações-de-integridade">8. Roteiro Prático 2 — Testando Violações de Integridade</h2>
+<p><strong>Objetivo:</strong> provocar deliberadamente erros de constraint no SSMS e reconhecer, no painel <strong>Messages</strong>, o código de erro e a constraint violada.</p>
+<ol>
+<li>Insira dois contribuintes válidos.</li>
+<li>Execute os comandos abaixo, um de cada vez, e registre a mensagem retornada pelo SSMS:</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-comment">-- (a) Violação de integridade de domínio</span>
+<span class="hljs-keyword">INSERT INTO</span> contribuinte (cnpj_cpf, razao_social, uf)
+<span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;12345&#x27;</span>, <span class="hljs-string">&#x27;Empresa Teste LTDA&#x27;</span>, <span class="hljs-string">&#x27;PB&#x27;</span>);
+<span class="hljs-comment">-- Esperado: Msg 547 — CHECK ck_cnpj_cpf_tamanho</span>
+
+<span class="hljs-comment">-- (b) Violação de integridade de entidade</span>
+<span class="hljs-keyword">INSERT INTO</span> contribuinte (cnpj_cpf, razao_social, uf)
+<span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;12345678000199&#x27;</span>, <span class="hljs-string">&#x27;Empresa Teste LTDA&#x27;</span>, <span class="hljs-string">&#x27;PB&#x27;</span>);
+
+<span class="hljs-keyword">INSERT INTO</span> contribuinte (cnpj_cpf, razao_social, uf)
+<span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;12345678000199&#x27;</span>, <span class="hljs-string">&#x27;Empresa Duplicada LTDA&#x27;</span>, <span class="hljs-string">&#x27;PB&#x27;</span>);
+<span class="hljs-comment">-- Esperado: Msg 2627 — violação de UNIQUE (uq_contribuinte_doc)</span>
+
+<span class="hljs-comment">-- (c) Violação de integridade referencial</span>
+<span class="hljs-keyword">INSERT INTO</span> nfe (chave_acesso, id_contribuinte_emitente, id_contribuinte_destinatario,
+                  data_emissao, valor_total)
+<span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;25260712345678000199550010000000011000000015&#x27;</span>,
+        <span class="hljs-number">9999</span>, <span class="hljs-number">9999</span>, <span class="hljs-built_in">CAST</span>(GETDATE() <span class="hljs-keyword">AS</span> <span class="hljs-type">DATE</span>), <span class="hljs-number">100.00</span>);
+<span class="hljs-comment">-- Esperado: Msg 547 — FOREIGN KEY fk_nfe_emitente (id_contribuinte_emitente 9999 não existe)</span>
+
+<span class="hljs-comment">-- (d) Violação de regra de negócio (CHECK)</span>
+<span class="hljs-keyword">INSERT INTO</span> nfe (chave_acesso, id_contribuinte_emitente, id_contribuinte_destinatario,
+                  data_emissao, valor_total)
+<span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;25260712345678000199550010000000021000000016&#x27;</span>,
+        <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-built_in">CAST</span>(GETDATE() <span class="hljs-keyword">AS</span> <span class="hljs-type">DATE</span>), <span class="hljs-number">-500.00</span>);
+<span class="hljs-comment">-- Esperado: Msg 547 — CHECK ck_nfe_valor_positivo</span>
+
+<span class="hljs-comment">-- (e) Tentativa de excluir um contribuinte que já emitiu documentos</span>
+<span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> contribuinte <span class="hljs-keyword">WHERE</span> id_contribuinte <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;
+<span class="hljs-comment">-- Esperado: Msg 547 — FOREIGN KEY (NO ACTION impede a exclusão)</span>
+</div></code></pre>
+<ol start="3">
+<li>Em grupo, preencha a tabela abaixo:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Comando</th>
+<th>Constraint violada</th>
+<th>Tipo de integridade</th>
+<th>Código de erro (SSMS)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(a)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(b)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(c)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(d)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(e)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+
+</body>
+</html>

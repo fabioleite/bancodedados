@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>exercicio_integrador.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="exercício-integrador--carga-de-dados-alteração-de-tabelas-e-correção-de-dados">Exercício Integrador — Carga de Dados, Alteração de Tabelas e Correção de Dados</h1>
+<p><strong>Curso de Integridade Fiscal — Banco de Dados <code>curso_integridade_fiscal</code></strong>
+<strong>Complementa os módulos: BULK INSERT · ALTER TABLE · UPDATE e DELETE</strong></p>
+<hr>
+<h2 id="1-objetivo">1. Objetivo</h2>
+<p>Este exercício integra três competências trabalhadas separadamente nos módulos anteriores:</p>
+<ol>
+<li><strong>Carga de dados</strong> de um arquivo CSV externo com <code>BULK INSERT</code>;</li>
+<li><strong>Evolução de estrutura</strong> de uma tabela já carregada, usando <code>ALTER TABLE</code>;</li>
+<li><strong>Correção de dados</strong> com base em regras de negócio fiscal, usando <code>UPDATE</code>.</li>
+</ol>
+<p>O cenário simula uma rotina real de trabalho de um auditor fiscal da SEFAZ-PB: um lote de notas fiscais eletrônicas é recebido de um sistema externo, carregado numa tabela de staging, e precisa passar por um processo de triagem e correção antes de ser considerado apto para análise.</p>
+<hr>
+<h2 id="2-revisão-rápida-de-conceitos">2. Revisão rápida de conceitos</h2>
+<table>
+<thead>
+<tr>
+<th>Comando</th>
+<th>Papel neste exercício</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BULK INSERT</code></td>
+<td>Importa o arquivo CSV bruto para uma tabela de staging, sem qualquer tratamento prévio dos dados</td>
+</tr>
+<tr>
+<td><code>ALTER TABLE</code></td>
+<td>Adapta a estrutura da tabela de staging para suportar o processo de triagem (novas colunas de controle)</td>
+</tr>
+<tr>
+<td><code>UPDATE</code></td>
+<td>Corrige, padroniza e sinaliza os registros com base em regras de negócio fiscal</td>
+</tr>
+</tbody>
+</table>
+<p>A tabela de staging não deve ser confundida com a tabela definitiva <code>nfe</code> do banco <code>curso_integridade_fiscal</code>: ela existe apenas para receber dados brutos e passar por depuração antes de uma eventual carga final — prática comum em rotinas de ETL (Extract, Transform, Load) usadas por órgãos fiscais para tratar arquivos recebidos de terceiros.</p>
+<hr>
+<h2 id="3-ferramenta-de-trabalho-ssms-x-vs-code-extensão-mssql">3. Ferramenta de trabalho: SSMS x VS Code (extensão MSSQL)</h2>
+<p>Antes de iniciar, vale registrar uma mudança importante no ecossistema de ferramentas SQL Server: o <strong>Azure Data Studio foi oficialmente aposentado em 28/02/2026</strong> e não recebe mais atualizações. A Microsoft consolidou o desenvolvimento SQL em duas frentes:</p>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th>SQL Server Management Studio (SSMS)</th>
+<th>Visual Studio Code + extensão MSSQL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Plataforma</td>
+<td>Somente Windows</td>
+<td>Windows, macOS, Linux</td>
+</tr>
+<tr>
+<td>Foco principal</td>
+<td>Administração completa (SQL Server Agent, segurança, backups, jobs)</td>
+<td>Desenvolvimento de consultas e scripts do dia a dia</td>
+</tr>
+<tr>
+<td>Interface</td>
+<td>Tradicional, orientada a objetos do banco (Object Explorer)</td>
+<td>Editor de código moderno, leve, com IntelliSense</td>
+</tr>
+<tr>
+<td>Extensibilidade</td>
+<td>Limitada</td>
+<td>Alta (mesmo ecossistema de extensões do VS Code)</td>
+</tr>
+<tr>
+<td>Controle de versão (Git)</td>
+<td>Básico</td>
+<td>Integrado nativamente</td>
+</tr>
+<tr>
+<td>Indicação de uso</td>
+<td>Tarefas administrativas, jobs agendados, gestão de permissões</td>
+<td>Escrita e teste de scripts, exercícios como este, trabalho colaborativo com Git</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recomendação prática para este curso:</strong> use o <strong>SSMS</strong> quando o exercício envolver tarefas de administração (como configurar permissões ou agendar rotinas), e o <strong>VS Code com a extensão MSSQL</strong> para o trabalho cotidiano de escrever, testar e versionar os scripts deste exercício. Ambos se conectam à mesma instância do SQL Server e executam os mesmos comandos T-SQL — a escolha é uma questão de fluxo de trabalho, não de compatibilidade.</p>
+<blockquote>
+<p>Para instalar a extensão no VS Code: acesse a aba <strong>Extensions</strong>, busque por <strong>&quot;MSSQL&quot;</strong> (publicada pela Microsoft) e instale. Em seguida, use o comando <strong>MS SQL: Connect</strong> para conectar-se à instância local ou de rede.</p>
+</blockquote>
+<hr>
+<h2 id="4-preparando-o-arquivo-de-dados">4. Preparando o arquivo de dados</h2>
+<p>O arquivo <code>nfe_importacao_lote.csv</code> simula um lote de 40 notas fiscais recebidas de um sistema externo, com separador <code>;</code> e as colunas:</p>
+<p><code>chave_acesso; cnpj_emitente; razao_social_emitente; cfop; ncm; valor_total; data_emissao</code></p>
+<p>O lote contém <strong>erros propositais</strong>, típicos de arquivos reais recebidos por órgãos fiscalizadores:</p>
+<ul>
+<li>CNPJs com menos de 14 dígitos ou zerados (<code>00000000000000</code>);</li>
+<li>CFOPs inválidos (fora da tabela de códigos, ou não numéricos);</li>
+<li>NCMs com formato incorreto (letras ou tamanho errado);</li>
+<li>Valores totais negativos ou iguais a zero;</li>
+<li>Datas de emissão em formato inválido (<code>32/13/2026</code>);</li>
+<li>Chaves de acesso duplicadas.</li>
+</ul>
+<p>Copie o arquivo para uma pasta acessível pela instância do SQL Server (ex.: <code>C:\dados\nfe_importacao_lote.csv</code>) antes de iniciar.</p>
+<hr>
+<h2 id="5-parte-1--carga-com-bulk-insert-revisão">5. Parte 1 — Carga com BULK INSERT (revisão)</h2>
+<p><strong>5.1</strong> Crie a tabela de staging <code>stg_nfe_importacao</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE TABLE</span> stg_nfe_importacao (
+    chave_acesso            <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">44</span>),
+    cnpj_emitente           <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>),
+    razao_social_emitente   <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">150</span>),
+    cfop                    <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">10</span>),
+    ncm                     <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>),
+    valor_total             <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>),   <span class="hljs-comment">-- carregado como texto propositalmente</span>
+    data_emissao            <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>)    <span class="hljs-comment">-- carregado como texto propositalmente</span>
+);
+</div></code></pre>
+<blockquote>
+<p><strong>Por que <code>VARCHAR</code> em vez de <code>DECIMAL</code> ou <code>DATE</code>?</strong> Porque o arquivo contém valores e datas em formatos inválidos. Se as colunas fossem tipadas corretamente, o <code>BULK INSERT</code> falharia no meio da carga. Carregar como texto primeiro e validar depois é uma prática comum ao lidar com arquivos de origem não confiável — você vai corrigir os tipos na Parte 2.</p>
+</blockquote>
+<p><strong>5.2</strong> Execute a carga:</p>
+<pre class="hljs"><code><div>BULK <span class="hljs-keyword">INSERT</span> stg_nfe_importacao
+<span class="hljs-keyword">FROM</span> <span class="hljs-string">&#x27;C:\dados\nfe_importacao_lote.csv&#x27;</span>
+<span class="hljs-keyword">WITH</span> (
+    FIRSTROW <span class="hljs-operator">=</span> <span class="hljs-number">2</span>,
+    FIELDTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;;&#x27;</span>,
+    ROWTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;\n&#x27;</span>,
+    CODEPAGE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;65001&#x27;</span>
+);
+</div></code></pre>
+<p><strong>5.3</strong> Confirme que as 40 linhas foram carregadas:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> total_linhas <span class="hljs-keyword">FROM</span> stg_nfe_importacao;
+</div></code></pre>
+<hr>
+<h2 id="6-parte-2--evoluindo-a-estrutura-com-alter-table">6. Parte 2 — Evoluindo a estrutura com ALTER TABLE</h2>
+<p>A tabela de staging, como está, só armazena o dado bruto. Para conduzir a triagem, o auditor precisa de colunas de controle que não existiam no arquivo original.</p>
+<p><strong>Exercício 6.1 (conceitual).</strong> Adicione as colunas de controle abaixo à tabela <code>stg_nfe_importacao</code>, escolhendo o tipo de dado adequado para cada uma:</p>
+<ul>
+<li><code>status_validacao</code> — indica se o registro está <code>'PENDENTE'</code>, <code>'VALIDO'</code> ou <code>'INVALIDO'</code> (valor padrão <code>'PENDENTE'</code>);</li>
+<li><code>motivo_rejeicao</code> — texto livre explicando por que o registro foi marcado como inválido (pode ser nulo);</li>
+<li><code>data_analise</code> — data em que o registro foi revisado pelo auditor (pode ser nula até a revisão ocorrer);</li>
+<li><code>auditor_responsavel</code> — nome do auditor que revisou o registro (pode ser nulo).</li>
+</ul>
+<p><strong>Exercício 6.2 (intermediário).</strong> Depois de perceber que <code>valor_total</code> e <code>data_emissao</code> foram carregados como texto, adicione duas novas colunas já com o tipo correto, para receber os valores convertidos após a validação:</p>
+<ul>
+<li><code>valor_total_num DECIMAL(15,2)</code></li>
+<li><code>data_emissao_dt DATE</code></li>
+</ul>
+<blockquote>
+<p>Note que não estamos alterando o tipo das colunas originais (<code>ALTER COLUMN</code>), e sim adicionando colunas novas para os dados convertidos. Isso preserva o dado bruto original para auditoria — uma prática recomendada ao lidar com dados de terceiros: nunca sobrescrever a fonte antes de validar.</p>
+</blockquote>
+<p><strong>Exercício 6.3 (desafio).</strong> Adicione uma restrição <code>CHECK</code> na coluna <code>status_validacao</code> para garantir que ela só aceite os três valores previstos (<code>'PENDENTE'</code>, <code>'VALIDO'</code>, <code>'INVALIDO'</code>).</p>
+<hr>
+<h2 id="7-parte-3--corrigindo-e-triando-os-dados-com-update">7. Parte 3 — Corrigindo e triando os dados com UPDATE</h2>
+<p>Com a estrutura pronta, é hora de aplicar as regras de negócio fiscal para validar e corrigir os registros.</p>
+<h3 id="nível-conceitual">Nível conceitual</h3>
+<p><strong>7.1</strong> Marque como <code>'INVALIDO'</code> todos os registros cujo <code>cnpj_emitente</code> não tenha exatamente 14 caracteres, preenchendo <code>motivo_rejeicao</code> com <code>'CNPJ com formato invalido'</code>.</p>
+<p><strong>7.2</strong> Marque como <code>'INVALIDO'</code> os registros cujo <code>valor_total</code> (ainda em texto) represente um valor menor ou igual a zero, com o motivo <code>'Valor total zerado ou negativo'</code>.</p>
+<h3 id="nível-intermediário">Nível intermediário</h3>
+<p><strong>7.3</strong> Para os registros com <code>cnpj_emitente</code> de 14 dígitos e <code>valor_total</code> convertível para número positivo, popule <code>valor_total_num</code> com a conversão de <code>valor_total</code> para <code>DECIMAL(15,2)</code> usando <code>TRY_CONVERT</code> (para evitar erro de conversão nos registros ainda inválidos).</p>
+<p><strong>7.4</strong> Popule <code>data_emissao_dt</code> a partir de <code>data_emissao</code> usando <code>TRY_CONVERT(DATE, data_emissao, 23)</code>. Em seguida, marque como <code>'INVALIDO'</code> os registros em que essa conversão resultou em <code>NULL</code>, com o motivo <code>'Data de emissao invalida'</code>.</p>
+<p><strong>7.5</strong> Marque como <code>'INVALIDO'</code> os registros cujo <code>cfop</code> não pertença à lista de CFOPs válidos para o curso: <code>('5101','5102','5405','5949','6101','6102','6108','6403')</code>, com o motivo <code>'CFOP fora da tabela de codigos validos'</code>.</p>
+<h3 id="nível-desafio">Nível desafio</h3>
+<p><strong>7.6</strong> Identifique registros com <code>chave_acesso</code> duplicada (mais de uma ocorrência na tabela de staging) e marque <strong>todas as ocorrências</strong>, exceto a primeira (pela ordem de carga), como <code>'INVALIDO'</code>, com o motivo <code>'Chave de acesso duplicada no lote'</code>. Dica: utilize uma CTE com <code>ROW_NUMBER()</code> particionada por <code>chave_acesso</code>.</p>
+<p><strong>7.7</strong> Todos os registros que passaram por todas as validações acima sem serem marcados como <code>'INVALIDO'</code> devem ser atualizados para <code>status_validacao = 'VALIDO'</code>, com <code>data_analise = GETDATE()</code> e <code>auditor_responsavel = 'Auditoria Automatizada - Triagem Inicial'</code>.</p>
+<p><strong>7.8 (integração final).</strong> Escreva uma única consulta <code>SELECT</code> que resuma o resultado da triagem: quantidade de registros por <code>status_validacao</code>, e — para os inválidos — quantidade agrupada por <code>motivo_rejeicao</code>. Essa é a visão que um auditor apresentaria como relatório de qualidade do lote recebido.</p>
+<hr>
+<h2 id="8-para-refletir">8. Para refletir</h2>
+<ul>
+<li>Por que faz sentido separar a carga bruta (staging) da tabela definitiva <code>nfe</code>, em vez de aplicar <code>BULK INSERT</code> diretamente nela?</li>
+<li>Em uma rotina real da SEFAZ-PB, quem deveria revisar os registros marcados como <code>'INVALIDO'</code> antes de descartá-los definitivamente?</li>
+<li>Que outras regras de negócio fiscal (além das aplicadas aqui) poderiam ser incorporadas a essa triagem — por exemplo, cruzamento com o cadastro de contribuintes?</li>
+</ul>
+
+</body>
+</html>

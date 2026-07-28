@@ -1,0 +1,7 @@
+# Ignorar diretório de dados locais
+dados/
+modelo BDFISC/dados/
+
+# Arquivos temporários e IDE
+.vscode/
+*.log

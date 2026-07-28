@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>exercicio_vscode.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="material-complementar--recursos-visuais-e-low-code-do-vs-code-com-a-extensão-mssql">Material Complementar — Recursos Visuais e Low-Code do VS Code com a Extensão MSSQL</h1>
+<p><strong>Curso de Integridade Fiscal — Banco de Dados <code>curso_integridade_fiscal</code></strong>
+<strong>Complementa os módulos de BULK INSERT, ALTER TABLE e o exercício integrador</strong></p>
+<hr>
+<h2 id="1-objetivo">1. Objetivo</h2>
+<p>Todos os módulos anteriores do curso foram construídos em torno da escrita direta de comandos T-SQL (<code>BULK INSERT</code>, <code>CREATE TABLE</code>, <code>ALTER TABLE</code>, <code>UPDATE</code>). Esse caminho é essencial para entender o que acontece &quot;por baixo do capô&quot; — mas no dia a dia da auditoria fiscal, muitas dessas tarefas podem ser resolvidas mais rapidamente por interfaces gráficas, sem abrir mão da precisão técnica.</p>
+<p>Este material apresenta os recursos <strong>visuais e low-code</strong> da extensão MSSQL para VS Code: assistentes de importação, editores de dados em grade (estilo planilha), e designers de tabela e de esquema com diagramação e arrastar-e-soltar. A ideia não é substituir o T-SQL — é saber quando cada abordagem é mais eficiente.</p>
+<p><img src="https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/media/mssql-extension-visual-studio-code/mssql-extension-vscode.png?view=sql-server-ver17" alt="Extensão MSSQL instalada no Visual Studio Code">
+<em>A extensão MSSQL instalada e ativa no VS Code — o ícone na Activity Bar e a vista de Conexões confirmam a instalação. Fonte: Microsoft Learn.</em></p>
+<hr>
+<h2 id="2-panorama-dos-recursos">2. Panorama dos recursos</h2>
+<p><cite index="15-1">A extensão MSSQL para Visual Studio Code fornece ferramentas para conectar a bancos de dados, gerenciar e desenhar esquemas, explorar objetos do banco de dados, executar consultas T-SQL e visualizar planos de execução.</cite> Os recursos relevantes para um fluxo de trabalho <strong>low-code</strong> são:</p>
+<table>
+<thead>
+<tr>
+<th>Recurso</th>
+<th>O que substitui em T-SQL</th>
+<th>Situação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Importar Arquivo Plano (Flat File Import)</td>
+<td><code>BULK INSERT</code></td>
+<td>Disponibilidade geral</td>
+</tr>
+<tr>
+<td>Table Designer</td>
+<td><code>CREATE TABLE</code> / <code>ALTER TABLE</code></td>
+<td>Disponibilidade geral</td>
+</tr>
+<tr>
+<td>Schema Designer</td>
+<td><code>CREATE TABLE</code> com <code>FOREIGN KEY</code>, diagramação de modelo</td>
+<td>Disponibilidade geral</td>
+</tr>
+<tr>
+<td>Visualizar &amp; Editar Dados</td>
+<td><code>INSERT</code> / <code>UPDATE</code> / <code>DELETE</code> simples</td>
+<td>Disponibilidade geral</td>
+</tr>
+<tr>
+<td>Explorador de Objetos com filtros</td>
+<td>Consultas em <code>sys.tables</code>, <code>sys.columns</code></td>
+<td>Disponibilidade geral</td>
+</tr>
+<tr>
+<td>Schema Designer com GitHub Copilot</td>
+<td>Modelagem inteira a partir de linguagem natural</td>
+<td>Disponibilidade geral</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="3-importação-de-csv-sem-escrever-bulk-insert">3. Importação de CSV sem escrever BULK INSERT</h2>
+<p>O assistente <strong>Importar Arquivo Plano</strong> (<em>Flat File Import</em>) é o equivalente visual direto do que foi feito manualmente no módulo de BULK INSERT.</p>
+<p>Antes da importação, a conexão com o banco é feita pela caixa de diálogo de conexão da extensão:</p>
+<p><img src="https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/media/mssql-extension-visual-studio-code/mssql-connection-dialog-parameters.png?view=sql-server-ver17" alt="Caixa de diálogo de conexão da extensão MSSQL no VS Code">
+<em>Tela de conexão — permite conectar por parâmetros, string de conexão ou navegando pelo Azure. Fonte: Microsoft Learn.</em></p>
+<p><strong>Como acessar o assistente:</strong> no Object Explorer (vista de Conexões), expanda a conexão e o nó <strong>Databases</strong>, clique com o botão direito no banco de dados de destino e selecione <strong>Import flat file</strong>.</p>
+<p><img src="https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/media/mssql-database-operations/flat-file-import-entry.png?view=sql-server-ver17" alt="Menu de contexto com a opção Import flat file no Object Explorer do VS Code">
+<em>Ponto de entrada do assistente — botão direito no banco de dados → Import flat file. Fonte: Microsoft Learn.</em></p>
+<p>O assistente conduz o usuário por etapas:</p>
+<p><strong>Passo 1 — Especificar o arquivo de entrada:</strong> informe o banco de destino, o caminho do arquivo <code>.csv</code>/<code>.txt</code>, o nome da nova tabela e o schema (ex.: <code>dbo</code>).</p>
+<p><img src="https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/media/mssql-database-operations/flat-file-dialog.png?view=sql-server-ver17" alt="Tela do assistente de importação de arquivo mostrando a configuração do arquivo de entrada"></p>
+<p><strong>Passo 2 — Pré-visualizar os dados:</strong> <cite index="11-1">a extensão detecta automaticamente os nomes de colunas e os tipos de dados</cite>, poupando a etapa manual de decidir se cada coluna é <code>VARCHAR</code>, <code>INT</code>, <code>DATE</code>, etc. Esta tela permite validar o alinhamento das colunas e o delimitador usado antes de prosseguir.</p>
+<p><img src="https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/media/mssql-database-operations/flat-file-preview.png?view=sql-server-ver17" alt="Tela do assistente de importação de arquivo mostrando a pré-visualização dos dados com colunas inferidas"></p>
+<p><strong>Passo 3 — Modificar colunas:</strong> <cite index="11-1">é possível ajustar nomes de colunas, tipos de dados, chaves primárias e nulidade</cite> antes de confirmar.</p>
+<p><img src="https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/media/mssql-database-operations/flat-file-modify.png?view=sql-server-ver17" alt="Tela do assistente de importação de arquivo mostrando as opções de modificação de colunas"></p>
+<p>Ao selecionar <strong>Import Data</strong>: <cite index="11-1">a tabela é criada e os dados são importados em um único fluxo contínuo</cite>, sem exigir um <code>CREATE TABLE</code> prévio nem a instrução <code>BULK INSERT</code>.</p>
+<p><em>Fonte das capturas de tela desta seção: tutorial oficial &quot;Database Operations — MSSQL Extension for Visual Studio Code&quot; — Microsoft Learn.</em></p>
+<p><strong>Aplicação no cenário do curso:</strong> ao receber o arquivo <code>nfe_importacao_lote.csv</code> do exercício integrador, em vez de escrever manualmente o <code>CREATE TABLE stg_nfe_importacao</code> e depois o <code>BULK INSERT</code>, o auditor poderia:</p>
+<ul>
+<li>Clicar com o botão direito no banco <code>curso_integridade_fiscal</code> → <strong>Import Flat File</strong>;</li>
+<li>Apontar para o CSV e deixar o assistente inferir os tipos;</li>
+<li>Ajustar manualmente <code>valor_total</code> e <code>data_emissao</code> para <code>VARCHAR</code> (já que o arquivo contém erros propositais) — o mesmo raciocínio do módulo anterior, só que decidido visualmente, clicando no tipo da coluna em vez de escrevê-lo;</li>
+<li>Concluir o assistente, que cria a tabela e carrega as 40 linhas automaticamente.</li>
+</ul>
+<p><strong>Quando preferir o assistente em vez do <code>BULK INSERT</code> manual:</strong> cargas pontuais, exploratórias, ou quando o formato do arquivo ainda não é totalmente conhecido (o assistente ajuda a descobrir a estrutura). <strong>Quando preferir o <code>BULK INSERT</code> escrito:</strong> cargas repetitivas, agendadas, ou que precisam ser versionadas como script (ex.: parte de uma rotina de ETL documentada).</p>
+<hr>
+<h2 id="4-table-designer--criando-e-alterando-tabelas-visualmente">4. Table Designer — criando e alterando tabelas visualmente</h2>
+<p>O <strong>Table Designer</strong> oferece uma interface para o que os módulos de modelagem e de <code>ALTER TABLE</code> fizeram via código.</p>
+<p><strong>Como acessar:</strong> botão direito em <strong>Tables</strong> no Object Explorer → <strong>New Table</strong> (para criar) ou botão direito em uma tabela existente → <strong>Design</strong> (para alterar).</p>
+<p>Principais capacidades da interface:</p>
+<ul>
+<li><strong>Colunas</strong> — <cite index="15-1">adicionar novas colunas, definir tipos de dados, definir a anulabilidade e especificar valores padrão, além de designar uma coluna como chave primária ou coluna de identidade diretamente na interface</cite>;</li>
+<li><strong>Chave primária</strong> — <cite index="15-1">definir uma ou mais colunas como chave primária da tabela</cite>;</li>
+<li><strong>Índices</strong> — <cite index="15-1">criar e gerenciar índices para melhorar o desempenho das consultas</cite>;</li>
+<li><strong>Chaves estrangeiras</strong> — <cite index="15-1">definir relacionamentos entre tabelas referenciando chaves primárias de outras tabelas</cite>;</li>
+<li><strong>Check constraints</strong> — configurar regras de validação (equivalente visual ao <code>CHECK</code> que foi usado no exercício integrador para <code>status_validacao</code>).</li>
+</ul>
+<p>Um diferencial importante: o designer mantém um painel <strong>Script como Criar</strong>, que mostra em tempo real o T-SQL equivalente a cada alteração feita visualmente. Isso significa que o material continua &quot;auditável&quot; — o auditor pode clicar para montar a tabela e, ao final, copiar ou revisar o script gerado antes de aplicá-lo, com a opção de <strong>Publicar</strong> (aplica direto no banco) ou <strong>Copiar script</strong> (para versionar ou ajustar manualmente).</p>
+<p><img src="https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/media/mssql-extension-visual-studio-code/table-designer.png?view=sql-server-ver17" alt="Interface do Table Designer no VS Code mostrando colunas, tipos de dados e o painel de script">
+<em>Table Designer aberto no VS Code — grade de colunas à esquerda e painel de script T-SQL gerado à direita. Fonte: Microsoft Learn.</em></p>
+<p><strong>Aplicação no cenário do curso:</strong> as colunas de controle adicionadas no exercício integrador (<code>status_validacao</code>, <code>motivo_rejeicao</code>, <code>data_analise</code>, <code>auditor_responsavel</code>, e a constraint de <code>CHECK</code>) poderiam ter sido adicionadas inteiramente pelo Table Designer, sem escrever nenhum <code>ALTER TABLE</code> — bastando abrir a tabela em modo de edição, clicar em &quot;adicionar coluna&quot; quatro vezes e configurar a constraint na aba correspondente.</p>
+<hr>
+<h2 id="5-schema-designer--modelagem-visual-com-diagrama">5. Schema Designer — modelagem visual com diagrama</h2>
+<p>O <strong>Schema Designer</strong> vai além de uma tabela isolada: ele apresenta o banco inteiro como um diagrama interativo, no estilo dos diagramas ER trabalhados nos módulos de modelagem relacional.</p>
+<p><img src="https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/media/mssql-schema-designer/schema-designer-overview.png?view=sql-server-ver17" alt="Visão geral do Schema Designer no VS Code mostrando um diagrama de banco de dados">
+<em>Visão geral do canvas do Schema Designer, com várias tabelas e seus relacionamentos exibidos como um diagrama. Fonte: Microsoft Learn.</em></p>
+<p><strong>Como acessar:</strong> clique com o botão direito no banco de dados no Object Explorer e selecione <strong>Visualize and Design Schema</strong>.</p>
+<p><img src="https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/media/mssql-schema-designer/schema-designer-entry-point.png?view=sql-server-ver17" alt="Menu de contexto mostrando a opção para abrir o Schema Designer no VS Code"></p>
+<p>Recursos principais:</p>
+<ul>
+<li><cite index="9-1">Interface visual para criar e gerenciar múltiplas tabelas simultaneamente, com disposição automática das tabelas no diagrama</cite>;</li>
+<li>Arrastar e soltar para reposicionar tabelas e reorganizar visualmente o modelo, além de recursos de busca, filtro, zoom e um mini-mapa para diagramas grandes;</li>
+<li>Criação de relacionamentos (chaves estrangeiras) desenhando uma linha entre colunas de tabelas diferentes, em vez de escrever <code>FOREIGN KEY REFERENCES</code>;</li>
+<li>Geração automática do script T-SQL correspondente ao diagrama, para revisão antes de publicar.</li>
+</ul>
+<p>Cada tabela no diagrama exibe seu nome, colunas, tipos de dados e a chave primária (identificada por um ícone de chave):</p>
+<p><img src="https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/media/mssql-schema-designer/schema-designer-tables.png?view=sql-server-ver17" alt="Estrutura de uma tabela no Schema Designer mostrando colunas, tipos de dados e chave primária"></p>
+<p>Para editar uma tabela, basta clicar no ícone de lápis, o que abre o painel <strong>Table Editor</strong> ao lado do canvas:</p>
+<p><img src="https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/media/mssql-schema-designer/schema-designer-edit-table.png?view=sql-server-ver17" alt="Painel do editor de tabela no Schema Designer para adicionar ou modificar detalhes da tabela"></p>
+<p>Os relacionamentos entre tabelas (chaves estrangeiras) podem ser gerenciados por um painel dedicado, ou desenhados diretamente arrastando uma seta de uma coluna a outra no diagrama:</p>
+<p><img src="https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/media/mssql-schema-designer/schema-designer-foreign-key.png?view=sql-server-ver17" alt="Painel de gerenciamento de chaves estrangeiras no Schema Designer"></p>
+<p><img src="https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/media/mssql-schema-designer/schema-designer-arrows.png?view=sql-server-ver17" alt="Setas representando relacionamentos de chave estrangeira entre tabelas no diagrama do Schema Designer"></p>
+<p>Ao final da modelagem, o botão <strong>Publish Changes</strong> mostra um resumo de todas as alterações pendentes antes de aplicá-las ao banco:</p>
+<p><img src="https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/media/mssql-schema-designer/schema-designer-publish.png?view=sql-server-ver17" alt="Tela de resumo de alterações do Schema Designer antes de publicar no banco"></p>
+<p><em>Fonte das capturas de tela desta seção: tutorial oficial &quot;Schema Designer — MSSQL Extension for Visual Studio Code&quot; — Microsoft Learn.</em></p>
+<p><strong>Recurso avançado — Schema Designer com GitHub Copilot:</strong> <cite index="10-1">a integração com o GitHub Copilot permite desenhar e evoluir esquemas de banco de dados usando linguagem natural diretamente no canvas visual</cite>. Em vez de adicionar tabelas, colunas e relacionamentos manualmente pela interface, <cite index="10-1">é possível descrever o que se precisa em português (ou inglês) e o Copilot gera as tabelas, colunas, tipos de dados e relacionamentos automaticamente, refletidos em tempo real tanto no diagrama visual quanto no script T-SQL</cite>.</p>
+<p><strong>Aplicação no cenário do curso:</strong> o conjunto de entidades reutilizado em todos os módulos (<code>contribuinte</code>, <code>nfe</code>, <code>auto_infracao</code>, <code>auditor_fiscal</code>) poderia ser recriado do zero desenhando as quatro tabelas no canvas do Schema Designer, arrastando uma linha de <code>nfe.cnpj_emitente</code> até <code>contribuinte.cnpj</code> para materializar visualmente a chave estrangeira — o mesmo relacionamento que, em T-SQL, exigiria escrever a cláusula <code>FOREIGN KEY ... REFERENCES</code>.</p>
+<hr>
+<h2 id="6-visualizar--editar-dados--correção-de-dados-sem-update">6. Visualizar &amp; Editar Dados — correção de dados sem UPDATE</h2>
+<p>Este é o recurso mais diretamente comparável ao módulo de <code>UPDATE</code>/<code>DELETE</code>.</p>
+<p><strong>Como acessar:</strong> botão direito em uma tabela no Object Explorer → <strong>Edit Data</strong> (também acessível dando um duplo clique na tabela).</p>
+<p><cite index="15-1">Os dados da tabela abrem em uma grade dentro de uma aba do editor, em um layout semelhante a uma planilha, com navegação por páginas.</cite> Capacidades principais:</p>
+<p><img src="https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/media/mssql-extension-visual-studio-code/edit-data.png?view=sql-server-ver17" alt="Tela de edição de dados em grade no VS Code, estilo planilha">
+<em>Grade de edição de dados aberta em uma aba do editor — layout semelhante a uma planilha, com paginação e o painel de script correspondente. Fonte: Microsoft Learn.</em></p>
+<ul>
+<li><strong>Edição em linha</strong> — <cite index="15-1">atualizar valores de células diretamente na grade, com validação em tempo real que sinaliza em vermelho entradas inválidas, como tipos de dados incorretos ou violações de constraint</cite>;</li>
+<li><strong>Adicionar e excluir linhas</strong> — inserir ou remover registros sem escrever <code>INSERT</code>/<code>DELETE</code>;</li>
+<li><strong>Paginação</strong> — navegar por grandes volumes de dados sem carregar tudo de uma vez;</li>
+<li><strong>Salvar alterações</strong> — <cite index="15-1">as edições ficam pendentes até que o usuário selecione &quot;Salvar Alterações&quot;, mantendo controle total sobre quando as atualizações são gravadas no banco</cite>;</li>
+<li><strong>Mostrar script</strong> — <cite index="15-1">um painel apresenta, em modo somente leitura, o script DML equivalente a todas as ações feitas na grade</cite> — ou seja, mesmo corrigindo dados visualmente, é possível auditar exatamente qual <code>UPDATE</code>/<code>INSERT</code>/<code>DELETE</code> foi gerado.</li>
+</ul>
+<p><strong>Importante para o contexto de auditoria fiscal:</strong> essa &quot;prestação de contas&quot; via <strong>Mostrar Script</strong> é o que torna o recurso apropriado mesmo em um ambiente que exige rastreabilidade — nenhuma alteração acontece &quot;invisível&quot;; o T-SQL equivalente sempre pode ser conferido antes ou depois de salvar.</p>
+<p><strong>Limitação a ter em mente:</strong> correções em massa baseadas em regra de negócio (como os itens 7.1 a 7.7 do exercício integrador, que aplicam uma condição a dezenas de linhas de uma vez) continuam sendo mais eficientes em T-SQL puro. O editor em grade é ideal para correções pontuais, linha a linha — não para regras de triagem aplicadas a um lote inteiro.</p>
+<hr>
+<h2 id="7-explorador-de-objetos-com-filtros">7. Explorador de Objetos com filtros</h2>
+<p>Para localizar rapidamente tabelas, views e outros objetos em um banco com muitos elementos — situação comum à medida que o curso acumula módulos sobre o mesmo <code>curso_integridade_fiscal</code> — <cite index="15-1">o Object Explorer permite aplicar filtros por propriedades como nome, proprietário ou data de criação, em múltiplos níveis da hierarquia do banco</cite>. É a alternativa visual a escrever consultas em <code>sys.tables</code> ou <code>sys.columns</code> para localizar objetos.</p>
+<p><img src="https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/media/mssql-extension-visual-studio-code/object-explorer-filtering.png?view=sql-server-ver17" alt="Recurso de filtro do Object Explorer no VS Code">
+<em>Filtros aplicados ao Object Explorer para restringir a lista de objetos exibidos. Fonte: Microsoft Learn.</em></p>
+<hr>
+<h2 id="8-quando-usar-cada-abordagem">8. Quando usar cada abordagem</h2>
+<table>
+<thead>
+<tr>
+<th>Situação</th>
+<th>Abordagem recomendada</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Carga exploratória de um CSV novo, formato ainda incerto</td>
+<td>Import Flat File (assistente)</td>
+</tr>
+<tr>
+<td>Carga repetitiva, agendada, documentada como script</td>
+<td><code>BULK INSERT</code> escrito</td>
+</tr>
+<tr>
+<td>Criar uma tabela nova rapidamente</td>
+<td>Table Designer</td>
+</tr>
+<tr>
+<td>Desenhar o modelo relacional completo de um novo módulo</td>
+<td>Schema Designer</td>
+</tr>
+<tr>
+<td>Corrigir 1 a 3 registros específicos</td>
+<td>Visualizar &amp; Editar Dados</td>
+</tr>
+<tr>
+<td>Corrigir dezenas/centenas de registros por regra de negócio</td>
+<td><code>UPDATE</code> com <code>WHERE</code></td>
+</tr>
+<tr>
+<td>Entender o que uma constraint realmente faz</td>
+<td>Escrever o <code>ALTER TABLE ... CHECK</code> manualmente ao menos uma vez</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="9-para-refletir">9. Para refletir</h2>
+<ul>
+<li>Em uma rotina real de auditoria da SEFAZ-PB, quais tarefas ganhariam mais em velocidade usando os assistentes visuais, e quais exigem que o script T-SQL fique documentado e versionado?</li>
+<li>O painel <strong>Mostrar Script</strong> do editor de dados resolve completamente a preocupação de rastreabilidade, ou ainda haveria vantagem em manter os <code>UPDATE</code>s de triagem como scripts formais, como os do exercício integrador?</li>
+<li>Que riscos existem em depender só da inferência automática de tipos do assistente de importação, sem revisar manualmente o esquema sugerido — especialmente diante de um arquivo com erros propositais, como o do exercício integrador?</li>
+</ul>
+<hr>
+<h2 id="10-referências">10. Referências</h2>
+<p>Todas as capturas de tela e descrições técnicas deste material foram retiradas da documentação oficial da Microsoft (Microsoft Learn), atualizada em 2025-2026:</p>
+<ol>
+<li>
+<p>Microsoft Learn — <em>Overview - MSSQL Extension for Visual Studio Code</em>. Disponível em: https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/mssql-extension-visual-studio-code?view=sql-server-ver17</p>
+</li>
+<li>
+<p>Microsoft Learn — <em>Database Operations - MSSQL Extension for Visual Studio Code</em> (Import Flat File). Disponível em: https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/mssql-database-operations?view=sql-server-ver17</p>
+</li>
+<li>
+<p>Microsoft Learn — <em>Schema Designer - MSSQL Extension for Visual Studio Code</em>. Disponível em: https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/mssql-schema-designer?view=sql-server-ver17</p>
+</li>
+<li>
+<p>Microsoft Learn — <em>Schema Designer with GitHub Copilot</em>. Disponível em: https://learn.microsoft.com/en-us/sql/tools/visual-studio-code-extensions/mssql/mssql-schema-designer-copilot?view=sql-server-ver17</p>
+</li>
+<li>
+<p>Azure SQL Dev Corner (Microsoft DevBlogs) — <em>MSSQL Extension for VS Code: Introducing Schema Designer (Preview)</em>. Disponível em: https://devblogs.microsoft.com/azure-sql/vs-code-mssql-schema-designer/</p>
+</li>
+<li>
+<p>Azure SQL Dev Corner (Microsoft DevBlogs) — <em>MSSQL Extension for VS Code: SQL Notebooks, AI-Powered Schema Design, Data API builder &amp; More</em>. Disponível em: https://devblogs.microsoft.com/azure-sql/vscode-mssql-march-2026/</p>
+</li>
+<li>
+<p>Microsoft — <em>What's Happening with Azure Data Studio</em>. Disponível em: https://learn.microsoft.com/en-us/sql/tools/whats-happening-azure-data-studio?view=sql-server-ver17</p>
+</li>
+</ol>
+<blockquote>
+<p><strong>Nota sobre as imagens:</strong> todas as capturas de tela reproduzidas neste documento são hotlinks para os arquivos de imagem hospedados oficialmente pela Microsoft em learn.microsoft.com, extraídos diretamente dos tutoriais públicos indicados acima — não foram usadas capturas de tela de terceiros ou de fontes não oficiais.</p>
+</blockquote>
+
+</body>
+</html>
