@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>roteiro_auditoria_abcfarma_lotes_10k.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 id="roteiro-de-laborat%C3%B3rio%3A-particionamento-e-carga-iterativa-do-arquivo-abcfarma-em-lotes-de-10-mil-registros" tabindex="-1">Roteiro de laboratório: particionamento e carga iterativa do arquivo ABCFarma em lotes de 10 mil registros</h1>
+<h2 id="1.-objetivo" tabindex="-1">1. Objetivo</h2>
+<p>Neste laboratório, o aluno vai:</p>
+<ul>
+<li>diagnosticar e preparar o arquivo CSV ABCFarma;</li>
+<li>dividir o arquivo em vários arquivos menores, com 10 mil registros cada;</li>
+<li>carregar esses arquivos de forma iterativa em uma tabela única de staging;</li>
+<li>controlar a execução via uma tabela de log do banco;</li>
+<li>normalizar os dados e realizar auditoria de variação de preços;</li>
+<li>automatizar o processo com uma stored procedure que percorre todos os arquivos.</li>
+</ul>
+<p>O cenário é inspirado no roteiro de auditoria ABCFarma, mas agora com um desafio adicional: o arquivo original é grande e precisa ser particionado antes da carga em massa.</p>
+<hr>
+<h2 id="2.-arquivos-envolvidos" tabindex="-1">2. Arquivos envolvidos</h2>
+<p>Os arquivos de entrada normalmente usados neste laboratório são:</p>
+<ul>
+<li><code>p50_abcfarma.csv</code> — origem original em UTF-16</li>
+<li><code>p50_abcfarma_utf8.csv</code> — cópia convertida em UTF-8</li>
+<li>arquivos particionados, como:
+<ul>
+<li><code>abcfarma_0001.csv</code></li>
+<li><code>abcfarma_0002.csv</code></li>
+<li><code>abcfarma_0003.csv</code></li>
+<li>...</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="3.-diagn%C3%B3stico-inicial-do-arquivo" tabindex="-1">3. Diagnóstico inicial do arquivo</h2>
+<p>Antes de qualquer carga, é importante verificar a codificação e a estrutura do arquivo. Em muitos cenários, o arquivo sai do sistema de origem em UTF-16, o que pode gerar falhas de leitura e de <code>BULK INSERT</code>.</p>
+<h3 id="3.1-verificar-a-codifica%C3%A7%C3%A3o" tabindex="-1">3.1 Verificar a codificação</h3>
+<pre class='hljs'><code><div><span class="hljs-variable">$arquivoOriginal</span> = <span class="hljs-string">&#x27;C:\dados\abcfarma\p50_abcfarma.csv&#x27;</span>
+<span class="hljs-variable">$bytes</span> = [<span class="hljs-type">System.IO.File</span>]::ReadAllBytes(<span class="hljs-variable">$arquivoOriginal</span>)
+<span class="hljs-variable">$bytes</span>[<span class="hljs-number">0</span><span class="hljs-type">..3</span>]
+</div></code></pre>
+<p>Se a saída for algo como:</p>
+<pre class='hljs'><code><div>255
+254
+...
+</div></code></pre>
+<p>significa que o arquivo está em UTF-16 LE (BOM <code>FF FE</code>).</p>
+<h3 id="3.2-converter-para-utf-8" tabindex="-1">3.2 Converter para UTF-8</h3>
+<pre class='hljs'><code><div><span class="hljs-variable">$in</span>  = <span class="hljs-string">&#x27;C:\dados\abcfarma\p50_abcfarma.csv&#x27;</span>
+<span class="hljs-variable">$out</span> = <span class="hljs-string">&#x27;C:\dados\abcfarma\p50_abcfarma_utf8.csv&#x27;</span>
+
+<span class="hljs-variable">$text</span> = [<span class="hljs-type">System.IO.File</span>]::ReadAllText(<span class="hljs-variable">$in</span>, [<span class="hljs-type">System.Text.Encoding</span>]::Unicode)
+[<span class="hljs-type">System.IO.File</span>]::WriteAllText(<span class="hljs-variable">$out</span>, <span class="hljs-variable">$text</span>, [<span class="hljs-type">System.Text.UTF8Encoding</span>]::new(<span class="hljs-variable">$false</span>))
+</div></code></pre>
+<h3 id="3.3-confirmar-cabe%C3%A7alho-e-quantidade-de-colunas" tabindex="-1">3.3 Confirmar cabeçalho e quantidade de colunas</h3>
+<pre class='hljs'><code><div><span class="hljs-variable">$arquivo</span> = <span class="hljs-string">&#x27;C:\dados\abcfarma\p50_abcfarma_utf8.csv&#x27;</span>
+<span class="hljs-variable">$linhaCabecalho</span> = <span class="hljs-built_in">Get-Content</span> <span class="hljs-variable">$arquivo</span> <span class="hljs-literal">-TotalCount</span> <span class="hljs-number">1</span>
+<span class="hljs-variable">$campos</span> = (<span class="hljs-variable">$linhaCabecalho</span> <span class="hljs-operator">-split</span> <span class="hljs-string">&#x27;\|&#x27;</span>)
+<span class="hljs-variable">$campos</span>.Count
+<span class="hljs-variable">$campos</span>
+</div></code></pre>
+<h3 id="3.4-contar-registros-do-arquivo" tabindex="-1">3.4 Contar registros do arquivo</h3>
+<pre class='hljs'><code><div><span class="hljs-variable">$arquivo</span> = <span class="hljs-string">&#x27;C:\dados\abcfarma\p50_abcfarma_utf8.csv&#x27;</span>
+<span class="hljs-variable">$registros</span> = (<span class="hljs-built_in">Get-Content</span> <span class="hljs-variable">$arquivo</span>).Count - <span class="hljs-number">1</span>
+<span class="hljs-built_in">Write-Host</span> <span class="hljs-string">&quot;Total de registros: <span class="hljs-variable">$registros</span>&quot;</span>
+</div></code></pre>
+<h3 id="3.5-visualizar-as-primeiras-linhas" tabindex="-1">3.5 Visualizar as primeiras linhas</h3>
+<pre class='hljs'><code><div><span class="hljs-built_in">Get-Content</span> <span class="hljs-string">&#x27;C:\dados\abcfarma\p50_abcfarma_utf8.csv&#x27;</span> <span class="hljs-literal">-TotalCount</span> <span class="hljs-number">11</span>
+</div></code></pre>
+<h3 id="observa%C3%A7%C3%B5es" tabindex="-1">Observações</h3>
+<ul>
+<li>o separador do CSV é <code>|</code>;</li>
+<li>o arquivo possui cabeçalho e deve ser ignorado durante a carga;</li>
+<li>valores monetários usam <code>,</code> como separador decimal;</li>
+<li>a conversão para UTF-8 é essencial para manter a leitura estável no SQL Server.</li>
+</ul>
+<hr>
+<h2 id="4.-divis%C3%A3o-do-arquivo-em-partes-de-10-mil-registros" tabindex="-1">4. Divisão do arquivo em partes de 10 mil registros</h2>
+<p>Depois de validar o arquivo, o próximo passo é dividir o conteúdo em arquivos menores, cada um com 10 mil registros, para facilitar a carga incremental e a conferência.</p>
+<h3 id="4.1-estrutura-de-sa%C3%ADda" tabindex="-1">4.1 Estrutura de saída</h3>
+<p>Crie a pasta:</p>
+<pre class='hljs'><code><div><span class="hljs-built_in">New-Item</span> <span class="hljs-literal">-ItemType</span> Directory <span class="hljs-literal">-Force</span> <span class="hljs-literal">-Path</span> <span class="hljs-string">&#x27;C:\dados\abcfarma\partes&#x27;</span>
+</div></code></pre>
+<h3 id="4.2-script-em-powershell-para-particionar-o-csv" tabindex="-1">4.2 Script em PowerShell para particionar o CSV</h3>
+<pre class='hljs'><code><div><span class="hljs-variable">$arquivoEntrada</span> = <span class="hljs-string">&#x27;C:\dados\abcfarma\p50_abcfarma_utf8.csv&#x27;</span>
+<span class="hljs-variable">$pastaSaida</span>    = <span class="hljs-string">&#x27;C:\dados\abcfarma\partes&#x27;</span>
+<span class="hljs-variable">$batchSize</span>     = <span class="hljs-number">10000</span>
+
+<span class="hljs-variable">$header</span> = <span class="hljs-built_in">Get-Content</span> <span class="hljs-literal">-Path</span> <span class="hljs-variable">$arquivoEntrada</span> <span class="hljs-literal">-TotalCount</span> <span class="hljs-number">1</span>
+<span class="hljs-variable">$linhas</span> = <span class="hljs-built_in">Get-Content</span> <span class="hljs-literal">-Path</span> <span class="hljs-variable">$arquivoEntrada</span> | <span class="hljs-built_in">Select-Object</span> <span class="hljs-literal">-Skip</span> <span class="hljs-number">1</span>
+
+<span class="hljs-variable">$contador</span> = <span class="hljs-number">0</span>
+<span class="hljs-variable">$arquivoAtual</span> = <span class="hljs-number">0</span>
+<span class="hljs-variable">$buffer</span> = <span class="hljs-built_in">New-Object</span> System.Collections.Generic.List<span class="hljs-function">[<span class="hljs-built_in">string</span>]</span>
+
+<span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$linha</span> <span class="hljs-keyword">in</span> <span class="hljs-variable">$linhas</span>) {
+    <span class="hljs-variable">$buffer</span>.Add(<span class="hljs-variable">$linha</span>)
+    <span class="hljs-variable">$contador</span>++
+
+    <span class="hljs-keyword">if</span> (<span class="hljs-variable">$contador</span> <span class="hljs-operator">-eq</span> <span class="hljs-variable">$batchSize</span>) {
+        <span class="hljs-variable">$arquivoAtual</span>++
+        <span class="hljs-variable">$nomeArquivo</span> = <span class="hljs-built_in">Join-Path</span> <span class="hljs-variable">$pastaSaida</span> (<span class="hljs-string">&quot;abcfarma_{0:0000}.csv&quot;</span> <span class="hljs-operator">-f</span> <span class="hljs-variable">$arquivoAtual</span>)
+
+        <span class="hljs-variable">$header</span> + <span class="hljs-variable">$buffer</span> | <span class="hljs-built_in">Set-Content</span> <span class="hljs-literal">-Path</span> <span class="hljs-variable">$nomeArquivo</span> <span class="hljs-literal">-Encoding</span> UTF8
+
+        <span class="hljs-built_in">Write-Host</span> <span class="hljs-string">&quot;Arquivo gerado: <span class="hljs-variable">$nomeArquivo</span>&quot;</span>
+        <span class="hljs-variable">$buffer</span>.Clear()
+        <span class="hljs-variable">$contador</span> = <span class="hljs-number">0</span>
+    }
+}
+
+<span class="hljs-keyword">if</span> (<span class="hljs-variable">$buffer</span>.Count <span class="hljs-operator">-gt</span> <span class="hljs-number">0</span>) {
+    <span class="hljs-variable">$arquivoAtual</span>++
+    <span class="hljs-variable">$nomeArquivo</span> = <span class="hljs-built_in">Join-Path</span> <span class="hljs-variable">$pastaSaida</span> (<span class="hljs-string">&quot;abcfarma_{0:0000}.csv&quot;</span> <span class="hljs-operator">-f</span> <span class="hljs-variable">$arquivoAtual</span>)
+    <span class="hljs-variable">$header</span> + <span class="hljs-variable">$buffer</span> | <span class="hljs-built_in">Set-Content</span> <span class="hljs-literal">-Path</span> <span class="hljs-variable">$nomeArquivo</span> <span class="hljs-literal">-Encoding</span> UTF8
+    <span class="hljs-built_in">Write-Host</span> <span class="hljs-string">&quot;Arquivo final gerado: <span class="hljs-variable">$nomeArquivo</span>&quot;</span>
+}
+
+<span class="hljs-built_in">Write-Host</span> <span class="hljs-string">&quot;Total de arquivos gerados: <span class="hljs-variable">$arquivoAtual</span>&quot;</span>
+</div></code></pre>
+<h3 id="4.3-validar-a-cria%C3%A7%C3%A3o-dos-arquivos" tabindex="-1">4.3 Validar a criação dos arquivos</h3>
+<pre class='hljs'><code><div><span class="hljs-built_in">Get-ChildItem</span> <span class="hljs-string">&#x27;C:\dados\abcfarma\partes&#x27;</span> | <span class="hljs-built_in">Select-Object</span> Name, Length
+</div></code></pre>
+<h3 id="4.4-verificar-o-tamanho-de-cada-arquivo" tabindex="-1">4.4 Verificar o tamanho de cada arquivo</h3>
+<pre class='hljs'><code><div><span class="hljs-built_in">Get-ChildItem</span> <span class="hljs-string">&#x27;C:\dados\abcfarma\partes\*.csv&#x27;</span> | <span class="hljs-built_in">ForEach-Object</span> {
+    <span class="hljs-variable">$conteudo</span> = <span class="hljs-built_in">Get-Content</span> <span class="hljs-variable">$_</span>.FullName
+    <span class="hljs-variable">$linhas</span> = <span class="hljs-variable">$conteudo</span>.Count - <span class="hljs-number">1</span>
+    <span class="hljs-built_in">Write-Host</span> (<span class="hljs-variable">$_</span>.Name + <span class="hljs-string">&quot; =&gt; &quot;</span> + <span class="hljs-variable">$linhas</span> + <span class="hljs-string">&quot; registros&quot;</span>)
+}
+</div></code></pre>
+<h3 id="objetivo-did%C3%A1tico" tabindex="-1">Objetivo didático</h3>
+<p>A ideia é que cada arquivo gerado tenha aproximadamente 10 mil linhas de dados, além da linha de cabeçalho. Isso facilita a carga incremental, a etapa de auditoria e a análise por lote.</p>
+<h3 id="script-auxiliar-em-python" tabindex="-1">Script auxiliar em Python</h3>
+<p>Para automatizar essa etapa, o repositório agora inclui um script que lê o CSV, preserva o cabeçalho em cada arquivo e grava os registros em lotes sequenciais:</p>
+<pre class='hljs'><code><div>python split_csv_em_lotes.py <span class="hljs-string">&quot;C:\dados\abcfarma\p50_abcfarma_utf8.csv&quot;</span> <span class="hljs-string">&quot;C:\dados\abcfarma\partes&quot;</span>
+</div></code></pre>
+<p>O script aceita o delimitador do arquivo (por padrão <code>,</code>, mas pode ser ajustado para <code>|</code>) e gera arquivos com nomes como <code>abcfarma_0001.csv</code>.</p>
+<hr>
+<h2 id="5.-prepara%C3%A7%C3%A3o-do-banco-de-dados" tabindex="-1">5. Preparação do banco de dados</h2>
+<p>Agora o aluno deve criar os objetos necessários para receber os arquivos particionados.</p>
+<h3 id="5.1-criar-schema-de-staging" tabindex="-1">5.1 Criar schema de staging</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> SCHEMA staging;
+GO
+</div></code></pre>
+<h3 id="5.2-criar-tabela-de-staging-para-receber-um-arquivo-csv" tabindex="-1">5.2 Criar tabela de staging para receber um arquivo CSV</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE TABLE</span> staging.abcfarma_raw (
+    CODIGO NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    EAN NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    REGISTRO_ANVISA NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    NCM NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    CEST NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    NOME NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
+    LABORATORIO NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    TIPO NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    CLASSE_TERAPEUTICA NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
+    COMPOSICAO NVARCHAR(<span class="hljs-number">1000</span>) <span class="hljs-keyword">NULL</span>,
+    TARJA NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    UNIDADE_DE_VENDA NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    CNPJ_LABORATORIO NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    APRESENTACAO NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    LISTAPISC OFINS NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    RESTRHOSP NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    CNPJ_DECLARANTE NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    NOME_DECLARANTE NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
+    PICMS NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    VPF NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    VPMC NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    VPMCEMBFRAC NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    VPMCEMBMULT NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    CODIGO_LABORATORIO NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    LABORATORIO_2 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    DESCRICAO NVARCHAR(<span class="hljs-number">1000</span>) <span class="hljs-keyword">NULL</span>,
+    COMPOSICAO_2 NVARCHAR(<span class="hljs-number">1000</span>) <span class="hljs-keyword">NULL</span>,
+    REGIME_PRECO NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    LISTA_LCCT NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    PF_20 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    PMC_20 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    FRA_20 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    DATA_VIGENCIA NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    NOVO NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    VARIACAO_PRECO NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    REFERENCIA NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    ATC NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    CLASSE_TERAPEUTICA_2 NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
+    PORTARIA_344_98 NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    TISS_TUSS NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    CONFAZ_87 NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    CAP NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    GGREM NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    DCB NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    CAS NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    ARQUIVO_ORIGEM NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    DATA_REFERENCIA NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    ANO_PASTA NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>,
+    ORIGEM_ARQUIVO NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>
+);
+GO
+</div></code></pre>
+<h3 id="5.3-criar-tabela-de-controle-de-carga" tabindex="-1">5.3 Criar tabela de controle de carga</h3>
+<p>Essa tabela registra quantos arquivos foram processados e quantos registros foram inseridos em cada execução.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE TABLE</span> dbo.tb_log_carga_abcfarma (
+    IdLog <span class="hljs-type">INT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">PRIMARY KEY</span>,
+    NomeArquivo NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NOT NULL</span>,
+    DataProcessamento DATETIME <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> GETDATE(),
+    QtdeRegistrosInseridos <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span>,
+    StatusProcesso NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT NULL</span>,
+    Observacao NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>
+);
+GO
+</div></code></pre>
+<h3 id="5.4-criar-tabela-final-normalizada" tabindex="-1">5.4 Criar tabela final normalizada</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE TABLE</span> dbo.abcfarma_normalizado (
+    Id <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">PRIMARY KEY</span>,
+    CODIGO <span class="hljs-type">INT</span> <span class="hljs-keyword">NULL</span>,
+    EAN NVARCHAR(<span class="hljs-number">30</span>) <span class="hljs-keyword">NULL</span>,
+    REGISTRO_ANVISA NVARCHAR(<span class="hljs-number">30</span>) <span class="hljs-keyword">NULL</span>,
+    NOME NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
+    LABORATORIO NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    CLASSE_TERAPEUTICA NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
+    COMPOSICAO NVARCHAR(<span class="hljs-number">1000</span>) <span class="hljs-keyword">NULL</span>,
+    TARJA NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    VPF <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    VPMC <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    DATA_REFERENCIA <span class="hljs-type">DATE</span> <span class="hljs-keyword">NULL</span>,
+    ARQUIVO_ORIGEM NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    ORIGEM_ARQUIVO NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>
+);
+GO
+</div></code></pre>
+<h3 id="5.5-criar-tabela-de-auditoria" tabindex="-1">5.5 Criar tabela de auditoria</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE TABLE</span> dbo.auditoria_abcfarma (
+    Id <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">PRIMARY KEY</span>,
+    CODIGO <span class="hljs-type">INT</span> <span class="hljs-keyword">NULL</span>,
+    LABORATORIO NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    DATA_REFERENCIA <span class="hljs-type">DATE</span> <span class="hljs-keyword">NULL</span>,
+    VPF <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    VPMC <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    VPF_ANTERIOR <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    VPMC_ANTERIOR <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    VARIACAO_VPF <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    VARIACAO_VPMC <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    FLAG_DIVERGENCIA BIT <span class="hljs-keyword">NULL</span>
+);
+GO
+</div></code></pre>
+<hr>
+<h2 id="6.-carga-inicial-de-um-%C3%BAnico-arquivo" tabindex="-1">6. Carga inicial de um único arquivo</h2>
+<p>Antes de automatizar a carga dos arquivos particionados, o aluno deve testar a carga de um único lote.</p>
+<h3 id="6.1-comando-de-bulk-insert-de-um-%C3%BAnico-arquivo" tabindex="-1">6.1 Comando de bulk insert de um único arquivo</h3>
+<pre class='hljs'><code><div>BULK <span class="hljs-keyword">INSERT</span> staging.abcfarma_raw
+<span class="hljs-keyword">FROM</span> <span class="hljs-string">&#x27;C:\dados\abcfarma\partes\abcfarma_0001.csv&#x27;</span>
+<span class="hljs-keyword">WITH</span> (
+    FIELDTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;|&#x27;</span>,
+    ROWTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;\n&#x27;</span>,
+    FIRSTROW <span class="hljs-operator">=</span> <span class="hljs-number">2</span>,
+    DATAFILETYPE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;char&#x27;</span>,
+    CODEPAGE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;65001&#x27;</span>,
+    TABLOCK,
+    MAXERRORS <span class="hljs-operator">=</span> <span class="hljs-number">100</span>
+);
+</div></code></pre>
+<h3 id="6.2-transforma%C3%A7%C3%A3o-para-a-tabela-normalizada" tabindex="-1">6.2 Transformação para a tabela normalizada</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">INSERT INTO</span> dbo.abcfarma_normalizado (
+    CODIGO,
+    EAN,
+    REGISTRO_ANVISA,
+    NOME,
+    LABORATORIO,
+    CLASSE_TERAPEUTICA,
+    COMPOSICAO,
+    TARJA,
+    VPF,
+    VPMC,
+    DATA_REFERENCIA,
+    ARQUIVO_ORIGEM,
+    ORIGEM_ARQUIVO
+)
+<span class="hljs-keyword">SELECT</span>
+    TRY_CONVERT(<span class="hljs-type">INT</span>, LTRIM(RTRIM(CODIGO))) <span class="hljs-keyword">AS</span> CODIGO,
+    LTRIM(RTRIM(EAN)) <span class="hljs-keyword">AS</span> EAN,
+    LTRIM(RTRIM(REGISTRO_ANVISA)) <span class="hljs-keyword">AS</span> REGISTRO_ANVISA,
+    LTRIM(RTRIM(NOME)) <span class="hljs-keyword">AS</span> NOME,
+    LTRIM(RTRIM(LABORATORIO)) <span class="hljs-keyword">AS</span> LABORATORIO,
+    LTRIM(RTRIM(CLASSE_TERAPEUTICA)) <span class="hljs-keyword">AS</span> CLASSE_TERAPEUTICA,
+    LTRIM(RTRIM(COMPOSICAO)) <span class="hljs-keyword">AS</span> COMPOSICAO,
+    LTRIM(RTRIM(TARJA)) <span class="hljs-keyword">AS</span> TARJA,
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(VPF, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)) <span class="hljs-keyword">AS</span> VPF,
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(VPMC, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)) <span class="hljs-keyword">AS</span> VPMC,
+    TRY_CONVERT(<span class="hljs-type">DATE</span>, DATA_REFERENCIA) <span class="hljs-keyword">AS</span> DATA_REFERENCIA,
+    <span class="hljs-string">&#x27;abcfarma_0001.csv&#x27;</span> <span class="hljs-keyword">AS</span> ARQUIVO_ORIGEM,
+    <span class="hljs-string">&#x27;ABCFarma&#x27;</span> <span class="hljs-keyword">AS</span> ORIGEM_ARQUIVO
+<span class="hljs-keyword">FROM</span> staging.abcfarma_raw
+<span class="hljs-keyword">WHERE</span> LTRIM(RTRIM(CODIGO)) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">AND</span> LTRIM(RTRIM(CODIGO)) <span class="hljs-operator">&lt;&gt;</span> <span class="hljs-string">&#x27;&#x27;</span>;
+</div></code></pre>
+<h3 id="6.3-verificar-registro-carregado" tabindex="-1">6.3 Verificar registro carregado</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> TotalRegistros
+<span class="hljs-keyword">FROM</span> dbo.abcfarma_normalizado;
+</div></code></pre>
+<hr>
+<h2 id="7.-estrutura-da-auditoria-de-varia%C3%A7%C3%A3o-de-pre%C3%A7os" tabindex="-1">7. Estrutura da auditoria de variação de preços</h2>
+<p>A infraestrutura da auditoria continua a mesma lógica do roteiro anterior:</p>
+<h3 id="7.1-primeira-vis%C3%A3o%3A-pre%C3%A7o-anterior" tabindex="-1">7.1 Primeira visão: preço anterior</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> dbo.vw_abcfarma_precos_anteriores <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    CODIGO,
+    LABORATORIO,
+    DATA_REFERENCIA,
+    VPF,
+    VPMC,
+    <span class="hljs-built_in">LAG</span>(VPF) <span class="hljs-keyword">OVER</span> (
+        <span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> CODIGO, LABORATORIO
+        <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> DATA_REFERENCIA
+    ) <span class="hljs-keyword">AS</span> VPF_ANTERIOR,
+    <span class="hljs-built_in">LAG</span>(VPMC) <span class="hljs-keyword">OVER</span> (
+        <span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> CODIGO, LABORATORIO
+        <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> DATA_REFERENCIA
+    ) <span class="hljs-keyword">AS</span> VPMC_ANTERIOR
+<span class="hljs-keyword">FROM</span> dbo.abcfarma_normalizado;
+GO
+</div></code></pre>
+<h3 id="7.2-segunda-vis%C3%A3o%3A-varia%C3%A7%C3%B5es-relevantes" tabindex="-1">7.2 Segunda visão: variações relevantes</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> dbo.vw_abcfarma_variacoes <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    CODIGO,
+    LABORATORIO,
+    DATA_REFERENCIA,
+    VPF,
+    VPF_ANTERIOR,
+    VPMC,
+    VPMC_ANTERIOR,
+    ISNULL(VPF <span class="hljs-operator">-</span> VPF_ANTERIOR, <span class="hljs-number">0</span>) <span class="hljs-keyword">AS</span> VARIACAO_VPF,
+    ISNULL(VPMC <span class="hljs-operator">-</span> VPMC_ANTERIOR, <span class="hljs-number">0</span>) <span class="hljs-keyword">AS</span> VARIACAO_VPMC
+<span class="hljs-keyword">FROM</span> dbo.vw_abcfarma_precos_anteriores
+<span class="hljs-keyword">WHERE</span> DATA_REFERENCIA <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>;
+GO
+</div></code></pre>
+<h3 id="7.3-consulta-de-auditoria-principal" tabindex="-1">7.3 Consulta de auditoria principal</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    CODIGO,
+    LABORATORIO,
+    DATA_REFERENCIA,
+    VPF,
+    VPF_ANTERIOR,
+    VPMC,
+    VPMC_ANTERIOR,
+    VARIACAO_VPF,
+    VARIACAO_VPMC
+<span class="hljs-keyword">FROM</span> dbo.vw_abcfarma_variacoes
+<span class="hljs-keyword">WHERE</span> <span class="hljs-built_in">ABS</span>(VARIACAO_VPF) <span class="hljs-operator">&gt;</span> <span class="hljs-number">10</span>
+   <span class="hljs-keyword">OR</span> <span class="hljs-built_in">ABS</span>(VARIACAO_VPMC) <span class="hljs-operator">&gt;</span> <span class="hljs-number">10</span>;
+</div></code></pre>
+<h3 id="7.4-explica%C3%A7%C3%A3o-da-l%C3%B3gica" tabindex="-1">7.4 Explicação da lógica</h3>
+<ul>
+<li><code>PARTITION BY CODIGO, LABORATORIO</code> garante a comparação apenas entre itens do mesmo produto e laboratório;</li>
+<li><code>ORDER BY DATA_REFERENCIA</code> define a ordem cronológica da análise;</li>
+<li><code>LAG</code> pega o valor anterior para comparação;</li>
+<li><code>ABS(...) &gt; 10</code> identifica variações significativas para auditoria.</li>
+</ul>
+<hr>
+<h2 id="8.-passo-a-passo-para-a-carga-iterativa-dos-arquivos-particionados" tabindex="-1">8. Passo a passo para a carga iterativa dos arquivos particionados</h2>
+<p>Agora o aluno deve carregar todos os arquivos de uma pasta em sequência, usando uma estrutura de repetição em T-SQL.</p>
+<h3 id="8.1-criar-tabela-auxiliar-para-listar-os-arquivos-da-pasta" tabindex="-1">8.1 Criar tabela auxiliar para listar os arquivos da pasta</h3>
+<p>Para fins didáticos, vamos usar uma tabela temporária para guardar a lista dos arquivos da pasta de partes.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE TABLE</span> #Arquivos (
+    IdArquivo <span class="hljs-type">INT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+    NomeArquivo NVARCHAR(<span class="hljs-number">500</span>)
+);
+GO
+</div></code></pre>
+<h3 id="8.2-popular-a-tabela-com-os-nomes-dos-arquivos" tabindex="-1">8.2 Popular a tabela com os nomes dos arquivos</h3>
+<p>Se o ambiente permitir <code>xp_cmdshell</code>, a listagem pode ser feita diretamente no sistema operacional. Caso ele esteja desabilitado, esse passo pode ser feito em uma etapa anterior pelo banco ou pelo administrador.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@Comando</span> NVARCHAR(<span class="hljs-number">4000</span>);
+<span class="hljs-keyword">SET</span> <span class="hljs-variable">@Comando</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;dir /b &quot;C:\dados\abcfarma\partes\\*.csv&quot;&#x27;</span>;
+
+<span class="hljs-keyword">INSERT INTO</span> #Arquivos (NomeArquivo)
+<span class="hljs-keyword">EXEC</span> xp_cmdshell <span class="hljs-variable">@Comando</span>;
+</div></code></pre>
+<blockquote>
+<p>Importante: <code>xp_cmdshell</code> deve ser habilitado pelo DBA do ambiente e usado com cuidado. Em ambientes mais restritivos, o passo pode ser substituído pelo carregamento da lista de arquivos por uma tabela externa.</p>
+</blockquote>
+<h3 id="8.3-filtrar-arquivos-v%C3%A1lidos" tabindex="-1">8.3 Filtrar arquivos válidos</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> #Arquivos
+<span class="hljs-keyword">WHERE</span> NomeArquivo <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+   <span class="hljs-keyword">OR</span> LTRIM(RTRIM(NomeArquivo)) <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;&#x27;</span>
+   <span class="hljs-keyword">OR</span> NomeArquivo <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%File Not Found%&#x27;</span>;
+</div></code></pre>
+<h3 id="8.4-fazer-o-controle-de-loop" tabindex="-1">8.4 Fazer o controle de loop</h3>
+<p>Agora será usada a estrutura repetitiva <code>WHILE</code> para percorrer cada arquivo da tabela.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@IdAtual</span> <span class="hljs-type">INT</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;
+<span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@NomeArquivo</span> NVARCHAR(<span class="hljs-number">500</span>);
+<span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@CaminhoCompleto</span> NVARCHAR(<span class="hljs-number">1000</span>);
+<span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@QtdeRegistros</span> <span class="hljs-type">INT</span>;
+
+WHILE <span class="hljs-keyword">EXISTS</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span> <span class="hljs-keyword">FROM</span> #Arquivos <span class="hljs-keyword">WHERE</span> IdArquivo <span class="hljs-operator">=</span> <span class="hljs-variable">@IdAtual</span>)
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-variable">@NomeArquivo</span> <span class="hljs-operator">=</span> NomeArquivo
+    <span class="hljs-keyword">FROM</span> #Arquivos
+    <span class="hljs-keyword">WHERE</span> IdArquivo <span class="hljs-operator">=</span> <span class="hljs-variable">@IdAtual</span>;
+
+    <span class="hljs-keyword">SET</span> <span class="hljs-variable">@CaminhoCompleto</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;C:\dados\abcfarma\partes\&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-variable">@NomeArquivo</span>;
+
+    <span class="hljs-keyword">TRUNCATE</span> <span class="hljs-keyword">TABLE</span> staging.abcfarma_raw;
+
+    BULK <span class="hljs-keyword">INSERT</span> staging.abcfarma_raw
+    <span class="hljs-keyword">FROM</span> <span class="hljs-variable">@CaminhoCompleto</span>
+    <span class="hljs-keyword">WITH</span> (
+        FIELDTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;|&#x27;</span>,
+        ROWTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;\n&#x27;</span>,
+        FIRSTROW <span class="hljs-operator">=</span> <span class="hljs-number">2</span>,
+        DATAFILETYPE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;char&#x27;</span>,
+        CODEPAGE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;65001&#x27;</span>,
+        TABLOCK,
+        MAXERRORS <span class="hljs-operator">=</span> <span class="hljs-number">100</span>
+    );
+
+    <span class="hljs-keyword">INSERT INTO</span> dbo.abcfarma_normalizado (
+        CODIGO,
+        EAN,
+        REGISTRO_ANVISA,
+        NOME,
+        LABORATORIO,
+        CLASSE_TERAPEUTICA,
+        COMPOSICAO,
+        TARJA,
+        VPF,
+        VPMC,
+        DATA_REFERENCIA,
+        ARQUIVO_ORIGEM,
+        ORIGEM_ARQUIVO
+    )
+    <span class="hljs-keyword">SELECT</span>
+        TRY_CONVERT(<span class="hljs-type">INT</span>, LTRIM(RTRIM(CODIGO))) <span class="hljs-keyword">AS</span> CODIGO,
+        LTRIM(RTRIM(EAN)) <span class="hljs-keyword">AS</span> EAN,
+        LTRIM(RTRIM(REGISTRO_ANVISA)) <span class="hljs-keyword">AS</span> REGISTRO_ANVISA,
+        LTRIM(RTRIM(NOME)) <span class="hljs-keyword">AS</span> NOME,
+        LTRIM(RTRIM(LABORATORIO)) <span class="hljs-keyword">AS</span> LABORATORIO,
+        LTRIM(RTRIM(CLASSE_TERAPEUTICA)) <span class="hljs-keyword">AS</span> CLASSE_TERAPEUTICA,
+        LTRIM(RTRIM(COMPOSICAO)) <span class="hljs-keyword">AS</span> COMPOSICAO,
+        LTRIM(RTRIM(TARJA)) <span class="hljs-keyword">AS</span> TARJA,
+        TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(VPF, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)) <span class="hljs-keyword">AS</span> VPF,
+        TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(VPMC, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)) <span class="hljs-keyword">AS</span> VPMC,
+        TRY_CONVERT(<span class="hljs-type">DATE</span>, DATA_REFERENCIA) <span class="hljs-keyword">AS</span> DATA_REFERENCIA,
+        <span class="hljs-variable">@NomeArquivo</span> <span class="hljs-keyword">AS</span> ARQUIVO_ORIGEM,
+        <span class="hljs-string">&#x27;ABCFarma&#x27;</span> <span class="hljs-keyword">AS</span> ORIGEM_ARQUIVO
+    <span class="hljs-keyword">FROM</span> staging.abcfarma_raw
+    <span class="hljs-keyword">WHERE</span> LTRIM(RTRIM(CODIGO)) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+      <span class="hljs-keyword">AND</span> LTRIM(RTRIM(CODIGO)) <span class="hljs-operator">&lt;&gt;</span> <span class="hljs-string">&#x27;&#x27;</span>;
+
+    <span class="hljs-keyword">SET</span> <span class="hljs-variable">@QtdeRegistros</span> <span class="hljs-operator">=</span> @<span class="hljs-variable">@ROWCOUNT</span>;
+
+    <span class="hljs-keyword">INSERT INTO</span> dbo.tb_log_carga_abcfarma (
+        NomeArquivo,
+        QtdeRegistrosInseridos,
+        StatusProcesso,
+        Observacao
+    )
+    <span class="hljs-keyword">VALUES</span> (
+        <span class="hljs-variable">@NomeArquivo</span>,
+        <span class="hljs-variable">@QtdeRegistros</span>,
+        <span class="hljs-string">&#x27;OK&#x27;</span>,
+        <span class="hljs-string">&#x27;Arquivo carregado com sucesso.&#x27;</span>
+    );
+
+    <span class="hljs-keyword">SET</span> <span class="hljs-variable">@IdAtual</span> <span class="hljs-operator">=</span> <span class="hljs-variable">@IdAtual</span> <span class="hljs-operator">+</span> <span class="hljs-number">1</span>;
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<h3 id="8.5-verificar-log-de-execu%C3%A7%C3%A3o" tabindex="-1">8.5 Verificar log de execução</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    IdLog,
+    NomeArquivo,
+    DataProcessamento,
+    QtdeRegistrosInseridos,
+    StatusProcesso,
+    Observacao
+<span class="hljs-keyword">FROM</span> dbo.tb_log_carga_abcfarma
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> IdLog;
+</div></code></pre>
+<h3 id="8.6-verificar-total-final-carregado" tabindex="-1">8.6 Verificar total final carregado</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> TotalRegistrosNaTabelaFinal
+<span class="hljs-keyword">FROM</span> dbo.abcfarma_normalizado;
+</div></code></pre>
+<h3 id="8.7-verificar-total-de-arquivos-processados" tabindex="-1">8.7 Verificar total de arquivos processados</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> TotalArquivosProcessados
+<span class="hljs-keyword">FROM</span> dbo.tb_log_carga_abcfarma
+<span class="hljs-keyword">WHERE</span> StatusProcesso <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;OK&#x27;</span>;
+</div></code></pre>
+<hr>
+<h2 id="9.-implementa%C3%A7%C3%A3o-de-uma-stored-procedure-para-automatizar-a-carga-em-lote" tabindex="-1">9. Implementação de uma stored procedure para automatizar a carga em lote</h2>
+<p>A seguir, o aluno prepara uma stored procedure que encapsula a lógica dos arquivos particionados e faz o controle final.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">PROCEDURE</span> dbo.usp_carga_lotes_abcfarma
+    <span class="hljs-variable">@PastaArquivos</span> NVARCHAR(<span class="hljs-number">500</span>)
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">SET</span> NOCOUNT <span class="hljs-keyword">ON</span>;
+
+    <span class="hljs-keyword">CREATE TABLE</span> #Arquivos (
+        IdArquivo <span class="hljs-type">INT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>),
+        NomeArquivo NVARCHAR(<span class="hljs-number">500</span>)
+    );
+
+    <span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@Comando</span> NVARCHAR(<span class="hljs-number">4000</span>);
+    <span class="hljs-keyword">SET</span> <span class="hljs-variable">@Comando</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;dir /b &quot;&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-variable">@PastaArquivos</span> <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;\\*.csv&quot;&#x27;</span>;
+
+    <span class="hljs-keyword">INSERT INTO</span> #Arquivos (NomeArquivo)
+    <span class="hljs-keyword">EXEC</span> xp_cmdshell <span class="hljs-variable">@Comando</span>;
+
+    <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> #Arquivos
+    <span class="hljs-keyword">WHERE</span> NomeArquivo <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+       <span class="hljs-keyword">OR</span> LTRIM(RTRIM(NomeArquivo)) <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;&#x27;</span>
+       <span class="hljs-keyword">OR</span> NomeArquivo <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%File Not Found%&#x27;</span>;
+
+    <span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@IdAtual</span> <span class="hljs-type">INT</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@NomeArquivo</span> NVARCHAR(<span class="hljs-number">500</span>);
+    <span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@CaminhoCompleto</span> NVARCHAR(<span class="hljs-number">1000</span>);
+    <span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@QtdeRegistros</span> <span class="hljs-type">INT</span>;
+    <span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@TotalArquivos</span> <span class="hljs-type">INT</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@TotalRegistros</span> <span class="hljs-type">INT</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;
+
+    WHILE <span class="hljs-keyword">EXISTS</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span> <span class="hljs-keyword">FROM</span> #Arquivos <span class="hljs-keyword">WHERE</span> IdArquivo <span class="hljs-operator">=</span> <span class="hljs-variable">@IdAtual</span>)
+    <span class="hljs-keyword">BEGIN</span>
+        <span class="hljs-keyword">SELECT</span> <span class="hljs-variable">@NomeArquivo</span> <span class="hljs-operator">=</span> NomeArquivo
+        <span class="hljs-keyword">FROM</span> #Arquivos
+        <span class="hljs-keyword">WHERE</span> IdArquivo <span class="hljs-operator">=</span> <span class="hljs-variable">@IdAtual</span>;
+
+        <span class="hljs-keyword">SET</span> <span class="hljs-variable">@CaminhoCompleto</span> <span class="hljs-operator">=</span> <span class="hljs-variable">@PastaArquivos</span> <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;\\&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-variable">@NomeArquivo</span>;
+
+        <span class="hljs-keyword">BEGIN</span> TRY
+            <span class="hljs-keyword">TRUNCATE</span> <span class="hljs-keyword">TABLE</span> staging.abcfarma_raw;
+
+            BULK <span class="hljs-keyword">INSERT</span> staging.abcfarma_raw
+            <span class="hljs-keyword">FROM</span> <span class="hljs-variable">@CaminhoCompleto</span>
+            <span class="hljs-keyword">WITH</span> (
+                FIELDTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;|&#x27;</span>,
+                ROWTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;\n&#x27;</span>,
+                FIRSTROW <span class="hljs-operator">=</span> <span class="hljs-number">2</span>,
+                DATAFILETYPE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;char&#x27;</span>,
+                CODEPAGE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;65001&#x27;</span>,
+                TABLOCK,
+                MAXERRORS <span class="hljs-operator">=</span> <span class="hljs-number">100</span>
+            );
+
+            <span class="hljs-keyword">INSERT INTO</span> dbo.abcfarma_normalizado (
+                CODIGO,
+                EAN,
+                REGISTRO_ANVISA,
+                NOME,
+                LABORATORIO,
+                CLASSE_TERAPEUTICA,
+                COMPOSICAO,
+                TARJA,
+                VPF,
+                VPMC,
+                DATA_REFERENCIA,
+                ARQUIVO_ORIGEM,
+                ORIGEM_ARQUIVO
+            )
+            <span class="hljs-keyword">SELECT</span>
+                TRY_CONVERT(<span class="hljs-type">INT</span>, LTRIM(RTRIM(CODIGO))) <span class="hljs-keyword">AS</span> CODIGO,
+                LTRIM(RTRIM(EAN)) <span class="hljs-keyword">AS</span> EAN,
+                LTRIM(RTRIM(REGISTRO_ANVISA)) <span class="hljs-keyword">AS</span> REGISTRO_ANVISA,
+                LTRIM(RTRIM(NOME)) <span class="hljs-keyword">AS</span> NOME,
+                LTRIM(RTRIM(LABORATORIO)) <span class="hljs-keyword">AS</span> LABORATORIO,
+                LTRIM(RTRIM(CLASSE_TERAPEUTICA)) <span class="hljs-keyword">AS</span> CLASSE_TERAPEUTICA,
+                LTRIM(RTRIM(COMPOSICAO)) <span class="hljs-keyword">AS</span> COMPOSICAO,
+                LTRIM(RTRIM(TARJA)) <span class="hljs-keyword">AS</span> TARJA,
+                TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(VPF, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)) <span class="hljs-keyword">AS</span> VPF,
+                TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(VPMC, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)) <span class="hljs-keyword">AS</span> VPMC,
+                TRY_CONVERT(<span class="hljs-type">DATE</span>, DATA_REFERENCIA) <span class="hljs-keyword">AS</span> DATA_REFERENCIA,
+                <span class="hljs-variable">@NomeArquivo</span> <span class="hljs-keyword">AS</span> ARQUIVO_ORIGEM,
+                <span class="hljs-string">&#x27;ABCFarma&#x27;</span> <span class="hljs-keyword">AS</span> ORIGEM_ARQUIVO
+            <span class="hljs-keyword">FROM</span> staging.abcfarma_raw
+            <span class="hljs-keyword">WHERE</span> LTRIM(RTRIM(CODIGO)) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+              <span class="hljs-keyword">AND</span> LTRIM(RTRIM(CODIGO)) <span class="hljs-operator">&lt;&gt;</span> <span class="hljs-string">&#x27;&#x27;</span>;
+
+            <span class="hljs-keyword">SET</span> <span class="hljs-variable">@QtdeRegistros</span> <span class="hljs-operator">=</span> @<span class="hljs-variable">@ROWCOUNT</span>;
+            <span class="hljs-keyword">SET</span> <span class="hljs-variable">@TotalRegistros</span> <span class="hljs-operator">=</span> <span class="hljs-variable">@TotalRegistros</span> <span class="hljs-operator">+</span> <span class="hljs-variable">@QtdeRegistros</span>;
+            <span class="hljs-keyword">SET</span> <span class="hljs-variable">@TotalArquivos</span> <span class="hljs-operator">=</span> <span class="hljs-variable">@TotalArquivos</span> <span class="hljs-operator">+</span> <span class="hljs-number">1</span>;
+
+            <span class="hljs-keyword">INSERT INTO</span> dbo.tb_log_carga_abcfarma (
+                NomeArquivo,
+                QtdeRegistrosInseridos,
+                StatusProcesso,
+                Observacao
+            )
+            <span class="hljs-keyword">VALUES</span> (
+                <span class="hljs-variable">@NomeArquivo</span>,
+                <span class="hljs-variable">@QtdeRegistros</span>,
+                <span class="hljs-string">&#x27;OK&#x27;</span>,
+                <span class="hljs-string">&#x27;Arquivo carregado com sucesso.&#x27;</span>
+            );
+
+        <span class="hljs-keyword">END</span> TRY
+        <span class="hljs-keyword">BEGIN</span> CATCH
+            <span class="hljs-keyword">INSERT INTO</span> dbo.tb_log_carga_abcfarma (
+                NomeArquivo,
+                QtdeRegistrosInseridos,
+                StatusProcesso,
+                Observacao
+            )
+            <span class="hljs-keyword">VALUES</span> (
+                <span class="hljs-variable">@NomeArquivo</span>,
+                <span class="hljs-number">0</span>,
+                <span class="hljs-string">&#x27;ERRO&#x27;</span>,
+                ERROR_MESSAGE()
+            );
+        <span class="hljs-keyword">END</span> CATCH
+
+        <span class="hljs-keyword">SET</span> <span class="hljs-variable">@IdAtual</span> <span class="hljs-operator">=</span> <span class="hljs-variable">@IdAtual</span> <span class="hljs-operator">+</span> <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">END</span>;
+
+    <span class="hljs-keyword">SELECT</span>
+        <span class="hljs-variable">@TotalArquivos</span> <span class="hljs-keyword">AS</span> TotalArquivosProcessados,
+        <span class="hljs-variable">@TotalRegistros</span> <span class="hljs-keyword">AS</span> TotalRegistrosInseridos;
+<span class="hljs-keyword">END</span>;
+GO
+</div></code></pre>
+<h3 id="9.1-execu%C3%A7%C3%A3o-da-stored-procedure" tabindex="-1">9.1 Execução da stored procedure</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> dbo.usp_carga_lotes_abcfarma
+    <span class="hljs-variable">@PastaArquivos</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;C:\dados\abcfarma\partes&#x27;</span>;
+</div></code></pre>
+<h3 id="9.2-consultar-resultado-final" tabindex="-1">9.2 Consultar resultado final</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    <span class="hljs-built_in">SUM</span>(QtdeRegistrosInseridos) <span class="hljs-keyword">AS</span> TotalTodosRegistros,
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> TotalArquivosProcessados
+<span class="hljs-keyword">FROM</span> dbo.tb_log_carga_abcfarma
+<span class="hljs-keyword">WHERE</span> StatusProcesso <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;OK&#x27;</span>;
+</div></code></pre>
+<hr>
+<h2 id="10.-sistema-de-controle-e-rastreabilidade" tabindex="-1">10. Sistema de controle e rastreabilidade</h2>
+<p>O banco precisa manter controle sobre cada lote processado para permitir:</p>
+<ul>
+<li>auditoria de execução;</li>
+<li>reprocessamento em caso de falha;</li>
+<li>contabilização de lotes e registros carregados;</li>
+<li>investigação de anomalias por aquivo;</li>
+<li>rastreio da etapa de carga.</li>
+</ul>
+<h3 id="10.1-consulta-para-ver-a-evolu%C3%A7%C3%A3o-dos-arquivos" tabindex="-1">10.1 Consulta para ver a evolução dos arquivos</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    NomeArquivo,
+    DataProcessamento,
+    QtdeRegistrosInseridos,
+    StatusProcesso,
+    Observacao
+<span class="hljs-keyword">FROM</span> dbo.tb_log_carga_abcfarma
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> DataProcessamento;
+</div></code></pre>
+<h3 id="10.2-consulta-resumida-por-status" tabindex="-1">10.2 Consulta resumida por status</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    StatusProcesso,
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> QuantidadeArquivos,
+    <span class="hljs-built_in">SUM</span>(QtdeRegistrosInseridos) <span class="hljs-keyword">AS</span> TotalRegistros
+<span class="hljs-keyword">FROM</span> dbo.tb_log_carga_abcfarma
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> StatusProcesso;
+</div></code></pre>
+<h3 id="10.3-consulta-para-verificar-o-volume-do-banco-final" tabindex="-1">10.3 Consulta para verificar o volume do banco final</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> TotalRegistrosNaTabelaFinal
+<span class="hljs-keyword">FROM</span> dbo.abcfarma_normalizado;
+</div></code></pre>
+<hr>
+<h2 id="11.-checklist-do-laborat%C3%B3rio" tabindex="-1">11. Checklist do laboratório</h2>
+<p>O aluno deve concluir as etapas a seguir:</p>
+<ul>
+<li><input type="checkbox" id="checkbox0"><label for="checkbox0"> verificar o encoding do arquivo original;</label></li>
+<li><input type="checkbox" id="checkbox1"><label for="checkbox1"> converter para UTF-8 quando necessário;</label></li>
+<li><input type="checkbox" id="checkbox2"><label for="checkbox2"> validar o delimitador </label><code>|</code>;</li>
+<li><input type="checkbox" id="checkbox3"><label for="checkbox3"> revisar cabeçalho e quantidade de colunas;</label></li>
+<li><input type="checkbox" id="checkbox4"><label for="checkbox4"> dividir o CSV em partes de 10 mil registros;</label></li>
+<li><input type="checkbox" id="checkbox5"><label for="checkbox5"> criar schema e tabelas de staging;</label></li>
+<li><input type="checkbox" id="checkbox6"><label for="checkbox6"> criar tabela de controle para log da carga;</label></li>
+<li><input type="checkbox" id="checkbox7"><label for="checkbox7"> criar stored procedure de iteração;</label></li>
+<li><input type="checkbox" id="checkbox8"><label for="checkbox8"> executar a carga dos arquivos em sequência;</label></li>
+<li><input type="checkbox" id="checkbox9"><label for="checkbox9"> validar a quantidade de registros inseridos;</label></li>
+<li><input type="checkbox" id="checkbox10"><label for="checkbox10"> calcular a auditoria de variação de preços;</label></li>
+<li><input type="checkbox" id="checkbox11"><label for="checkbox11"> confirmar o total final de registros carregados.</label></li>
+</ul>
+<hr>
+<h2 id="12.-conclus%C3%A3o" tabindex="-1">12. Conclusão</h2>
+<p>Este laboratório simula um cenário real de carga de dados fiscais em lote. O aluno aprende a separar um arquivo grande em blocos menores, carregar cada bloco em sequência, registrar a execução em tabela de controle e, por fim, usar a base normalizada para auditoria de preços.</p>
+<p>O ponto central do exercício não é apenas a tecnologia de <code>BULK INSERT</code>, mas também a disciplina de governança de dados: particionar o arquivo, controlar a execução, registrar os dados e manter rastreabilidade do processo.</p>
+<p>Esse tipo de abordagem é muito comum em ambientes corporativos, principalmente quando a base de entrada é muito grande e a auditoria precisa ser feita de forma segura e documentada.</p>
+
+    </div>
+</body>
+</html>

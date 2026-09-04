@@ -98,28 +98,44 @@ WHERE status_validacao <> 'INVALIDO'
 
 ### 7.6
 
+Esta solução evita CTE, `JOIN` e `ROW_NUMBER()`, usando apenas construções já vistas nos módulos anteriores: `ALTER TABLE`, agregação (`GROUP BY`/`HAVING`/`MIN`) e subconsulta. O preço é precisar de uma coluna que sirva de critério de ordem — a tabela de staging não tem chave primária nem identidade, e sem alguma coluna assim não há como distinguir "a primeira ocorrência" de qualquer outra.
+
+**Passo 1 — criar uma coluna de identidade para estabelecer uma ordem.** Ao ser adicionada a uma tabela já populada, a `IDENTITY` preenche automaticamente cada linha existente com um número sequencial:
+
 ```sql
-WITH duplicadas AS (
-    SELECT
-        chave_acesso,
-        ROW_NUMBER() OVER (
-            PARTITION BY chave_acesso
-            ORDER BY (SELECT NULL)
-        ) AS ordem_ocorrencia
-    FROM stg_nfe_importacao
-)
-UPDATE d
-SET status_validacao = 'INVALIDO',
-    motivo_rejeicao = 'Chave de acesso duplicada no lote'
-FROM stg_nfe_importacao d
-JOIN duplicadas dup
-    ON dup.chave_acesso = d.chave_acesso
-WHERE dup.ordem_ocorrencia > 1;
+ALTER TABLE stg_nfe_importacao
+ADD id_linha INT IDENTITY(1,1);
 ```
 
-**Comentário:** como a tabela de staging não possui uma chave primária ou coluna identidade explícita, a CTE usa `ROW_NUMBER() OVER (PARTITION BY chave_acesso ORDER BY (SELECT NULL))` apenas para numerar as ocorrências dentro de cada grupo de `chave_acesso` repetida — a ordem exata entre duplicatas não importa aqui, o que importa é manter uma e marcar as demais. Se a tabela tivesse uma coluna de identidade (`id INT IDENTITY`), o ideal seria ordenar por ela para garantir que a primeira carregada seja sempre a preservada.
+**Passo 2 — conferir, com um SELECT simples, quais chaves estão duplicadas e qual `id_linha` deve ser preservado.** Antes de atualizar qualquer coisa, vale enxergar o que será considerado "a primeira ocorrência": o menor `id_linha` dentro de cada grupo de `chave_acesso` repetida.
 
-> **Variação equivalente:** se preferir manter a explicitamente a *primeira linha carregada*, adicione uma coluna de identidade à tabela de staging antes da carga (`id INT IDENTITY(1,1)`) e troque `ORDER BY (SELECT NULL)` por `ORDER BY id`.
+```sql
+SELECT chave_acesso,
+       MIN(id_linha)   AS primeira_ocorrencia,
+       COUNT(*)        AS qtd_ocorrencias
+FROM stg_nfe_importacao
+GROUP BY chave_acesso
+HAVING COUNT(*) > 1;
+```
+
+**Passo 3 — atualizar tudo o que não for a primeira ocorrência de cada chave.** O `UPDATE` faz, em uma única instrução, o que o `SELECT` do passo 2 revelou: marcar como inválida toda linha cujo `id_linha` não seja o menor do seu grupo.
+
+```sql
+UPDATE stg_nfe_importacao
+SET status_validacao = 'INVALIDO',
+    motivo_rejeicao = 'Chave de acesso duplicada no lote'
+WHERE id_linha NOT IN (
+    SELECT MIN(id_linha)
+    FROM stg_nfe_importacao
+    GROUP BY chave_acesso
+);
+```
+
+**Comentário:** a subconsulta `SELECT MIN(id_linha) FROM stg_nfe_importacao GROUP BY chave_acesso` devolve, para cada `chave_acesso` (repetida ou não), o menor `id_linha` do grupo — a lista de "linhas para preservar". O `UPDATE` marca como inválida qualquer linha cujo `id_linha` não esteja nessa lista. Chaves sem duplicata também aparecem na subconsulta (seu único `id_linha` já é o mínimo de um grupo de um elemento só), o que automaticamente as protege de serem marcadas, sem precisar de nenhum filtro adicional para tratá-las à parte.
+
+> **Por que o `NOT IN` é seguro aqui.** A armadilha clássica do `NOT IN` é quando a lista retornada pela subconsulta contém `NULL` — nesse caso a condição inteira deixa de retornar qualquer linha. Isso não acontece aqui porque `id_linha` é uma coluna `IDENTITY`, que nunca é nula; logo `MIN(id_linha)` também nunca é nulo, e o `NOT IN` funciona normalmente.
+
+> **Diferença em relação à versão com CTE e `ROW_NUMBER()`.** A versão com `ROW_NUMBER() OVER (PARTITION BY chave_acesso ORDER BY ...)` numera cada linha dentro do seu grupo (1ª, 2ª, 3ª ocorrência...) e descarta tudo que não for a 1ª — é mais flexível (dispensa uma coluna de ordem física) e mais eficiente em tabelas grandes, mas exige dominar função de janela, CTE e junção. A versão com `GROUP BY` + `MIN()` + `NOT IN` chega ao mesmo resultado com construções mais básicas, ao custo de precisar criar antes uma coluna que sirva de critério de ordem.
 
 ### 7.7
 

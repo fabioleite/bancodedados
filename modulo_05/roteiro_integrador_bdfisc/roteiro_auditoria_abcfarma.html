@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>roteiro_auditoria_abcfarma.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 id="roteiro-de-carga%2C-limpeza-e-auditoria-fiscal-para-arquivos-abcfarma" tabindex="-1">Roteiro de carga, limpeza e auditoria fiscal para arquivos ABCFarma</h1>
+<h2 id="1.-objetivo" tabindex="-1">1. Objetivo</h2>
+<p>Este roteiro tem como objetivo:</p>
+<ul>
+<li>preparar a carga em massa de arquivos CSV fiscais em staging;</li>
+<li>normalizar e limpar campos antes da análise;</li>
+<li>executar auditoria de preços e variação de preços de medicamentos;</li>
+<li>automatizar o processo com uma stored procedure.</li>
+</ul>
+<p>Os arquivos observados nesta pasta incluem:</p>
+<ul>
+<li><code>p50_abcfarma.csv</code></li>
+<li><code>p50_abcfarma_utf8.csv</code></li>
+<li><code>p50_anexo5.csv</code></li>
+<li><code>tabela_anexo_5_sefaz.csv</code></li>
+<li><code>abcfarma_completo_20260101_170957.csv</code></li>
+</ul>
+<p>O caso de uso principal é auditoria fiscal de preços de medicamentos com foco em comparação entre períodos, laboratórios e regras de vigência.</p>
+<hr>
+<h2 id="2.-diagn%C3%B3stico-do-arquivo" tabindex="-1">2. Diagnóstico do arquivo</h2>
+<p>O arquivo original apresentou problemas de encoding, identificados pela sequência de bytes do início do arquivo:</p>
+<ul>
+<li><code>FF FE</code> = BOM UTF-16 LE</li>
+</ul>
+<p>Isso indica que o CSV foi gerado em UTF-16 e não em UTF-8. Para padronizar o trabalho, foi convertida uma cópia para UTF-8.</p>
+<h3 id="convers%C3%A3o-em-powershell" tabindex="-1">Conversão em PowerShell</h3>
+<pre class='hljs'><code><div><span class="hljs-variable">$in</span>  = <span class="hljs-string">&#x27;.\modulo_05\roteiro_integrador_bdfisc\p50_abcfarma.csv&#x27;</span>
+<span class="hljs-variable">$out</span> = <span class="hljs-string">&#x27;.\modulo_05\roteiro_integrador_bdfisc\p50_abcfarma_utf8.csv&#x27;</span>
+
+<span class="hljs-variable">$text</span> = [<span class="hljs-type">System.IO.File</span>]::ReadAllText(<span class="hljs-variable">$in</span>, [<span class="hljs-type">System.Text.Encoding</span>]::Unicode)
+[<span class="hljs-type">System.IO.File</span>]::WriteAllText(<span class="hljs-variable">$out</span>, <span class="hljs-variable">$text</span>, [<span class="hljs-type">System.Text.UTF8Encoding</span>]::new(<span class="hljs-variable">$false</span>))
+</div></code></pre>
+<h3 id="inspe%C3%A7%C3%A3o-r%C3%A1pida-do-csv-no-powershell" tabindex="-1">Inspeção rápida do CSV no PowerShell</h3>
+<p>Antes de carregar o arquivo em massa, vale validar a estrutura e o tamanho do CSV tratado. Os comandos abaixo ajudam a confirmar o cabeçalho, a quantidade de registros e a amostra inicial.</p>
+<h4 id="1)-quantos-campos-possui-a-linha-de-cabe%C3%A7alho-do-arquivo" tabindex="-1">1) Quantos campos possui a linha de cabeçalho do arquivo</h4>
+<pre class='hljs'><code><div><span class="hljs-variable">$arquivo</span> = <span class="hljs-string">&#x27;C:\projetos\bancodedados\modulo_05\roteiro_integrador_bdfisc\p50_abcfarma_utf8.csv&#x27;</span>
+<span class="hljs-variable">$linhaCabecalho</span> = <span class="hljs-built_in">Get-Content</span> <span class="hljs-variable">$arquivo</span> <span class="hljs-literal">-TotalCount</span> <span class="hljs-number">1</span>
+<span class="hljs-variable">$campos</span> = (<span class="hljs-variable">$linhaCabecalho</span> <span class="hljs-operator">-split</span> <span class="hljs-string">&#x27;\|&#x27;</span>)
+<span class="hljs-variable">$campos</span>.Count
+<span class="hljs-variable">$campos</span>
+</div></code></pre>
+<p><strong>O que observar:</strong> o resultado deve mostrar a quantidade correta de colunas da base ABCFarma. Como o separador é <code>|</code>, o número de campos tende a ser maior do que em arquivos com <code>;</code>.</p>
+<h4 id="2)-quantos-registros-ao-todo-o-arquivo-possui" tabindex="-1">2) Quantos registros ao todo o arquivo possui</h4>
+<pre class='hljs'><code><div><span class="hljs-variable">$arquivo</span> = <span class="hljs-string">&#x27;C:\projetos\bancodedados\modulo_05\roteiro_integrador_bdfisc\p50_abcfarma_utf8.csv&#x27;</span>
+<span class="hljs-variable">$registros</span> = (<span class="hljs-built_in">Get-Content</span> <span class="hljs-variable">$arquivo</span>).Count - <span class="hljs-number">1</span>
+<span class="hljs-built_in">Write-Host</span> <span class="hljs-string">&quot;Total de registros em p50_abcfarma_utf8.csv: <span class="hljs-variable">$registros</span>&quot;</span>
+</div></code></pre>
+<h4 id="3)-exibir-as-10-primeiras-linhas-no-powershell" tabindex="-1">3) Exibir as 10 primeiras linhas no PowerShell</h4>
+<pre class='hljs'><code><div><span class="hljs-built_in">Get-Content</span> <span class="hljs-string">&#x27;C:\projetos\bancodedados\modulo_05\roteiro_integrador_bdfisc\p50_abcfarma_utf8.csv&#x27;</span> <span class="hljs-literal">-TotalCount</span> <span class="hljs-number">11</span>
+</div></code></pre>
+<p><strong>A armadilha:</strong> se o separador estiver incorreto, a contagem de colunas e a carga em massa podem falhar antes mesmo do <code>BULK INSERT</code>.</p>
+<h3 id="estrutura-do-csv" tabindex="-1">Estrutura do CSV</h3>
+<p>Os primeiros registros apresentam o padrão abaixo:</p>
+<pre class='hljs'><code><div>&quot;CODIGO&quot;|&quot;EAN&quot;|&quot;REGISTRO ANVISA&quot;|&quot;NCM&quot;|&quot;CEST&quot;|&quot;NOME&quot;|&quot;LABORATORIO&quot;|&quot;TIPO&quot;|&quot;CLASSE TERAPEUTICA&quot;|...
+&quot;245746&quot;|&quot;7891317158705&quot;|&quot;4707603680023&quot;|&quot;21069090&quot;|&quot;&quot;|&quot;20 BI&quot;|&quot;MOMENTA&quot;|&quot;O&quot;|&quot;PRODUTOS PROBIOTICOS&quot;|...
+</div></code></pre>
+<p>Observações:</p>
+<ul>
+<li>o separador é <code>|</code> e não <code>,</code>;</li>
+<li>a linha de cabeçalho existe e deve ser ignorada no <code>BULK INSERT</code>;</li>
+<li>há valores numéricos com vírgula decimal (<code>29,39</code>, <code>38,42</code>), então a conversão deve ser feita na etapa de normalização;</li>
+<li>alguns campos de texto podem conter acentos e símbolos especiais, por isso a codificação deve ser consistente.</li>
+</ul>
+<hr>
+<h2 id="3.-cen%C3%A1rio-de-uso-fiscal" tabindex="-1">3. Cenário de uso fiscal</h2>
+<h3 id="caso-de-uso-proposto%3A-auditoria-de-pre%C3%A7os-e-varia%C3%A7%C3%A3o-de-medicamentos" tabindex="-1">Caso de uso proposto: auditoria de preços e variação de medicamentos</h3>
+<p>O objetivo é verificar se os preços de venda praticados por laboratório e produto estão coerentes com a data de vigência, com a composição e com a variação de períodos anteriores.</p>
+<h3 id="regras-de-auditoria" tabindex="-1">Regras de auditoria</h3>
+<ol>
+<li>Identificar produtos com variação de preço acima do esperado em curto intervalo.</li>
+<li>Verificar se a mesma apresentação do mesmo produto foi reajustada sem justificativa.</li>
+<li>Analisar registros com <code>DATA_REFERENCIA</code> ou <code>DATA_VIGENCIA</code> inconsistentes.</li>
+<li>Detectar <code>vPF</code> e <code>vPMC</code> divergentes em relação aos percentuais de tabela.</li>
+<li>Verificar produtos com laboratórios repetidos e preços anômalos.</li>
+<li>Validar divergência entre arquivo de origem e data de referência.</li>
+</ol>
+<h3 id="exemplo-de-evid%C3%AAncia-fiscal" tabindex="-1">Exemplo de evidência fiscal</h3>
+<ul>
+<li>produto com mesmo código e laboratório;</li>
+<li>o mesmo medicamento aparece em meses consecutivos;</li>
+<li>o valor do preço de venda muda de <code>R$ 29,39</code> para <code>R$ 38,42</code> em um intervalo curto;</li>
+<li>o impacto pode ser classificado como revisão de tarifa ou anomalia de mercado.</li>
+</ul>
+<hr>
+<h2 id="4.-estrutura-de-staging-recomendada" tabindex="-1">4. Estrutura de staging recomendada</h2>
+<p>Crie um schema para guardar o dado bruto antes da limpeza.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> SCHEMA staging;
+GO
+
+<span class="hljs-keyword">CREATE TABLE</span> staging.abcfarma_raw (
+    CODIGO NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    EAN NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    REGISTRO_ANVISA NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    NCM NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    CEST NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    NOME NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
+    LABORATORIO NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    TIPO NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    CLASSE_TERAPEUTICA NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
+    COMPOSICAO NVARCHAR(<span class="hljs-number">1000</span>) <span class="hljs-keyword">NULL</span>,
+    TARJA NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    UNIDADE_DE_VENDA NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    CNPJ_LABORATORIO NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    APRESENTACAO NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    LISTAPISC OFINS NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    RESTRHOSP NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    CNPJ_DECLARANTE NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    NOME_DECLARANTE NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
+    PICMS NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    VPF NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    VPMC NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    VPMCEMBFRAC NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    VPMCEMBMULT NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    CODIGO_LABORATORIO NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    LABORATORIO_2 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    DESCRICAO NVARCHAR(<span class="hljs-number">1000</span>) <span class="hljs-keyword">NULL</span>,
+    COMPOSICAO_2 NVARCHAR(<span class="hljs-number">1000</span>) <span class="hljs-keyword">NULL</span>,
+    REGIME_PRECO NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    LISTA_LCCT NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    PF_20 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    PMC_20 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    FRA_20 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    DATA_VIGENCIA NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    NOVO NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    VARIACAO_PRECO NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    REFERENCIA NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    ATC NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    CLASSE_TERAPEUTICA_2 NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
+    PORTARIA_344_98 NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    TISS_TUSS NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    CONFAZ_87 NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    CAP NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    GGREM NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    DCB NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    CAS NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    ARQUIVO_ORIGEM NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    DATA_REFERENCIA NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    ANO_PASTA NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>,
+    ORIGEM_ARQUIVO NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>
+);
+GO
+</div></code></pre>
+<hr>
+<h2 id="5.-carga-em-massa-com-bulk-insert" tabindex="-1">5. Carga em massa com BULK INSERT</h2>
+<p>O comando deve ignorar a primeira linha do cabeçalho, usar <code>|</code> como delimitador e <code>UTF-8</code> como página de código.</p>
+<pre class='hljs'><code><div>BULK <span class="hljs-keyword">INSERT</span> staging.abcfarma_raw
+<span class="hljs-keyword">FROM</span> <span class="hljs-string">&#x27;C:\dados\staging\p50_abcfarma_utf8.csv&#x27;</span>
+<span class="hljs-keyword">WITH</span> (
+    FIELDTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;|&#x27;</span>,
+    ROWTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;\n&#x27;</span>,
+    FIRSTROW <span class="hljs-operator">=</span> <span class="hljs-number">2</span>,
+    DATAFILETYPE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;char&#x27;</span>,
+    CODEPAGE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;65001&#x27;</span>,
+    TABLOCK,
+    MAXERRORS <span class="hljs-operator">=</span> <span class="hljs-number">100</span>
+);
+</div></code></pre>
+<h3 id="observa%C3%A7%C3%B5es" tabindex="-1">Observações</h3>
+<ul>
+<li>Caso o SQL Server tenha permissão de acesso ao arquivo, a carga funciona diretamente.</li>
+<li>Em caso de erro de acesso, copie o CSV para um diretório do servidor SQL ou para um compartilhamento de rede.</li>
+<li>O <code>FIELDTERMINATOR = '|'</code> é obrigatório porque o arquivo usa pipe como separador.</li>
+</ul>
+<hr>
+<h2 id="6.-limpeza-e-normaliza%C3%A7%C3%A3o" tabindex="-1">6. Limpeza e normalização</h2>
+<p>Antes de inserir os dados definitivos, é importante padronizar campos numéricos e datas.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE TABLE</span> dbo.abcfarma_normalizado (
+    Id <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">PRIMARY KEY</span>,
+    CODIGO <span class="hljs-type">INT</span> <span class="hljs-keyword">NULL</span>,
+    EAN NVARCHAR(<span class="hljs-number">30</span>) <span class="hljs-keyword">NULL</span>,
+    REGISTRO_ANVISA NVARCHAR(<span class="hljs-number">30</span>) <span class="hljs-keyword">NULL</span>,
+    NOME NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
+    LABORATORIO NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    CLASSE_TERAPEUTICA NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
+    COMPOSICAO NVARCHAR(<span class="hljs-number">1000</span>) <span class="hljs-keyword">NULL</span>,
+    TARJA NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    VPF <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    VPMC <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    DATA_REFERENCIA <span class="hljs-type">DATE</span> <span class="hljs-keyword">NULL</span>,
+    ARQUIVO_ORIGEM NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    ORIGEM_ARQUIVO NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>
+);
+GO
+</div></code></pre>
+<h3 id="exemplo-de-transforma%C3%A7%C3%A3o" tabindex="-1">Exemplo de transformação</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">INSERT INTO</span> dbo.abcfarma_normalizado (
+    CODIGO,
+    EAN,
+    REGISTRO_ANVISA,
+    NOME,
+    LABORATORIO,
+    CLASSE_TERAPEUTICA,
+    COMPOSICAO,
+    TARJA,
+    VPF,
+    VPMC,
+    DATA_REFERENCIA,
+    ARQUIVO_ORIGEM,
+    ORIGEM_ARQUIVO
+)
+<span class="hljs-keyword">SELECT</span>
+    TRY_CONVERT(<span class="hljs-type">INT</span>, LTRIM(RTRIM(CODIGO))) <span class="hljs-keyword">AS</span> CODIGO,
+    LTRIM(RTRIM(EAN)) <span class="hljs-keyword">AS</span> EAN,
+    LTRIM(RTRIM(REGISTRO_ANVISA)) <span class="hljs-keyword">AS</span> REGISTRO_ANVISA,
+    LTRIM(RTRIM(NOME)) <span class="hljs-keyword">AS</span> NOME,
+    LTRIM(RTRIM(LABORATORIO)) <span class="hljs-keyword">AS</span> LABORATORIO,
+    LTRIM(RTRIM(CLASSE_TERAPEUTICA)) <span class="hljs-keyword">AS</span> CLASSE_TERAPEUTICA,
+    LTRIM(RTRIM(COMPOSICAO)) <span class="hljs-keyword">AS</span> COMPOSICAO,
+    LTRIM(RTRIM(TARJA)) <span class="hljs-keyword">AS</span> TARJA,
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(VPF, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)) <span class="hljs-keyword">AS</span> VPF,
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(VPMC, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)) <span class="hljs-keyword">AS</span> VPMC,
+    TRY_CONVERT(<span class="hljs-type">DATE</span>, DATA_REFERENCIA) <span class="hljs-keyword">AS</span> DATA_REFERENCIA,
+    LTRIM(RTRIM(ARQUIVO_ORIGEM)) <span class="hljs-keyword">AS</span> ARQUIVO_ORIGEM,
+    LTRIM(RTRIM(ORIGEM_ARQUIVO)) <span class="hljs-keyword">AS</span> ORIGEM_ARQUIVO
+<span class="hljs-keyword">FROM</span> staging.abcfarma_raw
+<span class="hljs-keyword">WHERE</span> LTRIM(RTRIM(CODIGO)) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">AND</span> LTRIM(RTRIM(CODIGO)) <span class="hljs-operator">&lt;&gt;</span> <span class="hljs-string">&#x27;&#x27;</span>;
+</div></code></pre>
+<h3 id="fun%C3%A7%C3%B5es-de-limpeza-%C3%BAteis" tabindex="-1">Funções de limpeza úteis</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    LTRIM(RTRIM(CODIGO)) <span class="hljs-keyword">AS</span> CODIGO,
+    REPLACE(REPLACE(VPF, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">AS</span> VPF_NORMALIZADO,
+    TRY_CONVERT(<span class="hljs-type">DATE</span>, DATA_REFERENCIA) <span class="hljs-keyword">AS</span> DATA_REFERENCIA
+<span class="hljs-keyword">FROM</span> staging.abcfarma_raw;
+</div></code></pre>
+<hr>
+<h2 id="7.-auditoria-fiscal-de-pre%C3%A7os-de-medicamentos" tabindex="-1">7. Auditoria fiscal de preços de medicamentos</h2>
+<p>O script <code>bdfisc.sql</code> não cria uma tabela histórica ABCFarma com <code>VPF</code> e <code>VPMC</code>. Portanto, os exemplos desta seção usam os objetos fiscais existentes no script. O registro mais aderente ao caso de medicamentos é <code>fisc.TB_512_PR_EFD_REGISTRO_C173_OPERACOES_COM_MEDICAMENTOS</code>, gerado a partir do registro C173 da EFD. Ele contém o produto, o NCM, o lote, as datas de fabricação e validade e o preço máximo de tabela (<code>C173_VL_TAB_MAX</code>).</p>
+<p>Para ampliar a evidência, os exemplos também usam:</p>
+<ul>
+<li><code>fisc.TB_506_PR_EFD_REGISTRO_C170_ITEM_DOC_FISCAL</code>, com os itens escriturados e seus valores;</li>
+<li><code>fisc.anexo5_sefaz_normalizado</code>, com a referência de NCM, CEST e vigência tributária;</li>
+<li><code>dbo.ITEM_NFE</code>, com os itens das NF-e e os valores comerciais e tributários do documento.</li>
+</ul>
+<h3 id="7.1-medicamentos-com-pre%C3%A7o-m%C3%A1ximo-de-tabela-ausente-ou-inv%C3%A1lido" tabindex="-1">7.1 Medicamentos com preço máximo de tabela ausente ou inválido</h3>
+<p>O primeiro teste identifica operações com medicamento em que o preço máximo informado no C173 está ausente ou não é positivo.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    REG0_PERIODO_DECLARACAO,
+    REG0_IE,
+    C100_CHV_NFE,
+    C100_NUM_DOC,
+    C100_DT_DOC,
+    REG0200_COD_ITEM,
+    REG0200_DESCR_ITEM,
+    REG0200_COD_NCM,
+    C173_LOTE_MED,
+    C173_QTD_ITEM,
+    C173_VL_TAB_MAX
+<span class="hljs-keyword">FROM</span> fisc.TB_512_PR_EFD_REGISTRO_C173_OPERACOES_COM_MEDICAMENTOS
+<span class="hljs-keyword">WHERE</span> C173_VL_TAB_MAX <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+   <span class="hljs-keyword">OR</span> C173_VL_TAB_MAX <span class="hljs-operator">&lt;=</span> <span class="hljs-number">0</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> C100_DT_DOC, C100_NUM_DOC;
+</div></code></pre>
+<p>Esse resultado deve ser tratado como exceção de qualidade ou de preenchimento fiscal. O valor ausente não prova, sozinho, que houve preço incorreto, mas impede a comparação com o preço máximo informado na documentação da operação.</p>
+<h3 id="7.2-varia%C3%A7%C3%A3o-do-pre%C3%A7o-m%C3%A1ximo-entre-documentos" tabindex="-1">7.2 Variação do preço máximo entre documentos</h3>
+<p>Como <code>TB_512</code> possui a data do documento e o código do item, é possível comparar o preço máximo informado em documentos consecutivos do mesmo produto.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">WITH</span> historico <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span>
+        REG0_IE,
+        REG0200_COD_ITEM,
+        REG0200_DESCR_ITEM,
+        C100_DT_DOC,
+        C100_CHV_NFE,
+        C170_NUM_ITEM,
+        C173_VL_TAB_MAX,
+        <span class="hljs-built_in">LAG</span>(C173_VL_TAB_MAX) <span class="hljs-keyword">OVER</span> (
+            <span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> REG0_IE, REG0200_COD_ITEM
+            <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> C100_DT_DOC, C100_CHV_NFE, C170_NUM_ITEM
+        ) <span class="hljs-keyword">AS</span> PRECO_ANTERIOR
+    <span class="hljs-keyword">FROM</span> fisc.TB_512_PR_EFD_REGISTRO_C173_OPERACOES_COM_MEDICAMENTOS
+    <span class="hljs-keyword">WHERE</span> C100_DT_DOC <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+      <span class="hljs-keyword">AND</span> C173_VL_TAB_MAX <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+)
+<span class="hljs-keyword">SELECT</span>
+    REG0_IE,
+    REG0200_COD_ITEM,
+    REG0200_DESCR_ITEM,
+    C100_DT_DOC,
+    C100_CHV_NFE,
+    PRECO_ANTERIOR,
+    C173_VL_TAB_MAX <span class="hljs-keyword">AS</span> PRECO_ATUAL,
+    C173_VL_TAB_MAX <span class="hljs-operator">-</span> PRECO_ANTERIOR <span class="hljs-keyword">AS</span> VARIACAO_PRECO,
+    <span class="hljs-keyword">CASE</span>
+        <span class="hljs-keyword">WHEN</span> <span class="hljs-built_in">ABS</span>(C173_VL_TAB_MAX <span class="hljs-operator">-</span> PRECO_ANTERIOR) <span class="hljs-operator">&gt;</span> <span class="hljs-number">10</span>
+        <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;AUDITAR&#x27;</span>
+        <span class="hljs-keyword">ELSE</span> <span class="hljs-string">&#x27;NORMAL&#x27;</span>
+    <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> ALERTA
+<span class="hljs-keyword">FROM</span> historico
+<span class="hljs-keyword">WHERE</span> PRECO_ANTERIOR <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">AND</span> <span class="hljs-built_in">ABS</span>(C173_VL_TAB_MAX <span class="hljs-operator">-</span> PRECO_ANTERIOR) <span class="hljs-operator">&gt;</span> <span class="hljs-number">10</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> C100_DT_DOC <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p>O limite de <code>10</code> é apenas um parâmetro didático. Em produção, ele deve ser substituído por um critério aprovado pela área fiscal, preferencialmente acompanhado de percentual de variação e intervalo entre documentos.</p>
+<h3 id="7.3-medicamentos-sem-correspond%C3%AAncia-no-anexo-5" tabindex="-1">7.3 Medicamentos sem correspondência no Anexo 5</h3>
+<p>O código NCM escriturado no C173 pode ser comparado com a tabela normalizada do Anexo 5. O teste abaixo destaca itens sem correspondência e itens cuja referência possui CEST nulo.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    m.REG0_PERIODO_DECLARACAO,
+    m.C100_CHV_NFE,
+    m.C100_DT_DOC,
+    m.REG0200_COD_ITEM,
+    m.REG0200_DESCR_ITEM,
+    m.REG0200_COD_NCM,
+    a.CEST,
+    a.DESCRICAO,
+    a.Vigencia_inicial,
+    a.Vigencia_final,
+    <span class="hljs-keyword">CASE</span>
+        <span class="hljs-keyword">WHEN</span> a.Id <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;NCM SEM REGRA NO ANEXO 5&#x27;</span>
+        <span class="hljs-keyword">WHEN</span> a.CEST <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;CEST AUSENTE NA REFERENCIA&#x27;</span>
+        <span class="hljs-keyword">ELSE</span> <span class="hljs-string">&#x27;VALIDAR ENQUADRAMENTO&#x27;</span>
+    <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> ALERTA
+<span class="hljs-keyword">FROM</span> fisc.TB_512_PR_EFD_REGISTRO_C173_OPERACOES_COM_MEDICAMENTOS <span class="hljs-keyword">AS</span> m
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> fisc.anexo5_sefaz_normalizado <span class="hljs-keyword">AS</span> a
+    <span class="hljs-keyword">ON</span> REPLACE(m.REG0200_COD_NCM, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-operator">=</span> REPLACE(a.NCM_SH, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>)
+<span class="hljs-keyword">WHERE</span> a.Id <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+   <span class="hljs-keyword">OR</span> a.CEST <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> m.C100_DT_DOC, m.REG0200_COD_NCM;
+</div></code></pre>
+<p>O código do produto não deve ser usado como substituto do CEST. A finalidade do teste é validar o NCM contra a referência oficial e, depois, revisar o enquadramento completo pela descrição e pelo regime tributário.</p>
+<h3 id="7.4-regra-do-anexo-5-fora-da-vig%C3%AAncia-da-opera%C3%A7%C3%A3o" tabindex="-1">7.4 Regra do Anexo 5 fora da vigência da operação</h3>
+<p>A regra tributária deve ser válida na data do documento. O cruzamento abaixo usa a data do C173 e limita a referência do Anexo 5 ao intervalo de vigência.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    m.REG0_PERIODO_DECLARACAO,
+    m.C100_CHV_NFE,
+    m.C100_DT_DOC,
+    m.REG0200_COD_ITEM,
+    m.REG0200_DESCR_ITEM,
+    m.REG0200_COD_NCM,
+    a.CEST,
+    a.Vigencia_inicial,
+    a.Vigencia_final,
+    a.Aliq_Interna,
+    a.MVA_Original
+<span class="hljs-keyword">FROM</span> fisc.TB_512_PR_EFD_REGISTRO_C173_OPERACOES_COM_MEDICAMENTOS <span class="hljs-keyword">AS</span> m
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> fisc.anexo5_sefaz_normalizado <span class="hljs-keyword">AS</span> a
+    <span class="hljs-keyword">ON</span> REPLACE(m.REG0200_COD_NCM, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-operator">=</span> REPLACE(a.NCM_SH, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>)
+<span class="hljs-keyword">WHERE</span> m.C100_DT_DOC <span class="hljs-operator">&lt;</span> a.Vigencia_inicial
+   <span class="hljs-keyword">OR</span> (a.Vigencia_final <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">AND</span> m.C100_DT_DOC <span class="hljs-operator">&gt;</span> a.Vigencia_final)
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> m.C100_DT_DOC, m.REG0200_COD_NCM;
+</div></code></pre>
+<p>Essa consulta identifica uma regra encontrada pelo NCM, mas que não estava ativa na data da operação. O caso precisa ser analisado junto com o CEST, a descrição, o regime tributário e eventuais alterações da legislação.</p>
+<h3 id="7.5-validade-do-medicamento-e-data-da-opera%C3%A7%C3%A3o" tabindex="-1">7.5 Validade do medicamento e data da operação</h3>
+<p>O C173 registra lote, fabricação e validade. Uma operação com data posterior à validade merece análise específica.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    REG0_PERIODO_DECLARACAO,
+    C100_CHV_NFE,
+    C100_NUM_DOC,
+    C100_DT_DOC,
+    REG0200_COD_ITEM,
+    REG0200_DESCR_ITEM,
+    C173_LOTE_MED,
+    C173_DT_FAB,
+    C173_DT_VAL,
+    C173_QTD_ITEM,
+    C173_VL_TAB_MAX
+<span class="hljs-keyword">FROM</span> fisc.TB_512_PR_EFD_REGISTRO_C173_OPERACOES_COM_MEDICAMENTOS
+<span class="hljs-keyword">WHERE</span> C173_DT_VAL <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+   <span class="hljs-keyword">OR</span> C173_DT_FAB <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+   <span class="hljs-keyword">OR</span> C173_DT_FAB <span class="hljs-operator">&gt;</span> C173_DT_VAL
+   <span class="hljs-keyword">OR</span> C100_DT_DOC <span class="hljs-operator">&gt;</span> C173_DT_VAL
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> C100_DT_DOC, C173_DT_VAL;
+</div></code></pre>
+<p>O resultado não deve ser interpretado automaticamente como venda irregular: pode haver erro de digitação, devolução, remessa ou outra situação documental. A consulta serve para selecionar os documentos que precisam de evidência complementar.</p>
+<h3 id="7.6-compara%C3%A7%C3%A3o-do-item-c170-com-o-medicamento-do-c173" tabindex="-1">7.6 Comparação do item C170 com o medicamento do C173</h3>
+<p>O BDFISC mantém uma tabela de resultado para o C170 e outra para o C173. O cruzamento por período, chave da NF-e e número do item permite verificar se o valor do item e o preço máximo do medicamento estão coerentes.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    c.REG0_PERIODO_DECLARACAO,
+    c.C100_CHV_NFE,
+    c.C100_NUM_DOC,
+    c.C100_DT_DOC,
+    c.C170_NUM_ITEM,
+    c.REG0200_COD_ITEM,
+    c.REG0200_DESCR_ITEM,
+    c.C170_QTD,
+    c.C170_VL_ITEM,
+    m.C173_VL_TAB_MAX,
+    <span class="hljs-keyword">CASE</span>
+        <span class="hljs-keyword">WHEN</span> c.C170_VL_ITEM <span class="hljs-operator">&gt;</span> m.C173_VL_TAB_MAX
+        <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;ITEM ACIMA DO PRECO MAXIMO INFORMADO&#x27;</span>
+        <span class="hljs-keyword">ELSE</span> <span class="hljs-string">&#x27;VALIDAR&#x27;</span>
+    <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> ALERTA
+<span class="hljs-keyword">FROM</span> fisc.TB_506_PR_EFD_REGISTRO_C170_ITEM_DOC_FISCAL <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> fisc.TB_512_PR_EFD_REGISTRO_C173_OPERACOES_COM_MEDICAMENTOS <span class="hljs-keyword">AS</span> m
+    <span class="hljs-keyword">ON</span> m.REG0_PERIODO_DECLARACAO <span class="hljs-operator">=</span> c.REG0_PERIODO_DECLARACAO
+   <span class="hljs-keyword">AND</span> m.C100_CHV_NFE <span class="hljs-operator">=</span> c.C100_CHV_NFE
+   <span class="hljs-keyword">AND</span> m.C170_NUM_ITEM <span class="hljs-operator">=</span> c.C170_NUM_ITEM
+<span class="hljs-keyword">WHERE</span> m.C173_VL_TAB_MAX <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">AND</span> c.C170_VL_ITEM <span class="hljs-operator">&gt;</span> m.C173_VL_TAB_MAX
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> c.C100_DT_DOC, c.C100_NUM_DOC, c.C170_NUM_ITEM;
+</div></code></pre>
+<p>O campo <code>C170_VL_ITEM</code> é o valor total do item, enquanto <code>C173_VL_TAB_MAX</code> é o preço máximo de tabela informado no C173. Por isso, a consulta é um indicador de seleção e não uma prova definitiva de excesso: quando a quantidade for maior que uma unidade ou houver diferenças de apresentação, o auditor deve calcular também o valor unitário e conferir a unidade comercial.</p>
+<h3 id="7.7-confronto-com-o-item-f%C3%ADsico-da-nf-e-em-dbo.item_nfe" tabindex="-1">7.7 Confronto com o item físico da NF-e em <code>dbo.ITEM_NFE</code></h3>
+<p>Quando a NF-e própria estiver disponível nas tabelas operacionais, o item pode ser auditado por NCM, CEST, quantidade, valor e descrição.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    i.sqnfe,
+    i.tpnfe,
+    i.nritemnfe,
+    i.cdproduto,
+    i.dsproduto,
+    i.cdncm,
+    i.cdcest,
+    i.qtprodcom,
+    i.vlprodcom,
+    i.vlicms,
+    i.vlicmsst
+<span class="hljs-keyword">FROM</span> dbo.ITEM_NFE <span class="hljs-keyword">AS</span> i
+<span class="hljs-keyword">WHERE</span> i.cdncm <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+   <span class="hljs-keyword">OR</span> i.cdproduto <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+   <span class="hljs-keyword">OR</span> i.dsproduto <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+   <span class="hljs-keyword">OR</span> i.qtprodcom <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+   <span class="hljs-keyword">OR</span> i.vlprodcom <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>;
+</div></code></pre>
+<p>Esse teste usa colunas existentes em <code>dbo.ITEM_NFE</code> e identifica dados insuficientes para uma auditoria de preço e enquadramento. O vínculo direto com <code>TB_512</code> depende da chave de nota disponível no ambiente e pode exigir uma view de relacionamento entre <code>sqnfe</code> e <code>C100_CHV_NFE</code>.</p>
+<h3 id="7.8-resumo-dos-indicadores" tabindex="-1">7.8 Resumo dos indicadores</h3>
+<ul>
+<li>preço máximo do C173 nulo ou menor que zero;</li>
+<li>variação do <code>C173_VL_TAB_MAX</code> acima do limite definido;</li>
+<li>NCM sem correspondência no <code>fisc.anexo5_sefaz_normalizado</code>;</li>
+<li>regra do Anexo 5 fora da vigência do documento;</li>
+<li>fabricação, validade ou lote inconsistentes;</li>
+<li>valor do item C170 acima do preço máximo informado no C173;</li>
+<li>item de <code>dbo.ITEM_NFE</code> sem código, NCM, descrição, quantidade ou valor.</li>
+</ul>
+<p>As tabelas <code>TB_506</code> e <code>TB_512</code> são resultados gerados pelas procedures de consulta do BDFISC. Assim, a auditoria parte da escrituração fiscal processada pelo próprio banco e usa a base ABCFarma como evidência complementar, quando o arquivo tiver sido carregado e normalizado nas tabelas da seção 6.</p>
+<hr>
+<h2 id="8.-stored-procedure-para-automatizar-o-processo" tabindex="-1">8. Stored procedure para automatizar o processo</h2>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">PROCEDURE</span> dbo.usp_carga_auditoria_abcfarma
+    <span class="hljs-variable">@ArquivoCSV</span> NVARCHAR(<span class="hljs-number">4000</span>)
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">SET</span> NOCOUNT <span class="hljs-keyword">ON</span>;
+
+    <span class="hljs-keyword">BEGIN</span> TRY
+        <span class="hljs-keyword">TRUNCATE</span> <span class="hljs-keyword">TABLE</span> staging.abcfarma_raw;
+
+        BULK <span class="hljs-keyword">INSERT</span> staging.abcfarma_raw
+        <span class="hljs-keyword">FROM</span> <span class="hljs-variable">@ArquivoCSV</span>
+        <span class="hljs-keyword">WITH</span> (
+            FIELDTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;|&#x27;</span>,
+            ROWTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;\n&#x27;</span>,
+            FIRSTROW <span class="hljs-operator">=</span> <span class="hljs-number">2</span>,
+            DATAFILETYPE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;char&#x27;</span>,
+            CODEPAGE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;65001&#x27;</span>,
+            TABLOCK,
+            MAXERRORS <span class="hljs-operator">=</span> <span class="hljs-number">100</span>
+        );
+
+        ;<span class="hljs-keyword">WITH</span> base <span class="hljs-keyword">AS</span> (
+            <span class="hljs-keyword">SELECT</span>
+                TRY_CONVERT(<span class="hljs-type">INT</span>, LTRIM(RTRIM(CODIGO))) <span class="hljs-keyword">AS</span> CODIGO,
+                LTRIM(RTRIM(EAN)) <span class="hljs-keyword">AS</span> EAN,
+                LTRIM(RTRIM(REGISTRO_ANVISA)) <span class="hljs-keyword">AS</span> REGISTRO_ANVISA,
+                LTRIM(RTRIM(NOME)) <span class="hljs-keyword">AS</span> NOME,
+                LTRIM(RTRIM(LABORATORIO)) <span class="hljs-keyword">AS</span> LABORATORIO,
+                LTRIM(RTRIM(CLASSE_TERAPEUTICA)) <span class="hljs-keyword">AS</span> CLASSE_TERAPEUTICA,
+                LTRIM(RTRIM(COMPOSICAO)) <span class="hljs-keyword">AS</span> COMPOSICAO,
+                LTRIM(RTRIM(TARJA)) <span class="hljs-keyword">AS</span> TARJA,
+                TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(VPF, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)) <span class="hljs-keyword">AS</span> VPF,
+                TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(VPMC, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)) <span class="hljs-keyword">AS</span> VPMC,
+                TRY_CONVERT(<span class="hljs-type">DATE</span>, DATA_REFERENCIA) <span class="hljs-keyword">AS</span> DATA_REFERENCIA,
+                LTRIM(RTRIM(ARQUIVO_ORIGEM)) <span class="hljs-keyword">AS</span> ARQUIVO_ORIGEM,
+                LTRIM(RTRIM(ORIGEM_ARQUIVO)) <span class="hljs-keyword">AS</span> ORIGEM_ARQUIVO
+            <span class="hljs-keyword">FROM</span> staging.abcfarma_raw
+            <span class="hljs-keyword">WHERE</span> LTRIM(RTRIM(CODIGO)) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+              <span class="hljs-keyword">AND</span> LTRIM(RTRIM(CODIGO)) <span class="hljs-operator">&lt;&gt;</span> <span class="hljs-string">&#x27;&#x27;</span>
+        )
+        <span class="hljs-keyword">INSERT INTO</span> dbo.abcfarma_normalizado (
+            CODIGO,
+            EAN,
+            REGISTRO_ANVISA,
+            NOME,
+            LABORATORIO,
+            CLASSE_TERAPEUTICA,
+            COMPOSICAO,
+            TARJA,
+            VPF,
+            VPMC,
+            DATA_REFERENCIA,
+            ARQUIVO_ORIGEM,
+            ORIGEM_ARQUIVO
+        )
+        <span class="hljs-keyword">SELECT</span>
+            CODIGO,
+            EAN,
+            REGISTRO_ANVISA,
+            NOME,
+            LABORATORIO,
+            CLASSE_TERAPEUTICA,
+            COMPOSICAO,
+            TARJA,
+            VPF,
+            VPMC,
+            DATA_REFERENCIA,
+            ARQUIVO_ORIGEM,
+            ORIGEM_ARQUIVO
+        <span class="hljs-keyword">FROM</span> base;
+
+        ;<span class="hljs-keyword">WITH</span> base <span class="hljs-keyword">AS</span> (
+            <span class="hljs-keyword">SELECT</span>
+                CODIGO,
+                LABORATORIO,
+                DATA_REFERENCIA,
+                VPF,
+                VPMC,
+                <span class="hljs-built_in">LAG</span>(VPF) <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> CODIGO, LABORATORIO <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> DATA_REFERENCIA) <span class="hljs-keyword">AS</span> VPF_ANTERIOR,
+                <span class="hljs-built_in">LAG</span>(VPMC) <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> CODIGO, LABORATORIO <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> DATA_REFERENCIA) <span class="hljs-keyword">AS</span> VPMC_ANTERIOR
+            <span class="hljs-keyword">FROM</span> dbo.abcfarma_normalizado
+        )
+        <span class="hljs-keyword">INSERT INTO</span> dbo.auditoria_abcfarma (
+            CODIGO,
+            LABORATORIO,
+            DATA_REFERENCIA,
+            VPF,
+            VPMC,
+            VPF_ANTERIOR,
+            VPMC_ANTERIOR,
+            VARIACAO_VPF,
+            VARIACAO_VPMC,
+            FLAG_DIVERGENCIA
+        )
+        <span class="hljs-keyword">SELECT</span>
+            CODIGO,
+            LABORATORIO,
+            DATA_REFERENCIA,
+            VPF,
+            VPMC,
+            VPF_ANTERIOR,
+            VPMC_ANTERIOR,
+            ISNULL(VPF <span class="hljs-operator">-</span> VPF_ANTERIOR, <span class="hljs-number">0</span>),
+            ISNULL(VPMC <span class="hljs-operator">-</span> VPMC_ANTERIOR, <span class="hljs-number">0</span>),
+            <span class="hljs-keyword">CASE</span>
+                <span class="hljs-keyword">WHEN</span> <span class="hljs-built_in">ABS</span>(<span class="hljs-built_in">CAST</span>((VPF <span class="hljs-operator">-</span> ISNULL(VPF_ANTERIOR, VPF)) <span class="hljs-keyword">AS</span> <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>))) <span class="hljs-operator">&gt;</span> <span class="hljs-number">10</span>
+                     <span class="hljs-keyword">OR</span> <span class="hljs-built_in">ABS</span>(<span class="hljs-built_in">CAST</span>((VPMC <span class="hljs-operator">-</span> ISNULL(VPMC_ANTERIOR, VPMC)) <span class="hljs-keyword">AS</span> <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>))) <span class="hljs-operator">&gt;</span> <span class="hljs-number">10</span>
+                <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span>
+            <span class="hljs-keyword">END</span>
+        <span class="hljs-keyword">FROM</span> base
+        <span class="hljs-keyword">WHERE</span> DATA_REFERENCIA <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>;
+
+        <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;Carga e auditoria concluídas com sucesso.&#x27;</span> <span class="hljs-keyword">AS</span> Resultado;
+
+    <span class="hljs-keyword">END</span> TRY
+    <span class="hljs-keyword">BEGIN</span> CATCH
+        <span class="hljs-keyword">SELECT</span>
+            ERROR_NUMBER() <span class="hljs-keyword">AS</span> NumeroErro,
+            ERROR_MESSAGE() <span class="hljs-keyword">AS</span> MensagemErro;
+        THROW;
+    <span class="hljs-keyword">END</span> CATCH
+<span class="hljs-keyword">END</span>;
+GO
+</div></code></pre>
+<h3 id="execu%C3%A7%C3%A3o" tabindex="-1">Execução</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> dbo.usp_carga_auditoria_abcfarma
+    <span class="hljs-variable">@ArquivoCSV</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;C:\dados\staging\p50_abcfarma_utf8.csv&#x27;</span>;
+</div></code></pre>
+<hr>
+<h2 id="9.-checklist-de-execu%C3%A7%C3%A3o" tabindex="-1">9. Checklist de execução</h2>
+<ul>
+<li><input type="checkbox" id="checkbox0"><label for="checkbox0"> confirmar encoding do arquivo original;</label></li>
+<li><input type="checkbox" id="checkbox1"><label for="checkbox1"> converter para UTF-8 quando necessário;</label></li>
+<li><input type="checkbox" id="checkbox2"><label for="checkbox2"> validar separador </label><code>|</code>;</li>
+<li><input type="checkbox" id="checkbox3"><label for="checkbox3"> criar schema </label><code>staging</code>;</li>
+<li><input type="checkbox" id="checkbox4"><label for="checkbox4"> criar tabela de staging;</label></li>
+<li><input type="checkbox" id="checkbox5"><label for="checkbox5"> executar </label><code>BULK INSERT</code>;</li>
+<li><input type="checkbox" id="checkbox6"><label for="checkbox6"> limpar e converter campos numéricos;</label></li>
+<li><input type="checkbox" id="checkbox7"><label for="checkbox7"> carregar tabela normalizada;</label></li>
+<li><input type="checkbox" id="checkbox8"><label for="checkbox8"> gerar auditoria de variação de preços;</label></li>
+<li><input type="checkbox" id="checkbox9"><label for="checkbox9"> automatizar com stored procedure.</label></li>
+</ul>
+<hr>
+<h2 id="10.-conclus%C3%A3o" tabindex="-1">10. Conclusão</h2>
+<p>Este fluxo reproduz um cenário típico de auditoria fiscal com dados externos em arquivo CSV: carga em massa, estapa de staging, limpeza, análise e materialização de resultados. Com a base padronizada, o auditor pode identificar anomalias de preço, comparar períodos e priorizar produtos com risco fiscal.</p>
+<p>Se for necessário, o próximo passo pode ser:</p>
+<ul>
+<li>adaptação da rotina para SQL Server real do ambiente;</li>
+<li>uso dos arquivos <code>p50_anexo5.csv</code> e <code>tabela_anexo_5_sefaz.csv</code> como complemento da auditoria;</li>
+<li>geração de relatórios por laboratório, NCM ou faixa de preço;</li>
+<li>criação de view consolidada para uso em dashboard de auditoria.</li>
+</ul>
+
+    </div>
+</body>
+</html>

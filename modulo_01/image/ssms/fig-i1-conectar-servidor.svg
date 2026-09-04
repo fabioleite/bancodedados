@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 460" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="560" height="460" fill="#ffffff"/>
+  <!-- janela do diálogo -->
+  <rect x="10" y="10" width="540" height="440" fill="#f3f3f3" stroke="#b0b0b0"/>
+  <rect x="10" y="10" width="540" height="28" fill="#3c5a78"/>
+  <text x="24" y="29" fill="#ffffff" font-size="13">Conectar ao Servidor</text>
+  <text x="524" y="28" fill="#ffffff" font-size="13">✕</text>
+
+  <!-- logo simplificado -->
+  <rect x="26" y="52" width="40" height="40" fill="#cfe0ee" stroke="#8fa9c2"/>
+  <text x="34" y="76" font-size="18" fill="#3c5a78">DB</text>
+
+  <text x="80" y="66" font-size="12" fill="#222" font-weight="bold">SQL Server</text>
+  <text x="80" y="84" font-size="11" fill="#555">Preencha as informações abaixo para conectar-se ao servidor.</text>
+
+  <!-- Tipo de servidor -->
+  <text x="26" y="122" font-size="11" fill="#333">Tipo de servidor:</text>
+  <rect x="220" y="108" width="300" height="20" fill="#ffffff" stroke="#a0a0a0"/>
+  <text x="228" y="122" font-size="11" fill="#222">Mecanismo de Banco de Dados</text>
+  <polygon points="505,113 513,113 509,120" fill="#666"/>
+
+  <!-- Nome do servidor -->
+  <text x="26" y="154" font-size="11" fill="#333">Nome do servidor:</text>
+  <rect x="220" y="140" width="300" height="20" fill="#ffffff" stroke="#2f6db3"/>
+  <text x="228" y="154" font-size="11" fill="#222">SRV-FISCAL01</text>
+
+  <!-- Autenticação -->
+  <text x="26" y="186" font-size="11" fill="#333">Autenticação:</text>
+  <rect x="220" y="172" width="300" height="20" fill="#ffffff" stroke="#a0a0a0"/>
+  <text x="228" y="186" font-size="11" fill="#222">Autenticação do Windows</text>
+  <polygon points="505,177 513,177 509,184" fill="#666"/>
+
+  <!-- Usuário/senha desabilitados -->
+  <text x="26" y="218" font-size="11" fill="#999">Nome de usuário:</text>
+  <rect x="220" y="204" width="300" height="20" fill="#e9e9e9" stroke="#c8c8c8"/>
+  <text x="228" y="218" font-size="11" fill="#999">dominio\auditor.silva</text>
+
+  <text x="26" y="250" font-size="11" fill="#999">Senha:</text>
+  <rect x="220" y="236" width="300" height="20" fill="#e9e9e9" stroke="#c8c8c8"/>
+  <text x="228" y="250" font-size="11" fill="#999">••••••••••</text>
+
+  <rect x="220" y="264" width="14" height="14" fill="#ffffff" stroke="#999"/>
+  <text x="240" y="275" font-size="11" fill="#999">Lembrar senha</text>
+
+  <!-- separador -->
+  <line x1="26" y1="300" x2="520" y2="300" stroke="#d5d5d5"/>
+
+  <!-- botões -->
+  <rect x="300" y="316" width="100" height="26" fill="#3c5a78" stroke="#2b4560"/>
+  <text x="330" y="333" font-size="12" fill="#ffffff">Conectar</text>
+
+  <rect x="410" y="316" width="100" height="26" fill="#ffffff" stroke="#a0a0a0"/>
+  <text x="440" y="333" font-size="12" fill="#333">Cancelar</text>
+
+  <rect x="26" y="316" width="120" height="26" fill="#ffffff" stroke="#a0a0a0"/>
+  <text x="34" y="333" font-size="12" fill="#333">Opções &gt;&gt;</text>
+
+  <!-- nota explicativa -->
+  <rect x="26" y="366" width="494" height="60" fill="#fff8e1" stroke="#e2c97e"/>
+  <text x="36" y="384" font-size="11" fill="#7a5c00" font-weight="bold">💡 Dica</text>
+  <text x="36" y="400" font-size="11" fill="#5a4400">Em laboratório, use sempre "Autenticação do Windows" com o</text>
+  <text x="36" y="414" font-size="11" fill="#5a4400">login fornecido pelo professor/DBA — nunca uma senha pessoal.</text>
+</svg>

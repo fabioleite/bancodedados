@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 596" width="980" height="596">
+<defs><marker id="seta" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#5b6b7f"/></marker><marker id="bola" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto"><circle cx="5" cy="5" r="3.2" fill="#ffffff" stroke="#3c6ea5" stroke-width="1.4"/></marker></defs>
+<rect x="0" y="0" width="980" height="596" rx="0" fill="#f8f9fb"/>
+<text x="24" y="34" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="15" fill="#1f2933" font-weight="700">Qual ferramenta usar? - arvore de decisao para o trabalho de analise fiscal</text>
+<rect x="360" y="56" width="260" height="50" rx="6" fill="#eef4fd" stroke="#5b87c5" stroke-width="1.2"/>
+<text x="374" y="76" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">A pergunta ja esta clara e o volume</text>
+<text x="374" y="92" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">de dados e grande?</text>
+<path d="M360 80 H 250 V 130" fill="none" stroke="#5b6b7f" stroke-width="1.4" marker-end="url(#seta)"/>
+<text x="240" y="74" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#5b6b7f" text-anchor="end">nao - ainda estou explorando</text>
+<rect x="120" y="132" width="260" height="76" rx="6" fill="#eaf6ea" stroke="#6ea36e" stroke-width="1.2"/>
+<text x="134" y="152" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="12" fill="#1f2933" font-weight="700">SSMS - Pesquisador de Objetos</text>
+<text x="134" y="170" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">+ Selecionar 1000 Linhas Superiores</text>
+<text x="134" y="186" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">+ Diagrama de Banco de Dados</text>
+<text x="134" y="202" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">Descobrir tabelas, colunas e relacoes.</text>
+<path d="M250 208 V 238" fill="none" stroke="#5b6b7f" stroke-width="1.4" marker-end="url(#seta)"/>
+<rect x="120" y="240" width="260" height="48" rx="6" fill="#eef4fd" stroke="#5b87c5" stroke-width="1.2"/>
+<text x="134" y="260" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">Sei o que quero, mas nao domino</text>
+<text x="134" y="276" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">a sintaxe do JOIN / GROUP BY?</text>
+<path d="M250 288 V 316" fill="none" stroke="#5b6b7f" stroke-width="1.4" marker-end="url(#seta)"/>
+<rect x="120" y="318" width="260" height="86" rx="6" fill="#eaf6ea" stroke="#6ea36e" stroke-width="1.2"/>
+<text x="134" y="338" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="12" fill="#1f2933" font-weight="700">SSMS - Designer de Consultas</text>
+<text x="134" y="356" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">(Ctrl+Shift+Q) monta a consulta por cliques</text>
+<text x="134" y="372" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">e mostra o T-SQL no painel SQL.</text>
+<text x="134" y="388" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">Leia sempre o SQL antes de clicar em OK.</text>
+<path d="M250 404 V 432" fill="none" stroke="#5b6b7f" stroke-width="1.4" marker-end="url(#seta)"/>
+<rect x="120" y="434" width="260" height="96" rx="6" fill="#fdeaea" stroke="#c98b8b" stroke-width="1.2"/>
+<text x="134" y="454" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="12" fill="#1f2933" font-weight="700">Limites do Designer</text>
+<text x="134" y="472" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">Nao trabalha com CTE (WITH), EXCEPT,</text>
+<text x="134" y="488" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">INTERSECT, funcoes de janela nem WITH TIES;</text>
+<text x="134" y="504" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">reformata e pode descaracterizar SQL escrito</text>
+<text x="134" y="520" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">a mao. Consulta madura: escreva no editor.</text>
+<path d="M620 80 H 730 V 130" fill="none" stroke="#5b6b7f" stroke-width="1.4" marker-end="url(#seta)"/>
+<text x="640" y="74" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#5b6b7f">sim - vou produzir um resultado</text>
+<rect x="600" y="132" width="300" height="48" rx="6" fill="#eef4fd" stroke="#5b87c5" stroke-width="1.2"/>
+<text x="614" y="152" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">O produto final e uma listagem pontual</text>
+<text x="614" y="168" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">ou um acompanhamento que se repete?</text>
+<path d="M660 180 V 206" fill="none" stroke="#5b6b7f" stroke-width="1.4" marker-end="url(#seta)"/>
+<text x="652" y="200" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#5b6b7f" text-anchor="end">pontual</text>
+<rect x="470" y="208" width="200" height="92" rx="6" fill="#eaf6ea" stroke="#6ea36e" stroke-width="1.2"/>
+<text x="484" y="228" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="12" fill="#1f2933" font-weight="700">SSMS + Excel</text>
+<text x="484" y="246" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">Executar a consulta, conferir</text>
+<text x="484" y="262" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">o plano, copiar com cabecalhos</text>
+<text x="484" y="278" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">ou "Salvar Resultados</text>
+<text x="484" y="294" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">como..." (CSV).</text>
+<path d="M840 180 V 206" fill="none" stroke="#5b6b7f" stroke-width="1.4" marker-end="url(#seta)"/>
+<text x="848" y="200" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#5b6b7f">recorrente</text>
+<rect x="730" y="208" width="230" height="48" rx="6" fill="#eef4fd" stroke="#5b87c5" stroke-width="1.2"/>
+<text x="744" y="228" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">Quem vai consumir: eu mesmo</text>
+<text x="744" y="244" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">ou a equipe / a gestao?</text>
+<path d="M730 256 V 300" fill="none" stroke="#5b6b7f" stroke-width="1.4" marker-end="url(#seta)"/>
+<text x="716" y="294" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#5b6b7f" text-anchor="end">eu mesmo</text>
+<rect x="640" y="302" width="180" height="92" rx="6" fill="#eaf6ea" stroke="#6ea36e" stroke-width="1.2"/>
+<text x="654" y="322" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="12" fill="#1f2933" font-weight="700">Excel + Power Query</text>
+<text x="654" y="340" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">Conexao parametrizada,</text>
+<text x="654" y="356" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">etapas reproduziveis e</text>
+<text x="654" y="372" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">atualizacao com um clique.</text>
+<path d="M900 256 V 300" fill="none" stroke="#5b6b7f" stroke-width="1.4" marker-end="url(#seta)"/>
+<text x="908" y="294" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#5b6b7f">equipe</text>
+<rect x="836" y="302" width="126" height="92" rx="6" fill="#eaf6ea" stroke="#6ea36e" stroke-width="1.2"/>
+<text x="850" y="322" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="12" fill="#1f2933" font-weight="700">Power BI</text>
+<text x="850" y="340" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">Painel publicado,</text>
+<text x="850" y="356" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">com controle de</text>
+<text x="850" y="372" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">acesso e RLS.</text>
+<rect x="470" y="404" width="492" height="172" rx="6" fill="#ffffff" stroke="#7f8c9b" stroke-width="1.2"/>
+<text x="484" y="424" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="12" fill="#1f2933" font-weight="700">Regras que atravessam todos os caminhos</text>
+<text x="484" y="442" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">1. Toda ferramenta grafica termina em SQL - saber ler esse SQL e o que</text>
+<text x="484" y="458" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">    separa o operador do analista.</text>
+<text x="484" y="474" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">2. Filtre na origem: trazer a tabela inteira para o desktop e filtrar depois</text>
+<text x="484" y="490" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">    e erro tecnico e risco de sigilo.</text>
+<text x="484" y="506" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">3. O resultado que instrui procedimento fiscal deve ser reproduzivel:</text>
+<text x="484" y="522" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">    guarde a consulta, nao apenas a planilha.</text>
+<text x="484" y="538" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">4. A extracao de dado de contribuinte segue a politica de acesso do orgao</text>
+<text x="484" y="554" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">    (art. 198 do CTN e LGPD).</text>
+</svg>

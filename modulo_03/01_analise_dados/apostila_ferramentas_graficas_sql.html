@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>apostila_ferramentas_graficas_sql.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 id="apostila-%E2%80%94-ferramentas-gr%C3%A1ficas-para-an%C3%A1lise-com-sql" tabindex="-1">Apostila — Ferramentas Gráficas para Análise com SQL</h1>
+<p><strong>Curso de Banco de Dados Relacional aplicado à Fiscalização Tributária</strong>
+<strong>Módulo 10 — Recursos <em>low code</em> do SQL Server Management Studio, do Excel/Power Query e do Power BI</strong>
+<strong>SGBD: Microsoft SQL Server (T-SQL) — Banco: <code>curso_integridade_fiscal</code></strong></p>
+<hr>
+<h2 id="sum%C3%A1rio" tabindex="-1">Sumário</h2>
+<ol>
+<li>Apresentação e objetivos</li>
+<li>O princípio que organiza o módulo: toda interface gráfica termina em SQL</li>
+<li>A janela do SSMS</li>
+<li>Explorar sem digitar: Pesquisador de Objetos, scripts automáticos e grades editáveis</li>
+<li>O Designer de Consultas (<em>Query Designer</em>)</li>
+<li>O Designer de Exibições (<em>View Designer</em>)</li>
+<li>Diagramas de Banco de Dados</li>
+<li>Produtividade no editor: modelos, trechos, IntelliSense e atalhos</li>
+<li>O que fazer com o resultado: grade, texto, arquivo e exportação</li>
+<li>Planos de execução gráficos e estatísticas</li>
+<li>GitHub Copilot no SSMS</li>
+<li>Excel + Power Query</li>
+<li>Power BI Desktop</li>
+<li>Quadro comparativo e árvore de decisão</li>
+<li>Governança, sigilo fiscal e boas práticas</li>
+<li>Exercícios</li>
+<li>Referências</li>
+</ol>
+<blockquote>
+<p><strong>Sobre as figuras.</strong> As oito figuras deste módulo estão na pasta <code>figuras/</code>, em <code>.png</code> (para inserir em documentos) e em <code>.svg</code> (vetorial, para projeção e impressão). São <strong>representações esquemáticas</strong> das telas, elaboradas para fins didáticos: reproduzem a disposição dos painéis e os pontos que interessam à aula, sem serem capturas do ambiente de produção — o que também evita expor dados de contribuintes em material de curso. O arquivo <code>gerar_figuras.py</code> reproduz e permite adaptar todas elas.</p>
+</blockquote>
+<hr>
+<h2 id="1.-apresenta%C3%A7%C3%A3o-e-objetivos" tabindex="-1">1. Apresentação e objetivos</h2>
+<h3 id="1.1-por-que-este-m%C3%B3dulo-existe" tabindex="-1">1.1 Por que este módulo existe</h3>
+<p>O Módulo 9 tratou da linguagem SQL: como escrever a consulta. Este módulo trata de <strong>como chegar até ela</strong> — e de como distribuir o resultado — usando os recursos gráficos que o SQL Server Management Studio (SSMS) e as ferramentas Microsoft de análise oferecem.</p>
+<p>Há duas razões práticas para isso na administração tributária:</p>
+<ol>
+<li><strong>Curva de aprendizagem.</strong> Servidores que dominam o negócio fiscal, mas não a sintaxe, produzem consultas corretas muito mais cedo quando montam a estrutura por cliques e leem o T-SQL gerado. A interface funciona como um tradutor: o auditor pensa em termos de &quot;quero contribuinte, nota, município, somar valor e filtrar situação&quot;; a ferramenta devolve <code>SELECT ... INNER JOIN ... GROUP BY ... HAVING</code>.</li>
+<li><strong>Ciclo completo do trabalho.</strong> Uma análise fiscal não termina no <code>SELECT</code>: ela vira listagem para a ordem de serviço, planilha para conferência, painel de acompanhamento para a gerência. Excel/Power Query e Power BI são o destino natural desse resultado — e ambos, sem que o usuário perceba, também geram SQL.</li>
+</ol>
+<h3 id="1.2-objetivos-de-aprendizagem" tabindex="-1">1.2 Objetivos de aprendizagem</h3>
+<p>Ao final do módulo, o participante deverá ser capaz de:</p>
+<ol>
+<li>Explorar um banco desconhecido pelo Pesquisador de Objetos e gerar scripts a partir de menus de contexto.</li>
+<li>Construir consultas com junções, agrupamento, ordenação e filtros no <strong>Designer de Consultas</strong>, e <strong>ler criticamente</strong> o T-SQL produzido.</li>
+<li>Reconhecer as <strong>limitações</strong> do construtor gráfico e identificar quando passar a escrever a consulta à mão.</li>
+<li>Ler um <strong>diagrama de banco de dados</strong> para descobrir caminhos de junção e conferir a existência de chaves estrangeiras.</li>
+<li>Interpretar um <strong>plano de execução gráfico</strong> o suficiente para distinguir varredura de busca e detectar predicados não <em>sargable</em>.</li>
+<li>Usar os recursos de produtividade do editor (modelos, trechos, IntelliSense, formatação, atalhos) e exportar resultados com segurança.</li>
+<li>Utilizar o <strong>Copilot no SSMS</strong> como assistente de redação, mantendo a responsabilidade técnica e o sigilo fiscal.</li>
+<li>Conectar <strong>Excel/Power Query</strong> e <strong>Power BI</strong> ao SQL Server, verificar o <em>query folding</em> e escolher entre Importação e DirectQuery.</li>
+<li>Escolher a ferramenta adequada a cada situação e aplicar as regras de governança de dados fiscais.</li>
+</ol>
+<h3 id="1.3-pr%C3%A9-requisitos" tabindex="-1">1.3 Pré-requisitos</h3>
+<p>Módulos 1 a 9. É indispensável o domínio dos conceitos do Módulo 9 (junções, agregação, <code>WHERE</code> × <code>HAVING</code>, <code>NULL</code>), porque <strong>a interface gráfica não protege contra erro conceitual</strong> — ela apenas o produz mais depressa.</p>
+<hr>
+<h2 id="2.-o-princ%C3%ADpio-que-organiza-o-m%C3%B3dulo" tabindex="-1">2. O princípio que organiza o módulo</h2>
+<blockquote>
+<p><strong>Toda ferramenta gráfica de análise termina em SQL.</strong>
+O Designer de Consultas escreve <code>SELECT</code>. O Power Query, quando bem usado, traduz cliques em <code>SELECT</code>. O Power BI em DirectQuery envia <code>SELECT</code> a cada visual. A diferença entre o operador e o analista não está em qual botão aperta, mas em <strong>saber ler o SQL que o botão gerou</strong>.</p>
+</blockquote>
+<p>Três consequências práticas orientam todo o restante:</p>
+<table>
+<thead>
+<tr>
+<th>Consequência</th>
+<th>Implicação para o trabalho fiscal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O SQL gerado é sempre visível</td>
+<td>Nenhuma consulta deve instruir procedimento fiscal sem que seu SQL tenha sido lido e compreendido</td>
+</tr>
+<tr>
+<td>O SQL gerado é frequentemente subótimo</td>
+<td>A GUI monta o que é sintaticamente correto, não o que é eficiente; para volume grande, revise</td>
+</tr>
+<tr>
+<td>O SQL gerado é reproduzível</td>
+<td>Guarde o script, não apenas a planilha: é o que permite refazer a apuração e sustentá-la em impugnação</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="3.-a-janela-do-ssms" tabindex="-1">3. A janela do SSMS</h2>
+<p><img src="figuras/fig01_ssms_layout.png" alt="Janela do SSMS"></p>
+<p><strong>Figura 1 — Áreas da janela do SSMS.</strong> À esquerda, o Pesquisador de Objetos; ao centro, o editor de consultas com realce de sintaxe e IntelliSense; abaixo, o painel de resultados com suas abas (Resultados, Mensagens, Estatísticas do Cliente, Plano de Execução).</p>
+<p>Quatro áreas concentram o trabalho:</p>
+<table>
+<thead>
+<tr>
+<th>Área</th>
+<th>Atalho</th>
+<th>Para que serve na prática fiscal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pesquisador de Objetos</td>
+<td><code>F8</code></td>
+<td>Descobrir tabelas, colunas, tipos, chaves e índices de uma base recebida</td>
+</tr>
+<tr>
+<td>Editor de Consultas</td>
+<td><code>Ctrl+N</code></td>
+<td>Escrever e executar T-SQL</td>
+</tr>
+<tr>
+<td>Painel de Resultados</td>
+<td><code>Ctrl+R</code> alterna</td>
+<td>Conferir a saída, os planos e as estatísticas</td>
+</tr>
+<tr>
+<td>Barra de status</td>
+<td>—</td>
+<td>Confirmar <strong>em qual servidor e em qual banco</strong> a consulta está rodando</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Hábito de segurança.</strong> Antes de executar qualquer coisa, confira na barra de status e no seletor da barra de ferramentas o servidor e o banco ativos. Rodar em produção uma consulta pensada para o ambiente de estudos é um acidente comum — e, quando a instrução não é um <code>SELECT</code>, é um acidente caro.</p>
+</blockquote>
+<h3 id="3.1-vers%C3%B5es-e-o-que-muda-entre-elas" tabindex="-1">3.1 Versões e o que muda entre elas</h3>
+<p>O SSMS é distribuído separadamente do mecanismo de banco de dados e evolui em ritmo próprio:</p>
+<table>
+<thead>
+<tr>
+<th>Versão</th>
+<th>Marco relevante</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>18.0</td>
+<td>Removeu os Diagramas de Banco de Dados</td>
+</tr>
+<tr>
+<td>18.1</td>
+<td><strong>Restaurou</strong> os Diagramas de Banco de Dados após reação da comunidade</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Primeira versão de 64 bits baseada no shell do Visual Studio 2022; introduziu o Copilot</td>
+</tr>
+<tr>
+<td>22.x</td>
+<td>Baseada no Visual Studio 2026; conclusão de código e chat do Copilot em disponibilidade geral (22.4.1, março/2026)</td>
+</tr>
+<tr>
+<td>22.7 (jun/2026)</td>
+<td>Formatação nativa de T-SQL, modo agente do Copilot e comparação gráfica de esquema, em prévia</td>
+</tr>
+</tbody>
+</table>
+<p>Os recursos <em>low code</em> clássicos — Designer de Consultas, Designer de Exibições, Diagramas, Modelos — permanecem disponíveis em todas essas versões. Confirme a versão instalada em <strong>Ajuda ▸ Sobre</strong>, porque a redação exata dos menus varia.</p>
+<hr>
+<h2 id="4.-explorar-sem-digitar" tabindex="-1">4. Explorar sem digitar</h2>
+<h3 id="4.1-pesquisador-de-objetos" tabindex="-1">4.1 Pesquisador de Objetos</h3>
+<p>O Pesquisador expõe a estrutura completa do banco em árvore. Para o auditor que recebe uma base nova, a sequência produtiva é sempre a mesma:</p>
+<ol>
+<li><strong>Tabelas</strong> — quais entidades existem e como se chamam;</li>
+<li><strong>Colunas</strong> — tipos, nulidade e o que é chave (<code>PK</code>, <code>FK</code> aparecem ao lado do nome);</li>
+<li><strong>Chaves</strong> — quais relacionamentos foram efetivamente declarados;</li>
+<li><strong>Índices</strong> — o que está indexado (indica por onde é barato filtrar);</li>
+<li><strong>Exibições</strong> — o que a área de TI já preparou como visão consolidada.</li>
+</ol>
+<p>Dois recursos pouco conhecidos e muito úteis:</p>
+<ul>
+<li><strong>Detalhes do Pesquisador de Objetos</strong> (<code>F7</code>): abre um painel em forma de lista com colunas de metadados (data de criação, número de linhas, espaço em disco). Permite ordenar as tabelas por quantidade de linhas — a maneira mais rápida de descobrir onde estão os grandes volumes antes de escrever a primeira consulta.</li>
+<li><strong>Filtro</strong> (botão direito sobre a pasta ▸ <em>Filtro</em> ▸ <em>Configurações de Filtro</em>): em bancos com centenas de objetos, filtrar por nome contendo <code>efd</code> ou <code>nfe</code> economiza rolagem.</li>
+</ul>
+<h3 id="4.2-scripts-gerados-por-menu" tabindex="-1">4.2 Scripts gerados por menu</h3>
+<p>Botão direito sobre uma tabela ▸ <strong>Script da Tabela como</strong> ▸ <code>SELECT em</code> / <code>INSERT em</code> / <code>UPDATE em</code> / <code>CREATE em</code> ▸ <em>Nova Janela do Editor de Consultas</em>.</p>
+<p>O SSMS escreve o comando com <strong>todas as colunas nomeadas e qualificadas</strong>. É o caminho mais rápido para obter a lista completa de colunas sem digitação — e, portanto, para abandonar o <code>SELECT *</code> sem esforço:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Gerado por: Script da Tabela como &gt; SELECT em</span>
+<span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">1000</span>) [id_nfe]
+      ,[chave_acesso]
+      ,[numero]
+      ,[serie]
+      ,[data_emissao]
+      ,[id_emitente]
+      ,[id_destinatario]
+      ,[tipo_operacao]
+      ,[valor_total]
+      ,[valor_icms]
+      ,[situacao]
+  <span class="hljs-keyword">FROM</span> [curso_integridade_fiscal].[dbo].[nfe];
+</div></code></pre>
+<p>O mesmo menu gera o <code>CREATE TABLE</code> completo — útil para documentar em um relatório de auditoria de sistemas a estrutura exata que existia na data da diligência.</p>
+<h3 id="4.3-selecionar-1000-linhas-superiores-e-editar-200-linhas-superiores" tabindex="-1">4.3 Selecionar 1000 Linhas Superiores e Editar 200 Linhas Superiores</h3>
+<ul>
+<li><strong>Selecionar 1000 Linhas Superiores</strong> executa imediatamente um <code>SELECT TOP (1000)</code>. É a inspeção inicial de conteúdo: formatos de data, presença de nulos, padrões de preenchimento, uso de maiúsculas nas razões sociais.</li>
+<li><strong>Editar 200 Linhas Superiores</strong> abre uma grade <strong>editável</strong>. Em ambiente de produção fiscal, isso deve ser encarado com reserva: altera dados sem registro de script e sem transação explícita. Seu valor didático é outro — nessa janela, o menu <strong>Consultar Designer</strong> habilita os mesmos painéis do construtor gráfico da seção 5, aplicados à tabela aberta.</li>
+</ul>
+<blockquote>
+<p><strong>Recomendação para a SEFAZ.</strong> Em bases de produção, o perfil de acesso do auditor deve ser somente leitura. A grade editável não deve ser o caminho de correção de dado algum: correções se fazem por script versionado, com <code>BEGIN TRAN</code>, conferência e <code>COMMIT</code> — como visto no Módulo 8.</p>
+</blockquote>
+<hr>
+<h2 id="5.-o-designer-de-consultas-(query-designer)" tabindex="-1">5. O Designer de Consultas (<em>Query Designer</em>)</h2>
+<p>É o recurso <em>low code</em> central do SSMS: constrói consultas por arrastar-e-soltar e por marcação em grade.</p>
+<p><img src="figuras/fig02_query_designer.png" alt="Designer de Consultas"></p>
+<p><strong>Figura 2 — Os painéis do Designer de Consultas.</strong> No topo, o painel de diagrama com as tabelas e as junções; no meio, o painel de critérios; embaixo, o painel SQL com o código gerado.</p>
+<h3 id="5.1-como-abrir" tabindex="-1">5.1 Como abrir</h3>
+<table>
+<thead>
+<tr>
+<th>Caminho</th>
+<th>Observação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Menu <strong>Consulta ▸ Design Query in Editor…</strong> (<code>Ctrl+Shift+Q</code>)</td>
+<td>Principal. A consulta montada é inserida na janela do editor ao clicar em OK</td>
+</tr>
+<tr>
+<td>Selecionar um trecho de SQL no editor e pressionar <code>Ctrl+Shift+Q</code></td>
+<td>Abre o designer <strong>já com a consulta selecionada</strong> carregada — excelente para <em>entender</em> uma consulta herdada visualmente</td>
+</tr>
+<tr>
+<td>Grade de <strong>Editar 200 Linhas Superiores</strong> ▸ menu <strong>Consultar Designer ▸ Painel</strong></td>
+<td>Habilita os painéis Diagrama/Critérios/SQL sobre a tabela aberta</td>
+</tr>
+<tr>
+<td><strong>Novo Modo de Exibição</strong> (seção 6)</td>
+<td>O mesmo designer, com destino em <code>CREATE VIEW</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="5.2-os-quatro-pain%C3%A9is" tabindex="-1">5.2 Os quatro painéis</h3>
+<table>
+<thead>
+<tr>
+<th>Painel</th>
+<th>Função</th>
+<th>Gera</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Diagrama</strong></td>
+<td>Escolher tabelas e definir junções</td>
+<td><code>FROM</code> e <code>JOIN … ON</code></td>
+</tr>
+<tr>
+<td><strong>Critérios</strong></td>
+<td>Escolher colunas, alias, ordenação, agrupamento e filtros</td>
+<td><code>SELECT</code>, <code>WHERE</code>, <code>GROUP BY</code>, <code>HAVING</code>, <code>ORDER BY</code></td>
+</tr>
+<tr>
+<td><strong>SQL</strong></td>
+<td>Exibir e editar o código</td>
+<td>a consulta inteira</td>
+</tr>
+<tr>
+<td><strong>Resultados</strong></td>
+<td>Executar e conferir</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Os painéis são <strong>bidirecionais</strong>: editar o SQL atualiza o diagrama e a grade; alterar a grade reescreve o SQL. Alterne a exibição pelos quatro primeiros botões da barra do designer.</p>
+<h3 id="5.3-receita-de-uso-%E2%80%94-cruzamento-contribuinte-%C3%97-nf-e-%C3%97-munic%C3%ADpio" tabindex="-1">5.3 Receita de uso — cruzamento contribuinte × NF-e × município</h3>
+<ol>
+<li><strong>Adicionar Tabela…</strong> e incluir <code>contribuinte</code>, <code>nfe</code> e <code>municipio</code>. As junções aparecem automaticamente quando existem chaves estrangeiras declaradas — se <strong>não</strong> aparecerem, é sinal de que a FK não existe no banco (ver seção 7); nesse caso, arraste a coluna de uma tabela sobre a coluna correspondente da outra para criar a junção manualmente.</li>
+<li>No diagrama, <strong>marque as caixas de seleção</strong> das colunas desejadas. Cada marcação cria uma linha no painel de critérios.</li>
+<li>No painel de critérios, preencha:
+<ul>
+<li><strong>Alias</strong> — nome de exibição da coluna (<code>total_emitido</code>);</li>
+<li><strong>Saída</strong> — desmarque quando a coluna servir apenas para filtrar;</li>
+<li><strong>Tipo de Classificação / Ordem</strong> — geram o <code>ORDER BY</code>;</li>
+<li><strong>Agrupar por</strong> — muda a natureza da consulta (ver 5.4);</li>
+<li><strong>Filtro</strong> — gera <code>WHERE</code> ou <code>HAVING</code>, conforme o caso.</li>
+</ul>
+</li>
+<li>Confira o painel SQL. <strong>Sempre.</strong></li>
+<li><strong>Verificar Sintaxe SQL</strong> e, então, <strong>OK</strong>.</li>
+</ol>
+<h3 id="5.4-o-mapa-gui-%E2%86%92-sql-(a-tabela-que-interessa-memorizar)" tabindex="-1">5.4 O mapa GUI → SQL (a tabela que interessa memorizar)</h3>
+<p>Ao acionar o botão <strong>Agrupar por (Σ)</strong>, o painel de critérios ganha a coluna &quot;Agrupar por&quot;, cujos valores se traduzem assim:</p>
+<table>
+<thead>
+<tr>
+<th>Valor na coluna &quot;Agrupar por&quot;</th>
+<th>T-SQL gerado</th>
+<th>Efeito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Agrupar por</code></td>
+<td>coluna entra no <code>GROUP BY</code></td>
+<td>define o nível de agregação</td>
+</tr>
+<tr>
+<td><code>Soma</code>, <code>Média</code>, <code>Contagem</code>, <code>Mín</code>, <code>Máx</code>, <code>Contagem Distinta</code></td>
+<td><code>SUM()</code>, <code>AVG()</code>, <code>COUNT()</code>, <code>MIN()</code>, <code>MAX()</code>, <code>COUNT(DISTINCT …)</code></td>
+<td>agrega</td>
+</tr>
+<tr>
+<td><code>Onde</code></td>
+<td>condição vai para o <strong><code>WHERE</code></strong></td>
+<td>filtra <strong>linhas</strong>, antes de agrupar</td>
+</tr>
+<tr>
+<td><code>Expressão</code></td>
+<td>expressão livre na lista de seleção</td>
+<td>cálculos</td>
+</tr>
+<tr>
+<td>filtro em coluna com função agregada</td>
+<td>condição vai para o <strong><code>HAVING</code></strong></td>
+<td>filtra <strong>grupos</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Esse quadro é a materialização visual da distinção <code>WHERE</code> × <code>HAVING</code> estudada no Módulo 9: na interface, é literalmente a diferença entre escrever o filtro em uma linha marcada como <code>Onde</code> e em uma linha marcada como <code>Soma</code>.</p>
+<h3 id="5.5-jun%C3%A7%C3%B5es-externas-pela-interface" tabindex="-1">5.5 Junções externas pela interface</h3>
+<p>Clique com o botão direito <strong>sobre a linha de junção</strong> no diagrama:</p>
+<table>
+<thead>
+<tr>
+<th>Opção marcada</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nenhuma</td>
+<td><code>INNER JOIN</code></td>
+</tr>
+<tr>
+<td><em>Selecionar Todas as Linhas de <code>contribuinte</code></em></td>
+<td><code>LEFT OUTER JOIN</code> (preserva a tabela da esquerda)</td>
+</tr>
+<tr>
+<td><em>Selecionar Todas as Linhas de <code>nfe</code></em></td>
+<td><code>RIGHT OUTER JOIN</code></td>
+</tr>
+<tr>
+<td>ambas</td>
+<td><code>FULL OUTER JOIN</code></td>
+</tr>
+</tbody>
+</table>
+<p>O losango sobre a linha muda de desenho conforme a escolha, indicando o lado preservado. É a forma mais rápida de montar o padrão de <strong>antijunção</strong> (<code>LEFT JOIN</code> + filtro <code>É Nulo</code> na chave da tabela da direita) que sustenta toda a malha fiscal de omissões.</p>
+<blockquote>
+<p><strong>Cuidado com o filtro na tabela opcional.</strong> Ao montar um <code>LEFT JOIN</code> pela interface e digitar um filtro sobre coluna da tabela da direita, o designer o coloca no <code>WHERE</code> — o que, como visto no Módulo 9 (seção 11.5), <strong>anula a junção externa</strong>. Nesse caso é preciso corrigir manualmente no painel SQL, movendo a condição para o <code>ON</code>. É um dos pontos em que a interface leva ao erro se o conceito não estiver claro.</p>
+</blockquote>
+<h3 id="5.6-limita%C3%A7%C3%B5es-do-designer-%E2%80%94-quando-parar-de-us%C3%A1-lo" tabindex="-1">5.6 Limitações do Designer — quando parar de usá-lo</h3>
+<p>O construtor gráfico é uma ferramenta de aprendizagem e de montagem inicial, não um ambiente de produção. Ele <strong>não</strong> trabalha com:</p>
+<ul>
+<li><strong>CTEs</strong> (<code>WITH …</code>), inclusive recursivas;</li>
+<li>operadores de conjunto <code>UNION</code>, <code>INTERSECT</code>, <code>EXCEPT</code>;</li>
+<li><strong>funções de janela</strong> (<code>ROW_NUMBER</code>, <code>SUM() OVER</code>);</li>
+<li><code>TOP … WITH TIES</code>, <code>OFFSET/FETCH</code>;</li>
+<li>variáveis (<code>DECLARE @periodo …</code>), lote com <code>GO</code>, comentários que ele preserve fielmente;</li>
+<li>consultas com subconsultas complexas — aceita algumas, mas com frequência as reescreve.</li>
+</ul>
+<p>Além disso, ele <strong>reformata</strong> o SQL: identação, parênteses e quebras de linha são refeitos, e comentários podem ser perdidos. Abrir uma consulta madura no designer é um bom modo de descaracterizá-la.</p>
+<blockquote>
+<p><strong>Regra prática:</strong> monte no designer, refine no editor. Uma vez que a consulta ganhe CTE, função de janela ou operador de conjunto, ela deixou de ser objeto do construtor gráfico.</p>
+</blockquote>
+<hr>
+<h2 id="6.-o-designer-de-exibi%C3%A7%C3%B5es-(view-designer)" tabindex="-1">6. O Designer de Exibições (<em>View Designer</em>)</h2>
+<p>Pesquisador de Objetos ▸ <strong>Exibições</strong> ▸ botão direito ▸ <strong>Nova Exibição…</strong> abre o mesmo designer, com destino em <code>CREATE VIEW</code>.</p>
+<p>Uma exibição (<code>VIEW</code>) é uma consulta nomeada e armazenada. Para a fiscalização, o valor é grande:</p>
+<ul>
+<li><strong>padroniza</strong> definições que não podem variar entre auditores — o que conta como &quot;saída autorizada&quot;, o que é &quot;documento regular&quot; na EFD;</li>
+<li><strong>simplifica</strong> o consumo por Excel e Power BI, que passam a enxergar uma tabela única em vez de cinco junções;</li>
+<li><strong>protege</strong>, quando combinada com permissões: concede-se acesso à exibição, não às tabelas de base.</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Exibição-padrão do curso, usada pelas ferramentas de análise</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> dbo.vw_nfe_saidas <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span> n.id_nfe,
+       n.chave_acesso,
+       n.data_emissao,
+       n.valor_total,
+       n.valor_icms,
+       n.situacao,
+       c.id_contribuinte,
+       c.cnpj,
+       c.razao_social,
+       c.regime_tributario,
+       m.nome         <span class="hljs-keyword">AS</span> municipio,
+       m.regiao_fiscal
+<span class="hljs-keyword">FROM</span>   dbo.nfe          <span class="hljs-keyword">AS</span> n
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.municipio    <span class="hljs-keyword">AS</span> m <span class="hljs-keyword">ON</span> m.id_municipio    <span class="hljs-operator">=</span> c.id_municipio
+<span class="hljs-keyword">WHERE</span>  n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>;
+</div></code></pre>
+<blockquote>
+<p>Exibições comuns <strong>não</strong> melhoram desempenho por si sós — são substituídas textualmente na consulta que as usa. Ganho de desempenho exige exibição <strong>indexada</strong> (<code>WITH SCHEMABINDING</code> + índice clusterizado), assunto de outro módulo.</p>
+</blockquote>
+<hr>
+<h2 id="7.-diagramas-de-banco-de-dados" tabindex="-1">7. Diagramas de Banco de Dados</h2>
+<p><img src="figuras/fig03_diagrama_bd.png" alt="Diagrama de Banco de Dados"></p>
+<p><strong>Figura 3 — Diagrama do banco <code>curso_integridade_fiscal</code>.</strong> Cada caixa é uma tabela; cada linha, uma chave estrangeira, com o símbolo de chave no lado &quot;um&quot; e a seta no lado &quot;muitos&quot;.</p>
+<p>Pesquisador de Objetos ▸ <strong>Diagramas de Banco de Dados</strong> ▸ botão direito ▸ <strong>Novo Diagrama de Banco de Dados</strong> ▸ adicionar as tabelas de interesse.</p>
+<p>Para o trabalho fiscal, o diagrama responde a duas perguntas que antecedem qualquer consulta:</p>
+<ol>
+<li><strong>Por onde estas tabelas se ligam?</strong> — o caminho de junção fica visível, e com ele a resposta sobre quantos <code>JOIN</code> serão necessários para ir de <code>auto_infracao</code> até <code>municipio</code>.</li>
+<li><strong>A integridade referencial existe de fato?</strong> — se duas tabelas que logicamente se relacionam não têm linha entre si, a FK <strong>não foi declarada</strong>. Isso significa que o banco aceita <code>id_contribuinte</code> órfão em <code>efd_c100</code>, e que o cruzamento pode perder linhas silenciosamente. Achado desse tipo é, ele próprio, resultado de auditoria de sistemas.</li>
+</ol>
+<p>Observações operacionais:</p>
+<ul>
+<li>Exige que o banco tenha um proprietário válido; se o SSMS reclamar de &quot;objetos de diagrama de banco de dados&quot;, peça ao administrador que execute a instalação de suporte a diagramas.</li>
+<li>Recursos úteis do menu de contexto: <em>Nomes de Coluna</em> (alterna entre nome apenas e nome+tipo), <em>Organizar Tabelas</em>, <em>Copiar Diagrama para a Área de Transferência</em> (para colar no relatório) e <em>Gerar Script de Alteração</em>.</li>
+<li><strong>Atenção:</strong> o diagrama é uma superfície de <em>edição</em>. Arrastar uma coluna ou apagar uma linha pode gerar alteração real de esquema. Em produção, abra-o para ler — e feche sem salvar.</li>
+</ul>
+<hr>
+<h2 id="8.-produtividade-no-editor" tabindex="-1">8. Produtividade no editor</h2>
+<p>Não é <em>low code</em> no sentido estrito, mas reduz drasticamente a digitação.</p>
+<table>
+<thead>
+<tr>
+<th>Recurso</th>
+<th>Como acionar</th>
+<th>Uso na fiscalização</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pesquisador de Modelos</strong></td>
+<td><code>Ctrl+Alt+T</code></td>
+<td>Modelos prontos de <code>CREATE</code>, <code>ALTER</code>, backup etc.</td>
+</tr>
+<tr>
+<td><strong>Preencher parâmetros do modelo</strong></td>
+<td><code>Ctrl+Shift+M</code></td>
+<td>Abre caixa de diálogo para substituir os <code>&lt;parâmetro, tipo, valor&gt;</code> do modelo</td>
+</tr>
+<tr>
+<td><strong>Trechos (snippets)</strong></td>
+<td><code>Ctrl+K, Ctrl+X</code></td>
+<td>Inserir esqueletos de <code>SELECT</code>, <code>INSERT</code>, <code>BEGIN TRAN</code></td>
+</tr>
+<tr>
+<td><strong>Circundar com</strong></td>
+<td><code>Ctrl+K, Ctrl+S</code></td>
+<td>Envolver a seleção em <code>BEGIN…END</code>, <code>IF</code>, <code>WHILE</code></td>
+</tr>
+<tr>
+<td><strong>IntelliSense</strong></td>
+<td>automático; <code>Ctrl+Espaço</code> força</td>
+<td>Completar nomes de tabelas e colunas; <code>Ctrl+Shift+R</code> atualiza o cache local após um <code>ALTER TABLE</code></td>
+</tr>
+<tr>
+<td><strong>Comentar / descomentar</strong></td>
+<td><code>Ctrl+K, Ctrl+C</code> / <code>Ctrl+K, Ctrl+U</code></td>
+<td>Testar variações da consulta</td>
+</tr>
+<tr>
+<td><strong>Formatar documento</strong></td>
+<td><code>Ctrl+K, Ctrl+D</code> (SSMS 22.7+, prévia)</td>
+<td>Padronizar a identação do T-SQL</td>
+</tr>
+<tr>
+<td><strong>Analisar (sem executar)</strong></td>
+<td><code>Ctrl+F5</code></td>
+<td>Validar sintaxe antes de rodar consulta pesada</td>
+</tr>
+<tr>
+<td><strong>Executar / Cancelar</strong></td>
+<td><code>F5</code> / <code>Alt+Break</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Alternar resultado grade/texto/arquivo</strong></td>
+<td><code>Ctrl+D</code> / <code>Ctrl+T</code> / <code>Ctrl+Shift+F</code></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Modelos personalizados são um instrumento de padronização institucional.</strong> Um modelo de &quot;consulta de malha fiscal&quot; com o cabeçalho de identificação (matrícula, número da OS, período, base legal) e a estrutura da consulta garante que toda extração fique documentada:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- =========================================================</span>
+<span class="hljs-comment">-- Ordem de Servico....: &lt;numero_os, varchar(20), OS-2025-00000&gt;</span>
+<span class="hljs-comment">-- Auditor.............: &lt;matricula, int, 0&gt;</span>
+<span class="hljs-comment">-- Periodo de apuracao.: &lt;periodo, char(6), 202501&gt;</span>
+<span class="hljs-comment">-- Objeto..............: &lt;objetivo, varchar(200), descrever a hipotese verificada&gt;</span>
+<span class="hljs-comment">-- Data de extracao....: (preenchida na execucao)</span>
+<span class="hljs-comment">-- =========================================================</span>
+<span class="hljs-keyword">SELECT</span> ...
+</div></code></pre>
+<hr>
+<h2 id="9.-o-que-fazer-com-o-resultado" tabindex="-1">9. O que fazer com o resultado</h2>
+<table>
+<thead>
+<tr>
+<th>Necessidade</th>
+<th>Caminho</th>
+<th>Cuidado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conferir na tela</td>
+<td>Resultados em Grade (<code>Ctrl+D</code>)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Colar em e-mail/documento</td>
+<td>Botão direito ▸ <em>Copiar com Cabeçalhos</em> (<code>Ctrl+Shift+C</code>)</td>
+<td>Confira se o destinatário pode receber o dado</td>
+</tr>
+<tr>
+<td>Gerar arquivo para o processo</td>
+<td>Botão direito ▸ <em>Salvar Resultados como…</em> (CSV)</td>
+<td>CSV não guarda tipos: valores e datas podem ser reinterpretados pelo Excel</td>
+</tr>
+<tr>
+<td>Resultado grande e recorrente</td>
+<td>Assistente de <strong>Importação e Exportação de Dados</strong></td>
+<td>Permite destino Excel, CSV ou outro banco</td>
+</tr>
+<tr>
+<td>Dados para instruir auto de infração</td>
+<td>Script de <code>INSERT</code> via <em>Gerar Scripts ▸ Tipos de dados a serem gerados: Somente dados</em></td>
+<td>Produz evidência reprodutível</td>
+</tr>
+<tr>
+<td>Publicar para a equipe</td>
+<td>Exibição + Power BI (seção 13)</td>
+<td>Aplique segurança em nível de linha</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Armadilha do CSV com CNPJ.</strong> Ao abrir no Excel um CSV com a coluna <code>cnpj</code>, os zeros à esquerda desaparecem e a coluna vira número. Isso já invalidou muitos cruzamentos. Soluções: importar pelo Power Query definindo o tipo como texto (seção 12), ou exportar a coluna já formatada com máscara no próprio SQL.</p>
+</blockquote>
+<hr>
+<h2 id="10.-planos-de-execu%C3%A7%C3%A3o-gr%C3%A1ficos" tabindex="-1">10. Planos de execução gráficos</h2>
+<p><img src="figuras/fig04_plano_execucao.png" alt="Plano de execução"></p>
+<p><strong>Figura 4 — Plano de execução real, com sugestão de índice ausente.</strong> O fluxo de dados corre da direita para a esquerda; a espessura das setas é proporcional ao número de linhas.</p>
+<table>
+<thead>
+<tr>
+<th>Recurso</th>
+<th>Atalho</th>
+<th>O que entrega</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Exibir Plano de Execução Estimado</td>
+<td><code>Ctrl+L</code></td>
+<td>Plano previsto, <strong>sem</strong> executar a consulta</td>
+</tr>
+<tr>
+<td>Incluir Plano de Execução Real</td>
+<td><code>Ctrl+M</code></td>
+<td>Plano com contagens reais, após executar</td>
+</tr>
+<tr>
+<td>Estatísticas do Cliente</td>
+<td><code>Shift+Alt+S</code></td>
+<td>Comparação entre execuções (tempo, pacotes, linhas)</td>
+</tr>
+<tr>
+<td>Estatísticas de Consulta Dinâmica</td>
+<td>menu Consulta</td>
+<td>Animação do fluxo durante a execução — excelente em sala de aula</td>
+</tr>
+</tbody>
+</table>
+<p><strong>O mínimo a saber ler:</strong></p>
+<ol>
+<li><strong>Busca (Seek)</strong> usa índice para ir direto às linhas; <strong>Verificação (Scan)</strong> lê tudo. Em tabelas de documentos fiscais com milhões de linhas, a diferença decide se a consulta roda em segundos ou em horas.</li>
+<li><strong>Setas grossas</strong> significam muitas linhas trafegando entre operadores — procure filtrar antes.</li>
+<li><strong>Estimadas × Reais</strong> muito diferentes indicam estatísticas desatualizadas ou predicado que impede o uso de índice, tipicamente por aplicar função à coluna filtrada (<code>YEAR(data_emissao) = 2025</code>, <code>LEFT(cnpj,8) = '12345678'</code>).</li>
+<li>A faixa verde de <strong>índice ausente</strong> é sugestão automática do otimizador: útil como pista, jamais aplicada diretamente em produção sem avaliação de impacto em gravação e espaço.</li>
+</ol>
+<blockquote>
+<p><strong>Exercício demonstrativo clássico.</strong> Execute lado a lado, com <code>Ctrl+M</code> ligado, a versão com <code>NOT IN</code> sobre coluna anulável e a versão com <code>NOT EXISTS</code> da mesma consulta de omissão de escrituração (Módulo 9, seção 16.1). Compare custo relativo, operadores e número de leituras. Nada convence mais rápido sobre a importância da forma de escrever.</p>
+</blockquote>
+<hr>
+<h2 id="11.-github-copilot-no-ssms" tabindex="-1">11. GitHub Copilot no SSMS</h2>
+<p><img src="figuras/fig05_copilot_ssms.png" alt="Copilot no SSMS"></p>
+<p><strong>Figura 5 — Chat do Copilot ao lado do editor, com o contexto do servidor e do banco.</strong></p>
+<h3 id="11.1-o-que-oferece" tabindex="-1">11.1 O que oferece</h3>
+<ul>
+<li><strong>Conclusão de código em linha:</strong> sugere o restante da instrução enquanto se digita; <code>Tab</code> aceita.</li>
+<li><strong>Chat com contexto de servidor e banco:</strong> conhece os nomes de tabelas e colunas do banco conectado, o que reduz sugestões inventadas.</li>
+<li><strong>Explicar consulta:</strong> descreve em linguagem natural o que um <code>SELECT</code> herdado faz — útil para revisar consultas de terceiros.</li>
+<li><strong>Corrigir erro:</strong> propõe correção a partir da mensagem de erro.</li>
+<li><strong>Modo agente</strong> (prévia, SSMS 22.7): recebe um objetivo e executa passos — inclusive executar consultas e ler planos — mediante aprovação.</li>
+</ul>
+<p>Disponibilidade: chat e conclusões em disponibilidade geral desde o SSMS 22.4.1 (março/2026); exige conta GitHub com licença Copilot e habilitação pela área de TI.</p>
+<h3 id="11.2-como-usar-com-proveito" tabindex="-1">11.2 Como usar com proveito</h3>
+<p>Prompts vagos produzem SQL genérico. Prompts que citam <strong>tabelas, colunas, período e regra</strong> produzem SQL utilizável:</p>
+<blockquote>
+<p>&quot;Usando <code>nfe</code> e <code>efd_c100</code>, liste os contribuintes que emitiram NF-e de saída autorizadas em janeiro/2025 sem o C100 correspondente (mesma <code>chave_acesso</code>, <code>periodo_apuracao</code> = '202501', <code>cod_situacao</code> = '00'), somando <code>valor_icms</code> e ordenando pelo maior valor.&quot;</p>
+</blockquote>
+<h3 id="11.3-limites-e-governan%C3%A7a-%E2%80%94-leitura-obrigat%C3%B3ria" tabindex="-1">11.3 Limites e governança — leitura obrigatória</h3>
+<ol>
+<li><strong>Não cole dados de contribuinte no prompt.</strong> Nome, CNPJ, chave de acesso e valores são dados protegidos pelo sigilo fiscal (art. 198 do CTN) e pela LGPD. Descreva o esquema e a regra, nunca o conteúdo.</li>
+<li><strong>O resultado é sugestão, não parecer.</strong> A responsabilidade técnica pela consulta que instrui um procedimento fiscal é do servidor que a executa.</li>
+<li><strong>Erros típicos a procurar:</strong> filtro de período fora do intervalo pretendido; junção pela coluna errada quando há nomes parecidos (<code>id_emitente</code> × <code>id_destinatario</code>); esquecimento de <code>cod_situacao</code> ou de <code>situacao</code>; uso de <code>NOT IN</code> onde caberia <code>NOT EXISTS</code>.</li>
+<li><strong>Valide por contagem de controle.</strong> Antes de aceitar o resultado, apure o mesmo número por outro caminho — total do período, contagem por outra chave, amostra conferida manualmente.</li>
+<li><strong>Política institucional prevalece.</strong> Verifique se o uso de assistentes de IA sobre bases fiscais está autorizado no órgão antes de habilitar o recurso.</li>
+</ol>
+<hr>
+<h2 id="12.-excel-%2B-power-query" tabindex="-1">12. Excel + Power Query</h2>
+<p>O Power Query é o motor de conexão e transformação embutido no Excel (aba <strong>Dados</strong>) e no Power BI. É a ferramenta <em>low code</em> mais usada pelo auditor — e a menos compreendida, porque a maioria a utiliza sem saber que ela <strong>escreve SQL</strong>.</p>
+<p><img src="figuras/fig06_power_query.png" alt="Editor do Power Query"></p>
+<p><strong>Figura 6 — Editor do Power Query.</strong> À esquerda, as consultas; ao centro, a visualização e o SQL gerado (&quot;Consulta Nativa&quot;); à direita, a lista de Etapas Aplicadas, onde o menu de contexto revela a opção <em>Exibir Consulta Nativa</em>.</p>
+<h3 id="12.1-conectar" tabindex="-1">12.1 Conectar</h3>
+<p><strong>Dados ▸ Obter Dados ▸ De Banco de Dados ▸ Do SQL Server</strong></p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Preenchimento</th>
+<th>Observação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Servidor</td>
+<td><code>SRV-SEFAZ\FISCO</code></td>
+<td>instância nomeada usa contrabarra</td>
+</tr>
+<tr>
+<td>Banco de dados</td>
+<td><code>curso_integridade_fiscal</code></td>
+<td>opcional, mas recomendável</td>
+</tr>
+<tr>
+<td>Modo de conectividade</td>
+<td><strong>Importar</strong> ou <strong>DirectQuery</strong></td>
+<td>ver 13.1</td>
+</tr>
+<tr>
+<td>Instrução SQL (opcional)</td>
+<td>um <code>SELECT</code> próprio</td>
+<td>ver a advertência em 12.3</td>
+</tr>
+<tr>
+<td>Credenciais</td>
+<td>Windows (integrada)</td>
+<td>preferível ao usuário e senha do banco</td>
+</tr>
+</tbody>
+</table>
+<p>Em seguida, o <strong>Navegador</strong> lista tabelas e exibições. Escolha <code>vw_nfe_saidas</code> (seção 6) e clique em <strong>Transformar Dados</strong> — e não em <em>Carregar</em>: o objetivo é filtrar <strong>antes</strong> de trazer.</p>
+<h3 id="12.2-query-folding%3A-o-conceito-central" tabindex="-1">12.2 Query folding: o conceito central</h3>
+<p>Cada clique no editor vira uma <strong>Etapa Aplicada</strong> em linguagem M. Quando a etapa é traduzível para SQL, o Power Query a envia ao servidor em vez de executá-la na máquina do usuário. Esse mecanismo se chama <strong>query folding</strong> (dobra da consulta).</p>
+<p>Para verificar: <strong>botão direito sobre a etapa ▸ Exibir Consulta Nativa</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Situação</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A opção aparece habilitada</td>
+<td>a dobra está intacta até ali; o SQL exibido é o que será executado no servidor</td>
+</tr>
+<tr>
+<td>A opção aparece <strong>esmaecida</strong></td>
+<td>a dobra foi quebrada em alguma etapa anterior; daí em diante tudo é processado no desktop</td>
+</tr>
+</tbody>
+</table>
+<p>Por que isso é decisivo em base fiscal: sem dobra, uma tabela de dezenas de milhões de itens de NF-e trafega inteira pela rede e é processada na estação de trabalho — lento, instável e, do ponto de vista de sigilo, indefensável.</p>
+<p><strong>Etapas que costumam preservar a dobra:</strong> filtrar linhas, remover/renomear colunas, alterar tipo, mesclar com outra consulta da <strong>mesma</strong> fonte, agrupar, ordenar.
+<strong>Etapas que costumam quebrá-la:</strong> adicionar índice, coluna personalizada com função M sem equivalente em SQL, mesclar com fonte local (planilha), <code>Table.Buffer</code>.</p>
+<p><strong>Regra de ouro:</strong> <em>filtre primeiro, transforme depois.</em></p>
+<h3 id="12.3-sql-pr%C3%B3prio-sem-perder-a-dobra" tabindex="-1">12.3 SQL próprio sem perder a dobra</h3>
+<p>Digitar um <code>SELECT</code> no campo &quot;Instrução SQL&quot; da conexão funciona, mas historicamente <strong>interrompe</strong> a dobra: tudo o que vier depois é processado localmente. A alternativa, no Editor Avançado, é declarar explicitamente que a consulta nativa pode ser dobrada:</p>
+<pre class='hljs'><code><div>let
+    Fonte <span class="hljs-built_in">=</span> Sql.Database(<span class="hljs-string">&quot;SRV-SEFAZ\FISCO&quot;</span>, <span class="hljs-string">&quot;curso_integridade_fiscal&quot;</span>),
+    Consulta <span class="hljs-built_in">=</span> Value.NativeQuery(
+        Fonte,
+        <span class="hljs-string">&quot;SELECT cnpj, razao_social, data_emissao, valor_total, valor_icms
+           FROM dbo.vw_nfe_saidas
+          WHERE situacao = &#x27;AUTORIZADA&#x27;
+            AND data_emissao &gt;= @ini AND data_emissao &lt; @fim&quot;</span>,
+        [ini <span class="hljs-built_in">=</span> DataInicial, fim <span class="hljs-built_in">=</span> DataFinal],
+        [EnableFolding <span class="hljs-built_in">=</span> <span class="hljs-built_in">true</span>]
+    )
+in
+    Consulta
+</div></code></pre>
+<p>Note ainda a <strong>parametrização</strong>: <code>DataInicial</code> e <code>DataFinal</code> são parâmetros do Power Query (aba <em>Página Inicial ▸ Gerenciar Parâmetros</em>). Com eles, a mesma pasta de trabalho serve a qualquer período — basta alterar o parâmetro e atualizar, sem editar consulta alguma. É o que transforma uma extração pontual em rotina de acompanhamento.</p>
+<h3 id="12.4-cuidados-espec%C3%ADficos-com-dado-fiscal" tabindex="-1">12.4 Cuidados específicos com dado fiscal</h3>
+<table>
+<thead>
+<tr>
+<th>Problema</th>
+<th>Prevenção</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CNPJ perde zeros à esquerda</td>
+<td>defina o tipo da coluna como <strong>Texto</strong> logo na primeira etapa de tipo</td>
+</tr>
+<tr>
+<td>Chave de acesso vira notação científica</td>
+<td>idem — 44 dígitos são texto, nunca número</td>
+</tr>
+<tr>
+<td>Valores com separador trocado</td>
+<td>confira a Localidade em <em>Tipo Alterado ▸ Usando Localidade</em> (Português-Brasil)</td>
+</tr>
+<tr>
+<td>Perfil de coluna enganoso</td>
+<td>o rodapé mostra estatística das <strong>1.000 primeiras linhas</strong>; para conclusões, use <em>Perfil de coluna baseado no conjunto de dados inteiro</em></td>
+</tr>
+<tr>
+<td>Planilha gigante e lenta</td>
+<td>carregue como <strong>Somente Criar Conexão</strong> + Modelo de Dados, e analise por Tabela Dinâmica</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="13.-power-bi-desktop" tabindex="-1">13. Power BI Desktop</h2>
+<p><img src="figuras/fig07_power_bi.png" alt="Power BI Desktop"></p>
+<p><strong>Figura 7 — Painel de malha fiscal no Power BI Desktop, com o Analisador de Desempenho exibindo o SQL enviado ao servidor.</strong></p>
+<h3 id="13.1-importa%C3%A7%C3%A3o-%C3%97-directquery" tabindex="-1">13.1 Importação × DirectQuery</h3>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th>Importação</th>
+<th>DirectQuery</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Onde ficam os dados</td>
+<td>copiados para dentro do arquivo <code>.pbix</code></td>
+<td>permanecem no SQL Server</td>
+</tr>
+<tr>
+<td>Desempenho de interação</td>
+<td>muito rápido (motor em memória)</td>
+<td>depende do servidor e dos índices</td>
+</tr>
+<tr>
+<td>Atualização</td>
+<td>agendada / manual</td>
+<td>a cada interação com o visual</td>
+</tr>
+<tr>
+<td>Volume</td>
+<td>limitado pela memória</td>
+<td>adequado a volumes grandes</td>
+</tr>
+<tr>
+<td><strong>Sigilo fiscal</strong></td>
+<td>o arquivo passa a <strong>conter</strong> dados de contribuintes — exige política de guarda, criptografia e controle de compartilhamento</td>
+<td>nada é copiado; o controle de acesso permanece no banco</td>
+</tr>
+<tr>
+<td>Recursos de modelagem</td>
+<td>completos</td>
+<td>restrições em DAX e em transformações</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Recomendação para a SEFAZ.</strong> Para painéis institucionais com dado individualizado de contribuinte, prefira <strong>DirectQuery</strong> sobre exibições preparadas, combinado com <strong>segurança em nível de linha</strong> (RLS) por região fiscal ou por perfil. Importação fica reservada a agregados que não identifiquem o contribuinte.</p>
+</blockquote>
+<h3 id="13.2-ver-o-sql-que-o-power-bi-gera" tabindex="-1">13.2 Ver o SQL que o Power BI gera</h3>
+<p><strong>Exibição ▸ Analisador de Desempenho ▸ Iniciar gravação ▸ Atualizar visuais</strong>. Cada visual passa a listar seu tempo; em DirectQuery, o link <strong>Copiar consulta</strong> entrega o SQL efetivamente enviado ao servidor. É o instrumento para (a) entender por que um visual está lento e (b) auditar exatamente o que o painel consulta.</p>
+<h3 id="13.3-boas-pr%C3%A1ticas-de-modelo" tabindex="-1">13.3 Boas práticas de modelo</h3>
+<ol>
+<li><strong>Não use uma consulta gigante como fonte única.</strong> Modele em tabelas de fato (<code>vw_painel_malha</code>) e dimensões (<code>d_calendario</code>, <code>d_contribuinte</code>), com relacionamentos.</li>
+<li><strong>Crie a tabela calendário</strong> e marque-a como tabela de datas: é o que faz funcionar comparação entre períodos.</li>
+<li><strong>Medidas em DAX, não colunas calculadas</strong>, sempre que possível.</li>
+<li><strong>Nomeie para o usuário final</strong>: <code>ICMS potencial</code>, e não <code>sum_dif_emitido_escriturado</code>.</li>
+<li><strong>Documente a regra</strong> de cada indicador em uma página do próprio relatório — quem lê o painel precisa saber o que significa &quot;prioridade alta&quot;.</li>
+</ol>
+<hr>
+<h2 id="14.-quadro-comparativo-e-%C3%A1rvore-de-decis%C3%A3o" tabindex="-1">14. Quadro comparativo e árvore de decisão</h2>
+<table>
+<thead>
+<tr>
+<th>Ferramenta</th>
+<th>Escreve SQL?</th>
+<th>Melhor para</th>
+<th>Limite principal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pesquisador de Objetos</td>
+<td>gera scripts</td>
+<td>explorar estrutura, obter listas de colunas</td>
+<td>não consulta dados</td>
+</tr>
+<tr>
+<td>Selecionar 1000 Linhas</td>
+<td>sim (<code>TOP</code>)</td>
+<td>primeira inspeção de conteúdo</td>
+<td>amostra, não análise</td>
+</tr>
+<tr>
+<td><strong>Designer de Consultas</strong></td>
+<td><strong>sim, e mostra</strong></td>
+<td>montar <code>JOIN</code>/<code>GROUP BY</code> sem decorar sintaxe</td>
+<td>sem CTE, conjunto, janela; reformata o código</td>
+</tr>
+<tr>
+<td>Designer de Exibições</td>
+<td>sim (<code>CREATE VIEW</code>)</td>
+<td>padronizar definições e simplificar o consumo</td>
+<td>mesmas limitações do designer</td>
+</tr>
+<tr>
+<td>Diagramas de BD</td>
+<td>não</td>
+<td>entender o modelo e as FKs</td>
+<td>é superfície de edição: risco de alterar</td>
+</tr>
+<tr>
+<td>Plano de execução</td>
+<td>não</td>
+<td>diagnosticar desempenho</td>
+<td>exige interpretação</td>
+</tr>
+<tr>
+<td>Copilot no SSMS</td>
+<td>sim (por IA)</td>
+<td>rascunhar e explicar consultas</td>
+<td>pode errar; restrições de sigilo</td>
+</tr>
+<tr>
+<td>Excel + Power Query</td>
+<td>sim (dobra)</td>
+<td>extração recorrente e parametrizada</td>
+<td>quebra de dobra derruba o desempenho</td>
+</tr>
+<tr>
+<td>Power BI</td>
+<td>sim (DirectQuery)</td>
+<td>painel para a equipe e a gestão</td>
+<td>exige modelagem e governança</td>
+</tr>
+</tbody>
+</table>
+<p><img src="figuras/fig08_arvore_decisao.png" alt="Árvore de decisão"></p>
+<p><strong>Figura 8 — Árvore de decisão: qual ferramenta usar em cada situação.</strong></p>
+<hr>
+<h2 id="15.-governan%C3%A7a%2C-sigilo-fiscal-e-boas-pr%C3%A1ticas" tabindex="-1">15. Governança, sigilo fiscal e boas práticas</h2>
+<p>A facilidade da interface gráfica amplia o alcance de quem a usa — não a sua competência legal. Cinco regras devem acompanhar todo o módulo:</p>
+<ol>
+<li><strong>Acesso pelo perfil, não pela ferramenta.</strong> O que o auditor pode ver é definido pelas permissões concedidas no banco. Nenhuma ferramenta gráfica cria autorização; se ela mostra o dado, é porque o perfil permite — e o registro de acesso existe.</li>
+<li><strong>Sigilo fiscal (art. 198 do CTN) e LGPD.</strong> Dado individualizado de contribuinte só circula no estrito interesse da administração tributária. Isso vale para a planilha exportada, para o <code>.pbix</code> importado e para o texto colado em um prompt de IA.</li>
+<li><strong>Minimize a cópia.</strong> Prefira filtrar na origem, publicar por DirectQuery e trabalhar sobre exibições. Cada cópia em desktop é uma superfície de risco a mais.</li>
+<li><strong>Reprodutibilidade.</strong> Guarde a consulta (script <code>.sql</code> ou a etapa M), a data e a hora da extração e o parâmetro de período. A planilha isolada não prova como o número foi obtido — e é o &quot;como&quot; que sustenta o auto de infração em impugnação.</li>
+<li><strong>Conferência independente.</strong> Todo resultado que fundamente procedimento fiscal deve ser conferido por um segundo caminho: contagem de controle, amostra manual ou consulta escrita de forma diferente por outro servidor.</li>
+</ol>
+<hr>
+<h2 id="16.-exerc%C3%ADcios" tabindex="-1">16. Exercícios</h2>
+<blockquote>
+<p>Resolva no ambiente do curso, sobre o banco <code>curso_integridade_fiscal</code>. As respostas comentadas estão em <strong><code>gabarito_ferramentas_graficas_sql.md</code></strong>.</p>
+</blockquote>
+<h3 id="bloco-a-%E2%80%94-explora%C3%A7%C3%A3o-pelo-ssms" tabindex="-1">Bloco A — Exploração pelo SSMS</h3>
+<p><strong>A1.</strong> Usando apenas o Pesquisador de Objetos (sem escrever SQL), descubra e anote: (a) quantas tabelas o banco possui; (b) quais colunas de <code>nfe</code> aceitam nulo; (c) quais índices existem em <code>efd_c100</code>.</p>
+<p><strong>A2.</strong> Pelo painel <strong>Detalhes do Pesquisador de Objetos</strong> (<code>F7</code>), ordene as tabelas por número de linhas e identifique as três maiores. Justifique, em duas linhas, por que essa informação deve preceder a redação de qualquer cruzamento.</p>
+<p><strong>A3.</strong> Gere, por menu de contexto, o script <code>SELECT</code> completo da tabela <code>nfe_item</code> e o <code>CREATE TABLE</code> de <code>efd_c170</code>. Explique uma situação de auditoria em que o segundo script é, ele próprio, evidência.</p>
+<p><strong>A4.</strong> Use <em>Selecionar 1000 Linhas Superiores</em> em <code>contribuinte</code> e relacione três características do preenchimento dos dados que só se percebem olhando (por exemplo: padronização de maiúsculas, presença de nulos, formato do CNPJ).</p>
+<h3 id="bloco-b-%E2%80%94-designer-de-consultas" tabindex="-1">Bloco B — Designer de Consultas</h3>
+<p><strong>B1.</strong> No Designer (<code>Ctrl+Shift+Q</code>), monte uma consulta que liste CNPJ, razão social e município dos contribuintes ativos do regime normal, ordenada por razão social. Copie o SQL gerado e compare-o com o que você escreveria à mão: aponte duas diferenças de estilo.</p>
+<p><strong>B2.</strong> Acrescente a tabela <code>nfe</code> e produza, ainda pelo Designer: quantidade de notas autorizadas e soma do valor total por contribuinte, apenas para quem tem mais de 100 notas. Identifique, no painel de critérios, exatamente onde nasceu o <code>GROUP BY</code> e onde nasceu o <code>HAVING</code>.</p>
+<p><strong>B3.</strong> Converta a junção com <code>nfe</code> em junção externa pela interface, de modo que contribuintes sem nota apareçam. Registre qual opção do menu de contexto você marcou e qual cláusula mudou no SQL.</p>
+<p><strong>B4.</strong> Ainda no Designer, tente montar uma consulta que use <code>EXCEPT</code> entre as chaves de acesso de <code>nfe</code> e de <code>efd_c100</code>. Descreva o que acontece e explique por quê.</p>
+<p><strong>B5.</strong> Abra no Designer (selecionando o texto e pressionando <code>Ctrl+Shift+Q</code>) a consulta da seção 16.1 do Módulo 9 (omissão de escrituração, com <code>NOT EXISTS</code>). O que o Designer faz com ela? Que lição isso traz sobre o momento de abandonar o construtor gráfico?</p>
+<p><strong>B6.</strong> Monte pela interface um <code>LEFT JOIN</code> entre <code>nfe</code> e <code>efd_c100</code> e adicione o filtro <code>periodo_apuracao = '202501'</code> na linha de <code>efd_c100</code>. Execute. O resultado é o esperado? Corrija no painel SQL e explique a correção.</p>
+<h3 id="bloco-c-%E2%80%94-exibi%C3%A7%C3%B5es-e-diagramas" tabindex="-1">Bloco C — Exibições e diagramas</h3>
+<p><strong>C1.</strong> Crie, pelo <strong>Designer de Exibições</strong>, a exibição <code>vw_autos_por_auditor</code> com: matrícula e nome do auditor, região fiscal, quantidade de autos e valor total autuado. Salve e consulte-a com um <code>SELECT</code> simples.</p>
+<p><strong>C2.</strong> Monte um diagrama contendo <code>contribuinte</code>, <code>nfe</code>, <code>nfe_item</code>, <code>efd_c100</code> e <code>efd_c170</code>. Identifique visualmente o caminho de junção entre <code>nfe_item</code> e <code>efd_c170</code> e escreva o <code>FROM</code> correspondente.</p>
+<p><strong>C3.</strong> Verifique no diagrama se existe chave estrangeira entre <code>efd_c100.chave_acesso</code> e <code>nfe.chave_acesso</code>. Explique o significado prático da resposta para o cruzamento de malha fiscal.</p>
+<h3 id="bloco-d-%E2%80%94-planos-de-execu%C3%A7%C3%A3o" tabindex="-1">Bloco D — Planos de execução</h3>
+<p><strong>D1.</strong> Com <code>Ctrl+M</code> ligado, execute as duas versões da consulta de contribuintes sem NF-e como destinatários — uma com <code>NOT IN</code> (protegida com <code>IS NOT NULL</code>) e outra com <code>NOT EXISTS</code>. Compare custo relativo, operadores e leituras.</p>
+<p><strong>D2.</strong> Execute <code>SELECT ... WHERE YEAR(data_emissao) = 2025</code> e depois a versão com intervalo de datas. Identifique no plano a mudança de Verificação para Busca e explique o conceito de predicado <em>sargable</em>.</p>
+<p><strong>D3.</strong> Localize no plano uma sugestão de índice ausente. Redija um parágrafo, como se fosse para a área de TI, argumentando a favor ou contra a criação desse índice — considerando impacto em gravação e em espaço.</p>
+<h3 id="bloco-e-%E2%80%94-excel%2C-power-query-e-power-bi" tabindex="-1">Bloco E — Excel, Power Query e Power BI</h3>
+<p><strong>E1.</strong> Conecte o Excel a <code>vw_nfe_saidas</code>, filtre janeiro/2025 e situação <code>AUTORIZADA</code> pelo editor do Power Query e verifique, pela opção <em>Exibir Consulta Nativa</em>, o SQL gerado. Transcreva-o.</p>
+<p><strong>E2.</strong> Acrescente uma etapa que quebre a dobra (por exemplo, <em>Adicionar Coluna de Índice</em>) e verifique novamente. Descreva o que mudou e por que isso importa em uma tabela com dezenas de milhões de linhas.</p>
+<p><strong>E3.</strong> Parametrize a consulta com <code>DataInicial</code> e <code>DataFinal</code> e demonstre a troca de período sem editar a consulta.</p>
+<p><strong>E4.</strong> Importe a coluna <code>cnpj</code> sem definir o tipo como texto e observe o resultado. Corrija e explique o risco fiscal de não ter percebido o problema.</p>
+<p><strong>E5.</strong> No Power BI, construa um visual de tabela sobre <code>vw_painel_malha</code>, ative o <strong>Analisador de Desempenho</strong> e copie o SQL gerado. Compare o SQL do modo Importação com o do modo DirectQuery.</p>
+<p><strong>E6.</strong> Escreva meia página comparando Importação e DirectQuery <strong>do ponto de vista do sigilo fiscal</strong>, e recomende um dos dois para um painel com CNPJ e valores individualizados, justificando.</p>
+<h3 id="bloco-f-%E2%80%94-integra%C3%A7%C3%A3o-e-julgamento-profissional" tabindex="-1">Bloco F — Integração e julgamento profissional</h3>
+<p><strong>F1.</strong> Escolha uma das rotinas de cruzamento do Módulo 9 (seção 16) e descreva o percurso completo pelas ferramentas: onde começaria, o que faria em cada uma e como entregaria o resultado. Justifique cada escolha pela árvore de decisão da Figura 8.</p>
+<p><strong>F2.</strong> Um colega apresenta uma planilha com 4.200 contribuintes &quot;omissos de EFD&quot;, produzida por Power Query, sem guardar a consulta. Liste cinco perguntas que você faria antes de instaurar procedimentos com base nela.</p>
+<p><strong>F3.</strong> Redija, em até uma página, um procedimento interno de uso de ferramentas gráficas de análise pela sua repartição, contemplando: perfis de acesso, guarda de arquivos extraídos, uso de assistentes de IA e reprodutibilidade das apurações.</p>
+<hr>
+<h2 id="17.-refer%C3%AAncias" tabindex="-1">17. Referências</h2>
+<p>MICROSOFT. <strong>Open the Query and View Designer (Visual Database Tools)</strong>. Microsoft Learn. Disponível em: <a href="https://learn.microsoft.com/en-us/ssms/visual-db-tools/open-the-query-and-view-designer-visual-database-tools">https://learn.microsoft.com/en-us/ssms/visual-db-tools/open-the-query-and-view-designer-visual-database-tools</a>.</p>
+<p>MICROSOFT. <strong>Work with Database Diagrams (Visual Database Tools)</strong>. Microsoft Learn. Disponível em: <a href="https://learn.microsoft.com/en-us/sql/ssms/visual-db-tools/work-with-database-diagrams-visual-database-tools">https://learn.microsoft.com/en-us/sql/ssms/visual-db-tools/work-with-database-diagrams-visual-database-tools</a>.</p>
+<p>MICROSOFT. <strong>SSMS Query Editor</strong>. Microsoft Learn. Disponível em: <a href="https://learn.microsoft.com/en-us/ssms/f1-help/database-engine-query-editor-sql-server-management-studio">https://learn.microsoft.com/en-us/ssms/f1-help/database-engine-query-editor-sql-server-management-studio</a>.</p>
+<p>MICROSOFT. <strong>What is GitHub Copilot in SQL Server Management Studio?</strong> Microsoft Learn. Disponível em: <a href="https://learn.microsoft.com/en-us/ssms/copilot/copilot-in-ssms-overview">https://learn.microsoft.com/en-us/ssms/copilot/copilot-in-ssms-overview</a>.</p>
+<p>MICROSOFT. <strong>Get started — GitHub Copilot in SQL Server Management Studio</strong>. Microsoft Learn. Disponível em: <a href="https://learn.microsoft.com/en-us/ssms/github-copilot/get-started">https://learn.microsoft.com/en-us/ssms/github-copilot/get-started</a>.</p>
+<p>MICROSOFT. <strong>SQL Server Management Studio (SSMS) 22.4.1 and GitHub Copilot in SSMS (Generally Available)</strong>. Microsoft Fabric Blog, mar. 2026. Disponível em: <a href="https://blog.fabric.microsoft.com/en/blog/sql-server-management-studio-ssms-22-4-1-and-github-copilot-in-ssms-generally-available">https://blog.fabric.microsoft.com/en/blog/sql-server-management-studio-ssms-22-4-1-and-github-copilot-in-ssms-generally-available</a>.</p>
+<p>MICROSOFT. <strong>Understanding query evaluation and query folding in Power Query</strong>. Microsoft Learn. Disponível em: <a href="https://learn.microsoft.com/en-us/power-query/query-folding-basics">https://learn.microsoft.com/en-us/power-query/query-folding-basics</a>.</p>
+<p>MICROSOFT. <strong>Query folding on native queries — Power Query</strong>. Microsoft Learn. Disponível em: <a href="https://learn.microsoft.com/en-us/power-query/native-query-folding">https://learn.microsoft.com/en-us/power-query/native-query-folding</a>.</p>
+<p>MICROSOFT. <strong>Import data from a database using native database query</strong>. Microsoft Learn. Disponível em: <a href="https://learn.microsoft.com/en-us/power-query/native-database-query">https://learn.microsoft.com/en-us/power-query/native-database-query</a>.</p>
+<p>PETKOVIC, Dusan. <strong>Microsoft SQL Server 2019: A Beginner's Guide</strong>. 7. ed. New York: McGraw-Hill Education, 2020.</p>
+<p>ELMASRI, Ramez; NAVATHE, Shamkant B. <strong>Fundamentals of Database Systems</strong>. 7. ed. Hoboken: Pearson, 2015.</p>
+<p>BRASIL. <strong>Lei nº 5.172/1966 (Código Tributário Nacional)</strong>, art. 198 — sigilo fiscal.</p>
+<p>BRASIL. <strong>Lei nº 13.709/2018 (Lei Geral de Proteção de Dados Pessoais)</strong>.</p>
+<hr>
+<p><em>Material didático produzido para o Curso de Banco de Dados Relacional aplicado à Fiscalização Tributária — Secretaria de Estado da Fazenda da Paraíba.</em></p>
+
+    </div>
+</body>
+</html>

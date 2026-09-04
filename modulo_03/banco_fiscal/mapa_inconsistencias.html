@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>mapa_inconsistencias.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h2 id="1.-mapa-das-inconsist%C3%AAncias-plantadas" tabindex="-1">1. Mapa das inconsistências plantadas</h2>
+<p>A base foi construída para que os cruzamentos dos Módulos 9 e 10 <strong>encontrem alguma coisa</strong>. As quantidades abaixo são as respostas esperadas — o script <code>07_verificacao.sql</code> as confere uma a uma.</p>
+<table>
+<thead>
+<tr>
+<th>Inconsistência</th>
+<th style="text-align:right">Quantidade</th>
+<th>Exercício correspondente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NF-e autorizada de saída sem C100 (omissão de escrituração)</td>
+<td style="text-align:right">2.023 no total;<strong>980</strong> entre declarantes do regime normal</td>
+<td>M9 §16.1, F5, G2, H1</td>
+</tr>
+<tr>
+<td>Chave escriturada que<strong>não existe</strong> na base de NF-e</td>
+<td style="text-align:right">38</td>
+<td>M9 D3</td>
+</tr>
+<tr>
+<td>Chave escriturada de nota<strong>cancelada</strong> (<code>cod_situacao='02'</code>)</td>
+<td style="text-align:right">402</td>
+<td>M9 D3 — falso positivo a discutir</td>
+</tr>
+<tr>
+<td>Divergência de valor/ICMS entre NF-e e EFD</td>
+<td style="text-align:right">147</td>
+<td>M9 §16.2, H2</td>
+</tr>
+<tr>
+<td>Divergência de item (NCM, CFOP, alíquota ou valor)</td>
+<td style="text-align:right">354</td>
+<td>M9 H2</td>
+</tr>
+<tr>
+<td>Chave com CNPJ divergente do cadastro</td>
+<td style="text-align:right">6</td>
+<td>M9 H3</td>
+</tr>
+<tr>
+<td>Chave com período (AAMM) divergente da emissão</td>
+<td style="text-align:right">5</td>
+<td>M9 H3</td>
+</tr>
+<tr>
+<td>Chave com 43 posições</td>
+<td style="text-align:right">2</td>
+<td>M9 H3</td>
+</tr>
+<tr>
+<td>Emitentes com mais de 1.000 notas autorizadas</td>
+<td style="text-align:right">3 (ids 1, 2 e 3)</td>
+<td>M9 C4</td>
+</tr>
+<tr>
+<td>Emitentes com mais de 500 notas</td>
+<td style="text-align:right">6</td>
+<td>M9 §8.3</td>
+</tr>
+<tr>
+<td>Cancelamento acima de 15%</td>
+<td style="text-align:right">2 (ids 4 e 12)</td>
+<td>M9 C8</td>
+</tr>
+<tr>
+<td>Carga efetiva abaixo de 4% no regime normal</td>
+<td style="text-align:right">2 (ids 5 e 17)</td>
+<td>M9 §8.3, G3</td>
+</tr>
+<tr>
+<td>Contribuintes ativos do regime normal sem EFD de 202501</td>
+<td style="text-align:right">8</td>
+<td>M9 G1</td>
+</tr>
+<tr>
+<td>Contribuintes que nunca foram destinatários</td>
+<td style="text-align:right">7</td>
+<td>M9 E3</td>
+</tr>
+<tr>
+<td>NF-e a consumidor não identificado (<code>id_destinatario</code> nulo)</td>
+<td style="text-align:right">1.041</td>
+<td>M9 A7, B7, F1</td>
+</tr>
+<tr>
+<td>C100 sem chave (documento não eletrônico)</td>
+<td style="text-align:right">25</td>
+<td>M9 A5, E3</td>
+</tr>
+<tr>
+<td>Notas em que a soma dos itens diverge do cabeçalho</td>
+<td style="text-align:right">15</td>
+<td>M9 §15, G6</td>
+</tr>
+<tr>
+<td>Pares de contribuintes com operações circulares</td>
+<td style="text-align:right">3 (8↔19, 14↔27, 23↔31)</td>
+<td>M9 F7</td>
+</tr>
+<tr>
+<td>Contribuintes sem faturamento declarado</td>
+<td style="text-align:right">6</td>
+<td>M9 B4, C2</td>
+</tr>
+<tr>
+<td>Municípios sem região fiscal (outras UFs)</td>
+<td style="text-align:right">10</td>
+<td>M9 §4.6</td>
+</tr>
+<tr>
+<td>Ordens de serviço sem data de conclusão</td>
+<td style="text-align:right">63</td>
+<td>M9 B9, A4</td>
+</tr>
+<tr>
+<td>Itens com descrição genérica ou muito curta</td>
+<td style="text-align:right">~370</td>
+<td>M9 B10</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tr%C3%AAs-armadilhas-propositais" tabindex="-1">Três armadilhas propositais</h3>
+<ol>
+<li><strong><code>NOT IN</code> com nulo.</strong> <code>nfe.id_destinatario</code> é nulo em 1.041 documentos. A consulta <code>WHERE id_contribuinte NOT IN (SELECT id_destinatario FROM nfe)</code> retorna <strong>vazio</strong> — é o exercício H6 do Módulo 9, e aqui ele acontece de verdade.</li>
+<li><strong>Regime tributário no cruzamento de EFD.</strong> Empresas do Simples e MEI não entregam EFD ICMS/IPI. Quem esquecer de filtrar <code>regime_tributario = 'NORMAL'</code> encontra 2.023 &quot;omissões&quot; em vez de 980 — metade delas falso positivo.</li>
+<li><strong>Nota cancelada escriturada.</strong> Um <code>EXCEPT</code> ingênuo entre as chaves da EFD e as da NF-e autorizada devolve 440 linhas, das quais 402 são documentos cancelados escriturados corretamente. Só 38 são achado real.</li>
+</ol>
+<hr>
+<h2 id="2.-ideias-sql-para-identificar-as-inconsist%C3%AAncias" tabindex="-1">2. Ideias SQL para identificar as inconsistências</h2>
+<p>Os exemplos a seguir apresentam pontos de partida para as consultas de malha. Eles privilegiam <code>NOT EXISTS</code> nos cruzamentos que podem envolver nulos, comparam valores monetários por tolerância de centavos e separam indícios de irregularidade de uma conclusão fiscal.</p>
+<h3 id="1.1-omiss%C3%A3o-de-escritura%C3%A7%C3%A3o-e-chaves-sem-correspond%C3%AAncia" tabindex="-1">1.1 Omissão de escrituração e chaves sem correspondência</h3>
+<p>Para localizar NF-e autorizadas de saída que não foram declaradas na EFD pelo próprio emitente, inicie em <code>nfe</code> e teste a inexistência do C100 correspondente. O filtro de regime elimina os contribuintes que não entregam EFD ICMS/IPI.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> n.id_nfe, n.chave_acesso, n.id_emitente, n.valor_total
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+		<span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+<span class="hljs-keyword">WHERE</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+	<span class="hljs-keyword">AND</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+	<span class="hljs-keyword">AND</span> c.regime_tributario <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;NORMAL&#x27;</span>
+	<span class="hljs-keyword">AND</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> (
+			<span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span>
+			<span class="hljs-keyword">FROM</span> dbo.efd_c100 <span class="hljs-keyword">AS</span> e
+			<span class="hljs-keyword">WHERE</span> e.chave_acesso <span class="hljs-operator">=</span> n.chave_acesso
+				<span class="hljs-keyword">AND</span> e.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+				<span class="hljs-keyword">AND</span> e.ind_oper <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+				<span class="hljs-keyword">AND</span> e.cod_situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;00&#x27;</span>
+	);
+</div></code></pre>
+<p>No sentido inverso, procure documentos escriturados cuja chave não exista em nenhuma NF-e local. Esse resultado pode conter documentos de outra UF, devendo ser analisado antes de ser tratado como irregularidade.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> e.id_c100, e.id_contribuinte, e.chave_acesso, e.valor_documento
+<span class="hljs-keyword">FROM</span> dbo.efd_c100 <span class="hljs-keyword">AS</span> e
+<span class="hljs-keyword">WHERE</span> e.chave_acesso <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+	<span class="hljs-keyword">AND</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> (
+			<span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span>
+			<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+			<span class="hljs-keyword">WHERE</span> n.chave_acesso <span class="hljs-operator">=</span> e.chave_acesso
+	);
+</div></code></pre>
+<p>Como alternativa didática, aplique <code>EXCEPT</code> entre os conjuntos de chaves de <code>nfe</code> e <code>efd_c100</code>; em seguida, classifique separadamente as chaves de NF-e canceladas para evitar falso positivo.</p>
+<h3 id="1.2-diverg%C3%AAncias-entre-nf-e-e-efd" tabindex="-1">1.2 Divergências entre NF-e e EFD</h3>
+<p>Para comparar os totais do documento, una as tabelas pela <code>chave_acesso</code>. A função <code>ABS</code> evita que diferenças negativas deixem de ser encontradas.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> n.chave_acesso,
+			 n.valor_total <span class="hljs-keyword">AS</span> valor_nfe,
+			 e.valor_documento <span class="hljs-keyword">AS</span> valor_efd,
+			 n.valor_icms <span class="hljs-keyword">AS</span> icms_nfe,
+			 e.valor_icms <span class="hljs-keyword">AS</span> icms_efd
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.efd_c100 <span class="hljs-keyword">AS</span> e
+		<span class="hljs-keyword">ON</span> e.chave_acesso <span class="hljs-operator">=</span> n.chave_acesso
+<span class="hljs-keyword">WHERE</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+	<span class="hljs-keyword">AND</span> e.cod_situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;00&#x27;</span>
+	<span class="hljs-keyword">AND</span> e.ind_oper <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+	<span class="hljs-keyword">AND</span> (<span class="hljs-built_in">ABS</span>(n.valor_total <span class="hljs-operator">-</span> e.valor_documento) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0.01</span>
+			 <span class="hljs-keyword">OR</span> <span class="hljs-built_in">ABS</span>(n.valor_icms <span class="hljs-operator">-</span> e.valor_icms) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0.01</span>);
+</div></code></pre>
+<p>Para a auditoria de itens, relacione <code>nfe_item</code> e <code>efd_c170</code> pelo número do item, depois de conectar cada documento pela chave. Compare NCM, CFOP, alíquota e valor, tratando alíquotas nulas com <code>COALESCE</code>.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> n.chave_acesso, i.num_item,
+			 i.ncm <span class="hljs-keyword">AS</span> ncm_nfe, c170.ncm <span class="hljs-keyword">AS</span> ncm_efd,
+			 i.cfop <span class="hljs-keyword">AS</span> cfop_nfe, c170.cfop <span class="hljs-keyword">AS</span> cfop_efd
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.nfe_item <span class="hljs-keyword">AS</span> i <span class="hljs-keyword">ON</span> i.id_nfe <span class="hljs-operator">=</span> n.id_nfe
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.efd_c100 <span class="hljs-keyword">AS</span> e <span class="hljs-keyword">ON</span> e.chave_acesso <span class="hljs-operator">=</span> n.chave_acesso
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.efd_c170 <span class="hljs-keyword">AS</span> c170
+		<span class="hljs-keyword">ON</span> c170.id_c100 <span class="hljs-operator">=</span> e.id_c100
+	 <span class="hljs-keyword">AND</span> c170.num_item <span class="hljs-operator">=</span> i.num_item
+<span class="hljs-keyword">WHERE</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+	<span class="hljs-keyword">AND</span> e.cod_situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;00&#x27;</span>
+	<span class="hljs-keyword">AND</span> (i.ncm <span class="hljs-operator">&lt;&gt;</span> c170.ncm
+			 <span class="hljs-keyword">OR</span> i.cfop <span class="hljs-operator">&lt;&gt;</span> c170.cfop
+			 <span class="hljs-keyword">OR</span> <span class="hljs-built_in">ABS</span>(<span class="hljs-built_in">COALESCE</span>(i.aliquota_icms, <span class="hljs-number">0</span>) <span class="hljs-operator">-</span> <span class="hljs-built_in">COALESCE</span>(c170.aliquota_icms, <span class="hljs-number">0</span>)) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0.01</span>
+			 <span class="hljs-keyword">OR</span> <span class="hljs-built_in">ABS</span>(i.valor_total_item <span class="hljs-operator">-</span> c170.valor_item) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0.01</span>);
+</div></code></pre>
+<h3 id="1.3-valida%C3%A7%C3%A3o-da-composi%C3%A7%C3%A3o-da-chave-de-acesso" tabindex="-1">1.3 Validação da composição da chave de acesso</h3>
+<p>A chave contém, entre outros dados, o período <code>AAMM</code> nas posições 3 a 6 e o CNPJ do emitente nas posições 7 a 20. Compare esses segmentos com o cadastro e com a data de emissão, incluindo uma verificação de tamanho.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> n.id_nfe, n.chave_acesso, c.cnpj, n.data_emissao,
+			 <span class="hljs-keyword">CASE</span>
+					 <span class="hljs-keyword">WHEN</span> LEN(n.chave_acesso) <span class="hljs-operator">&lt;&gt;</span> <span class="hljs-number">44</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;TAMANHO INVALIDO&#x27;</span>
+					 <span class="hljs-keyword">WHEN</span> <span class="hljs-built_in">SUBSTRING</span>(n.chave_acesso, <span class="hljs-number">7</span>, <span class="hljs-number">14</span>) <span class="hljs-operator">&lt;&gt;</span> c.cnpj <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;CNPJ DIVERGENTE&#x27;</span>
+					 <span class="hljs-keyword">WHEN</span> <span class="hljs-built_in">SUBSTRING</span>(n.chave_acesso, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>) <span class="hljs-operator">&lt;&gt;</span> FORMAT(n.data_emissao, <span class="hljs-string">&#x27;yyMM&#x27;</span>) <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;PERIODO DIVERGENTE&#x27;</span>
+			 <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> inconsistencia
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+		<span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+<span class="hljs-keyword">WHERE</span> LEN(n.chave_acesso) <span class="hljs-operator">&lt;&gt;</span> <span class="hljs-number">44</span>
+	 <span class="hljs-keyword">OR</span> <span class="hljs-built_in">SUBSTRING</span>(n.chave_acesso, <span class="hljs-number">7</span>, <span class="hljs-number">14</span>) <span class="hljs-operator">&lt;&gt;</span> c.cnpj
+	 <span class="hljs-keyword">OR</span> <span class="hljs-built_in">SUBSTRING</span>(n.chave_acesso, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>) <span class="hljs-operator">&lt;&gt;</span> FORMAT(n.data_emissao, <span class="hljs-string">&#x27;yyMM&#x27;</span>);
+</div></code></pre>
+<h3 id="1.4-indicadores-de-risco-por-emitente" tabindex="-1">1.4 Indicadores de risco por emitente</h3>
+<p>Agrupe NF-e por <code>id_emitente</code> e use <code>HAVING</code> para identificar alto volume de documentos. O mesmo agrupamento permite calcular o percentual de cancelamento e a carga efetiva de ICMS.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> n.id_emitente,
+			 <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> total_notas,
+			 <span class="hljs-built_in">CAST</span>(<span class="hljs-built_in">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CANCELADA&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span> <span class="hljs-keyword">END</span>) <span class="hljs-keyword">AS</span> <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">10</span>, <span class="hljs-number">2</span>))
+					 <span class="hljs-operator">/</span> <span class="hljs-built_in">NULLIF</span>(<span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>), <span class="hljs-number">0</span>) <span class="hljs-operator">*</span> <span class="hljs-number">100</span> <span class="hljs-keyword">AS</span> pct_cancelamento,
+			 <span class="hljs-built_in">SUM</span>(n.valor_icms) <span class="hljs-operator">/</span> <span class="hljs-built_in">NULLIF</span>(<span class="hljs-built_in">SUM</span>(n.valor_total), <span class="hljs-number">0</span>) <span class="hljs-operator">*</span> <span class="hljs-number">100</span> <span class="hljs-keyword">AS</span> carga_efetiva_pct
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">WHERE</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> n.id_emitente
+<span class="hljs-keyword">HAVING</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-operator">&gt;</span> <span class="hljs-number">500</span>;
+</div></code></pre>
+<p>Para a carga efetiva, junte <code>contribuinte</code>, restrinja a análise ao regime <code>NORMAL</code> e aplique a faixa de risco no <code>HAVING</code>. Aplique também um valor mínimo de operações para evitar conclusões a partir de amostras pequenas.</p>
+<h3 id="1.5-aus%C3%AAncias-cadastrais-e-marcadores-de-qualidade" tabindex="-1">1.5 Ausências cadastrais e marcadores de qualidade</h3>
+<p>Use <code>IS NULL</code> para localizar NF-e a consumidor não identificado, C100 sem chave, contribuintes sem faturamento, municípios sem região fiscal e ordens de serviço ainda sem conclusão. Para contribuintes sem EFD em uma competência ou que nunca foram destinatários, prefira o padrão abaixo com <code>NOT EXISTS</code>.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> c.id_contribuinte, c.razao_social
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">WHERE</span> c.situacao_cadastral <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;ATIVO&#x27;</span>
+	<span class="hljs-keyword">AND</span> c.regime_tributario <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;NORMAL&#x27;</span>
+	<span class="hljs-keyword">AND</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> (
+			<span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span>
+			<span class="hljs-keyword">FROM</span> dbo.efd_c100 <span class="hljs-keyword">AS</span> e
+			<span class="hljs-keyword">WHERE</span> e.id_contribuinte <span class="hljs-operator">=</span> c.id_contribuinte
+				<span class="hljs-keyword">AND</span> e.periodo_apuracao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;202501&#x27;</span>
+	);
+</div></code></pre>
+<p>Para identificar descrições genéricas, aplique <code>LIKE</code> a termos como <code>'%DIVERSOS%'</code> ou <code>'%MERCADORIA%'</code> e combine com <code>LEN(LTRIM(RTRIM(descricao)))</code> para itens excessivamente curtos.</p>
+<h3 id="1.6-totais-de-itens-e-opera%C3%A7%C3%B5es-circulares" tabindex="-1">1.6 Totais de itens e operações circulares</h3>
+<p>Uma expressão de tabela comum permite somar os itens por NF-e e confrontar o resultado com o total do cabeçalho.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">WITH</span> totais_itens <span class="hljs-keyword">AS</span> (
+		<span class="hljs-keyword">SELECT</span> i.id_nfe, <span class="hljs-built_in">SUM</span>(i.valor_total_item) <span class="hljs-keyword">AS</span> total_itens
+		<span class="hljs-keyword">FROM</span> dbo.nfe_item <span class="hljs-keyword">AS</span> i
+		<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> i.id_nfe
+)
+<span class="hljs-keyword">SELECT</span> n.id_nfe, n.valor_total, t.total_itens
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> totais_itens <span class="hljs-keyword">AS</span> t <span class="hljs-keyword">ON</span> t.id_nfe <span class="hljs-operator">=</span> n.id_nfe
+<span class="hljs-keyword">WHERE</span> <span class="hljs-built_in">ABS</span>(n.valor_total <span class="hljs-operator">-</span> t.total_itens) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0.01</span>;
+</div></code></pre>
+<p>Para detectar operações potencialmente circulares, faça uma autojunção de <code>nfe</code>: o emitente da primeira nota deve ser o destinatário da segunda, e vice-versa. Restrinja ambas às NF-e autorizadas, defina uma janela de datas com <code>DATEDIFF</code> e utilize <code>n1.id_emitente &lt; n1.id_destinatario</code> para não duplicar cada par.</p>
+<hr>
+
+    </div>
+</body>
+</html>

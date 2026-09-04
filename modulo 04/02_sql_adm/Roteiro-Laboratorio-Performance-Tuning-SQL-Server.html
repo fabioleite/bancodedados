@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Roteiro-Laboratorio-Performance-Tuning-SQL-Server.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 id="roteiro-de-laborat%C3%B3rio-%E2%80%94-performance-tuning-no-sql-server" tabindex="-1">Roteiro de Laboratório — Performance Tuning no SQL Server</h1>
+<h2 id="1.-objetivo" tabindex="-1">1. Objetivo</h2>
+<p>Demonstrar, em uma tabela de grande volume de dados fiscais, como o SQL Server executa consultas sem índices e como diferentes estratégias de indexação podem alterar:</p>
+<ul>
+<li>tempo de execução;</li>
+<li>consumo de CPU;</li>
+<li><code>logical reads</code>;</li>
+<li><code>physical reads</code>;</li>
+<li>quantidade de linhas processadas;</li>
+<li>operadores do plano de execução;</li>
+<li><code>Table Scan</code>;</li>
+<li><code>Index Scan</code>;</li>
+<li><code>Index Seek</code>;</li>
+<li><code>RID Lookup</code>;</li>
+<li><code>Key Lookup</code>;</li>
+<li><code>Sort</code>;</li>
+<li><code>Hash Match</code>;</li>
+<li>custo de manutenção dos índices.</li>
+</ul>
+<p>A metodologia será:</p>
+<pre class='hljs'><code><div>CONSULTA
+   ↓
+MEDIÇÃO
+   ↓
+PLANO DE EXECUÇÃO
+   ↓
+DIAGNÓSTICO
+   ↓
+ÍNDICE
+   ↓
+NOVA MEDIÇÃO
+   ↓
+COMPARAÇÃO
+</div></code></pre>
+<hr>
+<h2 id="2.-banco-e-tabela-utilizada" tabindex="-1">2. Banco e tabela utilizada</h2>
+<pre class='hljs'><code><div>USE [<span class="hljs-number">933000081200000173202662</span>_20260127_104141];
+GO
+</div></code></pre>
+<p>Tabela:</p>
+<pre class='hljs'><code><div>fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01
+</div></code></pre>
+<p>Essa tabela representa itens de notas fiscais. Uma única NF-e pode possuir diversos itens:</p>
+<pre class='hljs'><code><div>1 NF-e
+   ├── item 1
+   ├── item 2
+   ├── item 3
+   ├── ...
+   └── item N
+</div></code></pre>
+<p>Portanto, a tabela de itens tende a possuir cardinalidade muito maior que uma tabela de cabeçalho de NF-e.</p>
+<h3 id="caracter%C3%ADstica-importante" tabindex="-1">Característica importante</h3>
+<p>O DDL apresentado não possui:</p>
+<ul>
+<li><code>PRIMARY KEY</code>;</li>
+<li><code>UNIQUE</code>;</li>
+<li><code>CLUSTERED INDEX</code>;</li>
+<li><code>NONCLUSTERED INDEX</code>.</li>
+</ul>
+<p>O cenário inicial será, portanto, tratado como uma tabela <strong>heap</strong>.</p>
+<hr>
+<h1 id="3.-etapa-1-%E2%80%94-conhecer-o-volume-da-tabela" tabindex="-1">3. Etapa 1 — Conhecer o volume da tabela</h1>
+<p>Comece medindo a quantidade de registros:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    COUNT_BIG(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> quantidade_registros
+<span class="hljs-keyword">FROM</span> fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01;
+</div></code></pre>
+<p>Depois:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> sp_spaceused
+    <span class="hljs-string">&#x27;fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01&#x27;</span>;
+</div></code></pre>
+<h3 id="registre-os-resultados" tabindex="-1">Registre os resultados</h3>
+<table>
+<thead>
+<tr>
+<th>Informação</th>
+<th style="text-align:right">Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quantidade de registros</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>Espaço reservado</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>Espaço de dados</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>Espaço de índices</td>
+<td style="text-align:right"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="objetivo" tabindex="-1">Objetivo</h3>
+<p>Demonstrar que o custo de uma consulta depende também do volume de dados que precisa ser processado.</p>
+<hr>
+<h1 id="4.-etapa-2-%E2%80%94-verificar-os-%C3%ADndices-existentes" tabindex="-1">4. Etapa 2 — Verificar os índices existentes</h1>
+<p>Execute:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> sp_helpindex
+    <span class="hljs-string">&#x27;fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01&#x27;</span>;
+</div></code></pre>
+<p>Registre os índices existentes.</p>
+<p>Se o resultado confirmar que não há índices, o cenário será:</p>
+<pre class='hljs'><code><div>HEAP
+  │
+  ▼
+Table Scan
+</div></code></pre>
+<h3 id="quest%C3%A3o-para-discuss%C3%A3o" tabindex="-1">Questão para discussão</h3>
+<blockquote>
+<p>Por que o SQL Server precisa percorrer a tabela quando não existe uma estrutura de acesso adequada para a consulta?</p>
+</blockquote>
+<hr>
+<h1 id="5.-etapa-3-%E2%80%94-criar-a-consulta-pesada" tabindex="-1">5. Etapa 3 — Criar a consulta pesada</h1>
+<p>A primeira consulta fará uma análise fiscal agrupando os dados por:</p>
+<ul>
+<li>ano;</li>
+<li>mês;</li>
+<li>UF do emitente;</li>
+<li>CFOP.</li>
+</ul>
+<p>Além disso, serão calculados diversos indicadores.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    NF_ANO,
+    NF_MES,
+    NF_UF_EMITENTE,
+    ITEMNF_CFOP,
+
+    COUNT_BIG(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> quantidade_itens,
+
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> NF_CHAVE_ACESSO) <span class="hljs-keyword">AS</span> quantidade_notas,
+
+    <span class="hljs-built_in">SUM</span>(ITEMNF_VPROD) <span class="hljs-keyword">AS</span> valor_produtos,
+
+    <span class="hljs-built_in">SUM</span>(ITEMNF_VDESC) <span class="hljs-keyword">AS</span> valor_desconto,
+
+    <span class="hljs-built_in">SUM</span>(ITEMNF_VFRETE) <span class="hljs-keyword">AS</span> valor_frete,
+
+    <span class="hljs-built_in">SUM</span>(ITEMNF_VSEG) <span class="hljs-keyword">AS</span> valor_seguro,
+
+    <span class="hljs-built_in">SUM</span>(ITEMNF_VOUTRO) <span class="hljs-keyword">AS</span> outras_despesas,
+
+    <span class="hljs-built_in">SUM</span>(ITEMNF_VBC) <span class="hljs-keyword">AS</span> base_icms,
+
+    <span class="hljs-built_in">SUM</span>(ITEMNF_VLICMS) <span class="hljs-keyword">AS</span> valor_icms,
+
+    <span class="hljs-built_in">SUM</span>(ITEMNF_VBCST) <span class="hljs-keyword">AS</span> base_icms_st,
+
+    <span class="hljs-built_in">SUM</span>(ITEMNF_VICMSST) <span class="hljs-keyword">AS</span> valor_icms_st,
+
+    <span class="hljs-built_in">SUM</span>(ITEMNF_VBC_IPI) <span class="hljs-keyword">AS</span> base_ipi,
+
+    <span class="hljs-built_in">SUM</span>(ITEMNF_VIPI) <span class="hljs-keyword">AS</span> valor_ipi,
+
+    <span class="hljs-built_in">AVG</span>(ITEMNF_VPROD) <span class="hljs-keyword">AS</span> valor_medio_item,
+
+    <span class="hljs-built_in">MIN</span>(ITEMNF_VPROD) <span class="hljs-keyword">AS</span> menor_item,
+
+    <span class="hljs-built_in">MAX</span>(ITEMNF_VPROD) <span class="hljs-keyword">AS</span> maior_item
+
+<span class="hljs-keyword">FROM</span> fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01
+
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span>
+    NF_ANO,
+    NF_MES,
+    NF_UF_EMITENTE,
+    ITEMNF_CFOP
+
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span>
+    NF_ANO,
+    NF_MES,
+    NF_UF_EMITENTE,
+    ITEMNF_CFOP;
+</div></code></pre>
+<p>A consulta combina:</p>
+<pre class='hljs'><code><div>COUNT_BIG
+COUNT(DISTINCT)
+SUM
+AVG
+MIN
+MAX
+GROUP BY
+ORDER BY
+</div></code></pre>
+<p>sobre uma tabela potencialmente muito grande.</p>
+<hr>
+<h1 id="6.-etapa-4-%E2%80%94-medir-o-cen%C3%A1rio-inicial" tabindex="-1">6. Etapa 4 — Medir o cenário inicial</h1>
+<p>Ative as estatísticas:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SET</span> STATISTICS IO <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">SET</span> STATISTICS <span class="hljs-type">TIME</span> <span class="hljs-keyword">ON</span>;
+</div></code></pre>
+<p>Execute a consulta.</p>
+<p>Depois desative:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SET</span> STATISTICS IO OFF;
+<span class="hljs-keyword">SET</span> STATISTICS <span class="hljs-type">TIME</span> OFF;
+</div></code></pre>
+<p>Registre:</p>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th style="text-align:right">Sem índice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPU time</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>Elapsed time</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>Logical reads</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>Physical reads</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>Operador principal</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>Memória</td>
+<td style="text-align:right"></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="7.-etapa-5-%E2%80%94-capturar-o-plano-de-execu%C3%A7%C3%A3o" tabindex="-1">7. Etapa 5 — Capturar o plano de execução</h1>
+<p>No SQL Server Management Studio:</p>
+<pre class='hljs'><code><div>Ctrl + M
+</div></code></pre>
+<p>Execute novamente a consulta.</p>
+<p>Como a tabela é um heap, é esperado encontrar algum operador semelhante a:</p>
+<pre class='hljs'><code><div>Table Scan
+</div></code></pre>
+<p>Uma representação conceitual:</p>
+<pre class='hljs'><code><div>Table Scan
+     ↓
+Compute Scalar
+     ↓
+Hash Match / Aggregate
+     ↓
+Sort
+     ↓
+SELECT
+</div></code></pre>
+<h2 id="quest%C3%A3o-principal" tabindex="-1">Questão principal</h2>
+<blockquote>
+<p>Por que o SQL Server precisou ler tantas linhas?</p>
+</blockquote>
+<p>O objetivo não é apenas identificar o operador mais caro, mas compreender <strong>por que o otimizador escolheu aquele plano</strong>.</p>
+<hr>
+<h1 id="8.-etapa-6-%E2%80%94-criar-o-primeiro-%C3%ADndice" tabindex="-1">8. Etapa 6 — Criar o primeiro índice</h1>
+<p>Crie um índice sobre a data de emissão:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> INDEX IX_TB202_NF_DHEMI
+<span class="hljs-keyword">ON</span> fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01
+(
+    NF_DHEMI
+);
+</div></code></pre>
+<p>Verifique:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> sp_helpindex
+    <span class="hljs-string">&#x27;fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01&#x27;</span>;
+</div></code></pre>
+<hr>
+<h1 id="9.-etapa-7-%E2%80%94-criar-uma-consulta-seletiva" tabindex="-1">9. Etapa 7 — Criar uma consulta seletiva</h1>
+<p>Agora vamos analisar apenas um período.</p>
+<p>Exemplo: janeiro de 2026.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    COUNT_BIG(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> quantidade_itens,
+
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> NF_CHAVE_ACESSO) <span class="hljs-keyword">AS</span> quantidade_notas,
+
+    <span class="hljs-built_in">SUM</span>(ITEMNF_VPROD) <span class="hljs-keyword">AS</span> valor_produtos,
+
+    <span class="hljs-built_in">SUM</span>(ITEMNF_VDESC) <span class="hljs-keyword">AS</span> valor_desconto,
+
+    <span class="hljs-built_in">SUM</span>(ITEMNF_VLICMS) <span class="hljs-keyword">AS</span> valor_icms,
+
+    <span class="hljs-built_in">SUM</span>(ITEMNF_VICMSST) <span class="hljs-keyword">AS</span> valor_icms_st,
+
+    <span class="hljs-built_in">SUM</span>(ITEMNF_VIPI) <span class="hljs-keyword">AS</span> valor_ipi
+
+<span class="hljs-keyword">FROM</span> fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01
+
+<span class="hljs-keyword">WHERE</span> NF_DHEMI <span class="hljs-operator">&gt;=</span> <span class="hljs-string">&#x27;20260101&#x27;</span>
+  <span class="hljs-keyword">AND</span> NF_DHEMI <span class="hljs-operator">&lt;</span>  <span class="hljs-string">&#x27;20260201&#x27;</span>;
+</div></code></pre>
+<p>Agora o SQL Server pode utilizar o índice para procurar diretamente o intervalo solicitado.</p>
+<p>Conceitualmente:</p>
+<pre class='hljs'><code><div>IX_TB202_NF_DHEMI
+        │
+        ▼
+    Index Seek
+        │
+        ▼
+ somente janeiro/2026
+</div></code></pre>
+<hr>
+<h1 id="10.-etapa-8-%E2%80%94-comparar-table-scan-%C3%97-index-seek" tabindex="-1">10. Etapa 8 — Comparar Table Scan × Index Seek</h1>
+<h2 id="sem-%C3%ADndice" tabindex="-1">Sem índice</h2>
+<pre class='hljs'><code><div>HEAP
+ │
+ ▼
+Table Scan
+ │
+ ▼
+toda a tabela
+ │
+ ▼
+filtro
+</div></code></pre>
+<h2 id="com-%C3%ADndice" tabindex="-1">Com índice</h2>
+<pre class='hljs'><code><div>IX_TB202_NF_DHEMI
+        │
+        ▼
+    Index Seek
+        │
+        ▼
+ somente registros do período
+</div></code></pre>
+<h3 id="quest%C3%A3o-para-discuss%C3%A3o-1" tabindex="-1">Questão para discussão</h3>
+<blockquote>
+<p>Se a consulta precisa de apenas uma pequena parcela da tabela, qual estratégia tende a ser mais eficiente?</p>
+</blockquote>
+<hr>
+<h1 id="11.-etapa-9-%E2%80%94-demonstrar-sargability" tabindex="-1">11. Etapa 9 — Demonstrar SARGability</h1>
+<p>Agora compare duas formas de escrever a mesma consulta.</p>
+<h2 id="consulta-a-%E2%80%94-usando-fun%C3%A7%C3%B5es-sobre-a-coluna" tabindex="-1">Consulta A — usando funções sobre a coluna</h2>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    COUNT_BIG(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> quantidade_itens,
+    <span class="hljs-built_in">SUM</span>(ITEMNF_VPROD) <span class="hljs-keyword">AS</span> valor_produtos
+<span class="hljs-keyword">FROM</span> fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">YEAR</span>(NF_DHEMI) <span class="hljs-operator">=</span> <span class="hljs-number">2026</span>
+  <span class="hljs-keyword">AND</span> <span class="hljs-keyword">MONTH</span>(NF_DHEMI) <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;
+</div></code></pre>
+<h2 id="consulta-b-%E2%80%94-utilizando-intervalo" tabindex="-1">Consulta B — utilizando intervalo</h2>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    COUNT_BIG(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> quantidade_itens,
+    <span class="hljs-built_in">SUM</span>(ITEMNF_VPROD) <span class="hljs-keyword">AS</span> valor_produtos
+<span class="hljs-keyword">FROM</span> fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01
+<span class="hljs-keyword">WHERE</span> NF_DHEMI <span class="hljs-operator">&gt;=</span> <span class="hljs-string">&#x27;20260101&#x27;</span>
+  <span class="hljs-keyword">AND</span> NF_DHEMI <span class="hljs-operator">&lt;</span>  <span class="hljs-string">&#x27;20260201&#x27;</span>;
+</div></code></pre>
+<p>Execute ambas com:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SET</span> STATISTICS IO <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">SET</span> STATISTICS <span class="hljs-type">TIME</span> <span class="hljs-keyword">ON</span>;
+</div></code></pre>
+<p>Depois compare:</p>
+<ul>
+<li>plano de execução;</li>
+<li><code>logical reads</code>;</li>
+<li>CPU;</li>
+<li>tempo total;</li>
+<li>operador de acesso.</li>
+</ul>
+<h2 id="conceito" tabindex="-1">Conceito</h2>
+<p>A primeira consulta aplica funções sobre a coluna:</p>
+<pre class='hljs'><code><div>YEAR(NF_DHEMI)
+MONTH(NF_DHEMI)
+</div></code></pre>
+<p>A segunda trabalha diretamente com a coluna:</p>
+<pre class='hljs'><code><div>NF_DHEMI &gt;= ...
+AND NF_DHEMI &lt; ...
+</div></code></pre>
+<p>A segunda forma é mais favorável à utilização eficiente de índices e é um exemplo clássico de uma condição <strong>SARGable</strong>.</p>
+<hr>
+<h1 id="12.-etapa-10-%E2%80%94-criar-um-%C3%ADndice-de-cobertura" tabindex="-1">12. Etapa 10 — Criar um índice de cobertura</h1>
+<p>Agora vamos criar um índice que contenha a data como chave e as principais colunas utilizadas pela consulta como <code>INCLUDE</code>.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> INDEX IX_TB202_NF_DHEMI_COVERING
+<span class="hljs-keyword">ON</span> fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01
+(
+    NF_DHEMI
+)
+INCLUDE
+(
+    NF_CHAVE_ACESSO,
+    ITEMNF_VPROD,
+    ITEMNF_VDESC,
+    ITEMNF_VLICMS,
+    ITEMNF_VICMSST,
+    ITEMNF_VIPI
+);
+</div></code></pre>
+<p>Conceitualmente:</p>
+<pre class='hljs'><code><div>                    Índice
+                       │
+              ┌────────┴────────┐
+              │                 │
+          NF_DHEMI          INCLUDE
+                              │
+               ┌──────────────┼──────────────┐
+               │              │              │
+          VPROD           VLICMS          VIPI
+</div></code></pre>
+<p>O objetivo é reduzir a necessidade de buscar dados adicionais na estrutura principal.</p>
+<hr>
+<h1 id="13.-etapa-11-%E2%80%94-procurar-rid-lookup" tabindex="-1">13. Etapa 11 — Procurar RID Lookup</h1>
+<p>Observe o plano de execução.</p>
+<p>Como a tabela original é um heap, pode aparecer:</p>
+<pre class='hljs'><code><div>RID Lookup
+</div></code></pre>
+<p>Uma representação:</p>
+<pre class='hljs'><code><div>Index Seek
+     │
+     ▼
+encontra os registros
+     │
+     ▼
+RID Lookup
+     │
+     ▼
+Heap
+</div></code></pre>
+<p>O índice de cobertura pode reduzir ou eliminar essa necessidade para as colunas incluídas.</p>
+<h3 id="quest%C3%A3o" tabindex="-1">Questão</h3>
+<blockquote>
+<p>Qual é o custo de utilizar um índice que encontra a linha, mas não possui todas as informações necessárias para produzir o resultado?</p>
+</blockquote>
+<hr>
+<h1 id="14.-etapa-12-%E2%80%94-criar-um-%C3%ADndice-composto" tabindex="-1">14. Etapa 12 — Criar um índice composto</h1>
+<p>Agora vamos testar um índice alinhado às dimensões da consulta analítica:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> INDEX IX_TB202_PERIODO_UF_CFOP
+<span class="hljs-keyword">ON</span> fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01
+(
+    NF_ANO,
+    NF_MES,
+    NF_UF_EMITENTE,
+    ITEMNF_CFOP
+);
+</div></code></pre>
+<p>O índice está alinhado com:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span>
+    NF_ANO,
+    NF_MES,
+    NF_UF_EMITENTE,
+    ITEMNF_CFOP
+</div></code></pre>
+<h3 id="discuss%C3%A3o" tabindex="-1">Discussão</h3>
+<p>Um índice deve ser projetado considerando os <strong>padrões reais de acesso aos dados</strong>, e não apenas porque determinada coluna existe na tabela.</p>
+<hr>
+<h1 id="15.-etapa-13-%E2%80%94-comparar-as-estrat%C3%A9gias" tabindex="-1">15. Etapa 13 — Comparar as estratégias</h1>
+<p>Ao final, teremos quatro cenários experimentais.</p>
+<h2 id="cen%C3%A1rio-1-%E2%80%94-heap" tabindex="-1">Cenário 1 — Heap</h2>
+<pre class='hljs'><code><div>Table Scan
+</div></code></pre>
+<h2 id="cen%C3%A1rio-2-%E2%80%94-%C3%ADndice-em-data" tabindex="-1">Cenário 2 — Índice em data</h2>
+<pre class='hljs'><code><div>IX_TB202_NF_DHEMI
+
+Index Seek / Index Scan
+</div></code></pre>
+<h2 id="cen%C3%A1rio-3-%E2%80%94-%C3%ADndice-de-cobertura" tabindex="-1">Cenário 3 — Índice de cobertura</h2>
+<pre class='hljs'><code><div>IX_TB202_NF_DHEMI_COVERING
+
+Index Seek
++
+menor necessidade de Lookup
+</div></code></pre>
+<h2 id="cen%C3%A1rio-4-%E2%80%94-%C3%ADndice-composto" tabindex="-1">Cenário 4 — Índice composto</h2>
+<pre class='hljs'><code><div>IX_TB202_PERIODO_UF_CFOP
+</div></code></pre>
+<hr>
+<h1 id="16.-etapa-14-%E2%80%94-montar-a-tabela-de-resultados" tabindex="-1">16. Etapa 14 — Montar a tabela de resultados</h1>
+<p>Preencha durante o laboratório:</p>
+<table>
+<thead>
+<tr>
+<th>Cenário</th>
+<th>Índice</th>
+<th>Operador</th>
+<th style="text-align:right">Logical Reads</th>
+<th style="text-align:right">CPU</th>
+<th style="text-align:right">Tempo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Nenhum</td>
+<td>Table Scan</td>
+<td style="text-align:right"></td>
+<td style="text-align:right"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>NF_DHEMI</code></td>
+<td></td>
+<td style="text-align:right"></td>
+<td style="text-align:right"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Covering</td>
+<td></td>
+<td style="text-align:right"></td>
+<td style="text-align:right"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Composto</td>
+<td></td>
+<td style="text-align:right"></td>
+<td style="text-align:right"></td>
+<td style="text-align:right"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="an%C3%A1lise" tabindex="-1">Análise</h3>
+<p>O aluno deverá explicar:</p>
+<ol>
+<li>Qual cenário apresentou maior quantidade de <code>logical reads</code>?</li>
+<li>Qual apresentou menor tempo?</li>
+<li>Qual apresentou menor consumo de CPU?</li>
+<li>O plano mudou?</li>
+<li>O SQL Server utilizou <code>Index Seek</code>?</li>
+<li>Houve <code>RID Lookup</code>?</li>
+<li>O índice de cobertura trouxe benefício?</li>
+<li>O índice composto foi utilizado?</li>
+<li>O resultado da consulta permaneceu igual?</li>
+</ol>
+<hr>
+<h1 id="17.-etapa-15-%E2%80%94-demonstrar-o-custo-dos-%C3%ADndices" tabindex="-1">17. Etapa 15 — Demonstrar o custo dos índices</h1>
+<p>Índices não são gratuitos.</p>
+<p>Eles podem melhorar:</p>
+<pre class='hljs'><code><div>SELECT
+</div></code></pre>
+<p>mas também introduzem custos em:</p>
+<pre class='hljs'><code><div>INSERT
+UPDATE
+DELETE
+</div></code></pre>
+<p>Conceitualmente:</p>
+<pre class='hljs'><code><div>                 ÍNDICES
+                    │
+       ┌────────────┴────────────┐
+       │                         │
+     SELECT                  INSERT/UPDATE/DELETE
+       │                         │
+       ▼                         ▼
+ pode melhorar              precisa manter
+ desempenho                 os índices
+</div></code></pre>
+<p>Os custos incluem:</p>
+<ul>
+<li>espaço em disco;</li>
+<li>memória;</li>
+<li>CPU;</li>
+<li>manutenção;</li>
+<li><code>INSERT</code>;</li>
+<li><code>UPDATE</code>;</li>
+<li><code>DELETE</code>;</li>
+<li><code>REBUILD</code>;</li>
+<li><code>REORGANIZE</code>.</li>
+</ul>
+<hr>
+<h1 id="18.-etapa-16-%E2%80%94-atualizar-estat%C3%ADsticas" tabindex="-1">18. Etapa 16 — Atualizar estatísticas</h1>
+<p>Depois das alterações:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">UPDATE</span> STATISTICS
+fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01;
+</div></code></pre>
+<p>Execute novamente as consultas.</p>
+<p>Explique que o otimizador utiliza estatísticas para estimar:</p>
+<pre class='hljs'><code><div>quantas linhas serão retornadas?
+</div></code></pre>
+<p>Essa estimativa influencia decisões como:</p>
+<pre class='hljs'><code><div>Index Seek
+Index Scan
+Table Scan
+Nested Loops
+Hash Match
+Merge Join
+</div></code></pre>
+<hr>
+<h1 id="19.-etapa-17-%E2%80%94-comparar-estimated-%C3%97-actual-rows" tabindex="-1">19. Etapa 17 — Comparar Estimated × Actual Rows</h1>
+<p>No plano de execução, observe:</p>
+<pre class='hljs'><code><div>Estimated Number of Rows
+              VS
+Actual Number of Rows
+</div></code></pre>
+<p>Exemplo hipotético:</p>
+<pre class='hljs'><code><div>Estimated: 10.000
+Actual:    2.500.000
+</div></code></pre>
+<p>Uma diferença grande entre esses valores pode levar o otimizador a escolher um plano inadequado.</p>
+<h3 id="quest%C3%A3o-1" tabindex="-1">Questão</h3>
+<blockquote>
+<p>O que pode acontecer quando o SQL Server estima uma quantidade de linhas muito diferente da quantidade realmente processada?</p>
+</blockquote>
+<hr>
+<h1 id="20.-etapa-18-%E2%80%94-remover-os-%C3%ADndices-experimentais" tabindex="-1">20. Etapa 18 — Remover os índices experimentais</h1>
+<p>Ao finalizar o laboratório, remova os índices criados experimentalmente:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">DROP</span> INDEX IX_TB202_NF_DHEMI
+<span class="hljs-keyword">ON</span> fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01;
+</div></code></pre>
+<pre class='hljs'><code><div><span class="hljs-keyword">DROP</span> INDEX IX_TB202_NF_DHEMI_COVERING
+<span class="hljs-keyword">ON</span> fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01;
+</div></code></pre>
+<pre class='hljs'><code><div><span class="hljs-keyword">DROP</span> INDEX IX_TB202_PERIODO_UF_CFOP
+<span class="hljs-keyword">ON</span> fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01;
+</div></code></pre>
+<blockquote>
+<p><strong>Atenção:</strong> execute os comandos <code>DROP INDEX</code> somente se esses índices tiverem sido criados especificamente para o laboratório. Não remova índices existentes no ambiente de produção.</p>
+</blockquote>
+<hr>
+<h1 id="21.-sequ%C3%AAncia-did%C3%A1tica-recomendada" tabindex="-1">21. Sequência didática recomendada</h1>
+<pre class='hljs'><code><div>01. Conhecer a tabela
+        ↓
+02. Medir quantidade de registros
+        ↓
+03. Verificar índices existentes
+        ↓
+04. Executar consulta pesada
+        ↓
+05. STATISTICS IO / TIME
+        ↓
+06. Plano de execução
+        ↓
+07. Identificar Table Scan
+        ↓
+08. Criar índice em NF_DHEMI
+        ↓
+09. Executar consulta seletiva
+        ↓
+10. Comparar Scan × Seek
+        ↓
+11. Demonstrar SARGability
+        ↓
+12. Criar índice de cobertura
+        ↓
+13. Analisar RID Lookup
+        ↓
+14. Criar índice composto
+        ↓
+15. Comparar estratégias
+        ↓
+16. Analisar estatísticas
+        ↓
+17. Comparar Estimated × Actual Rows
+        ↓
+18. Discutir custo dos índices
+        ↓
+19. Remover índices experimentais
+        ↓
+20. Conclusão
+</div></code></pre>
+<hr>
+<h1 id="22.-conceitos-que-o-aluno-dever%C3%A1-dominar" tabindex="-1">22. Conceitos que o aluno deverá dominar</h1>
+<p>Ao final do laboratório, o aluno deverá compreender:</p>
+<ul>
+<li>Heap;</li>
+<li>Table Scan;</li>
+<li>Clustered Index;</li>
+<li>Nonclustered Index;</li>
+<li>Index Scan;</li>
+<li>Index Seek;</li>
+<li>RID Lookup;</li>
+<li>Key Lookup;</li>
+<li>índice de cobertura;</li>
+<li>índice composto;</li>
+<li><code>INCLUDE</code>;</li>
+<li>SARGability;</li>
+<li><code>STATISTICS IO</code>;</li>
+<li><code>STATISTICS TIME</code>;</li>
+<li>plano de execução;</li>
+<li>cardinalidade;</li>
+<li>estimativa de linhas;</li>
+<li>estatísticas;</li>
+<li>custo de manutenção dos índices.</li>
+</ul>
+<hr>
+<h1 id="23.-conclus%C3%A3o-esperada" tabindex="-1">23. Conclusão esperada</h1>
+<p>O objetivo principal do laboratório não é demonstrar que:</p>
+<blockquote>
+<p>&quot;índice deixa a consulta rápida&quot;.</p>
+</blockquote>
+<p>O objetivo é demonstrar o processo correto de <strong>Performance Tuning</strong>:</p>
+<pre class='hljs'><code><div>MEDIR
+  ↓
+OBSERVAR
+  ↓
+FORMULAR HIPÓTESE
+  ↓
+ALTERAR
+  ↓
+MEDIR NOVAMENTE
+  ↓
+COMPARAR
+  ↓
+VALIDAR
+</div></code></pre>
+<p>O SQL Server pode ou não utilizar o índice criado. Portanto, não devemos assumir antecipadamente que um índice produzirá <code>Index Seek</code> ou que será necessariamente mais rápido.</p>
+<p>A decisão do otimizador depende de fatores como:</p>
+<ul>
+<li>cardinalidade;</li>
+<li>seletividade;</li>
+<li>distribuição dos dados;</li>
+<li>estatísticas;</li>
+<li>custo estimado;</li>
+<li>quantidade de páginas;</li>
+<li>memória disponível;</li>
+<li>predicados da consulta;</li>
+<li>índices disponíveis.</li>
+</ul>
+<p><strong>A evidência deve vir do plano de execução e das métricas de desempenho.</strong></p>
+
+    </div>
+</body>
+</html>

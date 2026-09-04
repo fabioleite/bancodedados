@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>03.1 comandos update e delete.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 id="m%C3%B3dulo%3A-comandos-de-atualiza%C3%A7%C3%A3o-e-remo%C3%A7%C3%A3o-de-dados-(update-e-delete)" tabindex="-1">Módulo: Comandos de Atualização e Remoção de Dados (UPDATE e DELETE)</h1>
+<p><strong>Curso:</strong> Banco de Dados Relacionais aplicado à Administração Tributária
+<strong>Público-alvo:</strong> Profissionais da Secretaria de Estado da Fazenda da Paraíba (SEFAZ-PB)
+<strong>SGBD utilizado:</strong> Microsoft SQL Server (T-SQL) — ferramenta: SQL Server Management Studio (SSMS)
+<strong>Carga horária sugerida:</strong> 8 horas (4h teoria + 4h prática)</p>
+<hr>
+<h2 id="sum%C3%A1rio" tabindex="-1">Sumário</h2>
+<ol>
+<li><a href="#1-objetivos-do-m%C3%B3dulo">Objetivos do Módulo</a></li>
+<li><a href="#2-update-e-delete-no-contexto-da-linguagem-sql">UPDATE e DELETE no Contexto da Linguagem SQL</a></li>
+<li><a href="#3-o-comando-update--sintaxe-completa">O Comando UPDATE — Sintaxe Completa</a></li>
+<li><a href="#4-o-comando-delete--sintaxe-completa">O Comando DELETE — Sintaxe Completa</a></li>
+<li><a href="#5-truncate-table--delete--diferen%C3%A7as-fundamentais">TRUNCATE TABLE × DELETE — Diferenças Fundamentais</a></li>
+<li><a href="#6-intera%C3%A7%C3%A3o-com-integridade-referencial-e-triggers">Interação com Integridade Referencial e Triggers</a></li>
+<li><a href="#7-seguran%C3%A7a-operacional-evitando-desastres-em-produ%C3%A7%C3%A3o">Segurança Operacional: Evitando Desastres em Produção</a></li>
+<li><a href="#8-roteiro-pr%C3%A1tico-completo">Roteiro Prático Completo</a></li>
+<li><a href="#9-exerc%C3%ADcios-pr%C3%A1ticos">Exercícios Práticos</a></li>
+<li><a href="#10-gloss%C3%A1rio">Glossário</a></li>
+<li><a href="#11-refer%C3%AAncias">Referências</a></li>
+</ol>
+<hr>
+<h2 id="1.-objetivos-do-m%C3%B3dulo" tabindex="-1">1. Objetivos do Módulo</h2>
+<p>Ao final deste módulo, o participante será capaz de:</p>
+<ul>
+<li>Escrever comandos <code>UPDATE</code> em todas as suas variações de sintaxe em T-SQL: com condições simples, com <code>JOIN</code> (cláusula <code>FROM</code>), com subconsultas correlacionadas, com <code>CASE</code>, com <code>TOP</code>, com <code>OUTPUT</code> e em construções baseadas em CTE.</li>
+<li>Escrever comandos <code>DELETE</code> em todas as suas variações: com condições simples, com <code>JOIN</code>, com subconsultas, com <code>TOP</code>, com <code>OUTPUT</code> e em padrões de exclusão em lote (<em>batched delete</em>).</li>
+<li>Diferenciar <code>DELETE</code> de <code>TRUNCATE TABLE</code>, sabendo exatamente quando cada um é apropriado.</li>
+<li>Prever e tratar o impacto de <code>UPDATE</code>/<code>DELETE</code> sobre chaves estrangeiras, <code>CASCADE</code>, <code>SET NULL</code> e <em>triggers</em> já configurados no banco.</li>
+<li>Aplicar práticas de segurança operacional que evitam a alteração ou exclusão acidental de grandes volumes de dados fiscais.</li>
+</ul>
+<hr>
+<h2 id="2.-update-e-delete-no-contexto-da-linguagem-sql" tabindex="-1">2. UPDATE e DELETE no Contexto da Linguagem SQL</h2>
+<p><code>UPDATE</code> e <code>DELETE</code>, junto com <code>INSERT</code> e <code>SELECT</code>, compõem o núcleo da <strong>DML (Data Manipulation Language)</strong> — o subconjunto do SQL responsável por manipular os <strong>dados</strong> armazenados nas tabelas (em contraste com a <strong>DDL</strong>, vista no módulo de <code>ALTER TABLE</code>, que manipula a <strong>estrutura</strong> do banco).</p>
+<p><strong>Por que este módulo merece atenção redobrada em um contexto fiscal:</strong> diferentemente de um <code>SELECT</code> (que apenas lê dados, sem risco de alterá-los), <code>UPDATE</code> e <code>DELETE</code> <strong>modificam permanentemente</strong> o estado da base — e, em uma base fiscal, isso pode significar alterar o valor de uma multa já notificada, ou excluir um documento fiscal que tem valor probatório. Um <code>UPDATE</code> ou <code>DELETE</code> mal escrito (por exemplo, sem uma cláusula <code>WHERE</code>) pode afetar <strong>milhões de registros em uma fração de segundo</strong>, e nem sempre é possível reverter o dano. Este módulo trata tanto da sintaxe completa quanto da disciplina operacional necessária para usá-la com segurança.</p>
+<hr>
+<h2 id="3.-o-comando-update-%E2%80%94-sintaxe-completa" tabindex="-1">3. O Comando UPDATE — Sintaxe Completa</h2>
+<h3 id="3.1-sintaxe-b%C3%A1sica%3A-update-...-set-...-where" tabindex="-1">3.1 Sintaxe Básica: UPDATE ... SET ... WHERE</h3>
+<p>A forma mais simples do comando altera o valor de uma ou mais colunas, para todas as linhas que satisfazem uma condição.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">UPDATE</span> tabela
+<span class="hljs-keyword">SET</span> coluna1 <span class="hljs-operator">=</span> valor1
+<span class="hljs-keyword">WHERE</span> condicao;
+</div></code></pre>
+<p><strong>Exemplo fiscal:</strong> marcar uma NF-e específica como cancelada.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">UPDATE</span> nfe
+<span class="hljs-keyword">SET</span> situacao_nfe <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CANCELADA&#x27;</span>
+<span class="hljs-keyword">WHERE</span> id_nfe <span class="hljs-operator">=</span> <span class="hljs-number">1042</span>;
+</div></code></pre>
+<blockquote>
+<p><strong>A cláusula <code>WHERE</code> não é obrigatória sintaticamente — mas é, na prática, a parte mais importante do comando.</strong> Um <code>UPDATE</code> sem <code>WHERE</code> altera <strong>todas</strong> as linhas da tabela. Veremos essa armadilha com mais detalhe na seção 7.</p>
+</blockquote>
+<h3 id="3.2-atualizando-m%C3%BAltiplas-colunas" tabindex="-1">3.2 Atualizando Múltiplas Colunas</h3>
+<p>Basta separar cada atribuição por vírgula dentro da cláusula <code>SET</code>.</p>
+<p><strong>Exemplo fiscal:</strong> ao cancelar uma NF-e, registrar também a data e o motivo do cancelamento.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">UPDATE</span> nfe
+<span class="hljs-keyword">SET</span>
+    situacao_nfe          <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CANCELADA&#x27;</span>,
+    data_cancelamento        <span class="hljs-operator">=</span> SYSDATETIME(),
+    motivo_cancelamento         <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;Erro de digitação no CNPJ do destinatário&#x27;</span>
+<span class="hljs-keyword">WHERE</span> id_nfe <span class="hljs-operator">=</span> <span class="hljs-number">1042</span>;
+</div></code></pre>
+<h3 id="3.3-atualizando-com-base-em-express%C3%B5es-(referenciando-o-pr%C3%B3prio-valor-atual)" tabindex="-1">3.3 Atualizando com Base em Expressões (referenciando o próprio valor atual)</h3>
+<p>O lado direito do <code>SET</code> pode ser uma <strong>expressão</strong> que referencia o valor atual da própria coluna (ou de outras colunas da mesma linha) — o SQL Server sempre calcula a expressão com base no valor <strong>anterior</strong> à atualização.</p>
+<p><strong>Exemplo fiscal:</strong> reajustar em 10% o valor de todas as multas aplicadas ainda não quitadas, por correção monetária.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">UPDATE</span> auto_infracao
+<span class="hljs-keyword">SET</span> valor_multa_aplicado <span class="hljs-operator">=</span> valor_multa_aplicado <span class="hljs-operator">*</span> <span class="hljs-number">1.10</span>
+<span class="hljs-keyword">WHERE</span> situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;LAVRADO&#x27;</span>;
+</div></code></pre>
+<h3 id="3.4-atualizando-com-express%C3%B5es-condicionais-(case)" tabindex="-1">3.4 Atualizando com Expressões Condicionais (CASE)</h3>
+<p>A expressão <code>CASE</code> permite atribuir valores diferentes a depender de uma condição, tudo em um único comando.</p>
+<p><strong>Exemplo fiscal:</strong> reclassificar automaticamente a situação cadastral de contribuintes com base no tempo desde a última NF-e emitida.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">UPDATE</span> contribuinte
+<span class="hljs-keyword">SET</span> situacao_cadastral <span class="hljs-operator">=</span>
+    <span class="hljs-keyword">CASE</span>
+        <span class="hljs-keyword">WHEN</span> DATEDIFF(<span class="hljs-keyword">MONTH</span>, (<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">MAX</span>(n.data_emissao)
+                               <span class="hljs-keyword">FROM</span> nfe n
+                               <span class="hljs-keyword">WHERE</span> n.id_contribuinte_emitente <span class="hljs-operator">=</span> contribuinte.id_contribuinte), GETDATE()) <span class="hljs-operator">&gt;</span> <span class="hljs-number">24</span>
+            <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;INAPTO&#x27;</span>
+        <span class="hljs-keyword">WHEN</span> DATEDIFF(<span class="hljs-keyword">MONTH</span>, (<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">MAX</span>(n.data_emissao)
+                               <span class="hljs-keyword">FROM</span> nfe n
+                               <span class="hljs-keyword">WHERE</span> n.id_contribuinte_emitente <span class="hljs-operator">=</span> contribuinte.id_contribuinte), GETDATE()) <span class="hljs-operator">&gt;</span> <span class="hljs-number">12</span>
+            <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;SUSPENSO&#x27;</span>
+        <span class="hljs-keyword">ELSE</span> situacao_cadastral   <span class="hljs-comment">-- mantém o valor atual nos demais casos</span>
+    <span class="hljs-keyword">END</span>
+<span class="hljs-keyword">WHERE</span> situacao_cadastral <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;ATIVO&#x27;</span>;
+</div></code></pre>
+<blockquote>
+<p>Repare no <code>ELSE situacao_cadastral</code>: é uma técnica comum para &quot;não alterar&quot; a coluna quando nenhuma das condições específicas se aplica — a expressão <code>CASE</code> sempre precisa produzir algum valor, e reatribuir o valor atual equivale, na prática, a &quot;não mudar nada&quot; para aquela linha.</p>
+</blockquote>
+<h3 id="3.5-update-...-from-%E2%80%94-atualizando-com-base-em-outra-tabela-(join)" tabindex="-1">3.5 UPDATE ... FROM — Atualizando com Base em Outra Tabela (JOIN)</h3>
+<p>Esta é uma das construções mais usadas — e mais específicas do T-SQL — para atualizar uma tabela <strong>com base em valores de outra tabela relacionada</strong>. A cláusula <code>FROM</code>, dentro de um <code>UPDATE</code>, introduz o <code>JOIN</code>.</p>
+<p><strong>Exemplo fiscal:</strong> uma nova portaria da SEFAZ-PB reajusta o valor-base de multa de cada tipo de infração em 15%. É necessário recalcular o <code>valor_multa_aplicado</code> de todos os autos de infração <strong>ainda não quitados</strong>, com base no <strong>novo</strong> <code>valor_multa_base</code> de seu respectivo tipo de infração.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">UPDATE</span> a
+<span class="hljs-keyword">SET</span> a.valor_multa_aplicado <span class="hljs-operator">=</span> t.valor_multa_base
+<span class="hljs-keyword">FROM</span> auto_infracao a
+<span class="hljs-keyword">JOIN</span> tipo_infracao t
+    <span class="hljs-keyword">ON</span> t.id_tipo_infracao <span class="hljs-operator">=</span> a.id_tipo_infracao
+<span class="hljs-keyword">WHERE</span> a.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;LAVRADO&#x27;</span>;
+</div></code></pre>
+<blockquote>
+<p><strong>Atenção à sintaxe:</strong> o alias <code>a</code> (definido na cláusula <code>FROM</code>) é usado tanto no <code>UPDATE a</code> quanto no <code>SET a.coluna = ...</code> — essa é a forma padrão do T-SQL. Note que a tabela mencionada logo após <code>UPDATE</code> deve corresponder à tabela (ou ao seu alias) que você realmente pretende alterar; é um erro comum, especialmente para quem vem de outros SGBDs, esquecer que o T-SQL permite (e exige, neste padrão) repetir o alias logo após <code>UPDATE</code>.</p>
+</blockquote>
+<h3 id="3.6-update-com-subconsulta-correlacionada" tabindex="-1">3.6 UPDATE com Subconsulta Correlacionada</h3>
+<p>Quando a lógica de atualização depende de uma verificação de existência (ou de um valor agregado) em outra tabela, mas não se encaixa bem em um <code>JOIN</code> direto, usa-se uma subconsulta no <code>WHERE</code> ou no <code>SET</code>.</p>
+<p><strong>Exemplo fiscal:</strong> marcar como <code>'EM_MALHA_FISCAL'</code> todo contribuinte que possua ao menos uma NF-e autorizada sem o correspondente registro na EFD do mesmo período (situação já estudada nos módulos anteriores).</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">UPDATE</span> contribuinte
+<span class="hljs-keyword">SET</span> situacao_cadastral <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;EM_MALHA_FISCAL&#x27;</span>
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">EXISTS</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span>
+    <span class="hljs-keyword">FROM</span> nfe n
+    <span class="hljs-keyword">WHERE</span> n.id_contribuinte_emitente <span class="hljs-operator">=</span> contribuinte.id_contribuinte
+      <span class="hljs-keyword">AND</span> n.situacao_nfe <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+      <span class="hljs-keyword">AND</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> (
+          <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span>
+          <span class="hljs-keyword">FROM</span> efd_registro_c100 c
+          <span class="hljs-keyword">WHERE</span> c.chave_acesso_nfe <span class="hljs-operator">=</span> n.chave_acesso
+      )
+);
+</div></code></pre>
+<h3 id="3.7-update-top-(n)-%E2%80%94-limitando-o-n%C3%BAmero-de-linhas-afetadas" tabindex="-1">3.7 UPDATE TOP (n) — Limitando o Número de Linhas Afetadas</h3>
+<p><code>TOP (n)</code> restringe a atualização às primeiras <code>n</code> linhas que satisfazem a condição — útil, sobretudo, para processar grandes volumes <strong>em lotes</strong>, como veremos na seção 7.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">UPDATE</span> TOP (<span class="hljs-number">500</span>) auto_infracao
+<span class="hljs-keyword">SET</span> situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;EM_RECURSO&#x27;</span>
+<span class="hljs-keyword">WHERE</span> situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;LAVRADO&#x27;</span>
+  <span class="hljs-keyword">AND</span> id_auto_infracao <span class="hljs-keyword">IN</span> (<span class="hljs-keyword">SELECT</span> id_auto_infracao <span class="hljs-keyword">FROM</span> recurso_administrativo);
+</div></code></pre>
+<blockquote>
+<p><strong>Cuidado:</strong> sem uma cláusula <code>ORDER BY</code> (que, tecnicamente, o <code>UPDATE</code> não aceita diretamente — apenas o <code>SELECT</code> aceita), <strong>não há garantia de quais linhas específicas</strong> serão as &quot;primeiras 500&quot; escolhidas pelo SQL Server. Para um controle determinístico de quais linhas processar em cada lote, é necessário combinar <code>TOP</code> com uma CTE ordenada, como veremos na seção 3.9.</p>
+</blockquote>
+<h3 id="3.8-update-com-a-cl%C3%A1usula-output-%E2%80%94-capturando-valores-antes-e-depois" tabindex="-1">3.8 UPDATE com a Cláusula OUTPUT — Capturando Valores Antes e Depois</h3>
+<p>A cláusula <code>OUTPUT</code> permite <strong>capturar</strong> as linhas afetadas por um <code>UPDATE</code> — tanto o valor <strong>antigo</strong> (<code>deleted.coluna</code>) quanto o valor <strong>novo</strong> (<code>inserted.coluna</code>) — sem precisar de uma consulta separada. É extremamente útil para trilhas de auditoria.</p>
+<p><strong>Exemplo fiscal:</strong> ao reajustar o valor de multas (seção 3.5), registrar uma trilha de auditoria com o valor antes e depois da alteração.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE TABLE</span> auditoria_reajuste_multa (
+    id_auditoria         <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT NULL</span>,
+    id_auto_infracao        <span class="hljs-type">INT</span>           <span class="hljs-keyword">NOT NULL</span>,
+    valor_anterior              <span class="hljs-type">NUMERIC</span>(<span class="hljs-number">15</span>,<span class="hljs-number">2</span>) <span class="hljs-keyword">NOT NULL</span>,
+    valor_novo                     <span class="hljs-type">NUMERIC</span>(<span class="hljs-number">15</span>,<span class="hljs-number">2</span>) <span class="hljs-keyword">NOT NULL</span>,
+    data_hora_alteracao               DATETIME2     <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> (SYSDATETIME()),
+    <span class="hljs-keyword">CONSTRAINT</span> pk_auditoria_reajuste_multa <span class="hljs-keyword">PRIMARY KEY</span> (id_auditoria)
+);
+GO
+
+<span class="hljs-keyword">UPDATE</span> a
+<span class="hljs-keyword">SET</span> a.valor_multa_aplicado <span class="hljs-operator">=</span> t.valor_multa_base
+OUTPUT
+    deleted.id_auto_infracao,
+    deleted.valor_multa_aplicado,   <span class="hljs-comment">-- valor ANTES da atualização</span>
+    inserted.valor_multa_aplicado   <span class="hljs-comment">-- valor DEPOIS da atualização</span>
+<span class="hljs-keyword">INTO</span> auditoria_reajuste_multa (id_auto_infracao, valor_anterior, valor_novo)
+<span class="hljs-keyword">FROM</span> auto_infracao a
+<span class="hljs-keyword">JOIN</span> tipo_infracao t <span class="hljs-keyword">ON</span> t.id_tipo_infracao <span class="hljs-operator">=</span> a.id_tipo_infracao
+<span class="hljs-keyword">WHERE</span> a.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;LAVRADO&#x27;</span>;
+</div></code></pre>
+<blockquote>
+<p><strong><code>deleted</code> e <code>inserted</code> dentro do <code>OUTPUT</code> de um UPDATE:</strong> o nome pode causar estranheza à primeira vista, mas é o mesmo par de tabelas virtuais já estudado nas <em>triggers</em> (módulo de Restrições e Integridade): dentro de um <code>UPDATE</code>, o SQL Server trata a operação internamente como &quot;excluir a linha antiga e inserir a linha nova&quot; — por isso <code>deleted</code> representa o estado <strong>antes</strong>, e <code>inserted</code>, o estado <strong>depois</strong>.</p>
+</blockquote>
+<h3 id="3.9-update-por-meio-de-uma-cte-(common-table-expression)" tabindex="-1">3.9 UPDATE por meio de uma CTE (Common Table Expression)</h3>
+<p>Uma <strong>CTE</strong> (<code>WITH nome AS (...)</code>) pode ser usada para tornar a linha-alvo do <code>UPDATE</code> mais explícita — especialmente útil para combinar <code>TOP</code> com um critério de ordenação determinístico (o que o <code>UPDATE TOP</code> sozinho não permite, como visto na seção 3.7).</p>
+<p><strong>Exemplo fiscal:</strong> processar em lotes de 500 as NF-e mais antigas pendentes de vinculação ao registro EFD correspondente, evitando travar a tabela inteira de uma só vez.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">WITH</span> lote_a_atualizar <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">500</span>) id_nfe, situacao_nfe
+    <span class="hljs-keyword">FROM</span> nfe
+    <span class="hljs-keyword">WHERE</span> situacao_nfe <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;PENDENTE_VINCULACAO&#x27;</span>
+    <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> data_emissao <span class="hljs-keyword">ASC</span>   <span class="hljs-comment">-- as mais antigas primeiro — determinístico</span>
+)
+<span class="hljs-keyword">UPDATE</span> lote_a_atualizar
+<span class="hljs-keyword">SET</span> situacao_nfe <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;VINCULACAO_EM_PROCESSAMENTO&#x27;</span>;
+</div></code></pre>
+<blockquote>
+<p>A CTE aqui funciona como uma &quot;janela&quot; sobre a tabela <code>nfe</code>, definida por uma consulta com <code>ORDER BY</code> — algo que o <code>UPDATE TOP</code> direto não oferece. O <code>UPDATE</code> final é aplicado sobre essa janela, e o SQL Server entende que a alteração deve refletir na tabela base (<code>nfe</code>).</p>
+</blockquote>
+<h3 id="3.10-resumo-da-sintaxe-completa-do-update" tabindex="-1">3.10 Resumo da Sintaxe Completa do UPDATE</h3>
+<pre class='hljs'><code><div>[ <span class="hljs-keyword">WITH</span> cte <span class="hljs-keyword">AS</span> (...) ]
+<span class="hljs-keyword">UPDATE</span> [ TOP (n) ] { tabela <span class="hljs-operator">|</span> cte <span class="hljs-operator">|</span> alias }
+<span class="hljs-keyword">SET</span> coluna1 <span class="hljs-operator">=</span> expressao1 [, coluna2 <span class="hljs-operator">=</span> expressao2, ... ]
+[ OUTPUT clausula_output [ <span class="hljs-keyword">INTO</span> tabela_destino ] ]
+[ <span class="hljs-keyword">FROM</span> origem_do_join [ <span class="hljs-keyword">JOIN</span> ... <span class="hljs-keyword">ON</span> ... ] ]
+[ <span class="hljs-keyword">WHERE</span> condicao ]
+</div></code></pre>
+<hr>
+<h2 id="4.-o-comando-delete-%E2%80%94-sintaxe-completa" tabindex="-1">4. O Comando DELETE — Sintaxe Completa</h2>
+<h3 id="4.1-sintaxe-b%C3%A1sica%3A-delete-from-...-where" tabindex="-1">4.1 Sintaxe Básica: DELETE FROM ... WHERE</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> tabela
+<span class="hljs-keyword">WHERE</span> condicao;
+</div></code></pre>
+<p><strong>Exemplo fiscal:</strong> remover uma duplicata de NF-e inserida por engano (registro de teste).</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> duplicata_nfe
+<span class="hljs-keyword">WHERE</span> id_duplicata <span class="hljs-operator">=</span> <span class="hljs-number">87</span>;
+</div></code></pre>
+<blockquote>
+<p>Em T-SQL, a palavra <code>FROM</code> após <code>DELETE</code> é <strong>opcional</strong> na sintaxe básica (<code>DELETE tabela WHERE ...</code> também funciona), mas a forma <code>DELETE FROM tabela</code> é a mais recomendada por clareza e por ser exigida nas variações mais complexas (como a <code>DELETE ... FROM</code> com <code>JOIN</code>, seção 4.3, onde o <code>FROM</code> tem um papel sintático diferente).</p>
+</blockquote>
+<h3 id="4.2-delete-com-subconsulta-(in%2C-exists%2C-not-exists)" tabindex="-1">4.2 DELETE com Subconsulta (IN, EXISTS, NOT EXISTS)</h3>
+<p><strong>Exemplo fiscal — usando <code>IN</code>:</strong> remover, da tabela de staging, todas as linhas cuja <code>chave_acesso</code> já foi migrada com sucesso para a tabela definitiva (rotina de limpeza pós-carga, tema do módulo de <code>BULK INSERT</code>).</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> stg_nfe_importacao
+<span class="hljs-keyword">WHERE</span> chave_acesso <span class="hljs-keyword">IN</span> (<span class="hljs-keyword">SELECT</span> chave_acesso <span class="hljs-keyword">FROM</span> nfe_importada);
+</div></code></pre>
+<p><strong>Exemplo fiscal — usando <code>NOT EXISTS</code>:</strong> remover eventos de NF-e (<code>evento_nfe</code>) órfãos, cuja NF-e correspondente foi excluída de um ambiente de testes (situação que não deveria ocorrer em produção graças à integridade referencial, mas é comum em bases de homologação sem <code>FOREIGN KEY</code> totalmente configurada).</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> evento_nfe
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span> <span class="hljs-keyword">FROM</span> nfe n <span class="hljs-keyword">WHERE</span> n.id_nfe <span class="hljs-operator">=</span> evento_nfe.id_nfe
+);
+</div></code></pre>
+<h3 id="4.3-delete-...-from-%E2%80%94-removendo-com-base-em-um-join" tabindex="-1">4.3 DELETE ... FROM — Removendo com Base em um JOIN</h3>
+<p>Assim como o <code>UPDATE</code>, o <code>DELETE</code> pode usar uma cláusula <code>FROM</code> com <code>JOIN</code> para decidir quais linhas remover com base em outra tabela.</p>
+<p><strong>Exemplo fiscal:</strong> remover todos os itens (<code>item_nfe</code>) de notas fiscais que foram <strong>denegadas</strong> (documento fiscal que nunca chegou a ter validade jurídica, situação distinta de &quot;cancelada&quot;).</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">DELETE</span> i
+<span class="hljs-keyword">FROM</span> item_nfe i
+<span class="hljs-keyword">JOIN</span> nfe n <span class="hljs-keyword">ON</span> n.id_nfe <span class="hljs-operator">=</span> i.id_nfe
+<span class="hljs-keyword">WHERE</span> n.situacao_nfe <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;DENEGADA&#x27;</span>;
+</div></code></pre>
+<blockquote>
+<p>Note a semelhança estrutural com o <code>UPDATE ... FROM</code> (seção 3.5): o alias (<code>i</code>) aparece logo após <code>DELETE</code>, indicando qual das tabelas envolvidas no <code>JOIN</code> deve, de fato, ter suas linhas removidas — a tabela <code>nfe</code> (<code>n</code>) é usada apenas como critério de filtro, e <strong>suas linhas não são afetadas</strong>.</p>
+</blockquote>
+<h3 id="4.4-delete-top-(n)" tabindex="-1">4.4 DELETE TOP (n)</h3>
+<p>Assim como no <code>UPDATE</code>, é possível limitar o número de linhas removidas de uma vez.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">DELETE</span> TOP (<span class="hljs-number">1000</span>) <span class="hljs-keyword">FROM</span> stg_nfe_importacao
+<span class="hljs-keyword">WHERE</span> data_hora_carga <span class="hljs-operator">&lt;</span> DATEADD(<span class="hljs-keyword">DAY</span>, <span class="hljs-number">-90</span>, GETDATE());
+</div></code></pre>
+<blockquote>
+<p>Vale a mesma ressalva da seção 3.7: sem <code>ORDER BY</code>, não há garantia de <strong>quais</strong> 1000 linhas serão excluídas primeiro — para exclusões em lote com ordem determinística, combine com uma CTE (seção 4.6).</p>
+</blockquote>
+<h3 id="4.5-delete-com-a-cl%C3%A1usula-output-%E2%80%94-capturando-os-dados-exclu%C3%ADdos" tabindex="-1">4.5 DELETE com a Cláusula OUTPUT — Capturando os Dados Excluídos</h3>
+<p>Assim como no <code>UPDATE</code>, é possível capturar as linhas removidas — extremamente valioso quando a exclusão de dados fiscais exige, por si só, uma trilha de auditoria (ou um &quot;backup lógico&quot; antes do apagamento definitivo).</p>
+<p><strong>Exemplo fiscal:</strong> antes de expurgar registros antigos de staging (mais de 90 dias), arquivá-los em uma tabela de histórico, em vez de simplesmente perdê-los.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE TABLE</span> stg_nfe_importacao_arquivo_morto (
+    chave_acesso        <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">44</span>),
+    cnpj_emitente          <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">14</span>),
+    cnpj_destinatario        <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">14</span>),
+    numero_nf                  <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>),
+    serie                         <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">10</span>),
+    data_emissao                    <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">10</span>),
+    valor_total                        <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>),
+    situacao                              <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>),
+    nome_arquivo_origem                      <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">200</span>),
+    data_hora_carga                             DATETIME2,
+    data_hora_expurgo                              DATETIME2 <span class="hljs-keyword">DEFAULT</span> (SYSDATETIME())
+);
+GO
+
+<span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> stg_nfe_importacao
+OUTPUT
+    deleted.chave_acesso, deleted.cnpj_emitente, deleted.cnpj_destinatario,
+    deleted.numero_nf, deleted.serie, deleted.data_emissao, deleted.valor_total,
+    deleted.situacao, deleted.nome_arquivo_origem, deleted.data_hora_carga
+<span class="hljs-keyword">INTO</span> stg_nfe_importacao_arquivo_morto
+    (chave_acesso, cnpj_emitente, cnpj_destinatario, numero_nf, serie,
+     data_emissao, valor_total, situacao, nome_arquivo_origem, data_hora_carga)
+<span class="hljs-keyword">WHERE</span> data_hora_carga <span class="hljs-operator">&lt;</span> DATEADD(<span class="hljs-keyword">DAY</span>, <span class="hljs-number">-90</span>, GETDATE());
+</div></code></pre>
+<blockquote>
+<p><strong>Este padrão — <code>DELETE ... OUTPUT deleted.* INTO tabela_arquivo</code> — é, na prática, a forma correta de implementar um &quot;soft delete com arquivamento&quot; em T-SQL</strong>, sem precisar de duas instruções separadas (<code>INSERT</code> seguido de <code>DELETE</code>), o que evitaria uma condição de corrida entre as duas operações.</p>
+</blockquote>
+<h3 id="4.6-delete-por-meio-de-uma-cte" tabindex="-1">4.6 DELETE por meio de uma CTE</h3>
+<p>Da mesma forma que no <code>UPDATE</code>, uma CTE viabiliza a exclusão em lotes com ordem determinística.</p>
+<p><strong>Exemplo fiscal:</strong> expurgar, em lotes de 1000, os registros mais antigos de <code>stg_nfe_importacao_arquivo_morto</code> que já ultrapassaram o prazo legal de retenção (por exemplo, 5 anos).</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">WITH</span> lote_a_excluir <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">1000</span>) chave_acesso
+    <span class="hljs-keyword">FROM</span> stg_nfe_importacao_arquivo_morto
+    <span class="hljs-keyword">WHERE</span> data_hora_expurgo <span class="hljs-operator">&lt;</span> DATEADD(<span class="hljs-keyword">YEAR</span>, <span class="hljs-number">-5</span>, GETDATE())
+    <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> data_hora_expurgo <span class="hljs-keyword">ASC</span>
+)
+<span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> lote_a_excluir;
+</div></code></pre>
+<h3 id="4.7-exclus%C3%A3o-em-lote-(batched-delete)-para-tabelas-grandes" tabindex="-1">4.7 Exclusão em Lote (Batched DELETE) para Tabelas Grandes</h3>
+<p>Excluir milhões de linhas em um único <code>DELETE</code> gera um <strong>crescimento explosivo do log de transações</strong> (cada linha excluída é registrada individualmente no log, dentro de uma única transação gigante) e mantém bloqueios por um tempo prolongado. A prática recomendada é <strong>excluir em lotes menores, em um laço</strong>, permitindo que cada lote seja committado (e o espaço de log, potencialmente reutilizado) antes do próximo.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@linhas_excluidas</span> <span class="hljs-type">INT</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;
+
+WHILE <span class="hljs-variable">@linhas_excluidas</span> <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">DELETE</span> TOP (<span class="hljs-number">5000</span>) <span class="hljs-keyword">FROM</span> stg_nfe_importacao_arquivo_morto
+    <span class="hljs-keyword">WHERE</span> data_hora_expurgo <span class="hljs-operator">&lt;</span> DATEADD(<span class="hljs-keyword">YEAR</span>, <span class="hljs-number">-5</span>, GETDATE());
+
+    <span class="hljs-keyword">SET</span> <span class="hljs-variable">@linhas_excluidas</span> <span class="hljs-operator">=</span> @<span class="hljs-variable">@ROWCOUNT</span>;
+
+    <span class="hljs-comment">-- Opcional: pequena pausa entre lotes, para reduzir contenção em ambiente de produção</span>
+    WAITFOR DELAY <span class="hljs-string">&#x27;00:00:00.5&#x27;</span>;
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<blockquote>
+<p><strong><code>@@ROWCOUNT</code></strong> retorna o número de linhas afetadas pelo <strong>último</strong> comando executado — aqui, usamos essa variável para controlar o laço: quando um lote não excluir mais nenhuma linha (<code>@@ROWCOUNT = 0</code>), significa que não há mais nada a excluir, e o laço termina.</p>
+</blockquote>
+<h3 id="4.8-resumo-da-sintaxe-completa-do-delete" tabindex="-1">4.8 Resumo da Sintaxe Completa do DELETE</h3>
+<pre class='hljs'><code><div>[ <span class="hljs-keyword">WITH</span> cte <span class="hljs-keyword">AS</span> (...) ]
+<span class="hljs-keyword">DELETE</span> [ TOP (n) ] [ <span class="hljs-keyword">FROM</span> ] { tabela <span class="hljs-operator">|</span> cte <span class="hljs-operator">|</span> alias }
+[ OUTPUT clausula_output [ <span class="hljs-keyword">INTO</span> tabela_destino ] ]
+[ <span class="hljs-keyword">FROM</span> origem_do_join [ <span class="hljs-keyword">JOIN</span> ... <span class="hljs-keyword">ON</span> ... ] ]
+[ <span class="hljs-keyword">WHERE</span> condicao ];
+</div></code></pre>
+<hr>
+<h2 id="5.-truncate-table-%C3%97-delete-%E2%80%94-diferen%C3%A7as-fundamentais" tabindex="-1">5. TRUNCATE TABLE × DELETE — Diferenças Fundamentais</h2>
+<p>Embora ambos removam dados de uma tabela, <code>TRUNCATE TABLE</code> e <code>DELETE FROM tabela</code> (sem <code>WHERE</code>) <strong>não são equivalentes</strong>. Um erro comum é tratá-los como intercambiáveis.</p>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th><code>DELETE</code></th>
+<th><code>TRUNCATE TABLE</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Permite <code>WHERE</code> (remover parte dos dados)</td>
+<td>Sim</td>
+<td><strong>Não</strong> — remove sempre todas as linhas</td>
+</tr>
+<tr>
+<td>Registro em log de transações</td>
+<td>Linha a linha (log completo)</td>
+<td>Mínimo (apenas as páginas desalocadas)</td>
+</tr>
+<tr>
+<td>Velocidade em tabelas grandes</td>
+<td>Mais lento</td>
+<td>Muito mais rápido</td>
+</tr>
+<tr>
+<td>Dispara <em>triggers</em> <code>AFTER DELETE</code></td>
+<td>Sim</td>
+<td><strong>Não</strong></td>
+</tr>
+<tr>
+<td>Reseta colunas <code>IDENTITY</code></td>
+<td>Não (o contador continua de onde parou)</td>
+<td>Sim (volta à semente original, a menos que resetado manualmente)</td>
+</tr>
+<tr>
+<td>Permissão necessária</td>
+<td><code>DELETE</code> na tabela</td>
+<td><code>ALTER</code> na tabela</td>
+</tr>
+<tr>
+<td>Funciona se a tabela é referenciada por <code>FOREIGN KEY</code> de outra tabela com linhas</td>
+<td>Sim (respeitando a integridade, linha a linha)</td>
+<td><strong>Não</strong> — falha imediatamente, mesmo que a tabela referenciadora esteja vazia (a menos que a FK seja removida ou desabilitada antes)</td>
+</tr>
+<tr>
+<td>Pode ser revertido dentro de uma transação (<code>ROLLBACK</code>)</td>
+<td>Sim</td>
+<td>Sim (ambos são operações logadas o suficiente para rollback dentro da mesma transação)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Exemplo fiscal — quando usar <code>TRUNCATE</code>:</strong> limpar completamente uma tabela de staging (<code>stg_nfe_importacao</code>) entre cargas de teste, sem qualquer necessidade de preservar histórico ou disparar <em>triggers</em>:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">TRUNCATE</span> <span class="hljs-keyword">TABLE</span> stg_nfe_importacao;
+</div></code></pre>
+<p><strong>Exemplo fiscal — quando <code>TRUNCATE</code> NÃO deve ser usado:</strong> tentar limpar a tabela <code>nfe</code>, que é referenciada por <code>item_nfe</code>, <code>evento_nfe</code>, <code>duplicata_nfe</code> e outras — o comando falhará com erro, mesmo que a intenção fosse legítima, justamente porque o <code>TRUNCATE</code> não verifica linha a linha se há dependência, apenas recusa a operação inteira diante de qualquer <code>FOREIGN KEY</code> de referência.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">TRUNCATE</span> <span class="hljs-keyword">TABLE</span> nfe;
+<span class="hljs-comment">-- Msg 4712: Cannot truncate table &#x27;nfe&#x27; because it is being referenced by a FOREIGN KEY constraint.</span>
+</div></code></pre>
+<hr>
+<h2 id="6.-intera%C3%A7%C3%A3o-com-integridade-referencial-e-triggers" tabindex="-1">6. Interação com Integridade Referencial e Triggers</h2>
+<h3 id="6.1-delete-e-as-a%C3%A7%C3%B5es-on-delete" tabindex="-1">6.1 DELETE e as ações ON DELETE</h3>
+<p>Como estudado no módulo de Restrições e Integridade, o comportamento de um <code>DELETE</code> sobre uma tabela &quot;pai&quot; depende diretamente da cláusula <code>ON DELETE</code> definida na <code>FOREIGN KEY</code> da tabela &quot;filha&quot;:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> nfe <span class="hljs-keyword">WHERE</span> id_nfe <span class="hljs-operator">=</span> <span class="hljs-number">1042</span>;
+</div></code></pre>
+<ul>
+<li>Se <code>item_nfe.fk_item_nfe</code> foi criada com <code>ON DELETE CASCADE</code>, os itens daquela NF-e são excluídos automaticamente junto.</li>
+<li>Se <code>evento_nfe.fk_evento_nfe</code> foi criada com <code>NO ACTION</code> (padrão), a exclusão da NF-e <strong>falhará</strong> caso existam eventos associados a ela — protegendo o histórico de eventos de ser perdido silenciosamente.</li>
+</ul>
+<h3 id="6.2-update-e-triggers-de-valida%C3%A7%C3%A3o" tabindex="-1">6.2 UPDATE e Triggers de Validação</h3>
+<p>Como visto no módulo de Restrições e Integridade, um <code>UPDATE</code> pode ser interceptado por uma <em>trigger</em> <code>AFTER UPDATE</code> que valide a transição de estado antes de permitir a alteração — por exemplo, a <em>trigger</em> <code>trg_impede_reabertura_nfe</code>, que bloqueia a mudança de <code>situacao_nfe</code> de <code>'CANCELADA'</code> para qualquer outro valor:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">UPDATE</span> nfe
+<span class="hljs-keyword">SET</span> situacao_nfe <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+<span class="hljs-keyword">WHERE</span> id_nfe <span class="hljs-operator">=</span> <span class="hljs-number">1042</span> <span class="hljs-keyword">AND</span> situacao_nfe <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CANCELADA&#x27;</span>;
+<span class="hljs-comment">-- Se a trigger trg_impede_reabertura_nfe estiver ativa, este comando é revertido</span>
+<span class="hljs-comment">-- e retorna a mensagem definida no RAISERROR daquela trigger.</span>
+</div></code></pre>
+<blockquote>
+<p><strong>Implicação prática:</strong> ao escrever um <code>UPDATE</code> em massa (como os das seções 3.5 ou 3.9), é importante ter em mente <strong>todas</strong> as <em>triggers</em> ativas na tabela-alvo — uma única linha do lote que viole uma regra de trigger pode fazer o <code>ROLLBACK</code> de todo o lote, dependendo de como a trigger foi escrita (lembrando que, por padrão em T-SQL, uma trigger dispara <strong>uma única vez por comando</strong>, recebendo todas as linhas afetadas de uma vez nas tabelas <code>inserted</code>/<code>deleted</code> — não uma vez por linha).</p>
+</blockquote>
+<hr>
+<h2 id="7.-seguran%C3%A7a-operacional%3A-evitando-desastres-em-produ%C3%A7%C3%A3o" tabindex="-1">7. Segurança Operacional: Evitando Desastres em Produção</h2>
+<h3 id="7.1-a-regra-de-ouro%3A-nunca-escrever-where-por-%C3%BAltimo" tabindex="-1">7.1 A regra de ouro: nunca escrever WHERE por último</h3>
+<p>O erro mais comum — e mais destrutivo — em <code>UPDATE</code>/<code>DELETE</code> é <strong>esquecer a cláusula <code>WHERE</code></strong>, afetando a tabela inteira.</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- ⚠️ PERIGO: sem WHERE, cancela TODAS as NF-e da base</span>
+<span class="hljs-keyword">UPDATE</span> nfe
+<span class="hljs-keyword">SET</span> situacao_nfe <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CANCELADA&#x27;</span>;
+</div></code></pre>
+<p><strong>Prática recomendada:</strong> sempre escrever primeiro um <code>SELECT</code> com a mesma condição pretendida, <strong>conferir visualmente as linhas retornadas</strong>, e só então transformar o <code>SELECT</code> em <code>UPDATE</code>/<code>DELETE</code>:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Passo 1: sempre comece assim, e revise o resultado</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> nfe <span class="hljs-keyword">WHERE</span> id_nfe <span class="hljs-operator">=</span> <span class="hljs-number">1042</span>;
+
+<span class="hljs-comment">-- Passo 2: só depois de confirmar visualmente, transforme em UPDATE/DELETE</span>
+<span class="hljs-keyword">UPDATE</span> nfe <span class="hljs-keyword">SET</span> situacao_nfe <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CANCELADA&#x27;</span> <span class="hljs-keyword">WHERE</span> id_nfe <span class="hljs-operator">=</span> <span class="hljs-number">1042</span>;
+</div></code></pre>
+<h3 id="7.2-envolvendo-em-uma-transa%C3%A7%C3%A3o-expl%C3%ADcita%2C-com-verifica%C3%A7%C3%A3o-antes-do-commit" tabindex="-1">7.2 Envolvendo em uma Transação Explícita, com Verificação Antes do COMMIT</h3>
+<p>Para operações de maior risco (alterações em massa, exclusões em tabelas críticas), é recomendável envolver o comando em uma transação explícita, verificar <code>@@ROWCOUNT</code> (ou consultar o resultado) <strong>antes</strong> de confirmar, e só então decidir entre <code>COMMIT</code> ou <code>ROLLBACK</code>.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">BEGIN</span> TRANSACTION;
+
+<span class="hljs-keyword">UPDATE</span> auto_infracao
+<span class="hljs-keyword">SET</span> valor_multa_aplicado <span class="hljs-operator">=</span> valor_multa_aplicado <span class="hljs-operator">*</span> <span class="hljs-number">1.10</span>
+<span class="hljs-keyword">WHERE</span> situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;LAVRADO&#x27;</span>;
+
+PRINT <span class="hljs-string">&#x27;Linhas afetadas: &#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">CAST</span>(@<span class="hljs-variable">@ROWCOUNT</span> <span class="hljs-keyword">AS</span> <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">10</span>));
+
+<span class="hljs-comment">-- Neste ponto, o instrutor/DBA verifica manualmente se o número de linhas faz sentido</span>
+<span class="hljs-comment">-- (por exemplo, comparando com uma contagem prévia esperada) antes de decidir:</span>
+
+<span class="hljs-comment">-- COMMIT TRANSACTION;   -- confirma a alteração</span>
+<span class="hljs-comment">-- ROLLBACK TRANSACTION; -- desfaz tudo, caso o número de linhas pareça errado</span>
+</div></code></pre>
+<blockquote>
+<p>Enquanto a transação não é finalizada com <code>COMMIT</code> ou <code>ROLLBACK</code>, <strong>nenhuma outra sessão consegue enxergar a alteração</strong>, e ela pode ser completamente desfeita. Esse é o principal mecanismo de segurança contra erros operacionais em comandos de alto risco.</p>
+</blockquote>
+<h3 id="7.3-try...catch-para-scripts-de-produ%C3%A7%C3%A3o" tabindex="-1">7.3 TRY...CATCH para Scripts de Produção</h3>
+<p>Para scripts automatizados (não interativos), o padrão <code>TRY...CATCH</code> combinado com transação garante que qualquer erro durante a execução resulte em <code>ROLLBACK</code> automático, evitando que a base fique em um estado parcialmente alterado.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">BEGIN</span> TRY
+    <span class="hljs-keyword">BEGIN</span> TRANSACTION;
+
+    <span class="hljs-keyword">UPDATE</span> auto_infracao
+    <span class="hljs-keyword">SET</span> valor_multa_aplicado <span class="hljs-operator">=</span> valor_multa_aplicado <span class="hljs-operator">*</span> <span class="hljs-number">1.10</span>
+    <span class="hljs-keyword">WHERE</span> situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;LAVRADO&#x27;</span>;
+
+    <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> stg_nfe_importacao
+    <span class="hljs-keyword">WHERE</span> chave_acesso <span class="hljs-keyword">IN</span> (<span class="hljs-keyword">SELECT</span> chave_acesso <span class="hljs-keyword">FROM</span> nfe_importada);
+
+    <span class="hljs-keyword">COMMIT</span> TRANSACTION;
+<span class="hljs-keyword">END</span> TRY
+<span class="hljs-keyword">BEGIN</span> CATCH
+    IF @<span class="hljs-variable">@TRANCOUNT</span> <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span>
+        <span class="hljs-keyword">ROLLBACK</span> TRANSACTION;
+
+    PRINT <span class="hljs-string">&#x27;Erro durante a operação: &#x27;</span> <span class="hljs-operator">+</span> ERROR_MESSAGE();
+<span class="hljs-keyword">END</span> CATCH;
+</div></code></pre>
+<h3 id="7.4-uso-de-set-xact_abort-on" tabindex="-1">7.4 Uso de SET XACT_ABORT ON</h3>
+<p>Em scripts que combinam múltiplos comandos DML dentro de uma transação, <code>SET XACT_ABORT ON</code> garante que <strong>qualquer</strong> erro de execução (mesmo os que, por padrão, não encerrariam automaticamente a transação) provoque o cancelamento e o <code>ROLLBACK</code> imediato de toda a transação — uma proteção adicional recomendada para scripts de produção.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SET</span> XACT_ABORT <span class="hljs-keyword">ON</span>;
+
+<span class="hljs-keyword">BEGIN</span> TRANSACTION;
+    <span class="hljs-keyword">UPDATE</span> auto_infracao <span class="hljs-keyword">SET</span> valor_multa_aplicado <span class="hljs-operator">=</span> valor_multa_aplicado <span class="hljs-operator">*</span> <span class="hljs-number">1.10</span> <span class="hljs-keyword">WHERE</span> situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;LAVRADO&#x27;</span>;
+<span class="hljs-keyword">COMMIT</span> TRANSACTION;
+</div></code></pre>
+<hr>
+<h2 id="8.-roteiro-pr%C3%A1tico-completo" tabindex="-1">8. Roteiro Prático Completo</h2>
+<p><strong>Objetivo:</strong> aplicar, em sequência, as principais variações de <code>UPDATE</code> e <code>DELETE</code> estudadas neste módulo sobre o banco <code>curso_integridade_fiscal</code>.</p>
+<pre class='hljs'><code><div>USE curso_integridade_fiscal;
+GO
+
+<span class="hljs-comment">-- 1. UPDATE básico</span>
+<span class="hljs-keyword">UPDATE</span> nfe
+<span class="hljs-keyword">SET</span> situacao_nfe <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CANCELADA&#x27;</span>, data_cancelamento <span class="hljs-operator">=</span> SYSDATETIME()
+<span class="hljs-keyword">WHERE</span> id_nfe <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;
+GO
+
+<span class="hljs-comment">-- 2. UPDATE ... FROM (join) com reajuste de multas</span>
+<span class="hljs-keyword">UPDATE</span> a
+<span class="hljs-keyword">SET</span> a.valor_multa_aplicado <span class="hljs-operator">=</span> t.valor_multa_base
+<span class="hljs-keyword">FROM</span> auto_infracao a
+<span class="hljs-keyword">JOIN</span> tipo_infracao t <span class="hljs-keyword">ON</span> t.id_tipo_infracao <span class="hljs-operator">=</span> a.id_tipo_infracao
+<span class="hljs-keyword">WHERE</span> a.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;LAVRADO&#x27;</span>;
+GO
+
+<span class="hljs-comment">-- 3. UPDATE com OUTPUT para auditoria</span>
+<span class="hljs-keyword">CREATE TABLE</span> auditoria_reajuste_multa (
+    id_auditoria       <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT NULL</span>,
+    id_auto_infracao      <span class="hljs-type">INT</span>           <span class="hljs-keyword">NOT NULL</span>,
+    valor_anterior           <span class="hljs-type">NUMERIC</span>(<span class="hljs-number">15</span>,<span class="hljs-number">2</span>) <span class="hljs-keyword">NOT NULL</span>,
+    valor_novo                  <span class="hljs-type">NUMERIC</span>(<span class="hljs-number">15</span>,<span class="hljs-number">2</span>) <span class="hljs-keyword">NOT NULL</span>,
+    data_hora_alteracao            DATETIME2     <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> (SYSDATETIME()),
+    <span class="hljs-keyword">CONSTRAINT</span> pk_auditoria_reajuste_multa <span class="hljs-keyword">PRIMARY KEY</span> (id_auditoria)
+);
+GO
+
+<span class="hljs-keyword">UPDATE</span> a
+<span class="hljs-keyword">SET</span> a.valor_multa_aplicado <span class="hljs-operator">=</span> a.valor_multa_aplicado <span class="hljs-operator">*</span> <span class="hljs-number">1.05</span>
+OUTPUT deleted.id_auto_infracao, deleted.valor_multa_aplicado, inserted.valor_multa_aplicado
+<span class="hljs-keyword">INTO</span> auditoria_reajuste_multa (id_auto_infracao, valor_anterior, valor_novo)
+<span class="hljs-keyword">FROM</span> auto_infracao a
+<span class="hljs-keyword">WHERE</span> a.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;LAVRADO&#x27;</span>;
+GO
+
+<span class="hljs-comment">-- 4. DELETE simples</span>
+<span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> duplicata_nfe <span class="hljs-keyword">WHERE</span> id_duplicata <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;
+GO
+
+<span class="hljs-comment">-- 5. DELETE ... FROM (join)</span>
+<span class="hljs-keyword">DELETE</span> i
+<span class="hljs-keyword">FROM</span> item_nfe i
+<span class="hljs-keyword">JOIN</span> nfe n <span class="hljs-keyword">ON</span> n.id_nfe <span class="hljs-operator">=</span> i.id_nfe
+<span class="hljs-keyword">WHERE</span> n.situacao_nfe <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;DENEGADA&#x27;</span>;
+GO
+
+<span class="hljs-comment">-- 6. DELETE em lote com WHILE</span>
+<span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@linhas_excluidas</span> <span class="hljs-type">INT</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;
+WHILE <span class="hljs-variable">@linhas_excluidas</span> <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">DELETE</span> TOP (<span class="hljs-number">100</span>) <span class="hljs-keyword">FROM</span> stg_nfe_importacao
+    <span class="hljs-keyword">WHERE</span> data_hora_carga <span class="hljs-operator">&lt;</span> DATEADD(<span class="hljs-keyword">DAY</span>, <span class="hljs-number">-90</span>, GETDATE());
+    <span class="hljs-keyword">SET</span> <span class="hljs-variable">@linhas_excluidas</span> <span class="hljs-operator">=</span> @<span class="hljs-variable">@ROWCOUNT</span>;
+<span class="hljs-keyword">END</span>;
+GO
+
+<span class="hljs-comment">-- 7. Transação segura com verificação antes do COMMIT</span>
+<span class="hljs-keyword">BEGIN</span> TRANSACTION;
+
+<span class="hljs-keyword">UPDATE</span> contribuinte
+<span class="hljs-keyword">SET</span> situacao_cadastral <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;SUSPENSO&#x27;</span>
+<span class="hljs-keyword">WHERE</span> id_contribuinte <span class="hljs-keyword">IN</span> (
+    <span class="hljs-keyword">SELECT</span> id_contribuinte <span class="hljs-keyword">FROM</span> contribuinte <span class="hljs-keyword">WHERE</span> situacao_cadastral <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;ATIVO&#x27;</span>
+      <span class="hljs-keyword">AND</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span> <span class="hljs-keyword">FROM</span> nfe n <span class="hljs-keyword">WHERE</span> n.id_contribuinte_emitente <span class="hljs-operator">=</span> contribuinte.id_contribuinte)
+);
+
+<span class="hljs-keyword">SELECT</span> @<span class="hljs-variable">@ROWCOUNT</span> <span class="hljs-keyword">AS</span> linhas_afetadas;
+<span class="hljs-comment">-- Revisar o número antes de decidir:</span>
+<span class="hljs-comment">-- COMMIT TRANSACTION;</span>
+<span class="hljs-comment">-- ROLLBACK TRANSACTION;</span>
+</div></code></pre>
+<hr>
+<h2 id="9.-exerc%C3%ADcios-pr%C3%A1ticos" tabindex="-1">9. Exercícios Práticos</h2>
+<h3 id="exerc%C3%ADcio-1-%E2%80%94-update-b%C3%A1sico-e-m%C3%BAltiplas-colunas" tabindex="-1">Exercício 1 — UPDATE básico e múltiplas colunas</h3>
+<p>Escreva um <code>UPDATE</code> que marque a ordem de serviço de fiscalização <code>id_ordem_servico = 5</code> como <code>'CONCLUIDA'</code>, preenchendo também <code>data_encerramento</code> com a data atual, em um único comando.</p>
+<h3 id="exerc%C3%ADcio-2-%E2%80%94-update-com-express%C3%A3o" tabindex="-1">Exercício 2 — UPDATE com expressão</h3>
+<p>A SEFAZ-PB decidiu conceder um desconto de 20% no valor de multas aplicadas há mais de 5 anos e ainda não quitadas, como incentivo à regularização. Escreva o <code>UPDATE</code> correspondente, com a condição de tempo adequada.</p>
+<h3 id="exerc%C3%ADcio-3-%E2%80%94-update-...-from-com-m%C3%BAltiplas-tabelas" tabindex="-1">Exercício 3 — UPDATE ... FROM com múltiplas tabelas</h3>
+<p>Escreva um <code>UPDATE</code> que, para cada <code>ordem_servico_fiscalizacao</code> com <code>status = 'EM_ANDAMENTO'</code> há mais de 180 dias, marque <code>status = 'CONCLUIDA'</code> — mas apenas para as ordens de serviço que já possuem <strong>pelo menos um</strong> <code>auto_infracao</code> lavrado (use <code>EXISTS</code> ou <code>JOIN</code>, à sua escolha, e justifique a escolha).</p>
+<h3 id="exerc%C3%ADcio-4-%E2%80%94-update-com-output" tabindex="-1">Exercício 4 — UPDATE com OUTPUT</h3>
+<p>Ao aplicar o Exercício 3, capture, por meio de <code>OUTPUT</code>, o <code>id_ordem_servico</code> e a data em que cada uma foi automaticamente concluída, gravando essa informação em uma nova tabela <code>auditoria_encerramento_os</code>.</p>
+<h3 id="exerc%C3%ADcio-5-%E2%80%94-delete-com-subconsulta" tabindex="-1">Exercício 5 — DELETE com subconsulta</h3>
+<p>Escreite um <code>DELETE</code> que remova, da tabela <code>evento_nfe</code>, todos os eventos do tipo <code>'MANIFESTACAO_DESTINATARIO'</code> associados a NF-e que estão <code>'CANCELADA'</code> — pressupondo que, uma vez cancelada a nota, esse tipo específico de evento perde o sentido (regra hipotética para fins do exercício).</p>
+<h3 id="exerc%C3%ADcio-6-%E2%80%94-delete-...-from-com-join" tabindex="-1">Exercício 6 — DELETE ... FROM com JOIN</h3>
+<p>Escreva um <code>DELETE</code> que remova, de <code>cte_nfe_transportada</code>, todos os vínculos de CT-e com NF-e que estejam <code>'DENEGADA'</code>.</p>
+<h3 id="exerc%C3%ADcio-7-%E2%80%94-truncate-vs-delete" tabindex="-1">Exercício 7 — TRUNCATE vs DELETE</h3>
+<p>Explique, sem executar, o que aconteceria se você tentasse <code>TRUNCATE TABLE contribuinte</code> no banco <code>curso_integridade_fiscal</code>, considerando as tabelas e chaves estrangeiras já criadas nos módulos anteriores. Qual seria a mensagem de erro esperada, e por quê?</p>
+<h3 id="exerc%C3%ADcio-8-%E2%80%94-exclus%C3%A3o-em-lote" tabindex="-1">Exercício 8 — Exclusão em lote</h3>
+<p>Escreva um script de exclusão em lote (padrão <code>WHILE</code> + <code>TOP</code> + <code>@@ROWCOUNT</code>) que remova, em lotes de 200, todos os registros de <code>nfe_importacao_rejeitada</code> com mais de 1 ano.</p>
+<h3 id="exerc%C3%ADcio-9-(desafio)-%E2%80%94-planejando-uma-opera%C3%A7%C3%A3o-de-alto-risco" tabindex="-1">Exercício 9 (Desafio) — Planejando uma operação de alto risco</h3>
+<p>A Secretaria pediu que todos os <code>auto_infracao</code> do <code>tipo_infracao</code> com <code>id_tipo_infracao = 7</code> sejam anulados (<code>situacao = 'ANULADO'</code>), pois aquela infração foi revogada retroativamente por decisão judicial. Escreva o <strong>script completo e seguro</strong> dessa operação, incluindo:</p>
+<ul>
+<li>A consulta <code>SELECT</code> prévia de verificação.</li>
+<li>A transação explícita com checagem de <code>@@ROWCOUNT</code> antes do <code>COMMIT</code>.</li>
+<li>A captura, via <code>OUTPUT</code>, de todos os autos afetados, para fins de notificação posterior aos contribuintes.</li>
+</ul>
+<hr>
+<h2 id="10.-gloss%C3%A1rio" tabindex="-1">10. Glossário</h2>
+<table>
+<thead>
+<tr>
+<th>Termo</th>
+<th>Definição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DML (Data Manipulation Language)</strong></td>
+<td>Subconjunto de comandos SQL que manipulam dados (<code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>)</td>
+</tr>
+<tr>
+<td><strong>Cláusula FROM (em UPDATE/DELETE)</strong></td>
+<td>Em T-SQL, introduz um <code>JOIN</code> com outra tabela para orientar quais linhas atualizar/excluir</td>
+</tr>
+<tr>
+<td><strong>OUTPUT</strong></td>
+<td>Cláusula que captura os valores antes (<code>deleted</code>) e/ou depois (<code>inserted</code>) de um <code>UPDATE</code>, <code>DELETE</code> ou <code>INSERT</code></td>
+</tr>
+<tr>
+<td><strong>Batched DELETE (exclusão em lote)</strong></td>
+<td>Padrão de excluir grandes volumes em pequenos lotes sucessivos, para reduzir impacto no log de transações e nos bloqueios</td>
+</tr>
+<tr>
+<td><strong>@@ROWCOUNT</strong></td>
+<td>Variável de sistema que retorna o número de linhas afetadas pelo último comando</td>
+</tr>
+<tr>
+<td><strong>TRUNCATE TABLE</strong></td>
+<td>Comando DDL que remove todas as linhas de uma tabela de forma minimamente registrada, sem <code>WHERE</code> e sem disparar triggers <code>AFTER DELETE</code></td>
+</tr>
+<tr>
+<td><strong>XACT_ABORT</strong></td>
+<td>Configuração de sessão que força o <code>ROLLBACK</code> automático de toda a transação diante de qualquer erro em tempo de execução</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="11.-refer%C3%AAncias" tabindex="-1">11. Referências</h2>
+<ul>
+<li>Documentação oficial da Microsoft — &quot;UPDATE (Transact-SQL)&quot;: https://learn.microsoft.com/sql/t-sql/queries/update-transact-sql</li>
+<li>Documentação oficial da Microsoft — &quot;DELETE (Transact-SQL)&quot;: https://learn.microsoft.com/sql/t-sql/statements/delete-transact-sql</li>
+<li>Documentação oficial da Microsoft — &quot;TRUNCATE TABLE (Transact-SQL)&quot;: https://learn.microsoft.com/sql/t-sql/statements/truncate-table-transact-sql</li>
+<li>Documentação oficial da Microsoft — &quot;OUTPUT Clause (Transact-SQL)&quot;: https://learn.microsoft.com/sql/t-sql/queries/output-clause-transact-sql</li>
+<li>Documentação oficial da Microsoft — &quot;SET XACT_ABORT (Transact-SQL)&quot;: https://learn.microsoft.com/sql/t-sql/statements/set-xact-abort-transact-sql</li>
+<li>ELMASRI, R.; NAVATHE, S. <em>Sistemas de Banco de Dados</em>. 7ª ed. Pearson.</li>
+</ul>
+<hr>
+<p><em>Material elaborado para uso interno no curso de Banco de Dados Relacionais — Módulo UPDATE e DELETE — SEFAZ-PB.</em></p>
+
+    </div>
+</body>
+</html>

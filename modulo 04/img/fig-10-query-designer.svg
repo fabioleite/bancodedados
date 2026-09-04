@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 640" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="940" height="640" fill="#ffffff"/>
+  <rect x="10" y="10" width="920" height="620" fill="#f3f3f3" stroke="#a8a8a8"/>
+  <rect x="10" y="10" width="920" height="26" fill="#3c5a78"/>
+  <text x="24" y="28" fill="#ffffff" font-size="13">Designer de Consultas (Query Designer) — SSMS</text>
+  <text x="906" y="28" fill="#ffffff" font-size="13">✕</text>
+
+  <!-- barra de paineis -->
+  <rect x="20" y="42" width="900" height="24" fill="#eceff2" stroke="#c8c8c8"/>
+  <rect x="26" y="46" width="86" height="16" fill="#dbe7f3" stroke="#9dbbd8"/><text x="34" y="58" font-size="10" fill="#173a5e">Diagrama</text>
+  <rect x="118" y="46" width="86" height="16" fill="#dbe7f3" stroke="#9dbbd8"/><text x="128" y="58" font-size="10" fill="#173a5e">Critérios</text>
+  <rect x="210" y="46" width="86" height="16" fill="#dbe7f3" stroke="#9dbbd8"/><text x="234" y="58" font-size="10" fill="#173a5e">SQL</text>
+  <rect x="302" y="46" width="86" height="16" fill="#dbe7f3" stroke="#9dbbd8"/><text x="320" y="58" font-size="10" fill="#173a5e">Resultados</text>
+  <text x="410" y="58" font-size="10" fill="#666">os quatro botões ligam/desligam cada painel</text>
+  <rect x="800" y="46" width="112" height="16" fill="#dff0d8" stroke="#8bbf8b"/><text x="812" y="58" font-size="10" fill="#2d6a2d">Executar SQL (Ctrl+R)</text>
+
+  <!-- PAINEL 1: DIAGRAMA -->
+  <rect x="20" y="72" width="900" height="196" fill="#ffffff" stroke="#c8c8c8"/>
+  <rect x="20" y="72" width="900" height="18" fill="#e1e8ef" stroke="#c8c8c8"/>
+  <text x="28" y="85" font-size="10" font-weight="bold" fill="#243b53">1 — Painel Diagrama  (arraste as tabelas; clique na linha de junção para trocar INNER por LEFT)</text>
+
+  <!-- tabela A -->
+  <rect x="60" y="100" width="230" height="152" fill="#fdfdfd" stroke="#8fa8be"/>
+  <rect x="60" y="100" width="230" height="20" fill="#dbe7f3" stroke="#8fa8be"/>
+  <text x="68" y="114" font-size="10" font-weight="bold" fill="#173a5e">fisc.VW_AUD_SAIDAS_XML  (X)</text>
+  <g font-size="9.5" fill="#333">
+    <rect x="66" y="124" width="9" height="9" fill="#4a7ab0"/><text x="82" y="132">REG0_PERIODO_DECLARACAO</text>
+    <rect x="66" y="140" width="9" height="9" fill="#4a7ab0"/><text x="82" y="148">NF_CHAVE_ACESSO</text>
+    <rect x="66" y="156" width="9" height="9" fill="#4a7ab0"/><text x="82" y="164">NF_NNF / NF_SERIE</text>
+    <rect x="66" y="172" width="9" height="9" fill="#4a7ab0"/><text x="82" y="180">NF_DHEMI</text>
+    <rect x="66" y="188" width="9" height="9" fill="#4a7ab0"/><text x="82" y="196">NF_SITUACAO</text>
+    <rect x="66" y="204" width="9" height="9" fill="#4a7ab0"/><text x="82" y="212">NF_CPF_CNPJ_DESTINATARIO</text>
+    <rect x="66" y="220" width="9" height="9" fill="#4a7ab0"/><text x="82" y="228">NF_VNF</text>
+    <text x="82" y="244" fill="#888">…</text>
+  </g>
+
+  <!-- junção -->
+  <line x1="290" y1="148" x2="420" y2="148" stroke="#4a7ab0" stroke-width="1.6"/>
+  <rect x="336" y="140" width="16" height="16" fill="#ffffff" stroke="#4a7ab0"/>
+  <polygon points="339,148 345,143 345,153" fill="#4a7ab0"/>
+  <rect x="300" y="106" width="190" height="28" rx="3" fill="#fff8e5" stroke="#e0c068"/>
+  <text x="308" y="117" font-size="9" fill="#7a5c00">Losango cheio à esquerda = LEFT JOIN:</text>
+  <text x="308" y="128" font-size="9" fill="#7a5c00">"todas as linhas de X, com ou sem par em C"</text>
+
+  <!-- tabela B -->
+  <rect x="420" y="100" width="240" height="152" fill="#fdfdfd" stroke="#8fa8be"/>
+  <rect x="420" y="100" width="240" height="20" fill="#dbe7f3" stroke="#8fa8be"/>
+  <text x="428" y="114" font-size="10" font-weight="bold" fill="#173a5e">fisc.VW_AUD_C100_SAIDAS  (C)</text>
+  <g font-size="9.5" fill="#333">
+    <rect x="426" y="124" width="9" height="9" fill="#4a7ab0"/><text x="442" y="132">REG0_PERIODO_DECLARACAO</text>
+    <rect x="426" y="140" width="9" height="9" fill="#4a7ab0"/><text x="442" y="148">C100_CHV_NFE</text>
+    <rect x="426" y="156" width="9" height="9" fill="#4a7ab0"/><text x="442" y="164">C100_NUM_DOC / C100_SER</text>
+    <rect x="426" y="172" width="9" height="9" fill="#4a7ab0"/><text x="442" y="180">C100_DT_DOC</text>
+    <rect x="426" y="188" width="9" height="9" fill="#4a7ab0"/><text x="442" y="196">C100_COD_SIT</text>
+    <rect x="426" y="204" width="9" height="9" fill="#4a7ab0"/><text x="442" y="212">C100_VL_DOC</text>
+    <rect x="426" y="220" width="9" height="9" fill="#4a7ab0"/><text x="442" y="228">C100_VL_ICMS</text>
+    <text x="442" y="244" fill="#888">…</text>
+  </g>
+
+  <rect x="686" y="100" width="220" height="152" rx="3" fill="#f7fafd" stroke="#9dbbd8"/>
+  <text x="696" y="118" font-size="10" font-weight="bold" fill="#1b3f60">Como chegar aqui</text>
+  <g font-size="9.5" fill="#33587a">
+    <text x="696" y="138">Pesquisador de Objetos</text>
+    <text x="696" y="153">→ DB → Exibições (Views)</text>
+    <text x="696" y="168">→ botão direito → Nova Exibição…</text>
+    <text x="696" y="188">Ou, no editor de consultas:</text>
+    <text x="696" y="203">selecione o SELECT → botão direito</text>
+    <text x="696" y="218">→ "Criar Consulta no Editor"</text>
+    <text x="696" y="233">(Ctrl+Shift+Q)</text>
+  </g>
+
+  <!-- PAINEL 2: CRITERIOS -->
+  <rect x="20" y="272" width="900" height="152" fill="#ffffff" stroke="#c8c8c8"/>
+  <rect x="20" y="272" width="900" height="18" fill="#e1e8ef" stroke="#c8c8c8"/>
+  <text x="28" y="285" font-size="10" font-weight="bold" fill="#243b53">2 — Painel Critérios  (colunas, apelidos, ordenação e filtros — equivale ao SELECT / WHERE / ORDER BY)</text>
+  <rect x="28" y="294" width="884" height="18" fill="#eef1f4" stroke="#cfd6dd"/>
+  <g font-size="9.5" font-weight="bold" fill="#243b53">
+    <text x="36" y="307">Coluna</text><text x="230" y="307">Alias</text><text x="360" y="307">Tabela</text><text x="470" y="307">Saída</text><text x="520" y="307">Classificar</text><text x="600" y="307">Agrupar por</text><text x="700" y="307">Filtro</text>
+  </g>
+  <g font-size="9.5" fill="#222">
+    <text x="36" y="326">REG0_PERIODO_DECLARACAO</text><text x="230" y="326">PERIODO</text><text x="360" y="326">X</text><text x="474" y="326">✔</text><text x="600" y="326">Agrupar por</text>
+    <text x="36" y="344">NF_CHAVE_ACESSO</text><text x="230" y="344">CHAVE</text><text x="360" y="344">X</text><text x="474" y="344">✔</text><text x="700" y="344">IS NOT NULL</text>
+    <text x="36" y="362">NF_SITUACAO</text><text x="230" y="362">SITUACAO_XML</text><text x="360" y="362">X</text><text x="474" y="362">✔</text><text x="700" y="362">LIKE 'A -%' OR LIKE 'O -%'</text>
+    <text x="36" y="380">C100_COD_SIT</text><text x="230" y="380">SITUACAO_EFD</text><text x="360" y="380">C</text><text x="474" y="380">✔</text>
+    <text x="36" y="398">NF_VNF</text><text x="230" y="398">VL_XML</text><text x="360" y="398">X</text><text x="474" y="398">✔</text><text x="520" y="398">Decrescente</text>
+    <text x="36" y="416">C100_VL_DOC</text><text x="230" y="416">VL_EFD</text><text x="360" y="416">C</text><text x="474" y="416">✔</text>
+  </g>
+  <line x1="28" y1="332" x2="912" y2="332" stroke="#eef0f2"/>
+  <line x1="28" y1="350" x2="912" y2="350" stroke="#eef0f2"/>
+  <line x1="28" y1="368" x2="912" y2="368" stroke="#eef0f2"/>
+  <line x1="28" y1="386" x2="912" y2="386" stroke="#eef0f2"/>
+  <line x1="28" y1="404" x2="912" y2="404" stroke="#eef0f2"/>
+
+  <!-- PAINEL 3: SQL -->
+  <rect x="20" y="428" width="900" height="130" fill="#ffffff" stroke="#c8c8c8"/>
+  <rect x="20" y="428" width="900" height="18" fill="#e1e8ef" stroke="#c8c8c8"/>
+  <text x="28" y="441" font-size="10" font-weight="bold" fill="#243b53">3 — Painel SQL  (gerado automaticamente; pode ser editado à mão — o diagrama se atualiza sozinho)</text>
+  <g font-family="Consolas, monospace" font-size="10.5">
+    <text x="32" y="462" fill="#0000ff">SELECT</text><text x="86" y="462" fill="#222"> X.REG0_PERIODO_DECLARACAO AS PERIODO, X.NF_CHAVE_ACESSO AS CHAVE,</text>
+    <text x="86" y="478" fill="#222">X.NF_SITUACAO AS SITUACAO_XML, C.C100_COD_SIT AS SITUACAO_EFD,</text>
+    <text x="86" y="494" fill="#222">X.NF_VNF AS VL_XML, C.C100_VL_DOC AS VL_EFD</text>
+    <text x="32" y="510" fill="#0000ff">FROM</text><text x="74" y="510" fill="#222"> fisc.VW_AUD_SAIDAS_XML </text><text x="240" y="510" fill="#0000ff">AS</text><text x="264" y="510" fill="#222"> X</text>
+    <text x="32" y="526" fill="#0000ff">     LEFT OUTER JOIN</text><text x="180" y="526" fill="#222"> fisc.VW_AUD_C100_SAIDAS </text><text x="358" y="526" fill="#0000ff">AS</text><text x="382" y="526" fill="#222"> C</text>
+    <text x="32" y="542" fill="#0000ff">       ON</text><text x="82" y="542" fill="#222"> X.NF_CHAVE_ACESSO = C.C100_CHV_NFE;</text>
+  </g>
+
+  <!-- PAINEL 4 -->
+  <rect x="20" y="562" width="900" height="58" fill="#ffffff" stroke="#c8c8c8"/>
+  <rect x="20" y="562" width="900" height="18" fill="#e1e8ef" stroke="#c8c8c8"/>
+  <text x="28" y="575" font-size="10" font-weight="bold" fill="#243b53">4 — Painel Resultados  (Ctrl+R executa e traz a amostra)</text>
+  <g font-size="9.5" fill="#222" font-family="Consolas, monospace">
+    <text x="32" y="594">3/2025   35250800081200000017355001000004821109476253   A - AUTORIZADA DENTRO DO PRAZO   NULL   18.430,00   NULL</text>
+    <text x="32" y="610">3/2025   35250800081200000017355001000004822109476261   A - AUTORIZADA DENTRO DO PRAZO   2 - DOCUMENTO CANCELADO   9.120,50   9.120,50</text>
+  </g>
+</svg>

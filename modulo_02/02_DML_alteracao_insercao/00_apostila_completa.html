@@ -1,0 +1,1939 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>00_apostila_completa.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 id="apostila-completa-%E2%80%94-inser%C3%A7%C3%A3o%2C-carga-e-integra%C3%A7%C3%A3o-de-dados-no-sql-server" tabindex="-1">Apostila Completa — Inserção, Carga e Integração de Dados no SQL Server</h1>
+<h2 id="m%C3%B3dulo-02-%E2%80%94-banco-de-dados-relacionais" tabindex="-1">Módulo 02 — Banco de Dados Relacionais</h2>
+<p>Este documento reúne, em um único arquivo, todo o conteúdo do diretório <code>02_DML_alteracao_insercao</code>, organizado na mesma sequência numérica dos arquivos originais, seguido dos roteiros de exercícios práticos.</p>
+<div class="page-break"></div>
+<h1 id="parte-01-%E2%80%94-2.1-introdu%C3%A7%C3%A3o" tabindex="-1">Parte 01 — 2.1 Introdução</h1>
+<h2 id="2.1-introdu%C3%A7%C3%A3o" tabindex="-1">2.1 Introdução</h2>
+<p>A inserção de dados corresponde às operações da linguagem DML (Data Manipulation Language) responsáveis por adicionar registros às tabelas.</p>
+<h3 id="objetivos" tabindex="-1">Objetivos</h3>
+<ul>
+<li>Compreender os mecanismos de inserção.</li>
+<li>Selecionar o método adequado para cada cenário.</li>
+<li>Avaliar desempenho e manutenção.</li>
+</ul>
+<h3 id="cen%C3%A1rios-comuns" tabindex="-1">Cenários comuns</h3>
+<ul>
+<li>Cadastro de usuários.</li>
+<li>Importação de planilhas.</li>
+<li>ETL e Data Warehouse.</li>
+<li>Integração entre sistemas.</li>
+</ul>
+<h3 id="m%C3%A9todos-estudados" tabindex="-1">Métodos estudados</h3>
+<ul>
+<li>INSERT ... VALUES</li>
+<li>INSERT múltiplas linhas</li>
+<li>INSERT ... SELECT</li>
+<li>SELECT INTO</li>
+<li>MERGE</li>
+<li>BULK INSERT</li>
+<li>SSIS</li>
+<li>bcp</li>
+<li>SqlBulkCopy</li>
+</ul>
+<blockquote>
+<p><strong>Boa prática:</strong> escolha o método considerando volume de dados, origem e frequência da carga.</p>
+</blockquote>
+<div class="page-break"></div>
+<h1 id="parte-02-%E2%80%94-2.2-insert-...-values" tabindex="-1">Parte 02 — 2.2 INSERT ... VALUES</h1>
+<h2 id="2.2-insert-...-values" tabindex="-1">2.2 INSERT ... VALUES</h2>
+<h3 id="conceito" tabindex="-1">Conceito</h3>
+<p>É o método mais simples para inserir registros. Os valores são informados explicitamente na instrução SQL.</p>
+<h3 id="sintaxe" tabindex="-1">Sintaxe</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">INSERT INTO</span> Aluno (Matricula, Nome, Curso)
+<span class="hljs-keyword">VALUES</span> (<span class="hljs-number">1001</span>,<span class="hljs-string">&#x27;Maria Silva&#x27;</span>,<span class="hljs-string">&#x27;Computação&#x27;</span>);
+</div></code></pre>
+<h3 id="explica%C3%A7%C3%A3o" tabindex="-1">Explicação</h3>
+<ul>
+<li><code>INSERT INTO</code>: define a tabela.</li>
+<li>Lista de colunas: evita erros quando a estrutura mudar.</li>
+<li><code>VALUES</code>: contém os dados.</li>
+</ul>
+<h3 id="resultado-esperado" tabindex="-1">Resultado esperado</h3>
+<pre class='hljs'><code><div>(1 row affected)
+</div></code></pre>
+<h3 id="exemplo-de-projeto" tabindex="-1">Exemplo de projeto</h3>
+<p>Em um sistema acadêmico, quando um aluno conclui sua matrícula pela interface web, a aplicação executa um <code>INSERT ... VALUES</code> para gravar o cadastro.</p>
+<h3 id="vantagens" tabindex="-1">Vantagens</h3>
+<ul>
+<li>Simples.</li>
+<li>Legível.</li>
+<li>Ideal para transações OLTP.</li>
+</ul>
+<h3 id="limita%C3%A7%C3%B5es" tabindex="-1">Limitações</h3>
+<ul>
+<li>Pouco eficiente para grandes volumes.</li>
+</ul>
+<h3 id="exerc%C3%ADcio" tabindex="-1">Exercício</h3>
+<p>Cadastre cinco professores utilizando <code>INSERT ... VALUES</code>.</p>
+<div class="page-break"></div>
+<h1 id="parte-03-%E2%80%94-2.3-insert-com-m%C3%BAltiplas-linhas" tabindex="-1">Parte 03 — 2.3 INSERT com múltiplas linhas</h1>
+<h2 id="2.3-insert-com-m%C3%BAltiplas-linhas" tabindex="-1">2.3 INSERT com múltiplas linhas</h2>
+<h3 id="conceito-1" tabindex="-1">Conceito</h3>
+<p>Permite inserir vários registros em um único comando.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">INSERT INTO</span> Curso (IdCurso, Nome)
+<span class="hljs-keyword">VALUES</span>
+(<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;Computação&#x27;</span>),
+(<span class="hljs-number">2</span>,<span class="hljs-string">&#x27;Engenharia&#x27;</span>),
+(<span class="hljs-number">3</span>,<span class="hljs-string">&#x27;Matemática&#x27;</span>);
+</div></code></pre>
+<h3 id="resultado-esperado-1" tabindex="-1">Resultado esperado</h3>
+<pre class='hljs'><code><div>(3 rows affected)
+</div></code></pre>
+<h3 id="aplica%C3%A7%C3%A3o" tabindex="-1">Aplicação</h3>
+<p>Ideal para carga inicial de tabelas de domínio, como estados, cidades, cursos ou perfis de usuários.</p>
+<h3 id="compara%C3%A7%C3%A3o" tabindex="-1">Comparação</h3>
+<ul>
+<li>Mais eficiente que executar vários <code>INSERT</code> individuais.</li>
+<li>Não substitui BULK INSERT para grandes volumes.</li>
+</ul>
+<h3 id="exerc%C3%ADcio-1" tabindex="-1">Exercício</h3>
+<p>Cadastre dez disciplinas em um único comando.</p>
+<div class="page-break"></div>
+<h1 id="parte-04-%E2%80%94-2.4-insert-...-select" tabindex="-1">Parte 04 — 2.4 INSERT ... SELECT</h1>
+<h2 id="2.4-insert-...-select" tabindex="-1">2.4 INSERT ... SELECT</h2>
+<h3 id="conceito-2" tabindex="-1">Conceito</h3>
+<p>Insere registros utilizando o resultado de uma consulta.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">INSERT INTO</span> AlunoBackup (Matricula, Nome, Curso)
+<span class="hljs-keyword">SELECT</span> Matricula, Nome, Curso
+<span class="hljs-keyword">FROM</span> Aluno
+<span class="hljs-keyword">WHERE</span> Curso<span class="hljs-operator">=</span><span class="hljs-string">&#x27;Computação&#x27;</span>;
+</div></code></pre>
+<h3 id="funcionamento" tabindex="-1">Funcionamento</h3>
+<ol>
+<li>O <code>SELECT</code> recupera os dados.</li>
+<li>O SQL Server valida tipos e restrições.</li>
+<li>Os registros são inseridos na tabela destino.</li>
+</ol>
+<h3 id="resultado-esperado-2" tabindex="-1">Resultado esperado</h3>
+<pre class='hljs'><code><div>(120 rows affected)
+</div></code></pre>
+<h3 id="estudo-de-caso" tabindex="-1">Estudo de caso</h3>
+<p>Uma universidade mantém uma tabela histórica de alunos formados. Ao final de cada semestre, um processo copia os alunos concluintes da tabela <code>Aluno</code> para <code>AlunoHistorico</code> utilizando <code>INSERT ... SELECT</code>.</p>
+<h3 id="vantagens-1" tabindex="-1">Vantagens</h3>
+<ul>
+<li>Excelente para migração de dados.</li>
+<li>Muito utilizado em ETL.</li>
+<li>Evita processamento na aplicação.</li>
+</ul>
+<h3 id="boas-pr%C3%A1ticas" tabindex="-1">Boas práticas</h3>
+<ul>
+<li>Especifique sempre as colunas.</li>
+<li>Utilize transações em cargas críticas.</li>
+</ul>
+<h3 id="exerc%C3%ADcio-2" tabindex="-1">Exercício</h3>
+<p>Copie todos os professores do Departamento de Computação para uma tabela de auditoria.</p>
+<div class="page-break"></div>
+<h1 id="parte-05-%E2%80%94-2.5-select-into" tabindex="-1">Parte 05 — 2.5 SELECT INTO</h1>
+<h2 id="2.5-select-into" tabindex="-1">2.5 SELECT INTO</h2>
+<h3 id="conceito-3" tabindex="-1">Conceito</h3>
+<p><code>SELECT INTO</code> cria uma <strong>nova tabela</strong> a partir do resultado de uma consulta.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">INTO</span> AlunoBackup
+<span class="hljs-keyword">FROM</span> Aluno;
+</div></code></pre>
+<h3 id="aplica%C3%A7%C3%A3o-1" tabindex="-1">Aplicação</h3>
+<p>Ideal para cópias temporárias, auditoria, migração e ambientes de testes.</p>
+<h3 id="exemplo" tabindex="-1">Exemplo</h3>
+<p>Antes de atualizar milhões de registros, cria-se uma cópia da tabela para recuperação rápida.</p>
+<h3 id="resultado" tabindex="-1">Resultado</h3>
+<pre class='hljs'><code><div>Command(s) completed successfully.
+</div></code></pre>
+<h3 id="boas-pr%C3%A1ticas-1" tabindex="-1">Boas práticas</h3>
+<ul>
+<li>Não substitui backup do banco.</li>
+<li>Crie índices após a cópia, se necessário.</li>
+</ul>
+<div class="page-break"></div>
+<h1 id="parte-06-%E2%80%94-2.6-insert-...-exec" tabindex="-1">Parte 06 — 2.6 INSERT ... EXEC</h1>
+<h2 id="2.6-insert-...-exec" tabindex="-1">2.6 INSERT ... EXEC</h2>
+<h3 id="conceito-4" tabindex="-1">Conceito</h3>
+<p>Insere em uma tabela o resultado retornado por uma Stored Procedure.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE TABLE</span> Resultado(Nome <span class="hljs-type">varchar</span>(<span class="hljs-number">100</span>), Total money);
+
+<span class="hljs-keyword">INSERT INTO</span> Resultado
+<span class="hljs-keyword">EXEC</span> dbo.spRelatorioFinanceiro;
+</div></code></pre>
+<h3 id="aplica%C3%A7%C3%A3o-2" tabindex="-1">Aplicação</h3>
+<p>Muito utilizado em sistemas legados e processos ETL que reutilizam procedures existentes.</p>
+<h3 id="vantagens-2" tabindex="-1">Vantagens</h3>
+<ul>
+<li>Reaproveita lógica de negócio.</li>
+<li>Evita duplicação de código.</li>
+</ul>
+<div class="page-break"></div>
+<h1 id="parte-07-%E2%80%94-2.7-insert-utilizando-cte" tabindex="-1">Parte 07 — 2.7 INSERT utilizando CTE</h1>
+<h2 id="2.7-insert-utilizando-cte" tabindex="-1">2.7 INSERT utilizando CTE</h2>
+<h3 id="conceito-5" tabindex="-1">Conceito</h3>
+<p><strong>CTE</strong> é a sigla para <strong>Common Table Expression</strong> (Expressão de Tabela Comum). É um conjunto de resultados nomeado e temporário, definido por meio da cláusula <code>WITH</code>, que existe apenas durante a execução da instrução seguinte (<code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> ou <code>MERGE</code>).</p>
+<p>Na prática, a CTE funciona como uma &quot;consulta auxiliar com nome&quot;: em vez de escrever uma subconsulta aninhada e de difícil leitura, o desenvolvedor a declara antes da instrução principal e depois referencia esse nome como se fosse uma tabela comum.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">WITH</span> AlunosAtivos <span class="hljs-keyword">AS</span> (
+ <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> Aluno <span class="hljs-keyword">WHERE</span> Ativo<span class="hljs-operator">=</span><span class="hljs-number">1</span>
+)
+<span class="hljs-keyword">INSERT INTO</span> AlunoBackup
+<span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> AlunosAtivos;
+</div></code></pre>
+<p>No exemplo acima, <code>AlunosAtivos</code> é a CTE: ela filtra os alunos ativos e, na sequência, o <code>INSERT</code> consome esse resultado para popular a tabela <code>AlunoBackup</code>.</p>
+<h3 id="sintaxe-geral" tabindex="-1">Sintaxe geral</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">WITH</span> NomeDaCTE (Coluna1, Coluna2, ...) <span class="hljs-keyword">AS</span>
+(
+    <span class="hljs-comment">-- consulta que define a CTE</span>
+    <span class="hljs-keyword">SELECT</span> ...
+)
+<span class="hljs-comment">-- instrução que utiliza a CTE</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-operator">/</span> <span class="hljs-keyword">INSERT</span> <span class="hljs-operator">/</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-operator">/</span> <span class="hljs-keyword">DELETE</span> <span class="hljs-operator">/</span> <span class="hljs-keyword">MERGE</span> ...
+</div></code></pre>
+<ul>
+<li>A lista de colunas entre parênteses após o nome é opcional — só é obrigatória quando há colunas calculadas sem alias ou nomes repetidos;</li>
+<li>A CTE deve ser imediatamente seguida pela instrução que a utiliza; não é possível declarar uma CTE e usá-la &quot;mais adiante&quot; no script;</li>
+<li>É possível declarar <strong>múltiplas CTEs</strong> na mesma cláusula <code>WITH</code>, separando-as por vírgula, inclusive fazendo uma referenciar a outra.</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-keyword">WITH</span> AlunosAtivos <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> Aluno <span class="hljs-keyword">WHERE</span> Ativo <span class="hljs-operator">=</span> <span class="hljs-number">1</span>
+),
+AlunosAprovados <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> AlunosAtivos <span class="hljs-keyword">WHERE</span> MediaFinal <span class="hljs-operator">&gt;=</span> <span class="hljs-number">7</span>
+)
+<span class="hljs-keyword">INSERT INTO</span> AlunoAprovadoBackup
+<span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> AlunosAprovados;
+</div></code></pre>
+<h3 id="caracter%C3%ADsticas" tabindex="-1">Características</h3>
+<ul>
+<li><strong>Escopo limitado</strong>: existe apenas durante a execução da instrução imediatamente seguinte; depois disso deixa de existir, diferente de uma tabela temporária (<code>#Tabela</code>);</li>
+<li><strong>Não é materializada em disco</strong>: o SQL Server normalmente a trata como parte do plano de execução da consulta principal, embutindo sua lógica;</li>
+<li><strong>Pode ser recursiva</strong>: usando <code>UNION ALL</code> para referenciar a própria CTE, útil para hierarquias (ex.: árvore de categorias, organograma);</li>
+<li><strong>Melhora a legibilidade</strong>: substitui subconsultas aninhadas complexas por blocos nomeados e sequenciais, facilitando a leitura de cima para baixo.</li>
+</ul>
+<h3 id="cte-x-subconsulta-x-tabela-tempor%C3%A1ria-x-view" tabindex="-1">CTE x Subconsulta x Tabela Temporária x View</h3>
+<table>
+<thead>
+<tr>
+<th>Recurso</th>
+<th>Escopo</th>
+<th>Persistência</th>
+<th>Reutilização</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CTE</td>
+<td>Uma única instrução</td>
+<td>Não persiste</td>
+<td>Só dentro da mesma instrução</td>
+</tr>
+<tr>
+<td>Subconsulta</td>
+<td>Uma única instrução</td>
+<td>Não persiste</td>
+<td>Não reutilizável (precisa repetir)</td>
+</tr>
+<tr>
+<td>Tabela Temporária (<code>#Tabela</code>)</td>
+<td>Sessão/conexão</td>
+<td>Persiste até o fim da sessão</td>
+<td>Reutilizável em várias instruções</td>
+</tr>
+<tr>
+<td>View</td>
+<td>Banco de dados</td>
+<td>Persiste como objeto do banco</td>
+<td>Reutilizável por qualquer consulta</td>
+</tr>
+</tbody>
+</table>
+<h3 id="aplica%C3%A7%C3%A3o-3" tabindex="-1">Aplicação</h3>
+<p>Projetos com consultas extensas, múltiplos JOINs e filtros complexos.</p>
+<h3 id="benef%C3%ADcios" tabindex="-1">Benefícios</h3>
+<ul>
+<li>Melhor legibilidade.</li>
+<li>Facilidade de manutenção.</li>
+<li>Evita repetição da mesma subconsulta várias vezes na instrução.</li>
+<li>Permite organizar a lógica em etapas nomeadas antes da inserção final.</li>
+</ul>
+<h3 id="limita%C3%A7%C3%B5es-1" tabindex="-1">Limitações</h3>
+<ul>
+<li>Escopo restrito a uma única instrução (não pode ser reaproveitada depois);</li>
+<li>Não aceita índices próprios, por não ser uma tabela física;</li>
+<li>CTEs recursivas mal escritas podem gerar loops de processamento custosos.</li>
+</ul>
+<h3 id="exerc%C3%ADcio-3" tabindex="-1">Exercício</h3>
+<p>Utilizando uma CTE, selecione apenas os clientes com mais de 5 pedidos e insira-os na tabela ClienteVIP.</p>
+<div class="page-break"></div>
+<h1 id="parte-08-%E2%80%94-2.9-insert-...-output" tabindex="-1">Parte 08 — 2.9 INSERT ... OUTPUT</h1>
+<h2 id="2.9-insert-...-output" tabindex="-1">2.9 INSERT ... OUTPUT</h2>
+<h3 id="conceito-6" tabindex="-1">Conceito</h3>
+<p>Captura automaticamente valores inseridos, como chaves IDENTITY.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@Ids</span> <span class="hljs-keyword">TABLE</span>(Id <span class="hljs-type">INT</span>);
+
+<span class="hljs-keyword">INSERT INTO</span> Produto(Nome)
+OUTPUT INSERTED.Id <span class="hljs-keyword">INTO</span> <span class="hljs-variable">@Ids</span>
+<span class="hljs-keyword">VALUES</span>(<span class="hljs-string">&#x27;Notebook&#x27;</span>);
+
+<span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> <span class="hljs-variable">@Ids</span>;
+</div></code></pre>
+<h3 id="aplica%C3%A7%C3%A3o-4" tabindex="-1">Aplicação</h3>
+<p>APIs REST e sistemas que precisam retornar o identificador recém-criado.</p>
+<div class="page-break"></div>
+<h1 id="parte-09-%E2%80%94-2.10-bulk-insert" tabindex="-1">Parte 09 — 2.10 BULK INSERT</h1>
+<h2 id="2.10-bulk-insert" tabindex="-1">2.10 BULK INSERT</h2>
+<h3 id="conceito-7" tabindex="-1">Conceito</h3>
+<p>O <code>BULK INSERT</code> é um comando T-SQL que importa grandes volumes de dados diretamente de um arquivo texto (CSV, TXT, entre outros) para dentro de uma tabela do SQL Server, sem a necessidade de um aplicativo externo. O próprio motor de banco de dados lê o arquivo, linha a linha, e insere os registros — por isso é uma das formas mais rápidas de carga em massa.</p>
+<pre class='hljs'><code><div>BULK <span class="hljs-keyword">INSERT</span> Cliente
+<span class="hljs-keyword">FROM</span> <span class="hljs-string">&#x27;C:\Importacao\clientes.csv&#x27;</span>
+<span class="hljs-keyword">WITH</span>(
+ FIRSTROW<span class="hljs-operator">=</span><span class="hljs-number">2</span>,
+ FIELDTERMINATOR<span class="hljs-operator">=</span><span class="hljs-string">&#x27;,&#x27;</span>,
+ ROWTERMINATOR<span class="hljs-operator">=</span><span class="hljs-string">&#x27;\n&#x27;</span>
+);
+</div></code></pre>
+<blockquote>
+<p>O arquivo precisa estar em um caminho acessível pelo <strong>serviço do SQL Server</strong> (disco local do servidor, compartilhamento de rede ou storage montado), e não necessariamente pela máquina de quem executa o comando.</p>
+</blockquote>
+<h3 id="contexto%3A-fiscaliza%C3%A7%C3%A3o-tribut%C3%A1ria" tabindex="-1">Contexto: fiscalização tributária</h3>
+<p>Um cenário típico de uso é o de uma <strong>Secretaria da Fazenda (SEFAZ)</strong> recebendo, diariamente, arquivos de <strong>Notas Fiscais Eletrônicas (NF-e)</strong> enviados pelos contribuintes para fins de apuração de ICMS. Cada arquivo chega em lote (um CSV por dia/contribuinte) e precisa ser carregado rapidamente em uma tabela de <strong>staging</strong> antes de ser validado e consolidado nas tabelas fiscais definitivas.</p>
+<p>Arquivo <code>nfe_sample.csv</code> (ver <a href="exemplos/nfe_sample.csv">exemplos/nfe_sample.csv</a>):</p>
+<pre class='hljs'><code><div>nrchaveacesso;vltotalnota;dtemissao;stnfe;sqnfe;tpnfe
+000000000000000000000000000000000000000001;100.00;2026-01-01;A;100001;1
+000000000000000000000000000000000000000002;100.00;2026-01-01;A;100002;1
+</div></code></pre>
+<p>Tabela de staging que recebe a carga bruta:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE TABLE</span> staging.nfe_bulk (
+    nrchaveacesso <span class="hljs-type">CHAR</span>(<span class="hljs-number">44</span>)       <span class="hljs-keyword">NOT NULL</span>,
+    vltotalnota   <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>)  <span class="hljs-keyword">NULL</span>,
+    dtemissao     <span class="hljs-type">DATE</span>           <span class="hljs-keyword">NULL</span>,
+    stnfe         <span class="hljs-type">CHAR</span>(<span class="hljs-number">1</span>)        <span class="hljs-keyword">NULL</span>,
+    sqnfe         <span class="hljs-type">BIGINT</span>         <span class="hljs-keyword">NULL</span>,
+    tpnfe         <span class="hljs-type">INT</span>            <span class="hljs-keyword">NULL</span>
+);
+</div></code></pre>
+<p>Carga do arquivo para a tabela <code>staging.nfe_bulk</code>:</p>
+<pre class='hljs'><code><div>BULK <span class="hljs-keyword">INSERT</span> staging.nfe_bulk
+<span class="hljs-keyword">FROM</span> <span class="hljs-string">&#x27;C:\cargas\nfe_sample.csv&#x27;</span>
+<span class="hljs-keyword">WITH</span> (
+    FIELDTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;;&#x27;</span>,
+    ROWTERMINATOR   <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;\n&#x27;</span>,
+    FIRSTROW        <span class="hljs-operator">=</span> <span class="hljs-number">2</span>,
+    CODEPAGE        <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;65001&#x27;</span>,
+    TABLOCK,
+    MAXERRORS       <span class="hljs-operator">=</span> <span class="hljs-number">0</span>
+);
+</div></code></pre>
+<p>Depois de carregado em <code>staging</code>, os dados só são movidos para as tabelas fiscais definitivas (<code>fiscal.NFE</code>) após validação (<code>TRY_CONVERT</code>), conforme mostrado em <a href="02.07-CTE-INSERT.md">02.07-CTE-INSERT.md</a> e no <a href="roteiro-insercao-massa.md">roteiro-insercao-massa.md</a>. Essa separação em duas etapas é importante em auditoria fiscal: garante que o arquivo original enviado pelo contribuinte fique preservado em <code>staging</code>, permitindo reprocessamento e rastreabilidade caso alguma nota seja rejeitada.</p>
+<h3 id="sintaxe-completa" tabindex="-1">Sintaxe completa</h3>
+<pre class='hljs'><code><div>BULK <span class="hljs-keyword">INSERT</span> [ nome_do_banco . ] [ schema . ] nome_da_tabela
+<span class="hljs-keyword">FROM</span> <span class="hljs-string">&#x27;caminho_do_arquivo&#x27;</span>
+<span class="hljs-keyword">WITH</span> (
+    [ FIRSTROW <span class="hljs-operator">=</span> numero_da_linha ],
+    [ LASTROW <span class="hljs-operator">=</span> numero_da_linha ],
+    [ FIELDTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;delimitador_de_coluna&#x27;</span> ],
+    [ ROWTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;delimitador_de_linha&#x27;</span> ],
+    [ CODEPAGE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;pagina_de_codigo&#x27;</span> ],
+    [ DATAFILETYPE <span class="hljs-operator">=</span> { <span class="hljs-string">&#x27;char&#x27;</span> <span class="hljs-operator">|</span> <span class="hljs-string">&#x27;native&#x27;</span> <span class="hljs-operator">|</span> <span class="hljs-string">&#x27;widechar&#x27;</span> <span class="hljs-operator">|</span> <span class="hljs-string">&#x27;widenative&#x27;</span> } ],
+    [ BATCHSIZE <span class="hljs-operator">=</span> numero_de_linhas ],
+    [ ROWS_PER_BATCH <span class="hljs-operator">=</span> numero_de_linhas ],
+    [ MAXERRORS <span class="hljs-operator">=</span> numero_maximo_de_erros ],
+    [ ERRORFILE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;caminho_do_arquivo_de_erro&#x27;</span> ],
+    [ KEEPNULLS ],
+    [ TABLOCK ],
+    [ CHECK_CONSTRAINTS ],
+    [ FIRE_TRIGGERS ]
+);
+</div></code></pre>
+<h3 id="detalhamento-dos-par%C3%A2metros" tabindex="-1">Detalhamento dos parâmetros</h3>
+<table>
+<thead>
+<tr>
+<th>Parâmetro</th>
+<th>Função</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FIRSTROW</code></td>
+<td>Define a primeira linha do arquivo a ser importada. Usado para pular o cabeçalho (ex.: <code>FIRSTROW = 2</code> ignora a linha de nomes das colunas).</td>
+</tr>
+<tr>
+<td><code>LASTROW</code></td>
+<td>Define a última linha a ser importada; útil para carregar apenas uma faixa do arquivo.</td>
+</tr>
+<tr>
+<td><code>FIELDTERMINATOR</code></td>
+<td>Caractere que separa as colunas dentro de cada linha (<code>;</code>, <code>,</code>, <code>\t</code>, etc.). Nos exemplos fiscais deste material, usa-se <code>;</code> porque o <code>,</code> já é usado como separador decimal em alguns arquivos de origem.</td>
+</tr>
+<tr>
+<td><code>ROWTERMINATOR</code></td>
+<td>Caractere que indica o fim de cada linha/registro (<code>\n</code>, <code>\r\n</code>). Deve corresponder exatamente à quebra de linha usada no arquivo.</td>
+</tr>
+<tr>
+<td><code>CODEPAGE</code></td>
+<td>Define a codificação de caracteres do arquivo. <code>'65001'</code> corresponde a UTF-8, importante para arquivos fiscais com acentuação (nomes de contribuintes, endereços).</td>
+</tr>
+<tr>
+<td><code>DATAFILETYPE</code></td>
+<td>Indica o tipo de dado do arquivo (<code>char</code> para texto simples, <code>native</code>/<code>widenative</code> para arquivos gerados por <code>bcp</code> em formato nativo).</td>
+</tr>
+<tr>
+<td><code>BATCHSIZE</code></td>
+<td>Quantidade de linhas processadas por lote (cada lote é <em>commitado</em> separadamente). Reduz o uso do log de transações em cargas muito grandes.</td>
+</tr>
+<tr>
+<td><code>ROWS_PER_BATCH</code></td>
+<td>Estima ao otimizador quantas linhas existem no arquivo, ajudando a escolher um plano de execução mais eficiente (sem dividir a carga em lotes como o <code>BATCHSIZE</code>).</td>
+</tr>
+<tr>
+<td><code>MAXERRORS</code></td>
+<td>Número máximo de linhas com erro tolerado antes de a carga inteira falhar. <code>MAXERRORS = 0</code> interrompe a carga no primeiro erro — recomendado em auditoria fiscal, onde uma nota mal formatada não deve passar despercebida.</td>
+</tr>
+<tr>
+<td><code>ERRORFILE</code></td>
+<td>Caminho de um arquivo onde o SQL Server grava as linhas rejeitadas, permitindo auditar exatamente o que falhou na carga.</td>
+</tr>
+<tr>
+<td><code>KEEPNULLS</code></td>
+<td>Mantém como <code>NULL</code> os campos vazios do arquivo, em vez de aplicar o valor <code>DEFAULT</code> da coluna.</td>
+</tr>
+<tr>
+<td><code>TABLOCK</code></td>
+<td>Aplica um bloqueio de tabela durante a carga, o que reduz a concorrência mas aumenta significativamente a performance — recomendado em cargas noturnas de grandes lotes de NF-e.</td>
+</tr>
+<tr>
+<td><code>CHECK_CONSTRAINTS</code></td>
+<td>Faz o SQL Server validar as <code>CONSTRAINTS</code> da tabela durante a carga (por padrão, <code>BULK INSERT</code> as ignora, por isso o uso de tabelas de staging sem regras rígidas).</td>
+</tr>
+<tr>
+<td><code>FIRE_TRIGGERS</code></td>
+<td>Faz os <code>INSERT TRIGGERS</code> da tabela de destino serem disparados durante a carga (por padrão não são).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tratamento-de-erros" tabindex="-1">Tratamento de erros</h3>
+<p>Em um cenário de fiscalização, é comum envolver o <code>BULK INSERT</code> em um bloco <code>TRY/CATCH</code>, registrando falhas em uma tabela de auditoria:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">BEGIN</span> TRY
+    BULK <span class="hljs-keyword">INSERT</span> staging.nfe_bulk
+    <span class="hljs-keyword">FROM</span> <span class="hljs-string">&#x27;C:\cargas\nfe_sample.csv&#x27;</span>
+    <span class="hljs-keyword">WITH</span> (
+        FIELDTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;;&#x27;</span>,
+        ROWTERMINATOR   <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;\n&#x27;</span>,
+        FIRSTROW        <span class="hljs-operator">=</span> <span class="hljs-number">2</span>,
+        CODEPAGE        <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;65001&#x27;</span>,
+        MAXERRORS       <span class="hljs-operator">=</span> <span class="hljs-number">0</span>,
+        ERRORFILE       <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;C:\cargas\erros\nfe_sample_erros.log&#x27;</span>
+    );
+<span class="hljs-keyword">END</span> TRY
+<span class="hljs-keyword">BEGIN</span> CATCH
+    <span class="hljs-keyword">INSERT INTO</span> auditoria.load_errors (file_path, error_message, error_time)
+    <span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;C:\cargas\nfe_sample.csv&#x27;</span>, ERROR_MESSAGE(), SYSUTCDATETIME());
+    THROW;
+<span class="hljs-keyword">END</span> CATCH
+</div></code></pre>
+<h3 id="aplica%C3%A7%C3%A3o-5" tabindex="-1">Aplicação</h3>
+<p>Migração de sistemas, Data Warehouse, ETL, cargas periódicas e recepção de arquivos fiscais (NF-e, NFC-e, CT-e, EFD) enviados por contribuintes para apuração e cruzamento de dados.</p>
+<h3 id="vantagens-3" tabindex="-1">Vantagens</h3>
+<ul>
+<li>Alto desempenho.</li>
+<li>Milhões de registros em poucos minutos.</li>
+<li>Processamento feito pelo próprio motor do banco, sem ferramenta externa.</li>
+</ul>
+<h3 id="boas-pr%C3%A1ticas-2" tabindex="-1">Boas práticas</h3>
+<ul>
+<li>Validar encoding do arquivo (<code>CODEPAGE</code>).</li>
+<li>Carregar primeiro em uma tabela de <code>staging</code> com tipos textuais, e só depois converter/validar para as tabelas definitivas.</li>
+<li>Executar em transações quando apropriado.</li>
+<li>Usar <code>MAXERRORS = 0</code> em cargas fiscais, para não aceitar arquivos parcialmente corrompidos silenciosamente.</li>
+<li>Registrar erros de importação com <code>ERRORFILE</code> e/ou tabela de auditoria.</li>
+<li>Preservar o arquivo original e os dados brutos em <code>staging</code> para rastreabilidade e reprocessamento.</li>
+</ul>
+<h3 id="exerc%C3%ADcio-4" tabindex="-1">Exercício</h3>
+<p>A SEFAZ recebe diariamente um arquivo CSV com as notas fiscais emitidas pelos contribuintes do estado. Usando <code>staging.nfe_bulk</code> como tabela de destino:</p>
+<ol>
+<li>Escreva o comando <code>BULK INSERT</code> para carregar o arquivo <code>nfe_sample.csv</code>, tratando corretamente cabeçalho, delimitador e codificação.</li>
+<li>Adicione <code>MAXERRORS</code> e <code>ERRORFILE</code> para capturar notas com formato inválido.</li>
+<li>Explique por que a carga é feita em duas etapas (<code>staging</code> → <code>fiscal.NFE</code>) em vez de inserir diretamente na tabela final.</li>
+</ol>
+<div class="page-break"></div>
+<h1 id="parte-10-%E2%80%94-2.11-openrowset(bulk)" tabindex="-1">Parte 10 — 2.11 OPENROWSET(BULK)</h1>
+<h2 id="2.11-openrowset(bulk)" tabindex="-1">2.11 OPENROWSET(BULK)</h2>
+<h3 id="conceito-8" tabindex="-1">Conceito</h3>
+<p>O <code>OPENROWSET(BULK)</code> permite acessar arquivos externos como se fossem uma tabela temporária, possibilitando consultas e inserções diretamente a partir desses arquivos.</p>
+<h3 id="sintaxe-1" tabindex="-1">Sintaxe</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">INSERT INTO</span> Cliente
+<span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span>
+<span class="hljs-keyword">FROM</span> OPENROWSET(
+    BULK <span class="hljs-string">&#x27;C:\Importacao\clientes.csv&#x27;</span>,
+    FORMAT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;CSV&#x27;</span>,
+    FIRSTROW<span class="hljs-operator">=</span><span class="hljs-number">2</span>
+) <span class="hljs-keyword">AS</span> Dados;
+</div></code></pre>
+<h3 id="funcionamento-1" tabindex="-1">Funcionamento</h3>
+<ol>
+<li>O SQL Server abre o arquivo.</li>
+<li>Os registros são interpretados conforme o formato especificado.</li>
+<li>O resultado é disponibilizado como uma tabela.</li>
+<li>O <code>INSERT</code> grava os dados na tabela destino.</li>
+</ol>
+<h3 id="aplica%C3%A7%C3%B5es" tabindex="-1">Aplicações</h3>
+<ul>
+<li>Importações ocasionais.</li>
+<li>Leitura de arquivos CSV.</li>
+<li>ETL simplificado.</li>
+<li>Data Lake.</li>
+</ul>
+<h3 id="vantagens-4" tabindex="-1">Vantagens</h3>
+<ul>
+<li>Não requer SSIS.</li>
+<li>Fácil utilização.</li>
+</ul>
+<h3 id="limita%C3%A7%C3%B5es-2" tabindex="-1">Limitações</h3>
+<ul>
+<li>Requer permissões de acesso ao arquivo.</li>
+<li>Poucos recursos de transformação.</li>
+</ul>
+<h3 id="exerc%C3%ADcio-5" tabindex="-1">Exercício</h3>
+<p>Importe um arquivo CSV contendo a relação de cursos.</p>
+<div class="page-break"></div>
+<h1 id="parte-11-%E2%80%94-2.12-assistente-de-importa%C3%A7%C3%A3o-do-ssms" tabindex="-1">Parte 11 — 2.12 Assistente de Importação do SSMS</h1>
+<h2 id="2.12-assistente-de-importa%C3%A7%C3%A3o-do-ssms" tabindex="-1">2.12 Assistente de Importação do SSMS</h2>
+<h3 id="conceito-9" tabindex="-1">Conceito</h3>
+<p>O SQL Server Management Studio oferece um assistente gráfico para importar dados sem programação.</p>
+<h3 id="fontes-suportadas" tabindex="-1">Fontes suportadas</h3>
+<ul>
+<li>Excel</li>
+<li>CSV</li>
+<li>Access</li>
+<li>Oracle</li>
+<li>SQL Server</li>
+<li>ODBC</li>
+</ul>
+<h3 id="fluxo" tabindex="-1">Fluxo</h3>
+<ol>
+<li>Tasks</li>
+<li>Import Data</li>
+<li>Escolha da origem</li>
+<li>Escolha do destino</li>
+<li>Mapeamento de colunas</li>
+<li>Execução</li>
+</ol>
+<h3 id="aplica%C3%A7%C3%B5es-1" tabindex="-1">Aplicações</h3>
+<ul>
+<li>Pequenos projetos.</li>
+<li>Importações administrativas.</li>
+<li>Migração inicial.</li>
+</ul>
+<h3 id="vantagens-5" tabindex="-1">Vantagens</h3>
+<ul>
+<li>Interface amigável.</li>
+<li>Não exige SQL.</li>
+</ul>
+<h3 id="limita%C3%A7%C3%B5es-3" tabindex="-1">Limitações</h3>
+<ul>
+<li>Pouca automação.</li>
+<li>Poucas transformações.</li>
+</ul>
+<div class="page-break"></div>
+<h1 id="parte-12-%E2%80%94-2.13-sql-server-integration-services-(ssis)" tabindex="-1">Parte 12 — 2.13 SQL Server Integration Services (SSIS)</h1>
+<h2 id="2.13-sql-server-integration-services-(ssis)" tabindex="-1">2.13 SQL Server Integration Services (SSIS)</h2>
+<h3 id="conceito-10" tabindex="-1">Conceito</h3>
+<p>O SSIS é a ferramenta oficial de ETL da Microsoft para extração, transformação e carga de dados.</p>
+<h3 id="arquitetura" tabindex="-1">Arquitetura</h3>
+<pre class='hljs'><code><div>Origem
+   |
+Data Flow
+   |
+Transformações
+   |
+Destino
+</div></code></pre>
+<h3 id="componentes" tabindex="-1">Componentes</h3>
+<ul>
+<li>Data Flow</li>
+<li>Control Flow</li>
+<li>Lookup</li>
+<li>Derived Column</li>
+<li>Aggregate</li>
+<li>Conditional Split</li>
+</ul>
+<h3 id="aplica%C3%A7%C3%B5es-2" tabindex="-1">Aplicações</h3>
+<ul>
+<li>Data Warehouse.</li>
+<li>Business Intelligence.</li>
+<li>Integração entre sistemas.</li>
+<li>Migração de dados.</li>
+</ul>
+<h3 id="exemplo-1" tabindex="-1">Exemplo</h3>
+<p>Importação diária de vendas das filiais para o banco corporativo.</p>
+<h3 id="vantagens-6" tabindex="-1">Vantagens</h3>
+<ul>
+<li>Alto desempenho.</li>
+<li>Grande quantidade de conectores.</li>
+<li>Agendamento pelo SQL Server Agent.</li>
+</ul>
+<div class="page-break"></div>
+<h1 id="parte-13-%E2%80%94-2.14-bcp-(bulk-copy-program)" tabindex="-1">Parte 13 — 2.14 BCP (Bulk Copy Program)</h1>
+<h2 id="2.14-bcp-(bulk-copy-program)" tabindex="-1">2.14 BCP (Bulk Copy Program)</h2>
+<h3 id="conceito-11" tabindex="-1">Conceito</h3>
+<p>O BCP é uma ferramenta de linha de comando para importação e exportação em alta velocidade.</p>
+<h3 id="exemplo-2" tabindex="-1">Exemplo</h3>
+<pre class='hljs'><code><div>bcp Escola.dbo.Aluno <span class="hljs-keyword">in</span> alunos.csv -c -t, -S SERVIDOR -T
+</div></code></pre>
+<h3 id="aplica%C3%A7%C3%B5es-3" tabindex="-1">Aplicações</h3>
+<ul>
+<li>Migração.</li>
+<li>Backup lógico.</li>
+<li>Cargas periódicas.</li>
+<li>Automatização via scripts.</li>
+</ul>
+<h3 id="vantagens-7" tabindex="-1">Vantagens</h3>
+<ul>
+<li>Muito rápido.</li>
+<li>Fácil automação.</li>
+</ul>
+<h3 id="limita%C3%A7%C3%B5es-4" tabindex="-1">Limitações</h3>
+<ul>
+<li>Interface por linha de comando.</li>
+<li>Poucas transformações.</li>
+</ul>
+<div class="page-break"></div>
+<h1 id="parte-14-%E2%80%94-2.16-linked-server" tabindex="-1">Parte 14 — 2.16 Linked Server</h1>
+<h2 id="2.16-linked-server" tabindex="-1">2.16 Linked Server</h2>
+<h3 id="objetivos-1" tabindex="-1">Objetivos</h3>
+<p>Ao final deste capítulo o aluno será capaz de:</p>
+<ul>
+<li>Compreender o conceito de Linked Server;</li>
+<li>Configurar a integração entre servidores SQL Server;</li>
+<li>Consultar e inserir dados remotos;</li>
+<li>Avaliar vantagens e limitações dessa abordagem.</li>
+</ul>
+<hr>
+<h3 id="conceito-12" tabindex="-1">Conceito</h3>
+<p>O <strong>Linked Server</strong> é um recurso do SQL Server que permite acessar objetos localizados em outro servidor de banco de dados como se fossem objetos locais.</p>
+<p>Sua principal finalidade é integrar diferentes bases de dados sem necessidade de desenvolver rotinas de importação intermediárias.</p>
+<h3 id="exemplo-3" tabindex="-1">Exemplo</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">INSERT INTO</span> dbo.Cliente
+<span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span>
+<span class="hljs-keyword">FROM</span> [SERVIDOR_MATRIZ].ERP.dbo.Cliente;
+</div></code></pre>
+<h3 id="aplica%C3%A7%C3%B5es-4" tabindex="-1">Aplicações</h3>
+<ul>
+<li>Consolidação de bases corporativas;</li>
+<li>Migração entre servidores;</li>
+<li>Sistemas distribuídos;</li>
+<li>Integração entre matriz e filiais;</li>
+<li>Auditoria fiscal.</li>
+</ul>
+<h3 id="vantagens-8" tabindex="-1">Vantagens</h3>
+<ul>
+<li>Simplicidade de implementação;</li>
+<li>Não exige exportação para arquivos;</li>
+<li>Permite consultas distribuídas.</li>
+</ul>
+<h3 id="limita%C3%A7%C3%B5es-5" tabindex="-1">Limitações</h3>
+<ul>
+<li>Dependência da rede;</li>
+<li>Impacto no desempenho em grandes consultas;</li>
+<li>Questões de segurança e autenticação.</li>
+</ul>
+<h3 id="boas-pr%C3%A1ticas-3" tabindex="-1">Boas práticas</h3>
+<ul>
+<li>Consultar apenas colunas necessárias;</li>
+<li>Evitar SELECT *;</li>
+<li>Utilizar filtros na origem;</li>
+<li>Monitorar tempo de resposta.</li>
+</ul>
+<h3 id="exerc%C3%ADcio-6" tabindex="-1">Exercício</h3>
+<p>Copie os produtos do servidor FILIAL01 para a tabela ProdutoBackup da matriz.</p>
+<div class="page-break"></div>
+<h1 id="parte-15-%E2%80%94-2.17-openquery" tabindex="-1">Parte 15 — 2.17 OPENQUERY</h1>
+<h2 id="2.17-openquery" tabindex="-1">2.17 OPENQUERY</h2>
+<h3 id="conceito-13" tabindex="-1">Conceito</h3>
+<p>O <code>OPENQUERY</code> executa uma consulta diretamente no <strong>servidor remoto</strong> e retorna apenas o resultado. Diferente do <code>OPENROWSET</code>, que abre uma conexão ad hoc a cada execução, o <code>OPENQUERY</code> sempre trabalha em cima de um <strong>Linked Server</strong> já configurado — é esse linked server (no exemplo, <code>OracleERP</code>) que informa ao SQL Server onde e como se conectar ao banco remoto.</p>
+<p>Ou seja, antes de rodar o <code>OPENQUERY</code> do exemplo é necessário configurar o acesso ao servidor remoto.</p>
+<h3 id="configurando-o-acesso-ao-servidor-remoto" tabindex="-1">Configurando o acesso ao servidor remoto</h3>
+<p>A configuração é feita uma única vez pelo DBA e envolve quatro passos: habilitar consultas distribuídas, criar o linked server com o provedor adequado, cadastrar as credenciais de acesso e liberar as opções necessárias para o OPENQUERY.</p>
+<h4 id="1.-habilitar-consultas-distribu%C3%ADdas-ad-hoc-(se-necess%C3%A1rio)" tabindex="-1">1. Habilitar consultas distribuídas ad hoc (se necessário)</h4>
+<pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> sp_configure <span class="hljs-string">&#x27;show advanced options&#x27;</span>, <span class="hljs-number">1</span>;
+RECONFIGURE;
+
+<span class="hljs-keyword">EXEC</span> sp_configure <span class="hljs-string">&#x27;Ad Hoc Distributed Queries&#x27;</span>, <span class="hljs-number">1</span>;
+RECONFIGURE;
+</div></code></pre>
+<h4 id="2.-criar-o-linked-server" tabindex="-1">2. Criar o Linked Server</h4>
+<pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> sp_addlinkedserver
+    <span class="hljs-variable">@server</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;OracleERP&#x27;</span>,
+    <span class="hljs-variable">@srvproduct</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;Oracle&#x27;</span>,
+    <span class="hljs-variable">@provider</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;OraOLEDB.Oracle&#x27;</span>,
+    <span class="hljs-variable">@datasrc</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;ERP_PROD&#x27;</span>;
+</div></code></pre>
+<ul>
+<li><code>@server</code> → nome que será usado nas consultas (é o mesmo nome referenciado dentro do <code>OPENQUERY</code>);</li>
+<li><code>@srvproduct</code> → identificação do produto de origem;</li>
+<li><code>@provider</code> → provider OLE DB instalado no servidor (ex.: <code>OraOLEDB.Oracle</code> para Oracle, <code>MSOLEDBSQL</code> para SQL Server);</li>
+<li><code>@datasrc</code> → nome do serviço/instância de conexão configurado no cliente (ex.: entrada do <code>tnsnames.ora</code>).</li>
+</ul>
+<h4 id="3.-cadastrar-as-credenciais-de-acesso" tabindex="-1">3. Cadastrar as credenciais de acesso</h4>
+<pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> sp_addlinkedsrvlogin
+    <span class="hljs-variable">@rmtsrvname</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;OracleERP&#x27;</span>,
+    <span class="hljs-variable">@useself</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;FALSE&#x27;</span>,
+    <span class="hljs-variable">@locallogin</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">NULL</span>,
+    <span class="hljs-variable">@rmtuser</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;usuario_erp&#x27;</span>,
+    <span class="hljs-variable">@rmtpassword</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;senha_erp&#x27;</span>;
+</div></code></pre>
+<ul>
+<li><code>@useself = 'FALSE'</code> indica que a conexão remota não usará as credenciais do login local do SQL Server, e sim o usuário/senha informados em <code>@rmtuser</code>/<code>@rmtpassword</code>;</li>
+<li><code>@locallogin = NULL</code> aplica essa credencial a qualquer login local que utilizar o linked server.</li>
+</ul>
+<h4 id="4.-permitir-que-o-linked-server-execute-openquery" tabindex="-1">4. Permitir que o linked server execute OPENQUERY</h4>
+<pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> sp_serveroption <span class="hljs-string">&#x27;OracleERP&#x27;</span>, <span class="hljs-string">&#x27;rpc out&#x27;</span>, <span class="hljs-string">&#x27;true&#x27;</span>;
+<span class="hljs-keyword">EXEC</span> sp_serveroption <span class="hljs-string">&#x27;OracleERP&#x27;</span>, <span class="hljs-string">&#x27;data access&#x27;</span>, <span class="hljs-string">&#x27;true&#x27;</span>;
+</div></code></pre>
+<p>Com o linked server <code>OracleERP</code> criado e autenticado, o servidor remoto está pronto para ser consultado.</p>
+<h3 id="utilizando-o-openquery" tabindex="-1">Utilizando o OPENQUERY</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span>
+<span class="hljs-keyword">FROM</span> OPENQUERY
+(
+ OracleERP,
+ <span class="hljs-string">&#x27;SELECT CODIGO,NOME FROM CLIENTE&#x27;</span>
+);
+</div></code></pre>
+<p>Também pode ser utilizado em inserções.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">INSERT INTO</span> Cliente
+<span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span>
+<span class="hljs-keyword">FROM</span> OPENQUERY
+(
+ OracleERP,
+ <span class="hljs-string">&#x27;SELECT CODIGO,NOME FROM CLIENTE&#x27;</span>
+);
+</div></code></pre>
+<blockquote>
+<p>A string entre aspas simples é enviada e processada <strong>inteiramente pelo servidor remoto</strong> (Oracle, no exemplo) — por isso deve seguir a sintaxe SQL do banco de origem, e não do SQL Server.</p>
+</blockquote>
+<h3 id="quando-utilizar" tabindex="-1">Quando utilizar</h3>
+<ul>
+<li>Oracle → SQL Server</li>
+<li>PostgreSQL → SQL Server</li>
+<li>MySQL → SQL Server</li>
+<li>SQL Server → SQL Server</li>
+</ul>
+<h3 id="vantagens-9" tabindex="-1">Vantagens</h3>
+<ul>
+<li>Melhor desempenho que consultas distribuídas em muitos cenários;</li>
+<li>Processamento realizado no servidor remoto.</li>
+</ul>
+<h3 id="limita%C3%A7%C3%B5es-6" tabindex="-1">Limitações</h3>
+<ul>
+<li>Exige a configuração prévia do Linked Server (provider, credenciais e opções de servidor);</li>
+<li>A string de consulta não é validada pelo SQL Server, apenas repassada ao servidor remoto;</li>
+<li>Erros de sintaxe só são identificados na execução, pois a consulta é uma string.</li>
+</ul>
+<h3 id="exerc%C3%ADcio-7" tabindex="-1">Exercício</h3>
+<p>Importe todos os fornecedores de um banco Oracle utilizando OPENQUERY.</p>
+<div class="page-break"></div>
+<h1 id="parte-16-%E2%80%94-2.18-comparativo-dos-m%C3%A9todos-de-inser%C3%A7%C3%A3o" tabindex="-1">Parte 16 — 2.18 Comparativo dos Métodos de Inserção</h1>
+<h2 id="2.18-comparativo-dos-m%C3%A9todos-de-inser%C3%A7%C3%A3o" tabindex="-1">2.18 Comparativo dos Métodos de Inserção</h2>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th style="text-align:center">Complexidade</th>
+<th style="text-align:center">Volume</th>
+<th>Principal aplicação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>INSERT VALUES</td>
+<td style="text-align:center">Baixa</td>
+<td style="text-align:center">Baixo</td>
+<td>Cadastros</td>
+</tr>
+<tr>
+<td>INSERT múltiplas linhas</td>
+<td style="text-align:center">Baixa</td>
+<td style="text-align:center">Médio</td>
+<td>Dados iniciais</td>
+</tr>
+<tr>
+<td>INSERT SELECT</td>
+<td style="text-align:center">Média</td>
+<td style="text-align:center">Alto</td>
+<td>Migração</td>
+</tr>
+<tr>
+<td>SELECT INTO</td>
+<td style="text-align:center">Baixa</td>
+<td style="text-align:center">Médio</td>
+<td>Backup temporário</td>
+</tr>
+<tr>
+<td>INSERT EXEC</td>
+<td style="text-align:center">Média</td>
+<td style="text-align:center">Médio</td>
+<td>Procedures</td>
+</tr>
+<tr>
+<td>CTE + INSERT</td>
+<td style="text-align:center">Média</td>
+<td style="text-align:center">Médio</td>
+<td>Consultas complexas</td>
+</tr>
+<tr>
+<td>MERGE</td>
+<td style="text-align:center">Alta</td>
+<td style="text-align:center">Alto</td>
+<td>Sincronização</td>
+</tr>
+<tr>
+<td>INSERT OUTPUT</td>
+<td style="text-align:center">Média</td>
+<td style="text-align:center">Baixo</td>
+<td>Recuperar IDENTITY</td>
+</tr>
+<tr>
+<td>BULK INSERT</td>
+<td style="text-align:center">Média</td>
+<td style="text-align:center">Muito Alto</td>
+<td>CSV</td>
+</tr>
+<tr>
+<td>OPENROWSET</td>
+<td style="text-align:center">Média</td>
+<td style="text-align:center">Alto</td>
+<td>Arquivos externos</td>
+</tr>
+<tr>
+<td>Import Wizard</td>
+<td style="text-align:center">Baixa</td>
+<td style="text-align:center">Médio</td>
+<td>Importação gráfica</td>
+</tr>
+<tr>
+<td>SSIS</td>
+<td style="text-align:center">Alta</td>
+<td style="text-align:center">Muito Alto</td>
+<td>ETL</td>
+</tr>
+<tr>
+<td>BCP</td>
+<td style="text-align:center">Média</td>
+<td style="text-align:center">Muito Alto</td>
+<td>Linha de comando</td>
+</tr>
+<tr>
+<td>SqlBulkCopy</td>
+<td style="text-align:center">Alta</td>
+<td style="text-align:center">Muito Alto</td>
+<td>Aplicações .NET</td>
+</tr>
+<tr>
+<td>Linked Server</td>
+<td style="text-align:center">Média</td>
+<td style="text-align:center">Alto</td>
+<td>Integração</td>
+</tr>
+<tr>
+<td>OPENQUERY</td>
+<td style="text-align:center">Alta</td>
+<td style="text-align:center">Alto</td>
+<td>Bancos heterogêneos</td>
+</tr>
+</tbody>
+</table>
+<h3 id="recomenda%C3%A7%C3%B5es" tabindex="-1">Recomendações</h3>
+<ul>
+<li>OLTP → INSERT VALUES</li>
+<li>ETL → SSIS</li>
+<li>Grandes arquivos → BULK INSERT</li>
+<li>Aplicações C# → SqlBulkCopy</li>
+<li>Integração entre bancos → Linked Server ou OPENQUERY</li>
+</ul>
+<div class="page-break"></div>
+<h1 id="parte-17-%E2%80%94-2.20-exerc%C3%ADcios" tabindex="-1">Parte 17 — 2.20 Exercícios</h1>
+<h2 id="2.20-exerc%C3%ADcios" tabindex="-1">2.20 Exercícios</h2>
+<h3 id="parte-i" tabindex="-1">Parte I</h3>
+<ol>
+<li>
+<p>Insira cinco alunos utilizando INSERT VALUES.</p>
+</li>
+<li>
+<p>Cadastre cinco cursos utilizando um único INSERT.</p>
+</li>
+<li>
+<p>Copie todos os alunos para uma tabela Backup utilizando INSERT SELECT.</p>
+</li>
+<li>
+<p>Crie uma nova tabela utilizando SELECT INTO.</p>
+</li>
+<li>
+<p>Execute uma procedure utilizando INSERT EXEC.</p>
+</li>
+</ol>
+<h3 id="parte-ii" tabindex="-1">Parte II</h3>
+<ol start="6">
+<li>
+<p>Utilize uma CTE para copiar apenas alunos ativos.</p>
+</li>
+<li>
+<p>Sincronize duas tabelas utilizando MERGE.</p>
+</li>
+<li>
+<p>Recupere o ID gerado utilizando INSERT OUTPUT.</p>
+</li>
+<li>
+<p>Elabore um script BULK INSERT para importar um arquivo CSV.</p>
+</li>
+<li>
+<p>Explique a diferença entre Linked Server e OPENQUERY.</p>
+</li>
+</ol>
+<h3 id="desafio" tabindex="-1">Desafio</h3>
+<p>Desenvolva um processo completo de integração contendo:</p>
+<ul>
+<li>BULK INSERT</li>
+<li>MERGE</li>
+<li>INSERT OUTPUT</li>
+<li>Auditoria</li>
+<li>Tratamento de erros</li>
+<li>Transação</li>
+</ul>
+<p>Apresente um diagrama do fluxo e justifique a escolha de cada método.</p>
+<div class="page-break"></div>
+<h1 id="parte-18-%E2%80%94-roteiro-de-exerc%C3%ADcios-%E2%80%94-inser%C3%A7%C3%A3o-em-massa-(multi-row%2C-bulk)" tabindex="-1">Parte 18 — Roteiro de Exercícios — Inserção em Massa (Multi-row, BULK)</h1>
+<h2 id="roteiro-de-exerc%C3%ADcios-%E2%80%94-inser%C3%A7%C3%A3o-em-massa-(multi-row%2C-bulk)" tabindex="-1">Roteiro de Exercícios — Inserção em Massa (Multi-row, BULK)</h2>
+<p>Objetivo: praticar técnicas de inserção em massa (multi-row INSERT, INSERT...SELECT, BULK INSERT, OPENROWSET/BCP/SqlBulkCopy) aplicadas a dados fiscais (EFD, NF-e), com foco em desempenho, integridade e auditoria.</p>
+<h3 id="exerc%C3%ADcio-1-%E2%80%94-insert-de-m%C3%BAltiplas-linhas-(pr%C3%A1tico-r%C3%A1pido)" tabindex="-1">Exercício 1 — INSERT de múltiplas linhas (prático rápido)</h3>
+<ol>
+<li>Crie uma tabela <code>fiscal.NFE_TEST</code> com colunas: <code>sqnfe BIGINT</code>, <code>tpnfe INT</code>, <code>nrchaveacesso CHAR(44)</code>, <code>vltotalnota DECIMAL(16,2)</code>, <code>dtemissao DATE</code>, <code>stnfe CHAR(1)</code>.</li>
+<li>Insira 5 notas via um único <code>INSERT</code> multi-row.</li>
+<li>Verifique a inserção e documente o plano de execução (EXPLAIN/SHOWPLAN).</li>
+</ol>
+<h3 id="exerc%C3%ADcio-2-%E2%80%94-insert-...-select-para-transformar-dados" tabindex="-1">Exercício 2 — INSERT ... SELECT para transformar dados</h3>
+<ol>
+<li>Considere uma tabela <code>staging.raw_nfe</code> com campos textuais.</li>
+<li>Realize um <code>INSERT INTO fiscal.NFE</code> usando <code>INSERT ... SELECT</code> com conversões (<code>TRY_CAST</code>/<code>TRY_CONVERT</code>) e filtros.</li>
+<li>Registre as linhas rejeitadas em uma tabela <code>staging.nfe_rejeitadas</code>.</li>
+</ol>
+<h3 id="exerc%C3%ADcio-3-%E2%80%94-cte-%2B-insert-em-massa" tabindex="-1">Exercício 3 — CTE + INSERT em massa</h3>
+<ol>
+<li>Use um <code>WITH cte AS (...)</code> para pré-processar dados (normalizar campos, remover duplicatas) e insira os resultados em <code>fiscal.NFE</code>.</li>
+<li>Mostre o script e explique porque a CTE ajuda na legibilidade e modularidade.</li>
+</ol>
+<h3 id="exerc%C3%ADcio-4-%E2%80%94-bulk-insert-(t-sql)" tabindex="-1">Exercício 4 — BULK INSERT (T-SQL)</h3>
+<ol>
+<li>Prepare um CSV <code>nfe_sample.csv</code> com colunas: <code>nrchaveacesso;vltotalnota;dtemissao;stnfe;sqnfe;tpnfe</code> (ponto decimal <code>.</code> ou vírgula conforme configuração).</li>
+<li>Crie uma tabela de staging <code>staging.nfe_bulk</code> com tipos textuais.</li>
+<li>Use <code>BULK INSERT staging.nfe_bulk FROM 'C:\cargas\nfe_sample.csv' WITH (FIELDTERMINATOR=';', ROWTERMINATOR='\n', FIRSTROW=2, CODEPAGE='65001')</code>.</li>
+<li>Valide e mova os registros para <code>fiscal.NFE</code> com <code>TRY_CONVERT</code>.</li>
+</ol>
+<h3 id="exerc%C3%ADcio-5-%E2%80%94-openrowset(bulk)-e-polybase-(se-dispon%C3%ADvel)" tabindex="-1">Exercício 5 — OPENROWSET(BULK) e PolyBase (se disponível)</h3>
+<ol>
+<li>Mostre como usar <code>OPENROWSET(BULK...)</code> para ler CSVs sem criar arquivo físico de staging (ex.: diretório de ingestão).</li>
+<li>Se PolyBase estiver disponível, descreva os passos para criar external table e consultar diretamente.</li>
+</ol>
+<h3 id="exerc%C3%ADcio-6-%E2%80%94-bcp-(linha-de-comando)-e-sqlbulkcopy-(c%23)-%E2%80%94-integra%C3%A7%C3%A3o" tabindex="-1">Exercício 6 — BCP (linha de comando) e SqlBulkCopy (C#) — integração</h3>
+<ol>
+<li>Forneça comando <code>bcp</code> para importar o CSV diretamente para uma tabela staging.</li>
+<li>Inclua um exemplo mínimo de uso de <code>SqlBulkCopy</code> em C# para enviar um <code>DataTable</code> ao SQL Server.</li>
+</ol>
+<h3 id="exerc%C3%ADcio-7-%E2%80%94-estrat%C3%A9gia-de-carga-para-grandes-volumes-(procedimento)" tabindex="-1">Exercício 7 — Estratégia de carga para grandes volumes (procedimento)</h3>
+<ol>
+<li>Escreva um roteiro de passos para ingestão de 10 milhões de linhas fiscais:
+<ul>
+<li>preparar CSVs particionados por mês;</li>
+<li>carregar em <code>staging</code> com <code>BULK INSERT</code>/BCP;</li>
+<li>desabilitar índices e constraints durante carga (quando seguro);</li>
+<li>executar validação e conversão por lote;</li>
+<li>inserir em tabelas finais e recriar índices;</li>
+<li>coletar estatísticas e executar <code>UPDATE STATISTICS</code>.</li>
+</ul>
+</li>
+<li>Explique riscos e rollback strategies.</li>
+</ol>
+<h3 id="exerc%C3%ADcio-8-%E2%80%94-tratamento-de-erros-e-auditoria" tabindex="-1">Exercício 8 — Tratamento de erros e auditoria</h3>
+<ol>
+<li>Implemente TRY/CATCH numa procedure que executa o fluxo de carga e grava erro em <code>auditoria.load_errors</code> com detalhes do arquivo/linha/mensagem.</li>
+<li>Mostre um exemplo de registro de erro e como reprocessar apenas linhas com falha.</li>
+</ol>
+<h3 id="exerc%C3%ADcio-9-%E2%80%94-fluxo-completo-de-staging-%E2%86%92-valida%C3%A7%C3%A3o-%E2%86%92-tabela-final" tabindex="-1">Exercício 9 — Fluxo completo de staging → validação → tabela final</h3>
+<ol>
+<li>Use os arquivos CSV de exemplo disponíveis em <code>exemplos/</code> para praticar um fluxo completo de ingestão:
+<ul>
+<li><code>staging_nfe_20.csv</code></li>
+<li><code>staging_item_nfe_20.csv</code></li>
+<li><code>staging_nfce_20.csv</code></li>
+<li><code>staging_item_nfce_20.csv</code></li>
+<li><code>staging_cte_20.csv</code></li>
+<li><code>staging_efd_registro_20.csv</code></li>
+</ul>
+</li>
+<li>Crie as tabelas de staging sugeridas no script <code>exemplos/staging_bulk_tabelas.sql</code>.</li>
+<li>Faça o <code>BULK INSERT</code> de cada CSV para a respectiva tabela de staging, usando <code>FIELDTERMINATOR=';'</code>, <code>ROWTERMINATOR='\n'</code>, <code>FIRSTROW=2</code> e <code>CODEPAGE='65001'</code>.</li>
+<li>Valide os dados carregados em staging com consultas simples, por exemplo:
+<ul>
+<li>verificar quantidade de linhas por arquivo;</li>
+<li>identificar valores nulos ou inconsistentes;</li>
+<li>confirmar se as datas estão no formato esperado.</li>
+</ul>
+</li>
+<li>Mova os registros para as tabelas finais com <code>INSERT ... SELECT</code> e conversões explícitas:
+<ul>
+<li><code>TRY_CONVERT(DATE, data_emissao)</code> para datas;</li>
+<li><code>TRY_CONVERT(DECIMAL(15,2), valor_total)</code> para valores monetários;</li>
+<li><code>TRY_CONVERT(BIGINT, id_nfe)</code> ou <code>TRY_CONVERT(BIGINT, id_nfce)</code> quando necessário.</li>
+</ul>
+</li>
+<li>Registre linhas inválidas em uma tabela de rejeição, por exemplo <code>staging.rejeicoes_bulk</code>, com colunas: <code>origem</code>, <code>motivo</code>, <code>dados_brutos</code>.</li>
+<li>Compare o número de linhas carregadas em staging com o número efetivamente inserido nas tabelas finais e explique diferenças.</li>
+<li>Discuta por que o uso de staging melhora a rastreabilidade, a auditoria e a recuperação de falhas em processos de carga.</li>
+</ol>
+<h3 id="entreg%C3%A1veis" tabindex="-1">Entregáveis</h3>
+<ul>
+<li>Scripts SQL: <code>CREATE TABLE</code>, <code>INSERT</code> (multi-row), <code>BULK INSERT</code>, <code>INSERT ... SELECT</code>, CTE scripts.</li>
+<li>Arquivo CSV de exemplo: <code>nfe_sample.csv</code>.</li>
+<li>Comando <code>bcp</code> e snippet <code>SqlBulkCopy</code>.</li>
+<li>Relatório curto (1 página) com justificativas de cada escolha (tipos, delimitador, handling de encoding, uso de índices).</li>
+</ul>
+<div class="page-break"></div>
+<h1 id="parte-19-%E2%80%94-respostas-e-explica%C3%A7%C3%B5es-%E2%80%94-inser%C3%A7%C3%A3o-em-massa-(multi-row%2C-bulk)" tabindex="-1">Parte 19 — Respostas e Explicações — Inserção em Massa (Multi-row, BULK)</h1>
+<h2 id="respostas-e-explica%C3%A7%C3%B5es-%E2%80%94-inser%C3%A7%C3%A3o-em-massa-(multi-row%2C-bulk)" tabindex="-1">Respostas e Explicações — Inserção em Massa (Multi-row, BULK)</h2>
+<p>Este documento responde passo a passo ao roteiro de exercícios, explicando decisões técnicas e fornecendo exemplos SQL e comandos.</p>
+<hr>
+<h3 id="exerc%C3%ADcio-1-%E2%80%94-insert-de-m%C3%BAltiplas-linhas" tabindex="-1">Exercício 1 — INSERT de múltiplas linhas</h3>
+<h4 id="solu%C3%A7%C3%A3o-(exemplo)" tabindex="-1">Solução (exemplo)</h4>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE TABLE</span> fiscal.NFE_TEST (
+  sqnfe <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span>,
+  tpnfe <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span>,
+  nrchaveacesso <span class="hljs-type">CHAR</span>(<span class="hljs-number">44</span>) <span class="hljs-keyword">NOT NULL</span>,
+  vltotalnota <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>) <span class="hljs-keyword">NOT NULL</span>,
+  dtemissao <span class="hljs-type">DATE</span> <span class="hljs-keyword">NOT NULL</span>,
+  stnfe <span class="hljs-type">CHAR</span>(<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT NULL</span>,
+  <span class="hljs-keyword">CONSTRAINT</span> PK_NFE_TEST <span class="hljs-keyword">PRIMARY KEY</span> (sqnfe, tpnfe)
+);
+
+<span class="hljs-keyword">INSERT INTO</span> fiscal.NFE_TEST (sqnfe, tpnfe, nrchaveacesso, vltotalnota, dtemissao, stnfe)
+<span class="hljs-keyword">VALUES</span>
+ (<span class="hljs-number">1001</span>,<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;000000000000000000000000000000000000000001&#x27;</span>,<span class="hljs-number">100.00</span>,<span class="hljs-string">&#x27;2026-07-01&#x27;</span>,<span class="hljs-string">&#x27;A&#x27;</span>),
+ (<span class="hljs-number">1002</span>,<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;000000000000000000000000000000000000000002&#x27;</span>,<span class="hljs-number">200.50</span>,<span class="hljs-string">&#x27;2026-07-01&#x27;</span>,<span class="hljs-string">&#x27;A&#x27;</span>),
+ (<span class="hljs-number">1003</span>,<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;000000000000000000000000000000000000000003&#x27;</span>,<span class="hljs-number">50.00</span>,<span class="hljs-string">&#x27;2026-07-02&#x27;</span>,<span class="hljs-string">&#x27;A&#x27;</span>),
+ (<span class="hljs-number">1004</span>,<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;000000000000000000000000000000000000000004&#x27;</span>,<span class="hljs-number">1200.00</span>,<span class="hljs-string">&#x27;2026-07-02&#x27;</span>,<span class="hljs-string">&#x27;C&#x27;</span>),
+ (<span class="hljs-number">1005</span>,<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;000000000000000000000000000000000000000005&#x27;</span>,<span class="hljs-number">79.99</span>,<span class="hljs-string">&#x27;2026-07-03&#x27;</span>,<span class="hljs-string">&#x27;A&#x27;</span>);
+</div></code></pre>
+<h4 id="explica%C3%A7%C3%B5es" tabindex="-1">Explicações</h4>
+<ul>
+<li>Usamos <code>CHAR(44)</code> para chave de acesso porque o tamanho é fixo; isso economiza espaço e melhora indexação.</li>
+<li>Multi-row <code>INSERT</code> reduz round-trips ao servidor comparado a múltiplos <code>INSERT</code> individuais.</li>
+<li>Verificar plano de execução (<code>SET SHOWPLAN_TEXT ON</code> / <code>EXPLAIN</code>) ajuda a confirmar se o DB usa abordagem eficiente.</li>
+</ul>
+<hr>
+<h3 id="exerc%C3%ADcio-2-%E2%80%94-insert-...-select" tabindex="-1">Exercício 2 — INSERT ... SELECT</h3>
+<h4 id="solu%C3%A7%C3%A3o-(exemplo)-1" tabindex="-1">Solução (exemplo)</h4>
+<pre class='hljs'><code><div><span class="hljs-comment">-- tabela staging</span>
+<span class="hljs-keyword">CREATE TABLE</span> staging.raw_nfe (
+  raw_id <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">PRIMARY KEY</span>,
+  nrchave NVARCHAR(<span class="hljs-number">100</span>),
+  vltotal NVARCHAR(<span class="hljs-number">50</span>),
+  dtemissao NVARCHAR(<span class="hljs-number">50</span>),
+  stnfe NVARCHAR(<span class="hljs-number">5</span>),
+  imported_dt DATETIME2 <span class="hljs-keyword">DEFAULT</span> SYSUTCDATETIME()
+);
+
+<span class="hljs-comment">-- mover validos</span>
+<span class="hljs-keyword">INSERT INTO</span> fiscal.NFE (sqnfe, tpnfe, nrchaveacesso, vltotalnota, dtemissao, stnfe)
+<span class="hljs-keyword">SELECT</span> NEXT <span class="hljs-keyword">VALUE</span> <span class="hljs-keyword">FOR</span> seq_nfe, <span class="hljs-number">1</span>,
+       <span class="hljs-keyword">LEFT</span>(r.nrchave,<span class="hljs-number">44</span>) <span class="hljs-keyword">AS</span> nrchaveacesso,
+       TRY_CAST(REPLACE(r.vltotal,<span class="hljs-string">&#x27;,&#x27;</span>,<span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">AS</span> <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>)) <span class="hljs-keyword">AS</span> vltotalnota,
+       TRY_CAST(r.dtemissao <span class="hljs-keyword">AS</span> <span class="hljs-type">DATE</span>) <span class="hljs-keyword">AS</span> dtemissao,
+       <span class="hljs-keyword">LEFT</span>(r.stnfe,<span class="hljs-number">1</span>) <span class="hljs-keyword">AS</span> stnfe
+<span class="hljs-keyword">FROM</span> staging.raw_nfe r
+<span class="hljs-keyword">WHERE</span> LEN(r.nrchave) <span class="hljs-operator">&gt;=</span> <span class="hljs-number">44</span>
+  <span class="hljs-keyword">AND</span> TRY_CAST(REPLACE(r.vltotal,<span class="hljs-string">&#x27;,&#x27;</span>,<span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">AS</span> <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>)) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">AND</span> TRY_CAST(r.dtemissao <span class="hljs-keyword">AS</span> <span class="hljs-type">DATE</span>) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">AND</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span> <span class="hljs-keyword">FROM</span> fiscal.NFE n <span class="hljs-keyword">WHERE</span> n.nrchaveacesso <span class="hljs-operator">=</span> <span class="hljs-keyword">LEFT</span>(r.nrchave,<span class="hljs-number">44</span>));
+
+<span class="hljs-comment">-- rejeitados</span>
+<span class="hljs-keyword">INSERT INTO</span> staging.nfe_rejeitadas (raw_id, motivo)
+<span class="hljs-keyword">SELECT</span> raw_id, <span class="hljs-string">&#x27;Formato invalido&#x27;</span> <span class="hljs-keyword">FROM</span> staging.raw_nfe r
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">NOT</span> (LEN(r.nrchave) <span class="hljs-operator">&gt;=</span> <span class="hljs-number">44</span> <span class="hljs-keyword">AND</span> TRY_CAST(REPLACE(r.vltotal,<span class="hljs-string">&#x27;,&#x27;</span>,<span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">AS</span> <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>)) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>);
+</div></code></pre>
+<h4 id="explica%C3%A7%C3%A3o-1" tabindex="-1">Explicação</h4>
+<ul>
+<li><code>TRY_CAST</code> e <code>REPLACE</code> ajudam a converter formatos diferentes (vírgula/ponto decimal).</li>
+<li><code>INSERT ... SELECT</code> é eficiente pois a conversão é feita no servidor com set-based operations.</li>
+<li>Registar rejeitados permite reprocessamento sem perder a linha original.</li>
+</ul>
+<hr>
+<h3 id="exerc%C3%ADcio-3-%E2%80%94-cte-%2B-insert" tabindex="-1">Exercício 3 — CTE + INSERT</h3>
+<h4 id="solu%C3%A7%C3%A3o-(exemplo)-2" tabindex="-1">Solução (exemplo)</h4>
+<pre class='hljs'><code><div><span class="hljs-keyword">WITH</span> cleaned <span class="hljs-keyword">AS</span> (
+  <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DISTINCT</span>
+    <span class="hljs-keyword">LEFT</span>(r.nrchave,<span class="hljs-number">44</span>) <span class="hljs-keyword">AS</span> nrchaveacesso,
+    TRY_CAST(REPLACE(r.vltotal,<span class="hljs-string">&#x27;,&#x27;</span>,<span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">AS</span> <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>)) <span class="hljs-keyword">AS</span> vltotalnota,
+    TRY_CAST(r.dtemissao <span class="hljs-keyword">AS</span> <span class="hljs-type">DATE</span>) <span class="hljs-keyword">AS</span> dtemissao,
+    <span class="hljs-keyword">LEFT</span>(r.stnfe,<span class="hljs-number">1</span>) <span class="hljs-keyword">AS</span> stnfe
+  <span class="hljs-keyword">FROM</span> staging.raw_nfe r
+  <span class="hljs-keyword">WHERE</span> LEN(r.nrchave) <span class="hljs-operator">&gt;=</span> <span class="hljs-number">44</span>
+)
+<span class="hljs-keyword">INSERT INTO</span> fiscal.NFE (sqnfe, tpnfe, nrchaveacesso, vltotalnota, dtemissao, stnfe)
+<span class="hljs-keyword">SELECT</span> NEXT <span class="hljs-keyword">VALUE</span> <span class="hljs-keyword">FOR</span> seq_nfe, <span class="hljs-number">1</span>, nrchaveacesso, vltotalnota, dtemissao, stnfe
+<span class="hljs-keyword">FROM</span> cleaned c
+<span class="hljs-keyword">WHERE</span> vltotalnota <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>;
+</div></code></pre>
+<h4 id="explica%C3%A7%C3%A3o-2" tabindex="-1">Explicação</h4>
+<ul>
+<li>CTE melhora legibilidade e separa a transformação da inserção.</li>
+<li><code>DISTINCT</code> evita duplicatas no staging; decisões como <code>DISTINCT</code> devem ser ponderadas conforme requisitos.</li>
+</ul>
+<hr>
+<h3 id="exerc%C3%ADcio-4-%E2%80%94-bulk-insert-(t-sql)-1" tabindex="-1">Exercício 4 — BULK INSERT (T-SQL)</h3>
+<h4 id="exemplo-de-csv-(nfe_sample.csv)" tabindex="-1">Exemplo de CSV (<code>nfe_sample.csv</code>)</h4>
+<pre class='hljs'><code><div>nrchaveacesso;vltotalnota;dtemissao;stnfe;sqnfe;tpnfe
+000000000000000000000000000000000000000001;100.00;2026-07-01;A;1001;1
+000000000000000000000000000000000000000002;200.50;2026-07-01;A;1002;1
+</div></code></pre>
+<h4 id="script-de-cria%C3%A7%C3%A3o-da-tabela-staging" tabindex="-1">Script de criação da tabela staging</h4>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE TABLE</span> staging.nfe_bulk (
+  nrchaveacesso <span class="hljs-type">CHAR</span>(<span class="hljs-number">44</span>) <span class="hljs-keyword">primary key</span>,
+  vltotalnota <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>),
+  dtemissao <span class="hljs-type">DATE</span>,
+  stnfe <span class="hljs-type">CHAR</span>(<span class="hljs-number">1</span>),
+  sqnfe <span class="hljs-type">BIGINT</span>,
+  tpnfe <span class="hljs-type">INT</span>
+);
+</div></code></pre>
+<h4 id="comando-bulk-insert" tabindex="-1">Comando BULK INSERT</h4>
+<pre class='hljs'><code><div>BULK <span class="hljs-keyword">INSERT</span> staging.nfe_bulk
+<span class="hljs-keyword">FROM</span> <span class="hljs-string">&#x27;C:\cargas\nfe_sample.csv&#x27;</span>
+<span class="hljs-keyword">WITH</span> (
+  FIELDTERMINATOR<span class="hljs-operator">=</span><span class="hljs-string">&#x27;;&#x27;</span>,
+  ROWTERMINATOR<span class="hljs-operator">=</span><span class="hljs-string">&#x27;\n&#x27;</span>,
+  FIRSTROW<span class="hljs-operator">=</span><span class="hljs-number">2</span>,
+  CODEPAGE<span class="hljs-operator">=</span><span class="hljs-string">&#x27;65001&#x27;</span>,
+  MAXERRORS<span class="hljs-operator">=</span><span class="hljs-number">0</span>
+);
+</div></code></pre>
+<h4 id="explica%C3%A7%C3%B5es-1" tabindex="-1">Explicações</h4>
+<ul>
+<li><code>CODEPAGE='65001'</code> garante UTF-8; ajuste conforme origem do CSV.</li>
+<li><code>FIRSTROW=2</code> pula cabeçalho.</li>
+<li>Depois de carregar em <code>staging</code>, utilizar <code>INSERT ... SELECT</code> com validações.</li>
+</ul>
+<hr>
+<h3 id="exerc%C3%ADcio-5-%E2%80%94-openrowset(bulk)-e-polybase" tabindex="-1">Exercício 5 — OPENROWSET(BULK) e PolyBase</h3>
+<h4 id="openrowset-exemplo" tabindex="-1">OPENROWSET exemplo</h4>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span>
+<span class="hljs-keyword">FROM</span> OPENROWSET(
+  BULK <span class="hljs-string">&#x27;C:\cargas\nfe_sample.csv&#x27;</span>,
+  FORMAT<span class="hljs-operator">=</span><span class="hljs-string">&#x27;CSV&#x27;</span>,
+  PARSER_VERSION<span class="hljs-operator">=</span><span class="hljs-string">&#x27;2.0&#x27;</span>
+) <span class="hljs-keyword">AS</span> t;
+</div></code></pre>
+<h4 id="observa%C3%A7%C3%B5es" tabindex="-1">Observações</h4>
+<ul>
+<li><code>OPENROWSET(BULK...)</code> permite leitura ad-hoc sem objeto persistente.</li>
+<li>PolyBase oferece external tables e é recomendado para grandes volumes e integração com HDFS/ADLS.</li>
+</ul>
+<hr>
+<h3 id="exerc%C3%ADcio-6-%E2%80%94-bcp-e-sqlbulkcopy" tabindex="-1">Exercício 6 — BCP e SqlBulkCopy</h3>
+<h4 id="comando-bcp-(exemplo)" tabindex="-1">Comando BCP (exemplo)</h4>
+<pre class='hljs'><code><div>bcp <span class="hljs-string">&quot;staging.nfe_bulk&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-string">&quot;C:\cargas\nfe_sample.csv&quot;</span> <span class="hljs-literal">-S</span> myserver <span class="hljs-literal">-d</span> SEFAZ_FISCAL <span class="hljs-literal">-T</span> <span class="hljs-literal">-c</span> <span class="hljs-literal">-t</span><span class="hljs-string">&quot;;&quot;</span> <span class="hljs-literal">-r</span><span class="hljs-string">&quot;\n&quot;</span>
+</div></code></pre>
+<h4 id="sqlbulkcopy-(c%23-minimal)" tabindex="-1">SqlBulkCopy (C# minimal)</h4>
+<pre class='hljs'><code><div><span class="hljs-keyword">using</span> (<span class="hljs-keyword">var</span> bulk = <span class="hljs-keyword">new</span> SqlBulkCopy(connString)) {
+  bulk.DestinationTableName = <span class="hljs-string">&quot;staging.nfe_bulk&quot;</span>;
+  bulk.WriteToServer(dataTable);
+}
+</div></code></pre>
+<h4 id="explica%C3%A7%C3%A3o-3" tabindex="-1">Explicação</h4>
+<ul>
+<li><code>bcp</code> é leve e rápido para cargas; <code>SqlBulkCopy</code> é programático e permite transformação em memória antes da carga.</li>
+</ul>
+<hr>
+<h3 id="exerc%C3%ADcio-7-%E2%80%94-estrat%C3%A9gia-de-carga-para-10m-linhas" tabindex="-1">Exercício 7 — Estratégia de carga para 10M linhas</h3>
+<h4 id="roteiro-resumido" tabindex="-1">Roteiro resumido</h4>
+<ol>
+<li>Particionar fonte em arquivos por mês (por exemplo <code>nfe_2026_07.csv</code>).</li>
+<li>Para cada arquivo:
+<ul>
+<li><code>BULK INSERT</code> para <code>staging</code> (sem índices);</li>
+<li>Validar e transformar em lotes (10k-100k) via <code>INSERT ... SELECT</code> transacional;</li>
+<li>Recriar índices e atualizar estatísticas;</li>
+</ul>
+</li>
+<li>Monitorar <code>tempdb</code> e I/O; usar <code>TABLOCK</code> em cargas massivas para melhorar throughput.</li>
+</ol>
+<h4 id="riscos%2Fmitiga%C3%A7%C3%B5es" tabindex="-1">Riscos/mitigações</h4>
+<ul>
+<li>Risco: locks longos — mitigar com batches e menor transaction scope.</li>
+<li>Risco: consumo de log — usar recuperação em massa e planejar backups.</li>
+</ul>
+<hr>
+<h3 id="exerc%C3%ADcio-8-%E2%80%94-tratamento-de-erros-e-auditoria-1" tabindex="-1">Exercício 8 — Tratamento de erros e auditoria</h3>
+<h4 id="procedure-de-exemplo-(esqueleto)" tabindex="-1">Procedure de exemplo (esqueleto)</h4>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> staging.LoadNfeFile <span class="hljs-variable">@FilePath</span> NVARCHAR(<span class="hljs-number">4000</span>)
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+  <span class="hljs-keyword">BEGIN</span> TRY
+    <span class="hljs-keyword">BEGIN</span> TRANSACTION;
+    BULK <span class="hljs-keyword">INSERT</span> staging.nfe_bulk <span class="hljs-keyword">FROM</span> <span class="hljs-variable">@FilePath</span> <span class="hljs-keyword">WITH</span> (FIELDTERMINATOR<span class="hljs-operator">=</span><span class="hljs-string">&#x27;;&#x27;</span>, FIRSTROW<span class="hljs-operator">=</span><span class="hljs-number">2</span>);
+    <span class="hljs-comment">-- validação e movimentação</span>
+    <span class="hljs-keyword">COMMIT</span> TRANSACTION;
+  <span class="hljs-keyword">END</span> TRY
+  <span class="hljs-keyword">BEGIN</span> CATCH
+    <span class="hljs-keyword">ROLLBACK</span> TRANSACTION;
+    <span class="hljs-keyword">INSERT INTO</span> auditoria.load_errors (file_path, error_message, error_time)
+    <span class="hljs-keyword">VALUES</span> (<span class="hljs-variable">@FilePath</span>, ERROR_MESSAGE(), SYSUTCDATETIME());
+    THROW;
+  <span class="hljs-keyword">END</span> CATCH
+<span class="hljs-keyword">END</span>
+</div></code></pre>
+<h4 id="explica%C3%A7%C3%A3o-4" tabindex="-1">Explicação</h4>
+<ul>
+<li>Registrar erros com <code>ERROR_MESSAGE()</code> facilita reprocessamento e auditoria.</li>
+<li>Transações garantem atomicidade por arquivo/lote.</li>
+</ul>
+<hr>
+<h3 id="observa%C3%A7%C3%B5es-finais-e-justificativas-de-design" tabindex="-1">Observações finais e justificativas de design</h3>
+<ul>
+<li>Use <code>DECIMAL</code> para valores financeiros; evitar <code>FLOAT</code>.</li>
+<li>Prefira CSV com delimitador <code>;</code> em ambientes que usam <code>,</code> como decimal separator; documente e normalize antes da carga.</li>
+<li>Crie índices apenas após carga inicial para evitar overhead em inserções massivas.</li>
+<li>Sempre manter um <code>staging</code> imutável (raw) para poder reprocesar sem perda de origem.</li>
+</ul>
+<hr>
+<p>Arquivos relacionados:</p>
+<ul>
+<li><code>roteiro-insercao-massa.md</code> (enunciado)</li>
+<li><code>nfe_sample.csv</code> (exemplo de carga)</li>
+<li><code>insercao-exemplos.sql</code> (coleção de exemplos SQL)</li>
+</ul>
+
+    </div>
+</body>
+</html>

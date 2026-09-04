@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 620" width="980" height="620">
+<defs><marker id="seta" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto"><path d="M1,1 L11,6 L1,11 z" fill="#5b6b7f"/></marker><marker id="bola" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto"><circle cx="5" cy="5" r="3.2" fill="#ffffff" stroke="#3c6ea5" stroke-width="1.4"/></marker></defs>
+<rect x="0" y="0" width="980" height="620" rx="0" fill="#f3f5f8"/>
+<rect x="10" y="10" width="960" height="600" rx="4" fill="#ffffff" stroke="#8f98a3" stroke-width="1"/>
+<rect x="10" y="10" width="960" height="26" rx="4" fill="#eef1f5" stroke="#c9ced6" stroke-width="1"/>
+<text x="24" y="28" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="12" fill="#1f2933" font-weight="700">Diagrama de Banco de Dados - curso_integridade_fiscal</text>
+<rect x="10" y="36" width="960" height="24" rx="0" fill="#eef1f5" stroke="#c9ced6" stroke-width="1"/>
+<text x="24" y="52" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">Pesquisador de Objetos &gt; Diagramas de Banco de Dados &gt; Novo Diagrama    |    Adicionar Tabela...    Mostrar Relacoes    Organizar Tabelas</text>
+<rect x="40" y="86" width="150" height="88" rx="3" fill="#ffffff" stroke="#6b7885" stroke-width="1"/>
+<rect x="40" y="86" width="150" height="18" rx="0" fill="#d9e6f6" stroke="#6b7885" stroke-width="1"/>
+<text x="48" y="99" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933" font-weight="700">municipio</text>
+<circle cx="51" cy="115" r="3" fill="#e8c33c" stroke="#a8862c"/>
+<line x1="54" y1="115" x2="60" y2="115" stroke="#a8862c" stroke-width="1.6"/>
+<line x1="58" y1="115" x2="58" y2="118" stroke="#a8862c" stroke-width="1.6"/>
+<text x="64" y="118" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">id_municipio</text>
+<text x="50" y="134" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">nome</text>
+<text x="50" y="150" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">uf</text>
+<text x="50" y="166" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">regiao_fiscal</text>
+<rect x="270" y="86" width="180" height="136" rx="3" fill="#ffffff" stroke="#6b7885" stroke-width="1"/>
+<rect x="270" y="86" width="180" height="18" rx="0" fill="#d9e6f6" stroke="#6b7885" stroke-width="1"/>
+<text x="278" y="99" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933" font-weight="700">contribuinte</text>
+<circle cx="281" cy="115" r="3" fill="#e8c33c" stroke="#a8862c"/>
+<line x1="284" y1="115" x2="290" y2="115" stroke="#a8862c" stroke-width="1.6"/>
+<line x1="288" y1="115" x2="288" y2="118" stroke="#a8862c" stroke-width="1.6"/>
+<text x="294" y="118" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">id_contribuinte</text>
+<text x="280" y="134" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">cnpj</text>
+<text x="280" y="150" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">razao_social</text>
+<text x="280" y="166" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">id_municipio (FK)</text>
+<text x="280" y="182" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">regime_tributario</text>
+<text x="280" y="198" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">situacao_cadastral</text>
+<text x="280" y="214" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">faturamento_declarado</text>
+<rect x="560" y="86" width="180" height="152" rx="3" fill="#ffffff" stroke="#6b7885" stroke-width="1"/>
+<rect x="560" y="86" width="180" height="18" rx="0" fill="#d9e6f6" stroke="#6b7885" stroke-width="1"/>
+<text x="568" y="99" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933" font-weight="700">nfe</text>
+<circle cx="571" cy="115" r="3" fill="#e8c33c" stroke="#a8862c"/>
+<line x1="574" y1="115" x2="580" y2="115" stroke="#a8862c" stroke-width="1.6"/>
+<line x1="578" y1="115" x2="578" y2="118" stroke="#a8862c" stroke-width="1.6"/>
+<text x="584" y="118" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">id_nfe</text>
+<text x="570" y="134" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">chave_acesso</text>
+<text x="570" y="150" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">data_emissao</text>
+<text x="570" y="166" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">id_emitente (FK)</text>
+<text x="570" y="182" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">id_destinatario (FK)</text>
+<text x="570" y="198" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">tipo_operacao</text>
+<text x="570" y="214" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">valor_total</text>
+<text x="570" y="230" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">situacao</text>
+<rect x="800" y="86" width="150" height="136" rx="3" fill="#ffffff" stroke="#6b7885" stroke-width="1"/>
+<rect x="800" y="86" width="150" height="18" rx="0" fill="#d9e6f6" stroke="#6b7885" stroke-width="1"/>
+<text x="808" y="99" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933" font-weight="700">nfe_item</text>
+<circle cx="811" cy="115" r="3" fill="#e8c33c" stroke="#a8862c"/>
+<line x1="814" y1="115" x2="820" y2="115" stroke="#a8862c" stroke-width="1.6"/>
+<line x1="818" y1="115" x2="818" y2="118" stroke="#a8862c" stroke-width="1.6"/>
+<text x="824" y="118" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">id_item</text>
+<text x="810" y="134" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">id_nfe (FK)</text>
+<text x="810" y="150" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">num_item</text>
+<text x="810" y="166" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">ncm</text>
+<text x="810" y="182" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">cfop</text>
+<text x="810" y="198" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">valor_total_item</text>
+<text x="810" y="214" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">aliquota_icms</text>
+<rect x="560" y="300" width="180" height="136" rx="3" fill="#ffffff" stroke="#6b7885" stroke-width="1"/>
+<rect x="560" y="300" width="180" height="18" rx="0" fill="#d9e6f6" stroke="#6b7885" stroke-width="1"/>
+<text x="568" y="313" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933" font-weight="700">efd_c100</text>
+<circle cx="571" cy="329" r="3" fill="#e8c33c" stroke="#a8862c"/>
+<line x1="574" y1="329" x2="580" y2="329" stroke="#a8862c" stroke-width="1.6"/>
+<line x1="578" y1="329" x2="578" y2="332" stroke="#a8862c" stroke-width="1.6"/>
+<text x="584" y="332" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">id_c100</text>
+<text x="570" y="348" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">id_contribuinte (FK)</text>
+<text x="570" y="364" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">periodo_apuracao</text>
+<text x="570" y="380" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">chave_acesso</text>
+<text x="570" y="396" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">ind_oper</text>
+<text x="570" y="412" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">valor_documento</text>
+<text x="570" y="428" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">valor_icms</text>
+<rect x="800" y="300" width="150" height="120" rx="3" fill="#ffffff" stroke="#6b7885" stroke-width="1"/>
+<rect x="800" y="300" width="150" height="18" rx="0" fill="#d9e6f6" stroke="#6b7885" stroke-width="1"/>
+<text x="808" y="313" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933" font-weight="700">efd_c170</text>
+<circle cx="811" cy="329" r="3" fill="#e8c33c" stroke="#a8862c"/>
+<line x1="814" y1="329" x2="820" y2="329" stroke="#a8862c" stroke-width="1.6"/>
+<line x1="818" y1="329" x2="818" y2="332" stroke="#a8862c" stroke-width="1.6"/>
+<text x="824" y="332" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">id_c170</text>
+<text x="810" y="348" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">id_c100 (FK)</text>
+<text x="810" y="364" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">num_item</text>
+<text x="810" y="380" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">ncm / cfop</text>
+<text x="810" y="396" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">valor_item</text>
+<text x="810" y="412" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">aliquota_icms</text>
+<rect x="270" y="300" width="180" height="120" rx="3" fill="#ffffff" stroke="#6b7885" stroke-width="1"/>
+<rect x="270" y="300" width="180" height="18" rx="0" fill="#d9e6f6" stroke="#6b7885" stroke-width="1"/>
+<text x="278" y="313" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933" font-weight="700">ordem_servico</text>
+<circle cx="281" cy="329" r="3" fill="#e8c33c" stroke="#a8862c"/>
+<line x1="284" y1="329" x2="290" y2="329" stroke="#a8862c" stroke-width="1.6"/>
+<line x1="288" y1="329" x2="288" y2="332" stroke="#a8862c" stroke-width="1.6"/>
+<text x="294" y="332" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">id_os</text>
+<text x="280" y="348" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">id_contribuinte (FK)</text>
+<text x="280" y="364" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">matricula_auditor (FK)</text>
+<text x="280" y="380" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">tipo_fiscalizacao</text>
+<text x="280" y="396" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">data_abertura / conclusao</text>
+<text x="280" y="412" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">situacao</text>
+<rect x="40" y="300" width="160" height="104" rx="3" fill="#ffffff" stroke="#6b7885" stroke-width="1"/>
+<rect x="40" y="300" width="160" height="18" rx="0" fill="#d9e6f6" stroke="#6b7885" stroke-width="1"/>
+<text x="48" y="313" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933" font-weight="700">auditor_fiscal</text>
+<circle cx="51" cy="329" r="3" fill="#e8c33c" stroke="#a8862c"/>
+<line x1="54" y1="329" x2="60" y2="329" stroke="#a8862c" stroke-width="1.6"/>
+<line x1="58" y1="329" x2="58" y2="332" stroke="#a8862c" stroke-width="1.6"/>
+<text x="64" y="332" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">matricula</text>
+<text x="50" y="348" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">nome</text>
+<text x="50" y="364" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">regiao_fiscal</text>
+<text x="50" y="380" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">matricula_supervisor (FK)</text>
+<text x="50" y="396" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">cargo</text>
+<rect x="270" y="470" width="180" height="104" rx="3" fill="#ffffff" stroke="#6b7885" stroke-width="1"/>
+<rect x="270" y="470" width="180" height="18" rx="0" fill="#d9e6f6" stroke="#6b7885" stroke-width="1"/>
+<text x="278" y="483" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933" font-weight="700">auto_infracao</text>
+<circle cx="281" cy="499" r="3" fill="#e8c33c" stroke="#a8862c"/>
+<line x1="284" y1="499" x2="290" y2="499" stroke="#a8862c" stroke-width="1.6"/>
+<line x1="288" y1="499" x2="288" y2="502" stroke="#a8862c" stroke-width="1.6"/>
+<text x="294" y="502" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">id_auto</text>
+<text x="280" y="518" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">id_os (FK)</text>
+<text x="280" y="534" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">id_contribuinte (FK)</text>
+<text x="280" y="550" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">valor_principal / multa</text>
+<text x="280" y="566" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">situacao</text>
+<path d="M190 122 H 270" fill="none" stroke="#3c6ea5" stroke-width="1.6" marker-end="url(#seta)" marker-start="url(#bola)"/>
+<path d="M450 122 H 560" fill="none" stroke="#3c6ea5" stroke-width="1.6" marker-end="url(#seta)" marker-start="url(#bola)"/>
+<path d="M450 152 C 500 152 510 178 560 178" fill="none" stroke="#3c6ea5" stroke-width="1.6" marker-end="url(#seta)" marker-start="url(#bola)"/>
+<path d="M740 122 H 800" fill="none" stroke="#3c6ea5" stroke-width="1.6" marker-end="url(#seta)" marker-start="url(#bola)"/>
+<path d="M450 200 C 510 200 510 350 560 350" fill="none" stroke="#3c6ea5" stroke-width="1.6" marker-end="url(#seta)" marker-start="url(#bola)"/>
+<path d="M740 334 H 800" fill="none" stroke="#3c6ea5" stroke-width="1.6" marker-end="url(#seta)" marker-start="url(#bola)"/>
+<path d="M360 224 V 300" fill="none" stroke="#3c6ea5" stroke-width="1.6" marker-end="url(#seta)" marker-start="url(#bola)"/>
+<path d="M200 334 H 270" fill="none" stroke="#3c6ea5" stroke-width="1.6" marker-end="url(#seta)" marker-start="url(#bola)"/>
+<path d="M360 400 V 470" fill="none" stroke="#3c6ea5" stroke-width="1.6" marker-end="url(#seta)" marker-start="url(#bola)"/>
+<path d="M120 396 C 120 460 200 520 270 520" fill="none" stroke="#3c6ea5" stroke-width="1.6" marker-end="url(#seta)" marker-start="url(#bola)"/>
+<path d="M40 366 C 8 366 8 334 40 334" fill="none" stroke="#3c6ea5" stroke-width="1.6"/>
+<text x="14" y="420" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10" fill="#3c6ea5">auto-relacionamento</text>
+<rect x="500" y="440" width="452" height="132" rx="0" fill="#f7fbff" stroke="#8fb6e4" stroke-width="1"/>
+<text x="510" y="458" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="11" fill="#1f2933" font-weight="700">Como ler o diagrama</text>
+<text x="510" y="476" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">Circulo = lado "um" (chave primaria)   |   Seta = lado "muitos" (chave estrangeira)</text>
+<text x="510" y="492" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">O desenho e lido do catalogo do banco: mostra o modelo REAL, nao o previsto</text>
+<text x="510" y="508" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">no projeto. Serve para (1) descobrir por onde as tabelas se ligam antes de</text>
+<text x="510" y="524" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">escrever um JOIN e (2) conferir se as chaves estrangeiras existem - ausencia</text>
+<text x="510" y="540" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">de linha entre duas tabelas costuma significar integridade referencial nao</text>
+<text x="510" y="556" font-family="DejaVu Sans, Segoe UI, Verdana, sans-serif" font-size="10.5" fill="#1f2933">declarada no banco.</text>
+</svg>

@@ -27,14 +27,14 @@ WHERE id_contribuinte IN (
 
 ## 2. Duas classificações rápidas
 
-| Retorno | Exemplo de uso |
-|---|---|
-| **Escalar** (1 linha, 1 coluna) | após `=`, `>`, em `SELECT`/`SET` |
-| **Tabela** (N linhas/colunas) | em `FROM`, com `IN`/`EXISTS` |
+| Retorno                               | Exemplo de uso                           |
+| ------------------------------------- | ---------------------------------------- |
+| **Escalar** (1 linha, 1 coluna) | após`=`, `>`, em `SELECT`/`SET` |
+| **Tabela** (N linhas/colunas)   | em`FROM`, com `IN`/`EXISTS`        |
 
-| Dependência | Característica |
-|---|---|
-| **Independente** | roda uma vez, não olha a linha externa |
+| Dependência             | Característica                                                 |
+| ------------------------ | --------------------------------------------------------------- |
+| **Independente**   | roda uma vez, não olha a linha externa                         |
 | **Correlacionada** | referencia coluna da consulta externa — "reavaliada por linha" |
 
 ---
@@ -160,10 +160,10 @@ CROSS APPLY (
 ) AS top3;
 ```
 
-| | Sem linhas na subconsulta |
-|---|---|
-| `CROSS APPLY` | descarta a linha externa (como `INNER JOIN`) |
-| `OUTER APPLY` | mantém, com `NULL` (como `LEFT JOIN`) |
+|                 | Sem linhas na subconsulta                     |
+| --------------- | --------------------------------------------- |
+| `CROSS APPLY` | descarta a linha externa (como`INNER JOIN`) |
+| `OUTER APPLY` | mantém, com`NULL` (como `LEFT JOIN`)     |
 
 ---
 

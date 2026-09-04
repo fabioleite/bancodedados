@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 560" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="820" height="560" fill="#ffffff"/>
+  <rect x="10" y="10" width="800" height="540" fill="#f5f5f5" stroke="#a8a8a8"/>
+  <rect x="10" y="10" width="800" height="28" fill="#3c5a78"/>
+  <text x="24" y="29" fill="#ffffff" font-size="13">Nova Tarefa (New Job) — SRV-FISCAL01</text>
+  <text x="786" y="29" fill="#ffffff" font-size="13">✕</text>
+
+  <!-- páginas -->
+  <rect x="20" y="48" width="170" height="450" fill="#ffffff" stroke="#c8c8c8"/>
+  <text x="30" y="68" font-size="11" font-weight="bold" fill="#243b53">Selecionar uma Página</text>
+  <text x="36" y="92" font-size="11" fill="#333">Geral</text>
+  <rect x="26" y="100" width="158" height="22" fill="#dbe7f3" stroke="#9dbbd8"/>
+  <text x="36" y="115" font-size="11" fill="#173a5e">Etapas (Steps)</text>
+  <text x="36" y="139" font-size="11" fill="#333">Agendamentos</text>
+  <text x="36" y="163" font-size="11" fill="#333">Alertas</text>
+  <text x="36" y="187" font-size="11" fill="#333">Notificações</text>
+  <text x="36" y="211" font-size="11" fill="#333">Destinos</text>
+
+  <rect x="26" y="330" width="158" height="160" rx="3" fill="#fff8e5" stroke="#e0c068"/>
+  <text x="34" y="350" font-size="10" font-weight="bold" fill="#7a5c00">Caminho no SSMS:</text>
+  <g font-size="9.5" fill="#5c4600">
+    <text x="34" y="370">Pesquisador de Objetos</text>
+    <text x="34" y="386">→ SQL Server Agent</text>
+    <text x="34" y="402">→ Tarefas (Jobs)</text>
+    <text x="34" y="418">→ botão direito</text>
+    <text x="34" y="434">→ Nova Tarefa…</text>
+    <text x="34" y="458">O serviço Agent precisa</text>
+    <text x="34" y="472">estar iniciado (ícone verde).</text>
+  </g>
+
+  <!-- conteudo -->
+  <rect x="200" y="48" width="600" height="450" fill="#ffffff" stroke="#c8c8c8"/>
+  <text x="212" y="70" font-size="11" fill="#333">Nome da tarefa:</text>
+  <rect x="320" y="58" width="290" height="18" fill="#ffffff" stroke="#a8b8c8"/>
+  <text x="326" y="71" font-size="11" fill="#111">JOB_CARGA_NFE_DIARIA</text>
+
+  <text x="212" y="98" font-size="11" font-weight="bold" fill="#243b53">Lista de etapas da tarefa:</text>
+  <rect x="212" y="106" width="576" height="22" fill="#eef1f4" stroke="#cfd6dd"/>
+  <g font-size="10" font-weight="bold" fill="#243b53">
+    <text x="222" y="121">Etapa</text><text x="272" y="121">Nome</text><text x="470" y="121">Tipo</text><text x="570" y="121">Ao êxito</text><text x="680" y="121">Ao falhar</text>
+  </g>
+  <g font-size="10" fill="#222">
+    <text x="230" y="146">1</text><text x="272" y="146">Preparar staging</text><text x="470" y="146">T-SQL</text><text x="570" y="146">Próxima etapa</text><text x="680" y="146">Encerrar (falha)</text>
+    <text x="230" y="172">2</text><text x="272" y="172">Carregar CSV (BULK INSERT)</text><text x="470" y="172">T-SQL</text><text x="570" y="172">Próxima etapa</text><text x="680" y="172">Encerrar (falha)</text>
+    <text x="230" y="198">3</text><text x="272" y="198">Validar e mesclar (MERGE)</text><text x="470" y="198">T-SQL</text><text x="570" y="198">Próxima etapa</text><text x="680" y="198">Encerrar (falha)</text>
+    <text x="230" y="224">4</text><text x="272" y="224">Atualizar estatísticas e log</text><text x="470" y="224">T-SQL</text><text x="570" y="224">Próxima etapa</text><text x="680" y="224">Encerrar (falha)</text>
+    <text x="230" y="250">5</text><text x="272" y="250">Alertar auditoria (Database Mail)</text><text x="470" y="250">T-SQL</text><text x="570" y="250">Encerrar (êxito)</text><text x="680" y="250">Encerrar (falha)</text>
+  </g>
+  <line x1="212" y1="156" x2="788" y2="156" stroke="#e6eaee"/>
+  <line x1="212" y1="182" x2="788" y2="182" stroke="#e6eaee"/>
+  <line x1="212" y1="208" x2="788" y2="208" stroke="#e6eaee"/>
+  <line x1="212" y1="234" x2="788" y2="234" stroke="#e6eaee"/>
+  <rect x="212" y="234" width="576" height="26" fill="#dbe7f3" opacity="0.5"/>
+  <rect x="212" y="128" width="576" height="140" fill="none" stroke="#cfd6dd"/>
+
+  <text x="212" y="292" font-size="11" fill="#333">Iniciar etapa:</text>
+  <rect x="300" y="280" width="240" height="18" fill="#ffffff" stroke="#a8b8c8"/>
+  <text x="306" y="293" font-size="11" fill="#111">1: Preparar staging</text>
+
+  <rect x="212" y="312" width="72" height="24" fill="#eceff2" stroke="#a8b8c8"/><text x="230" y="328" font-size="10.5" fill="#333">Nova…</text>
+  <rect x="292" y="312" width="72" height="24" fill="#eceff2" stroke="#a8b8c8"/><text x="306" y="328" font-size="10.5" fill="#333">Inserir…</text>
+  <rect x="372" y="312" width="72" height="24" fill="#eceff2" stroke="#a8b8c8"/><text x="388" y="328" font-size="10.5" fill="#333">Editar…</text>
+  <rect x="452" y="312" width="72" height="24" fill="#eceff2" stroke="#a8b8c8"/><text x="466" y="328" font-size="10.5" fill="#333">Excluir</text>
+
+  <!-- agendamento preview -->
+  <rect x="212" y="352" width="576" height="130" rx="4" fill="#f7fafd" stroke="#9dbbd8"/>
+  <text x="224" y="372" font-size="11" font-weight="bold" fill="#1b3f60">Prévia da página "Agendamentos"</text>
+  <text x="224" y="394" font-size="10.5" fill="#33587a">Nome: SCH_DIARIO_03H     |     Tipo: Recorrente     |     Habilitado: ✔</text>
+  <text x="224" y="414" font-size="10.5" fill="#33587a">Frequência: Diariamente, a cada 1 dia</text>
+  <text x="224" y="434" font-size="10.5" fill="#33587a">Frequência diária: Ocorre uma vez às 03:00:00</text>
+  <text x="224" y="454" font-size="10.5" fill="#33587a">Duração: início em 10/08/2026, sem data de término</text>
+  <text x="224" y="474" font-size="10.5" fill="#7a5c00">* Página "Notificações": marcar "Enviar e-mail ao operador quando a tarefa falhar".</text>
+
+  <rect x="530" y="508" width="80" height="24" fill="#e1e8ef" stroke="#8fa8be"/><text x="558" y="524" font-size="11" fill="#173a5e">OK</text>
+  <rect x="620" y="508" width="80" height="24" fill="#eceff2" stroke="#a8b8c8"/><text x="643" y="524" font-size="11" fill="#333">Cancelar</text>
+  <rect x="710" y="508" width="80" height="24" fill="#eceff2" stroke="#a8b8c8"/><text x="732" y="524" font-size="11" fill="#333">Script ▾</text>
+</svg>

@@ -1,0 +1,17 @@
+CONSTRUÇÃO DE NOVAS CONSULTAS
+CONSULTA 01: Auditar o aproveitamento do crédito apontado no registro D190, da EFD, decorrente da contratação (remetente/tomador) de serviço de prestação de transporte de cargas decorrente das saídas de produtos, com frete na modalidade CIF, sem o devido destaque desse valor no documento fiscal que acobertou o transito das mercadorias.
+
+TABELAS DO BDFISC A SEREM UTILIZADAS:
+1.	TB_201_PR_XML_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01 (TB_01);
+2.	TB_217_PR_XML_CTE_PROPRIOS_E_TERCEIROS_VINCULADO_A_NFE_02 (TB_02);
+3.	TB_662_PR_EFD_REGISTRO_D190_ANALITICO_NOTA_FISCAL_TRANSPORTE_CST_CFOP_ALIQ_ICMS(TB_03).
+
+CONSTRUÇÃO DA NOVA CONSULTA (EXIBIÇÃO) PARA EXTRAÇÃO DO CRÉDITO APROPRIADO INDEVIDAMENTE
+1.	Na TB_01 constam os documentos fiscais modelo 55 (nfe) de emissão própria visto que queremos saber o valor do frete, neles destacado, nas operações de saída de mercadorias;
+2.	Na TB_02 constam os documentos fiscais modelo 57 (cte) emitidos por terceiros relacionados aos documentos fiscais de saídas de mercadorias com frete na modalidade CIF;
+3.	Na TB_03 constam as informações contidas no registro D190, responsável pela escrituração do ICMS sobre o frete contratado pelo contribuinte e que foi objeto de crédito do ICMS;
+4.	Devemos utilizar as tabelas acima relacionando os campos em comum entre elas;
+5.	A tabela principal será a TB_01, onde filtraremos os registros pelas colunas “NF_SITUACAO”, “NF_CPF_CNPJ_DESTINATARIO” e “NF_VFRETE” para exibir apenas os documentos autorizados, com valores nulos nas operações de saídas de mercadorias, cujo destinatário é diferente do contribuinte auditado (excluir as entradas);
+6.	Acrescentaremos a tabela TB_02, onde relacionaremos os campos das chaves da NFE constante em ambas; 
+7.	Adicionaremos, na sequencia, a TB_03, onde relacionaremos os campos das chaves do CTE constante na TB_02 e TB_03.
+8.	Incluiremos, em seguida, o campo do valor do ICMS sobre o frete da TB_03, maior que 0(zero) para identificar o valor do crédito decorrente da prestação de serviço de transporte sem o devido destaque do valor do frete (modalidade CIF- Remetente/tomador) na NFe emitida em operações de saída de produtos.

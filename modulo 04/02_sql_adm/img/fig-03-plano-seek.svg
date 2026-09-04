@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="900" height="340" fill="#ffffff"/>
+  <rect x="10" y="10" width="880" height="320" fill="#fbfbfb" stroke="#c8c8c8"/>
+  <rect x="10" y="10" width="880" height="24" fill="#e1e8ef" stroke="#c8c8c8"/>
+  <text x="20" y="27" font-size="12" font-weight="bold" fill="#243b53">Plano de Execução Real — DEPOIS do índice IX_nf_cnpj_data</text>
+  <text x="20" y="52" font-size="11" fill="#555">Consulta 1: custo da consulta (relativo ao lote): 100%</text>
+  <text x="20" y="70" font-family="Consolas, monospace" font-size="11" fill="#333">SELECT ... FROM dbo.nota_fiscal WHERE cnpj_emitente = '11222333000144' AND dt_emissao BETWEEN ...</text>
+
+  <g>
+    <rect x="60" y="150" width="110" height="66" rx="4" fill="#ffffff" stroke="#7f9db9"/>
+    <circle cx="115" cy="172" r="12" fill="#eaf1f8" stroke="#7f9db9"/>
+    <text x="109" y="177" font-size="12" fill="#3a5c7d">▶</text>
+    <text x="115" y="197" font-size="11" text-anchor="middle" fill="#222">SELECT</text>
+    <text x="115" y="211" font-size="10" text-anchor="middle" fill="#666">Custo: 0%</text>
+  </g>
+  <line x1="230" y1="183" x2="175" y2="183" stroke="#5a7fa5" stroke-width="7"/>
+  <polygon points="175,183 190,176 190,190" fill="#5a7fa5"/>
+
+  <g>
+    <rect x="232" y="150" width="130" height="66" rx="4" fill="#ffffff" stroke="#7f9db9"/>
+    <circle cx="297" cy="172" r="12" fill="#eaf1f8" stroke="#7f9db9"/>
+    <text x="291" y="177" font-size="12" fill="#3a5c7d">Σ</text>
+    <text x="297" y="197" font-size="11" text-anchor="middle" fill="#222">Stream Aggregate</text>
+    <text x="297" y="211" font-size="10" text-anchor="middle" fill="#666">Custo: 18%</text>
+  </g>
+  <line x1="470" y1="183" x2="367" y2="183" stroke="#5a7fa5" stroke-width="8"/>
+  <polygon points="367,183 384,175 384,191" fill="#5a7fa5"/>
+  <text x="392" y="172" font-size="10" fill="#5a7fa5">12.480 linhas</text>
+
+  <g>
+    <rect x="472" y="140" width="210" height="86" rx="4" fill="#f2fbf2" stroke="#5aa35a" stroke-width="2"/>
+    <circle cx="577" cy="164" r="13" fill="#e2f5e2" stroke="#5aa35a"/>
+    <text x="571" y="169" font-size="13" fill="#2d6a2d" font-weight="bold">B</text>
+    <text x="577" y="190" font-size="11" text-anchor="middle" font-weight="bold" fill="#222">Index Seek (NonClustered)</text>
+    <text x="577" y="205" font-size="10" text-anchor="middle" fill="#444">[nota_fiscal].[IX_nf_cnpj_data]</text>
+    <text x="577" y="219" font-size="10" text-anchor="middle" fill="#2d6a2d" font-weight="bold">Custo: 82%</text>
+  </g>
+
+  <rect x="700" y="58" width="182" height="120" rx="3" fill="#ffffe1" stroke="#9a9a6a"/>
+  <text x="710" y="74" font-size="10" font-weight="bold" fill="#333">Index Seek (NonClustered)</text>
+  <g font-size="9.5" fill="#444">
+    <text x="710" y="92">Linhas lidas:          12.480</text>
+    <text x="710" y="108">Linhas retornadas:     12.480</text>
+    <text x="710" y="124">Leituras lógicas:          64</text>
+    <text x="710" y="140">Tempo decorrido:         42 ms</text>
+    <text x="710" y="158">Busca: cnpj_emitente = ...</text>
+    <text x="710" y="172">        AND dt_emissao ≥/≤ ...</text>
+  </g>
+  <line x1="700" y1="150" x2="682" y2="164" stroke="#9a9a6a" stroke-dasharray="3,2"/>
+
+  <rect x="20" y="256" width="860" height="58" rx="4" fill="#f2fbf2" stroke="#8bc48b"/>
+  <text x="32" y="276" font-size="11" font-weight="bold" fill="#2d6a2d">✔ Leia assim:</text>
+  <text x="32" y="294" font-size="11" fill="#2f5c2f">O SCAN virou SEEK: o SQL Server foi direto às 12.480 linhas relevantes. Leituras lógicas caíram de 8.412 para 64 (≈131×).</text>
+  <text x="32" y="309" font-size="11" fill="#2f5c2f">Atenção: o percentual do operador continua alto (82%) — isso é normal. O que importa é comparar o CUSTO TOTAL entre os dois lotes.</text>
+</svg>

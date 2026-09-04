@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>02 Restrições e integridade.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 id="m%C3%B3dulo%3A-restri%C3%A7%C3%B5es-e-regras-de-integridade-em-bancos-de-dados-relacionais" tabindex="-1">Módulo: Restrições e Regras de Integridade em Bancos de Dados Relacionais</h1>
+<p><strong>Curso:</strong> Banco de Dados Relacionais aplicado à Administração Tributária
+<strong>Público-alvo:</strong> Profissionais da Secretaria de Estado da Fazenda da Paraíba (SEFAZ-PB)
+<strong>SGBD utilizado:</strong> Microsoft SQL Server (T-SQL) — ferramenta: SQL Server Management Studio (SSMS)
+<strong>Carga horária sugerida:</strong> 8 horas (4h teoria + 4h prática)</p>
+<hr>
+<h2 id="sum%C3%A1rio" tabindex="-1">Sumário</h2>
+<ol>
+<li><a href="#1-objetivos-do-m%C3%B3dulo">Objetivos do Módulo</a></li>
+<li><a href="#2-por-que-integridade-de-dados-importa-para-a-administra%C3%A7%C3%A3o-tribut%C3%A1ria">Por que Integridade de Dados Importa para a Administração Tributária</a></li>
+<li><a href="#3-fundamentos-te%C3%B3ricos">Fundamentos Teóricos</a></li>
+<li><a href="#4-restri%C3%A7%C3%B5es-constraints-em-t-sql">Restrições (Constraints) em T-SQL</a></li>
+<li><a href="#5-tutorial-preparando-o-ambiente-no-sql-server-management-studio">Tutorial: Preparando o Ambiente no SQL Server Management Studio</a></li>
+<li><a href="#6-modelo-de-dados-de-refer%C3%AAncia-do-curso">Modelo de Dados de Referência do Curso</a></li>
+<li><a href="#7-roteiro-pr%C3%A1tico-1--construindo-o-esquema-com-constraints">Roteiro Prático 1 — Construindo o Esquema com Constraints</a></li>
+<li><a href="#8-roteiro-pr%C3%A1tico-2--testando-viola%C3%A7%C3%B5es-de-integridade">Roteiro Prático 2 — Testando Violações de Integridade</a></li>
+<li><a href="#9-roteiro-pr%C3%A1tico-3--regras-de-neg%C3%B3cio-fiscais-com-check-e-triggers">Roteiro Prático 3 — Regras de Negócio Fiscais com CHECK e Triggers</a></li>
+<li><a href="#10-exerc%C3%ADcios-pr%C3%A1ticos">Exercícios Práticos</a></li>
+<li><a href="#11-estudos-de-caso--erros-reais-de-integridade-em-ambientes-fiscais">Estudos de Caso — Erros Reais de Integridade em Ambientes Fiscais</a></li>
+<li><a href="#12-gloss%C3%A1rio">Glossário</a></li>
+<li><a href="#13-refer%C3%AAncias">Referências</a></li>
+</ol>
+<hr>
+<h2 id="1.-objetivos-do-m%C3%B3dulo" tabindex="-1">1. Objetivos do Módulo</h2>
+<p>Ao final deste módulo, o participante será capaz de:</p>
+<ul>
+<li>Explicar os quatro tipos clássicos de integridade de dados (domínio, entidade, referencial e definida pelo usuário).</li>
+<li>Utilizar o <strong>SQL Server Management Studio (SSMS)</strong> para criar bancos, executar scripts e inspecionar constraints visualmente.</li>
+<li>Implementar restrições <code>NOT NULL</code>, <code>UNIQUE</code>, <code>PRIMARY KEY</code>, <code>FOREIGN KEY</code>, <code>CHECK</code> e <code>DEFAULT</code> em T-SQL.</li>
+<li>Escolher corretamente as ações <code>ON DELETE</code> / <code>ON UPDATE</code> (<code>CASCADE</code>, <code>NO ACTION</code>, <code>SET NULL</code>) para relacionamentos entre documentos fiscais.</li>
+<li>Modelar, com constraints apropriadas, um esquema simplificado que represente <strong>NF-e</strong>, <strong>NFC-e</strong>, <strong>CT-e</strong> e registros de <strong>EFD</strong> (Escrituração Fiscal Digital).</li>
+<li>Escrever <em>triggers</em> em T-SQL para regras de negócio que exigem validação entre múltiplas linhas ou tabelas.</li>
+<li>Diagnosticar e corrigir violações de integridade comuns em bases de dados fiscais.</li>
+</ul>
+<hr>
+<h2 id="2.-por-que-integridade-de-dados-importa-para-a-administra%C3%A7%C3%A3o-tribut%C3%A1ria" tabindex="-1">2. Por que Integridade de Dados Importa para a Administração Tributária</h2>
+<p>Documentos fiscais eletrônicos (NF-e, NFC-e, CT-e) e escriturações (EFD ICMS/IPI, EFD Contribuições) alimentam bases de dados que sustentam:</p>
+<ul>
+<li><strong>Fiscalização e cruzamento de informações</strong> (malha fiscal, cruzamento NF-e x EFD x GIA).</li>
+<li><strong>Cálculo e cobrança de tributos</strong> (ICMS, substituição tributária, diferencial de alíquota).</li>
+<li><strong>Auditoria e combate à sonegação</strong> (notas &quot;frias&quot;, CT-e sem NF-e vinculada, cancelamentos fora de prazo).</li>
+</ul>
+<p>Um erro de integridade — por exemplo, um item de NF-e referenciando um documento inexistente, ou um valor de imposto negativo — pode gerar:</p>
+<ul>
+<li>Inconsistências em relatórios gerenciais e no cruzamento de dados;</li>
+<li>Créditos ou débitos tributários incorretos;</li>
+<li>Falhas em auditorias e possíveis contestações judiciais por parte do contribuinte.</li>
+</ul>
+<p>Em um ambiente tributário, a integridade de dados é essencial porque o sistema não armazena apenas informações: ele produz evidência para fiscalização, cálculo de tributos e análise de risco. Se um registro estiver inconsistente, a decisão do fiscal ou do auditor pode ser tomada com base em um dado incorreto.</p>
+<h3 id="exemplo-pr%C3%A1tico%3A-tabelas-fiscais-simples" tabindex="-1">Exemplo prático: tabelas fiscais simples</h3>
+<p>Considere um cenário em que uma NF-e possui vários itens e cada item precisa estar vinculado corretamente à nota fiscal correspondente:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE TABLE</span> contribuinte (
+    id_contribuinte <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">PRIMARY KEY</span>,
+    cnpj_cpf        <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">14</span>) <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">UNIQUE</span>,
+    razao_social    <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">150</span>) <span class="hljs-keyword">NOT NULL</span>
+);
+
+<span class="hljs-keyword">CREATE TABLE</span> nfe (
+    id_nfe                <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">PRIMARY KEY</span>,
+    chave_acesso          <span class="hljs-type">CHAR</span>(<span class="hljs-number">44</span>) <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">UNIQUE</span>,
+    id_contribuinte_emitente <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span>,
+    valor_total           <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">12</span>,<span class="hljs-number">2</span>) <span class="hljs-keyword">NOT NULL</span>,
+    <span class="hljs-keyword">CONSTRAINT</span> fk_nfe_emitente <span class="hljs-keyword">FOREIGN KEY</span> (id_contribuinte_emitente)
+        <span class="hljs-keyword">REFERENCES</span> contribuinte(id_contribuinte)
+);
+
+<span class="hljs-keyword">CREATE TABLE</span> item_nfe (
+    id_item     <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">PRIMARY KEY</span>,
+    id_nfe      <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NOT NULL</span>,
+    valor_item  <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">12</span>,<span class="hljs-number">2</span>) <span class="hljs-keyword">NOT NULL</span>,
+    <span class="hljs-keyword">CONSTRAINT</span> fk_item_nfe_nfe <span class="hljs-keyword">FOREIGN KEY</span> (id_nfe)
+        <span class="hljs-keyword">REFERENCES</span> nfe(id_nfe)
+);
+
+<span class="hljs-keyword">CREATE TABLE</span> cte (
+    id_cte             <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">PRIMARY KEY</span>,
+    id_nfe_vinculada   <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">NULL</span>,
+    <span class="hljs-keyword">CONSTRAINT</span> fk_cte_nfe <span class="hljs-keyword">FOREIGN KEY</span> (id_nfe_vinculada)
+        <span class="hljs-keyword">REFERENCES</span> nfe(id_nfe)
+);
+</div></code></pre>
+<p>Nesse modelo, a integridade referencial evita que um item de NF-e ou um CT-e aponte para uma nota que não existe. Isso é fundamental para preservar a coerência dos registros fiscais.</p>
+<h3 id="consultas-que-ajudam-a-identificar-problemas" tabindex="-1">Consultas que ajudam a identificar problemas</h3>
+<p>Mesmo com as restrições em vigor, é importante analisar os dados para detectar inconsistências históricas ou falhas de importação.</p>
+<ol>
+<li>Identificar itens de NF-e sem nota correspondente:</li>
+</ol>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> i.id_item, i.id_nfe
+<span class="hljs-keyword">FROM</span> item_nfe <span class="hljs-keyword">AS</span> i
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> nfe <span class="hljs-keyword">AS</span> n <span class="hljs-keyword">ON</span> n.id_nfe <span class="hljs-operator">=</span> i.id_nfe
+<span class="hljs-keyword">WHERE</span> n.id_nfe <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>;
+</div></code></pre>
+<ol start="2">
+<li>Encontrar notas fiscais cuja soma dos itens não bate com o valor total:</li>
+</ol>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> n.id_nfe,
+       n.valor_total,
+       <span class="hljs-built_in">SUM</span>(i.valor_item) <span class="hljs-keyword">AS</span> soma_itens
+<span class="hljs-keyword">FROM</span> nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">JOIN</span> item_nfe <span class="hljs-keyword">AS</span> i <span class="hljs-keyword">ON</span> i.id_nfe <span class="hljs-operator">=</span> n.id_nfe
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> n.id_nfe, n.valor_total
+<span class="hljs-keyword">HAVING</span> <span class="hljs-built_in">SUM</span>(i.valor_item) <span class="hljs-operator">&lt;&gt;</span> n.valor_total;
+</div></code></pre>
+<ol start="3">
+<li>Localizar CT-e vinculados a uma NF-e inexistente:</li>
+</ol>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> c.id_cte, c.id_nfe_vinculada
+<span class="hljs-keyword">FROM</span> cte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> nfe <span class="hljs-keyword">AS</span> n <span class="hljs-keyword">ON</span> n.id_nfe <span class="hljs-operator">=</span> c.id_nfe_vinculada
+<span class="hljs-keyword">WHERE</span> c.id_nfe_vinculada <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">AND</span> n.id_nfe <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>;
+</div></code></pre>
+<p>Essas consultas demonstram que a integridade não serve apenas para impedir erros na inserção de dados, mas também para apoiar a auditoria, a fiscalização e a análise da qualidade das informações armazenadas.</p>
+<p><strong>Restrições de integridade não são apenas um requisito técnico — são um mecanismo de conformidade, qualidade de informação e defesa jurídica dos dados públicos.</strong></p>
+<hr>
+<h2 id="3.-fundamentos-te%C3%B3ricos" tabindex="-1">3. Fundamentos Teóricos</h2>
+<h3 id="3.1-integridade-de-dom%C3%ADnio" tabindex="-1">3.1 Integridade de Domínio</h3>
+<p>Garante que cada coluna armazene apenas valores válidos dentro de um domínio (tipo, formato, faixa de valores).</p>
+<blockquote>
+<p>Exemplo fiscal: o campo <code>uf</code> de um contribuinte deve pertencer ao conjunto das 27 UFs brasileiras; o campo <code>valor_total</code> de uma NF-e não pode ser negativo.</p>
+</blockquote>
+<h3 id="3.2-integridade-de-entidade" tabindex="-1">3.2 Integridade de Entidade</h3>
+<p>Garante que cada linha de uma tabela seja <strong>unicamente identificável</strong> — nenhuma chave primária pode ser nula ou duplicada.</p>
+<blockquote>
+<p>Exemplo fiscal: a <strong>chave de acesso</strong> de uma NF-e (44 dígitos) identifica de forma única o documento em todo o território nacional; não pode haver duas linhas com a mesma chave de acesso.</p>
+</blockquote>
+<h3 id="3.3-integridade-referencial" tabindex="-1">3.3 Integridade Referencial</h3>
+<p>Garante que uma referência entre tabelas (chave estrangeira) sempre aponte para um registro existente na tabela referenciada.</p>
+<blockquote>
+<p>Exemplo fiscal: todo <code>item_nfe</code> deve referenciar uma <code>nfe</code> existente; um <code>cte</code> que transporta mercadorias de uma NF-e deve referenciar uma NF-e efetivamente emitida.</p>
+</blockquote>
+<h3 id="3.4-integridade-definida-pelo-usu%C3%A1rio-(regras-de-neg%C3%B3cio)" tabindex="-1">3.4 Integridade Definida pelo Usuário (Regras de Negócio)</h3>
+<p>Regras específicas do domínio de aplicação, que vão além dos tipos e relacionamentos básicos, geralmente implementadas com <code>CHECK</code>, <code>TRIGGER</code> ou na camada de aplicação.</p>
+<blockquote>
+<p>Exemplos fiscais:</p>
+<ul>
+<li>Uma NF-e cancelada não pode ser reaberta (transição de status irreversível).</li>
+<li>A soma dos valores dos itens deve ser igual ao valor total do documento.</li>
+<li>Uma NFC-e não pode ter CT-e vinculado (regra de segmento).</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="4.-restri%C3%A7%C3%B5es-(constraints)-em-t-sql" tabindex="-1">4. Restrições (Constraints) em T-SQL</h2>
+<table>
+<thead>
+<tr>
+<th>Constraint</th>
+<th>Tipo de Integridade</th>
+<th>Função</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NOT NULL</code></td>
+<td>Domínio</td>
+<td>Impede valor ausente em campo obrigatório</td>
+</tr>
+<tr>
+<td><code>UNIQUE</code></td>
+<td>Entidade</td>
+<td>Impede valores duplicados em uma coluna (não-PK)</td>
+</tr>
+<tr>
+<td><code>PRIMARY KEY</code></td>
+<td>Entidade</td>
+<td>Identificador único e não nulo da linha</td>
+</tr>
+<tr>
+<td><code>FOREIGN KEY</code></td>
+<td>Referencial</td>
+<td>Garante que o valor exista na tabela referenciada</td>
+</tr>
+<tr>
+<td><code>CHECK</code></td>
+<td>Definida pelo usuário</td>
+<td>Valida uma condição lógica sobre o valor da coluna/linha</td>
+</tr>
+<tr>
+<td><code>DEFAULT</code></td>
+<td>Domínio (apoio)</td>
+<td>Preenche valor padrão quando não informado</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4.1-sintaxe-b%C3%A1sica-em-t-sql" tabindex="-1">4.1 Sintaxe Básica em T-SQL</h3>
+<p>No SQL Server, o autoincremento é feito com <code>IDENTITY(inicial, incremento)</code>, e não existe operador nativo de expressão regular no <code>CHECK</code> — usamos o operador <code>LIKE</code> com classes de caracteres (<code>[0-9]</code>, <code>[^0-9]</code>, etc.).</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE TABLE</span> contribuinte (
+    id_contribuinte     <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT NULL</span>,
+    cnpj_cpf            <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">14</span>)  <span class="hljs-keyword">NOT NULL</span>,
+    razao_social        <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">150</span>) <span class="hljs-keyword">NOT NULL</span>,
+    uf                  <span class="hljs-type">CHAR</span>(<span class="hljs-number">2</span>)      <span class="hljs-keyword">NOT NULL</span>,
+    situacao_cadastral  <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>)  <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">CONSTRAINT</span> df_situacao <span class="hljs-keyword">DEFAULT</span> (<span class="hljs-string">&#x27;ATIVO&#x27;</span>),
+    <span class="hljs-keyword">CONSTRAINT</span> pk_contribuinte <span class="hljs-keyword">PRIMARY KEY</span> (id_contribuinte),
+    <span class="hljs-keyword">CONSTRAINT</span> uq_contribuinte_doc <span class="hljs-keyword">UNIQUE</span> (cnpj_cpf),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_situacao <span class="hljs-keyword">CHECK</span> (situacao_cadastral <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;ATIVO&#x27;</span>,<span class="hljs-string">&#x27;SUSPENSO&#x27;</span>,<span class="hljs-string">&#x27;BAIXADO&#x27;</span>,<span class="hljs-string">&#x27;INAPTO&#x27;</span>)),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_uf <span class="hljs-keyword">CHECK</span> (uf <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;AC&#x27;</span>,<span class="hljs-string">&#x27;AL&#x27;</span>,<span class="hljs-string">&#x27;AM&#x27;</span>,<span class="hljs-string">&#x27;AP&#x27;</span>,<span class="hljs-string">&#x27;BA&#x27;</span>,<span class="hljs-string">&#x27;CE&#x27;</span>,<span class="hljs-string">&#x27;DF&#x27;</span>,<span class="hljs-string">&#x27;ES&#x27;</span>,<span class="hljs-string">&#x27;GO&#x27;</span>,<span class="hljs-string">&#x27;MA&#x27;</span>,<span class="hljs-string">&#x27;MG&#x27;</span>,
+                                   <span class="hljs-string">&#x27;MS&#x27;</span>,<span class="hljs-string">&#x27;MT&#x27;</span>,<span class="hljs-string">&#x27;PA&#x27;</span>,<span class="hljs-string">&#x27;PB&#x27;</span>,<span class="hljs-string">&#x27;PE&#x27;</span>,<span class="hljs-string">&#x27;PI&#x27;</span>,<span class="hljs-string">&#x27;PR&#x27;</span>,<span class="hljs-string">&#x27;RJ&#x27;</span>,<span class="hljs-string">&#x27;RN&#x27;</span>,<span class="hljs-string">&#x27;RO&#x27;</span>,<span class="hljs-string">&#x27;RR&#x27;</span>,
+                                   <span class="hljs-string">&#x27;RS&#x27;</span>,<span class="hljs-string">&#x27;SC&#x27;</span>,<span class="hljs-string">&#x27;SE&#x27;</span>,<span class="hljs-string">&#x27;SP&#x27;</span>,<span class="hljs-string">&#x27;TO&#x27;</span>))
+);
+</div></code></pre>
+<h3 id="4.2-chaves-estrangeiras-e-a%C3%A7%C3%B5es-referenciais" tabindex="-1">4.2 Chaves Estrangeiras e Ações Referenciais</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CONSTRAINT</span> fk_nfe_emitente
+    <span class="hljs-keyword">FOREIGN KEY</span> (id_contribuinte_emitente)
+    <span class="hljs-keyword">REFERENCES</span> contribuinte (id_contribuinte)
+    <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">NO</span> ACTION
+    <span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> CASCADE
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Ação (T-SQL)</th>
+<th>Comportamento</th>
+<th>Uso típico em contexto fiscal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NO ACTION</code></td>
+<td>Impede a exclusão/alteração do &quot;pai&quot; se existir &quot;filho&quot; (é o padrão do SQL Server)</td>
+<td>Impedir exclusão de um contribuinte que já emitiu documentos fiscais</td>
+</tr>
+<tr>
+<td><code>CASCADE</code></td>
+<td>Propaga a exclusão/alteração para os &quot;filhos&quot;</td>
+<td>Excluir automaticamente os <code>item_nfe</code> ao excluir a <code>nfe</code> (em ambiente de testes)</td>
+</tr>
+<tr>
+<td><code>SET NULL</code></td>
+<td>Zera a referência no &quot;filho&quot;</td>
+<td>Um documento pode ficar &quot;sem transportadora&quot; se a transportadora for removida do cadastro</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Atenção — particularidade do SQL Server:</strong> o SQL Server <strong>não permite múltiplos caminhos de <code>CASCADE</code>/<code>SET NULL</code> que levem à mesma tabela</strong> (erro <em>&quot;may cause cycles or multiple cascade paths&quot;</em>). Nesses casos, é necessário usar <code>NO ACTION</code> e resolver a exclusão em duas etapas (ou via aplicação/<code>TRIGGER INSTEAD OF DELETE</code>). Isso é comum em nosso modelo, pois <code>nfe</code> é referenciada tanto por <code>item_nfe</code> quanto por <code>cte</code> e <code>efd_registro</code>.</p>
+</blockquote>
+<blockquote>
+<p><strong>Recomendação prática para bases fiscais de produção:</strong> preferir <code>NO ACTION</code> para preservar o histórico fiscal. <code>CASCADE</code> em exclusão é perigoso em bases de auditoria — documentos fiscais, uma vez emitidos, normalmente não devem ser fisicamente apagados (usa-se <strong>cancelamento lógico</strong> via coluna <code>situacao</code>, não <code>DELETE</code>).</p>
+</blockquote>
+<hr>
+<h2 id="5.-tutorial%3A-preparando-o-ambiente-no-sql-server-management-studio" tabindex="-1">5. Tutorial: Preparando o Ambiente no SQL Server Management Studio</h2>
+<p>Este tutorial assume o <strong>SSMS</strong> já instalado e conectado a uma instância de SQL Server (local, <code>LocalDB</code>, ou um servidor de homologação disponibilizado pela SEFAZ-PB).</p>
+<h3 id="5.1-conectando-ao-servidor" tabindex="-1">5.1 Conectando ao servidor</h3>
+<ol>
+<li>Abra o <strong>SQL Server Management Studio</strong>.</li>
+<li>Na janela <strong>Connect to Server</strong>:
+<ul>
+<li><em>Server type:</em> Database Engine</li>
+<li><em>Server name:</em> informe o nome/instância (ex.: <code>localhost</code>, <code>.\SQLEXPRESS</code>, ou o endereço fornecido pela equipe de TI da SEFAZ-PB).</li>
+<li><em>Authentication:</em> <code>Windows Authentication</code> (mais comum em ambiente corporativo) ou <code>SQL Server Authentication</code> (usuário e senha).</li>
+</ul>
+</li>
+<li>Clique em <strong>Connect</strong>.</li>
+</ol>
+<h3 id="5.2-criando-o-banco-de-dados-do-curso" tabindex="-1">5.2 Criando o banco de dados do curso</h3>
+<ol>
+<li>No <strong>Object Explorer</strong> (painel à esquerda), clique com o botão direito em <strong>Databases</strong> → <strong>New Database...</strong>.</li>
+<li>Em <em>Database name</em>, digite <code>curso_integridade_fiscal</code>.</li>
+<li>Clique em <strong>OK</strong>.</li>
+</ol>
+<p>Alternativamente, pelo T-SQL (recomendado, pois documenta o passo em script):</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> DATABASE curso_integridade_fiscal;
+GO
+</div></code></pre>
+<h3 id="5.3-abrindo-uma-janela-de-consulta-(new-query)" tabindex="-1">5.3 Abrindo uma janela de consulta (New Query)</h3>
+<ol>
+<li>Clique com o botão direito sobre o banco <code>curso_integridade_fiscal</code> criado → <strong>New Query</strong>.
+<ul>
+<li>Isso garante que o contexto (<code>USE curso_integridade_fiscal;</code>) já esteja correto.</li>
+</ul>
+</li>
+<li>Verifique, no topo da janela de consulta, se o combo de banco de dados (ao lado do botão <em>Execute</em>) está mostrando <code>curso_integridade_fiscal</code>. Caso contrário, selecione manualmente ou execute:</li>
+</ol>
+<pre class='hljs'><code><div>USE curso_integridade_fiscal;
+GO
+</div></code></pre>
+<h3 id="5.4-executando-scripts" tabindex="-1">5.4 Executando scripts</h3>
+<ul>
+<li>Para executar <strong>todo o script</strong> da janela: pressione <strong>F5</strong> ou clique em <strong>Execute</strong>.</li>
+<li>Para executar <strong>apenas um trecho selecionado</strong>: selecione o texto com o mouse e pressione <strong>F5</strong>.</li>
+<li>O separador <code>GO</code> divide o script em <strong>lotes (batches)</strong> — é obrigatório entre a criação de um objeto (ex.: <code>CREATE TRIGGER</code>) e o comando seguinte, pois <code>CREATE TRIGGER</code>/<code>CREATE FUNCTION</code>/<code>CREATE PROCEDURE</code> precisam ser o único comando do lote.</li>
+</ul>
+<h3 id="5.5-lendo-mensagens-de-erro" tabindex="-1">5.5 Lendo mensagens de erro</h3>
+<ul>
+<li>O painel <strong>Messages</strong>, na parte inferior, mostra o resultado da execução e as mensagens de erro do SQL Server, no formato:</li>
+</ul>
+<pre class='hljs'><code><div>Msg 547, Level 16, State 0, Line 12
+The INSERT statement conflicted with the CHECK constraint &quot;ck_nfe_valor_positivo&quot;.
+The conflict occurred in database &quot;curso_integridade_fiscal&quot;, table &quot;dbo.nfe&quot;, column 'valor_total'.
+</div></code></pre>
+<ul>
+<li>O <strong>número da mensagem</strong> (<code>Msg 547</code>) e o <strong>nome da constraint</strong> citada na mensagem são a forma mais rápida de identificar qual regra foi violada — anote-os durante os exercícios do Roteiro Prático 2.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Código comum</th>
+<th>Situação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Msg 2627</code></td>
+<td>Violação de <code>PRIMARY KEY</code> ou <code>UNIQUE</code> (chave duplicada)</td>
+</tr>
+<tr>
+<td><code>Msg 547</code></td>
+<td>Violação de <code>CHECK</code> ou <code>FOREIGN KEY</code></td>
+</tr>
+<tr>
+<td><code>Msg 515</code></td>
+<td>Tentativa de inserir <code>NULL</code> em coluna <code>NOT NULL</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="5.6-inspecionando-constraints-pela-interface-gr%C3%A1fica-(sem-escrever-sql)" tabindex="-1">5.6 Inspecionando constraints pela interface gráfica (sem escrever SQL)</h3>
+<ol>
+<li>No <strong>Object Explorer</strong>, expanda <code>curso_integridade_fiscal</code> → <strong>Tables</strong> → a tabela desejada (ex.: <code>dbo.nfe</code>) → <strong>Keys</strong> e <strong>Constraints</strong>.
+<ul>
+<li>Em <strong>Keys</strong>, aparecem <code>PRIMARY KEY</code> e <code>FOREIGN KEY</code>.</li>
+<li>Em <strong>Constraints</strong>, aparecem <code>CHECK</code> e <code>DEFAULT</code>.</li>
+</ul>
+</li>
+<li>Clique com o botão direito em qualquer constraint → <strong>Script Key as</strong> → <strong>CREATE To</strong> → <strong>New Query Editor Window</strong> para ver a definição exata gerada pelo SQL Server.</li>
+<li>Para visualizar o <strong>diagrama de relacionamentos</strong>: clique com o botão direito em <strong>Database Diagrams</strong> → <strong>New Database Diagram</strong> e arraste as tabelas desejadas — o SSMS desenha automaticamente as linhas de <code>FOREIGN KEY</code>.</li>
+</ol>
+<h3 id="5.7-consultando-o-cat%C3%A1logo-de-constraints-via-t-sql" tabindex="-1">5.7 Consultando o catálogo de constraints via T-SQL</h3>
+<p>Alternativa em script (útil para auditoria e para os exercícios do módulo):</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    tc.TABLE_NAME,
+    tc.CONSTRAINT_NAME,
+    tc.CONSTRAINT_TYPE
+<span class="hljs-keyword">FROM</span> INFORMATION_SCHEMA.TABLE_CONSTRAINTS tc
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> tc.TABLE_NAME, tc.CONSTRAINT_TYPE;
+</div></code></pre>
+<hr>
+<h2 id="6.-modelo-de-dados-de-refer%C3%AAncia-do-curso" tabindex="-1">6. Modelo de Dados de Referência do Curso</h2>
+<p>Um modelo simplificado, suficiente para os exercícios, cobrindo os quatro tipos de documento mencionados:</p>
+<pre class='hljs'><code><div>contribuinte (id_contribuinte PK)
+      │
+      ├──&lt; nfe (id_nfe PK, chave_acesso UQ, id_contribuinte_emitente FK, id_contribuinte_destinatario FK)
+      │        └──&lt; item_nfe (id_item PK, id_nfe FK, ncm, cfop, valor_item)
+      │
+      ├──&lt; nfce (id_nfce PK, chave_acesso UQ, id_contribuinte_emitente FK)
+      │        └──&lt; item_nfce (id_item PK, id_nfce FK, ncm, cfop, valor_item)
+      │
+      ├──&lt; cte (id_cte PK, chave_acesso UQ, id_contribuinte_emitente FK, id_nfe_vinculada FK)
+      │
+      └──&lt; efd_registro (id_registro PK, id_contribuinte FK, tipo_registro, periodo_apuracao, id_nfe_referenciada FK)
+</div></code></pre>
+<p><strong>Observações de modelagem:</strong></p>
+<ul>
+<li><code>chave_acesso</code> possui <strong>restrição <code>UNIQUE</code></strong> e formato de 44 dígitos numéricos — combina integridade de domínio (<code>CHECK</code> de formato, via <code>LIKE</code>) com integridade de entidade (<code>UNIQUE</code>).</li>
+<li><code>cte.id_nfe_vinculada</code> é opcional (nem todo CT-e carrega uma única NF-e), mas quando presente deve apontar para uma NF-e válida.</li>
+<li><code>efd_registro.id_nfe_referenciada</code> materializa o cruzamento EFD x NF-e, central para a malha fiscal.</li>
+<li>Como explicado na seção 4.2, usaremos <code>NO ACTION</code> nas FKs que apontam para <code>nfe</code> a partir de <code>cte</code> e <code>efd_registro</code>, para evitar o erro de múltiplos caminhos de cascata do SQL Server.</li>
+</ul>
+<hr>
+<h2 id="7.-roteiro-pr%C3%A1tico-1-%E2%80%94-construindo-o-esquema-com-constraints" tabindex="-1">7. Roteiro Prático 1 — Construindo o Esquema com Constraints</h2>
+<p><strong>Objetivo:</strong> criar o esquema completo do modelo de referência no SSMS, com todas as constraints comentadas.</p>
+<p><strong>Passo a passo:</strong></p>
+<ol>
+<li>No SSMS, abra uma nova <em>Query</em> sobre o banco <code>curso_integridade_fiscal</code> (ver seção 5.3).</li>
+<li>Execute o script abaixo por partes, tabela a tabela (selecione cada bloco e pressione F5), observando o painel <strong>Messages</strong>.</li>
+<li>Após cada <code>CREATE TABLE</code>, use o <strong>Object Explorer</strong> (clique direito na tabela → <strong>Refresh</strong>) para visualizar a tabela recém-criada e conferir suas <em>Keys</em> e <em>Constraints</em>.</li>
+<li>Para cada constraint, escreva num caderno de anotações <strong>qual tipo de integridade ela protege</strong> (domínio, entidade, referencial ou regra de negócio).</li>
+</ol>
+<pre class='hljs'><code><div>USE curso_integridade_fiscal;
+GO
+
+<span class="hljs-comment">-- 1. CONTRIBUINTE</span>
+<span class="hljs-keyword">CREATE TABLE</span> contribuinte (
+    id_contribuinte     <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT NULL</span>,
+    cnpj_cpf            <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">14</span>)  <span class="hljs-keyword">NOT NULL</span>,
+    razao_social        <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">150</span>) <span class="hljs-keyword">NOT NULL</span>,
+    uf                  <span class="hljs-type">CHAR</span>(<span class="hljs-number">2</span>)      <span class="hljs-keyword">NOT NULL</span>,
+    situacao_cadastral  <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>)  <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">CONSTRAINT</span> df_contribuinte_situacao <span class="hljs-keyword">DEFAULT</span> (<span class="hljs-string">&#x27;ATIVO&#x27;</span>),
+    <span class="hljs-keyword">CONSTRAINT</span> pk_contribuinte <span class="hljs-keyword">PRIMARY KEY</span> (id_contribuinte),
+    <span class="hljs-keyword">CONSTRAINT</span> uq_contribuinte_doc <span class="hljs-keyword">UNIQUE</span> (cnpj_cpf),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_cnpj_cpf_tamanho <span class="hljs-keyword">CHECK</span> (LEN(cnpj_cpf) <span class="hljs-keyword">IN</span> (<span class="hljs-number">11</span>,<span class="hljs-number">14</span>)),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_situacao <span class="hljs-keyword">CHECK</span> (situacao_cadastral <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;ATIVO&#x27;</span>,<span class="hljs-string">&#x27;SUSPENSO&#x27;</span>,<span class="hljs-string">&#x27;BAIXADO&#x27;</span>,<span class="hljs-string">&#x27;INAPTO&#x27;</span>))
+);
+GO
+
+<span class="hljs-comment">-- 2. NF-e</span>
+<span class="hljs-keyword">CREATE TABLE</span> nfe (
+    id_nfe                          <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT NULL</span>,
+    chave_acesso                    <span class="hljs-type">CHAR</span>(<span class="hljs-number">44</span>)        <span class="hljs-keyword">NOT NULL</span>,
+    id_contribuinte_emitente        <span class="hljs-type">BIGINT</span>          <span class="hljs-keyword">NOT NULL</span>,
+    id_contribuinte_destinatario    <span class="hljs-type">BIGINT</span>          <span class="hljs-keyword">NOT NULL</span>,
+    data_emissao                    <span class="hljs-type">DATE</span>            <span class="hljs-keyword">NOT NULL</span>,
+    valor_total                     <span class="hljs-type">NUMERIC</span>(<span class="hljs-number">15</span>,<span class="hljs-number">2</span>)   <span class="hljs-keyword">NOT NULL</span>,
+    situacao                        <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>)     <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">CONSTRAINT</span> df_nfe_situacao <span class="hljs-keyword">DEFAULT</span> (<span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>),
+    <span class="hljs-keyword">CONSTRAINT</span> pk_nfe <span class="hljs-keyword">PRIMARY KEY</span> (id_nfe),
+    <span class="hljs-keyword">CONSTRAINT</span> uq_nfe_chave <span class="hljs-keyword">UNIQUE</span> (chave_acesso),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_nfe_chave_formato <span class="hljs-keyword">CHECK</span> (
+        LEN(chave_acesso) <span class="hljs-operator">=</span> <span class="hljs-number">44</span> <span class="hljs-keyword">AND</span> chave_acesso <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%[^0-9]%&#x27;</span>
+    ),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_nfe_valor_positivo <span class="hljs-keyword">CHECK</span> (valor_total <span class="hljs-operator">&gt;=</span> <span class="hljs-number">0</span>),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_nfe_data <span class="hljs-keyword">CHECK</span> (data_emissao <span class="hljs-operator">&lt;=</span> <span class="hljs-built_in">CAST</span>(GETDATE() <span class="hljs-keyword">AS</span> <span class="hljs-type">DATE</span>)),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_nfe_situacao <span class="hljs-keyword">CHECK</span> (situacao <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>,<span class="hljs-string">&#x27;CANCELADA&#x27;</span>,<span class="hljs-string">&#x27;DENEGADA&#x27;</span>,<span class="hljs-string">&#x27;INUTILIZADA&#x27;</span>)),
+    <span class="hljs-keyword">CONSTRAINT</span> fk_nfe_emitente <span class="hljs-keyword">FOREIGN KEY</span> (id_contribuinte_emitente)
+        <span class="hljs-keyword">REFERENCES</span> contribuinte (id_contribuinte),
+    <span class="hljs-keyword">CONSTRAINT</span> fk_nfe_destinatario <span class="hljs-keyword">FOREIGN KEY</span> (id_contribuinte_destinatario)
+        <span class="hljs-keyword">REFERENCES</span> contribuinte (id_contribuinte)
+);
+GO
+
+<span class="hljs-comment">-- 3. ITEM DA NF-e</span>
+<span class="hljs-keyword">CREATE TABLE</span> item_nfe (
+    id_item        <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT NULL</span>,
+    id_nfe         <span class="hljs-type">BIGINT</span>          <span class="hljs-keyword">NOT NULL</span>,
+    ncm            <span class="hljs-type">CHAR</span>(<span class="hljs-number">8</span>)         <span class="hljs-keyword">NOT NULL</span>,
+    cfop           <span class="hljs-type">CHAR</span>(<span class="hljs-number">4</span>)         <span class="hljs-keyword">NOT NULL</span>,
+    valor_item     <span class="hljs-type">NUMERIC</span>(<span class="hljs-number">15</span>,<span class="hljs-number">2</span>)   <span class="hljs-keyword">NOT NULL</span>,
+    <span class="hljs-keyword">CONSTRAINT</span> pk_item_nfe <span class="hljs-keyword">PRIMARY KEY</span> (id_item),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_item_valor_positivo <span class="hljs-keyword">CHECK</span> (valor_item <span class="hljs-operator">&gt;=</span> <span class="hljs-number">0</span>),
+    <span class="hljs-keyword">CONSTRAINT</span> fk_item_nfe <span class="hljs-keyword">FOREIGN KEY</span> (id_nfe)
+        <span class="hljs-keyword">REFERENCES</span> nfe (id_nfe) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> CASCADE
+);
+GO
+
+<span class="hljs-comment">-- 4. NFC-e (estrutura semelhante à NF-e, sem destinatário obrigatório)</span>
+<span class="hljs-keyword">CREATE TABLE</span> nfce (
+    id_nfce                    <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT NULL</span>,
+    chave_acesso               <span class="hljs-type">CHAR</span>(<span class="hljs-number">44</span>)        <span class="hljs-keyword">NOT NULL</span>,
+    id_contribuinte_emitente   <span class="hljs-type">BIGINT</span>          <span class="hljs-keyword">NOT NULL</span>,
+    data_emissao                <span class="hljs-type">DATE</span>           <span class="hljs-keyword">NOT NULL</span>,
+    valor_total                 <span class="hljs-type">NUMERIC</span>(<span class="hljs-number">15</span>,<span class="hljs-number">2</span>)  <span class="hljs-keyword">NOT NULL</span>,
+    situacao                    <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>)    <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">CONSTRAINT</span> df_nfce_situacao <span class="hljs-keyword">DEFAULT</span> (<span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>),
+    <span class="hljs-keyword">CONSTRAINT</span> pk_nfce <span class="hljs-keyword">PRIMARY KEY</span> (id_nfce),
+    <span class="hljs-keyword">CONSTRAINT</span> uq_nfce_chave <span class="hljs-keyword">UNIQUE</span> (chave_acesso),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_nfce_chave_formato <span class="hljs-keyword">CHECK</span> (
+        LEN(chave_acesso) <span class="hljs-operator">=</span> <span class="hljs-number">44</span> <span class="hljs-keyword">AND</span> chave_acesso <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%[^0-9]%&#x27;</span>
+    ),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_nfce_valor_positivo <span class="hljs-keyword">CHECK</span> (valor_total <span class="hljs-operator">&gt;=</span> <span class="hljs-number">0</span>),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_nfce_situacao <span class="hljs-keyword">CHECK</span> (situacao <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>,<span class="hljs-string">&#x27;CANCELADA&#x27;</span>,<span class="hljs-string">&#x27;DENEGADA&#x27;</span>)),
+    <span class="hljs-keyword">CONSTRAINT</span> fk_nfce_emitente <span class="hljs-keyword">FOREIGN KEY</span> (id_contribuinte_emitente)
+        <span class="hljs-keyword">REFERENCES</span> contribuinte (id_contribuinte)
+);
+GO
+
+<span class="hljs-comment">-- 5. ITEM DA NFC-e</span>
+<span class="hljs-keyword">CREATE TABLE</span> item_nfce (
+    id_item        <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT NULL</span>,
+    id_nfce        <span class="hljs-type">BIGINT</span>          <span class="hljs-keyword">NOT NULL</span>,
+    ncm            <span class="hljs-type">CHAR</span>(<span class="hljs-number">8</span>)         <span class="hljs-keyword">NOT NULL</span>,
+    cfop           <span class="hljs-type">CHAR</span>(<span class="hljs-number">4</span>)         <span class="hljs-keyword">NOT NULL</span>,
+    valor_item     <span class="hljs-type">NUMERIC</span>(<span class="hljs-number">15</span>,<span class="hljs-number">2</span>)   <span class="hljs-keyword">NOT NULL</span>,
+    <span class="hljs-keyword">CONSTRAINT</span> pk_item_nfce <span class="hljs-keyword">PRIMARY KEY</span> (id_item),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_item_nfce_valor_positivo <span class="hljs-keyword">CHECK</span> (valor_item <span class="hljs-operator">&gt;=</span> <span class="hljs-number">0</span>),
+    <span class="hljs-keyword">CONSTRAINT</span> fk_item_nfce <span class="hljs-keyword">FOREIGN KEY</span> (id_nfce)
+        <span class="hljs-keyword">REFERENCES</span> nfce (id_nfce) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> CASCADE
+);
+GO
+
+<span class="hljs-comment">-- 6. CT-e</span>
+<span class="hljs-keyword">CREATE TABLE</span> cte (
+    id_cte                       <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT NULL</span>,
+    chave_acesso                 <span class="hljs-type">CHAR</span>(<span class="hljs-number">44</span>)        <span class="hljs-keyword">NOT NULL</span>,
+    id_contribuinte_emitente     <span class="hljs-type">BIGINT</span>          <span class="hljs-keyword">NOT NULL</span>,
+    id_nfe_vinculada             <span class="hljs-type">BIGINT</span>          <span class="hljs-keyword">NULL</span>,   <span class="hljs-comment">-- pode ser NULL: nem todo CT-e vincula uma única NF-e</span>
+    valor_frete                  <span class="hljs-type">NUMERIC</span>(<span class="hljs-number">15</span>,<span class="hljs-number">2</span>)   <span class="hljs-keyword">NOT NULL</span>,
+    situacao                     <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>)     <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">CONSTRAINT</span> df_cte_situacao <span class="hljs-keyword">DEFAULT</span> (<span class="hljs-string">&#x27;AUTORIZADO&#x27;</span>),
+    <span class="hljs-keyword">CONSTRAINT</span> pk_cte <span class="hljs-keyword">PRIMARY KEY</span> (id_cte),
+    <span class="hljs-keyword">CONSTRAINT</span> uq_cte_chave <span class="hljs-keyword">UNIQUE</span> (chave_acesso),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_cte_frete_positivo <span class="hljs-keyword">CHECK</span> (valor_frete <span class="hljs-operator">&gt;=</span> <span class="hljs-number">0</span>),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_cte_situacao <span class="hljs-keyword">CHECK</span> (situacao <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;AUTORIZADO&#x27;</span>,<span class="hljs-string">&#x27;CANCELADO&#x27;</span>,<span class="hljs-string">&#x27;DENEGADO&#x27;</span>)),
+    <span class="hljs-keyword">CONSTRAINT</span> fk_cte_emitente <span class="hljs-keyword">FOREIGN KEY</span> (id_contribuinte_emitente)
+        <span class="hljs-keyword">REFERENCES</span> contribuinte (id_contribuinte),
+    <span class="hljs-comment">-- NO ACTION: nfe já recebe cascade/participação de outras FKs (item_nfe) — evita erro de múltiplos caminhos</span>
+    <span class="hljs-keyword">CONSTRAINT</span> fk_cte_nfe <span class="hljs-keyword">FOREIGN KEY</span> (id_nfe_vinculada)
+        <span class="hljs-keyword">REFERENCES</span> nfe (id_nfe) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">NO</span> ACTION
+);
+GO
+
+<span class="hljs-comment">-- 7. REGISTRO DE EFD</span>
+<span class="hljs-keyword">CREATE TABLE</span> efd_registro (
+    id_registro              <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT NULL</span>,
+    id_contribuinte          <span class="hljs-type">BIGINT</span>          <span class="hljs-keyword">NOT NULL</span>,
+    tipo_registro            <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">10</span>)     <span class="hljs-keyword">NOT NULL</span>,   <span class="hljs-comment">-- ex.: &#x27;C100&#x27;, &#x27;C170&#x27;</span>
+    periodo_apuracao         <span class="hljs-type">CHAR</span>(<span class="hljs-number">7</span>)         <span class="hljs-keyword">NOT NULL</span>,    <span class="hljs-comment">-- formato &#x27;MM/AAAA&#x27;</span>
+    id_nfe_referenciada      <span class="hljs-type">BIGINT</span>          <span class="hljs-keyword">NULL</span>,
+    <span class="hljs-keyword">CONSTRAINT</span> pk_efd_registro <span class="hljs-keyword">PRIMARY KEY</span> (id_registro),
+    <span class="hljs-keyword">CONSTRAINT</span> ck_periodo_formato <span class="hljs-keyword">CHECK</span> (
+        <span class="hljs-built_in">SUBSTRING</span>(periodo_apuracao,<span class="hljs-number">3</span>,<span class="hljs-number">1</span>) <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;/&#x27;</span>
+        <span class="hljs-keyword">AND</span> LEN(periodo_apuracao) <span class="hljs-operator">=</span> <span class="hljs-number">7</span>
+        <span class="hljs-keyword">AND</span> <span class="hljs-built_in">CAST</span>(<span class="hljs-keyword">LEFT</span>(periodo_apuracao,<span class="hljs-number">2</span>) <span class="hljs-keyword">AS</span> <span class="hljs-type">INT</span>) <span class="hljs-keyword">BETWEEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">AND</span> <span class="hljs-number">12</span>
+    ),
+    <span class="hljs-keyword">CONSTRAINT</span> fk_efd_contribuinte <span class="hljs-keyword">FOREIGN KEY</span> (id_contribuinte)
+        <span class="hljs-keyword">REFERENCES</span> contribuinte (id_contribuinte),
+    <span class="hljs-keyword">CONSTRAINT</span> fk_efd_nfe <span class="hljs-keyword">FOREIGN KEY</span> (id_nfe_referenciada)
+        <span class="hljs-keyword">REFERENCES</span> nfe (id_nfe) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">NO</span> ACTION
+);
+GO
+</div></code></pre>
+<p><strong>Checkpoint de discussão em turma:</strong> por que <code>item_nfe</code> e <code>item_nfce</code> usam <code>ON DELETE CASCADE</code>, mas as demais FKs usam <code>NO ACTION</code>? (Resposta esperada: um item não existe fora do documento que o contém — é parte do &quot;todo&quot;; já um contribuinte, ou uma NF-e vinculada a CT-e/EFD, não deve ser excluído silenciosamente, sob risco de perda de histórico fiscal.)</p>
+<hr>
+<h2 id="8.-roteiro-pr%C3%A1tico-2-%E2%80%94-testando-viola%C3%A7%C3%B5es-de-integridade" tabindex="-1">8. Roteiro Prático 2 — Testando Violações de Integridade</h2>
+<p><strong>Objetivo:</strong> provocar deliberadamente erros de constraint no SSMS e reconhecer, no painel <strong>Messages</strong>, o código de erro e a constraint violada.</p>
+<ol>
+<li>Insira dois contribuintes válidos.</li>
+<li>Execute os comandos abaixo, um de cada vez, e registre a mensagem retornada pelo SSMS:</li>
+</ol>
+<pre class='hljs'><code><div><span class="hljs-comment">-- (a) Violação de integridade de domínio</span>
+<span class="hljs-keyword">INSERT INTO</span> contribuinte (cnpj_cpf, razao_social, uf)
+<span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;12345&#x27;</span>, <span class="hljs-string">&#x27;Empresa Teste LTDA&#x27;</span>, <span class="hljs-string">&#x27;PB&#x27;</span>);
+<span class="hljs-comment">-- Esperado: Msg 547 — CHECK ck_cnpj_cpf_tamanho</span>
+
+<span class="hljs-comment">-- (b) Violação de integridade de entidade</span>
+<span class="hljs-keyword">INSERT INTO</span> contribuinte (cnpj_cpf, razao_social, uf)
+<span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;12345678000199&#x27;</span>, <span class="hljs-string">&#x27;Empresa Teste LTDA&#x27;</span>, <span class="hljs-string">&#x27;PB&#x27;</span>);
+
+<span class="hljs-keyword">INSERT INTO</span> contribuinte (cnpj_cpf, razao_social, uf)
+<span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;12345678000199&#x27;</span>, <span class="hljs-string">&#x27;Empresa Duplicada LTDA&#x27;</span>, <span class="hljs-string">&#x27;PB&#x27;</span>);
+<span class="hljs-comment">-- Esperado: Msg 2627 — violação de UNIQUE (uq_contribuinte_doc)</span>
+
+<span class="hljs-comment">-- (c) Violação de integridade referencial</span>
+<span class="hljs-keyword">INSERT INTO</span> nfe (chave_acesso, id_contribuinte_emitente, id_contribuinte_destinatario,
+                  data_emissao, valor_total)
+<span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;25260712345678000199550010000000011000000015&#x27;</span>,
+        <span class="hljs-number">9999</span>, <span class="hljs-number">9999</span>, <span class="hljs-built_in">CAST</span>(GETDATE() <span class="hljs-keyword">AS</span> <span class="hljs-type">DATE</span>), <span class="hljs-number">100.00</span>);
+<span class="hljs-comment">-- Esperado: Msg 547 — FOREIGN KEY fk_nfe_emitente (id_contribuinte_emitente 9999 não existe)</span>
+
+<span class="hljs-comment">-- (d) Violação de regra de negócio (CHECK)</span>
+<span class="hljs-keyword">INSERT INTO</span> nfe (chave_acesso, id_contribuinte_emitente, id_contribuinte_destinatario,
+                  data_emissao, valor_total)
+<span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;25260712345678000199550010000000021000000016&#x27;</span>,
+        <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-built_in">CAST</span>(GETDATE() <span class="hljs-keyword">AS</span> <span class="hljs-type">DATE</span>), <span class="hljs-number">-500.00</span>);
+<span class="hljs-comment">-- Esperado: Msg 547 — CHECK ck_nfe_valor_positivo</span>
+
+<span class="hljs-comment">-- (e) Tentativa de excluir um contribuinte que já emitiu documentos</span>
+<span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> contribuinte <span class="hljs-keyword">WHERE</span> id_contribuinte <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;
+<span class="hljs-comment">-- Esperado: Msg 547 — FOREIGN KEY (NO ACTION impede a exclusão)</span>
+</div></code></pre>
+<ol start="3">
+<li>Em grupo, preencha a tabela abaixo:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Comando</th>
+<th>Constraint violada</th>
+<th>Tipo de integridade</th>
+<th>Código de erro (SSMS)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(a)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(b)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(c)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(d)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(e)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="9.-roteiro-pr%C3%A1tico-3-%E2%80%94-regras-de-neg%C3%B3cio-fiscais-com-check-e-triggers" tabindex="-1">9. Roteiro Prático 3 — Regras de Negócio Fiscais com CHECK e Triggers</h2>
+<p>Algumas regras não cabem em um <code>CHECK</code> de coluna simples porque envolvem <strong>múltiplas linhas ou múltiplas tabelas</strong>. Nesses casos, usamos <code>TRIGGER</code>.</p>
+<p>Em T-SQL, uma trigger <code>AFTER INSERT, UPDATE, DELETE</code> tem acesso às tabelas virtuais <code>inserted</code> e <code>deleted</code>, contendo as linhas afetadas pela operação.</p>
+<p><strong>Regra de negócio:</strong> &quot;A soma dos valores dos itens de uma NF-e deve ser igual ao valor total do documento.&quot;</p>
+<pre class='hljs'><code><div>USE curso_integridade_fiscal;
+GO
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> trg_valida_total_nfe
+<span class="hljs-keyword">ON</span> item_nfe
+AFTER <span class="hljs-keyword">INSERT</span>, <span class="hljs-keyword">UPDATE</span>, <span class="hljs-keyword">DELETE</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">SET</span> NOCOUNT <span class="hljs-keyword">ON</span>;
+
+    <span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@id_nfe</span> <span class="hljs-type">BIGINT</span>;
+
+    <span class="hljs-comment">-- captura o id_nfe afetado, considerando INSERT, UPDATE ou DELETE</span>
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-variable">@id_nfe</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">COALESCE</span>(
+        (<span class="hljs-keyword">SELECT</span> TOP <span class="hljs-number">1</span> id_nfe <span class="hljs-keyword">FROM</span> inserted),
+        (<span class="hljs-keyword">SELECT</span> TOP <span class="hljs-number">1</span> id_nfe <span class="hljs-keyword">FROM</span> deleted)
+    );
+
+    IF <span class="hljs-variable">@id_nfe</span> <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+        <span class="hljs-keyword">RETURN</span>;
+
+    <span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@soma_itens</span> <span class="hljs-type">NUMERIC</span>(<span class="hljs-number">15</span>,<span class="hljs-number">2</span>);
+    <span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@total_doc</span>  <span class="hljs-type">NUMERIC</span>(<span class="hljs-number">15</span>,<span class="hljs-number">2</span>);
+
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-variable">@soma_itens</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">COALESCE</span>(<span class="hljs-built_in">SUM</span>(valor_item), <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">FROM</span> item_nfe
+    <span class="hljs-keyword">WHERE</span> id_nfe <span class="hljs-operator">=</span> <span class="hljs-variable">@id_nfe</span>;
+
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-variable">@total_doc</span> <span class="hljs-operator">=</span> valor_total
+    <span class="hljs-keyword">FROM</span> nfe
+    <span class="hljs-keyword">WHERE</span> id_nfe <span class="hljs-operator">=</span> <span class="hljs-variable">@id_nfe</span>;
+
+    IF <span class="hljs-variable">@soma_itens</span> <span class="hljs-operator">&lt;&gt;</span> <span class="hljs-variable">@total_doc</span>
+    <span class="hljs-keyword">BEGIN</span>
+        RAISERROR(<span class="hljs-string">&#x27;Soma dos itens (%s) difere do valor total da NF-e (%s). Operação cancelada.&#x27;</span>,
+                   <span class="hljs-number">16</span>, <span class="hljs-number">1</span>, <span class="hljs-variable">@soma_itens</span>, <span class="hljs-variable">@total_doc</span>);
+        <span class="hljs-keyword">ROLLBACK</span> TRANSACTION;
+    <span class="hljs-keyword">END</span>
+<span class="hljs-keyword">END</span>;
+GO
+</div></code></pre>
+<p><strong>Regra de negócio:</strong> &quot;Um documento cancelado não pode voltar a ser AUTORIZADO&quot; (transição de estado irreversível).</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> trg_impede_reabertura_nfe
+<span class="hljs-keyword">ON</span> nfe
+AFTER <span class="hljs-keyword">UPDATE</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">SET</span> NOCOUNT <span class="hljs-keyword">ON</span>;
+
+    IF <span class="hljs-keyword">EXISTS</span> (
+        <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span>
+        <span class="hljs-keyword">FROM</span> deleted d
+        <span class="hljs-keyword">JOIN</span> inserted i <span class="hljs-keyword">ON</span> i.id_nfe <span class="hljs-operator">=</span> d.id_nfe
+        <span class="hljs-keyword">WHERE</span> d.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CANCELADA&#x27;</span> <span class="hljs-keyword">AND</span> i.situacao <span class="hljs-operator">&lt;&gt;</span> <span class="hljs-string">&#x27;CANCELADA&#x27;</span>
+    )
+    <span class="hljs-keyword">BEGIN</span>
+        RAISERROR(<span class="hljs-string">&#x27;NF-e cancelada não pode mudar de situação.&#x27;</span>, <span class="hljs-number">16</span>, <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">ROLLBACK</span> TRANSACTION;
+    <span class="hljs-keyword">END</span>
+<span class="hljs-keyword">END</span>;
+GO
+</div></code></pre>
+<blockquote>
+<p><strong>Discussão em turma:</strong> por que essas duas regras não poderiam ser implementadas apenas com <code>CHECK</code>? (Resposta esperada: <code>CHECK</code> em SQL Server avalia apenas a própria linha da tabela em que está definido, não agrega valores de outras linhas nem compara o valor antigo com o novo — para isso é necessário <code>TRIGGER</code>, que tem acesso às tabelas <code>inserted</code>/<code>deleted</code>.)</p>
+</blockquote>
+<blockquote>
+<p><strong>Nota sobre <code>SET NOCOUNT ON</code>:</strong> boa prática em toda trigger T-SQL — evita que a contagem de linhas afetadas interfira em aplicações cliente que dependem do retorno de <code>@@ROWCOUNT</code>.</p>
+</blockquote>
+<hr>
+<h2 id="10.-exerc%C3%ADcios-pr%C3%A1ticos" tabindex="-1">10. Exercícios Práticos</h2>
+<h3 id="exerc%C3%ADcio-1-%E2%80%94-identificando-o-tipo-de-integridade-(te%C3%B3rico)" tabindex="-1">Exercício 1 — Identificando o tipo de integridade (teórico)</h3>
+<p>Classifique cada situação abaixo como integridade de <strong>domínio</strong>, <strong>entidade</strong>, <strong>referencial</strong> ou <strong>regra de negócio</strong>:</p>
+<p>a) Duas NF-e com a mesma chave de acesso de 44 dígitos.
+b) Um CT-e referenciando uma NF-e com <code>id_nfe = 500</code>, mas essa NF-e não existe na base.
+c) Um campo <code>cfop</code> recebendo o valor <code>'ABCD'</code> em vez de um código numérico de 4 dígitos.
+d) Uma NFC-e emitida com data de emissão posterior à data atual.
+e) Uma NF-e sendo cancelada duas vezes.</p>
+<h3 id="exerc%C3%ADcio-2-%E2%80%94-modelando-o-cadastro-de-transportadoras" tabindex="-1">Exercício 2 — Modelando o Cadastro de Transportadoras</h3>
+<p>No SSMS, crie a tabela <code>transportadora</code> com:</p>
+<ul>
+<li><code>id_transportadora</code> (PK, <code>IDENTITY(1,1)</code>).</li>
+<li><code>cnpj</code> (14 caracteres, único, obrigatório).</li>
+<li><code>rntrc</code> (Registro Nacional de Transportadores Rodoviários de Cargas — 8 dígitos, obrigatório).</li>
+<li>Adicione uma coluna <code>id_transportadora</code> em <code>cte</code>, com FK para <code>transportadora</code>, permitindo <code>NULL</code> e <code>ON DELETE SET NULL</code>.</li>
+</ul>
+<p><em>(Dica: use <code>ALTER TABLE cte ADD ...</code> para adicionar a coluna e a constraint em uma tabela já existente.)</em></p>
+<h3 id="exerc%C3%ADcio-3-%E2%80%94-regra-de-cfop-compat%C3%ADvel-com-o-tipo-de-opera%C3%A7%C3%A3o" tabindex="-1">Exercício 3 — Regra de CFOP compatível com o tipo de operação</h3>
+<p>Adicione uma constraint em <code>item_nfe</code> que impeça CFOPs iniciados em <code>'5'</code> (operações dentro do estado) quando o emitente e o destinatário da nota estiverem em UFs diferentes. <em>(Dica: esta regra depende de dados de outra tabela — um <code>CHECK</code> de coluna simples é suficiente em T-SQL? Justifique e implemente a solução adequada — <code>TRIGGER</code> ou <code>CHECK</code> com função escalar.)</em></p>
+<h3 id="exerc%C3%ADcio-4-%E2%80%94-cruzamento-efd-x-nf-e" tabindex="-1">Exercício 4 — Cruzamento EFD x NF-e</h3>
+<p>Escreva uma consulta T-SQL que liste todas as NF-e <strong>autorizadas</strong> que <strong>não possuem</strong> nenhum registro correspondente em <code>efd_registro</code> — um indício de possível omissão de escrituração. <em>(Dica: <code>LEFT JOIN</code> com <code>WHERE ... IS NULL</code>, ou <code>NOT EXISTS</code>.)</em></p>
+<h3 id="exerc%C3%ADcio-5-%E2%80%94-simulando-exclus%C3%A3o-em-cascata" tabindex="-1">Exercício 5 — Simulando exclusão em cascata</h3>
+<ol>
+<li>No SSMS, insira uma NF-e com três itens.</li>
+<li>Exclua a NF-e (<code>DELETE FROM nfe WHERE ...</code>).</li>
+<li>Verifique (com <code>SELECT</code>) o que aconteceu com os itens em <code>item_nfe</code>.</li>
+<li>Explique, em termos de integridade referencial, por que isso ocorreu (relacione com a cláusula <code>ON DELETE CASCADE</code> usada na criação da tabela).</li>
+</ol>
+<h3 id="exerc%C3%ADcio-6-%E2%80%94-projetando-uma-nova-regra-de-neg%C3%B3cio" tabindex="-1">Exercício 6 — Projetando uma nova regra de negócio</h3>
+<p>A SEFAZ-PB decidiu que <strong>NFC-e não pode ter valor total acima de R$ 5.000,00</strong> (regra fiscal hipotética para fins didáticos). Implemente essa regra:
+a) Primeiro, como <code>CHECK</code> de coluna.
+b) Depois, discuta: e se o limite dependesse do regime tributário do contribuinte emitente (armazenado em <code>contribuinte</code>)? O <code>CHECK</code> de coluna ainda seria suficiente? Reescreva a solução usando <code>TRIGGER</code>, seguindo o padrão do Roteiro Prático 3.</p>
+<h3 id="exerc%C3%ADcio-7-(desafio)-%E2%80%94-auditoria-de-integridade-em-base-j%C3%A1-populada" tabindex="-1">Exercício 7 (Desafio) — Auditoria de integridade em base já populada</h3>
+<p>Você recebeu uma base de dados legada (sem constraints aplicadas) com tabelas equivalentes a <code>nfe</code> e <code>item_nfe</code>. Escreva consultas T-SQL para <strong>detectar</strong>, antes de tentar aplicar as constraints:
+a) Chaves de acesso duplicadas em <code>nfe</code> (<code>GROUP BY ... HAVING COUNT(*) &gt; 1</code>).
+b) Itens (<code>item_nfe</code>) órfãos, ou seja, sem <code>nfe</code> correspondente (<code>NOT EXISTS</code>).
+c) NF-e com <code>valor_total</code> negativo.</p>
+<p><em>(Dica: esse é um passo obrigatório antes de adicionar <code>PRIMARY KEY</code>, <code>FOREIGN KEY</code> ou <code>CHECK</code> em uma tabela já populada — o SQL Server rejeitará <code>ALTER TABLE ... ADD CONSTRAINT</code> se houver dados que a violem, a menos que se use <code>WITH NOCHECK</code>, o que <strong>não é recomendado</strong> em bases fiscais por deixar dados inconsistentes sem validação.)</em></p>
+<h3 id="exerc%C3%ADcio-8-%E2%80%94-explorando-o-ssms" tabindex="-1">Exercício 8 — Explorando o SSMS</h3>
+<ol>
+<li>Abra o <strong>Object Explorer</strong> e localize a tabela <code>nfe</code> criada no Roteiro Prático 1.</li>
+<li>Expanda <strong>Keys</strong> e <strong>Constraints</strong> e liste, em uma tabela no seu caderno, todas as constraints encontradas e seu tipo.</li>
+<li>Gere o script de uma das <code>FOREIGN KEY</code> usando <strong>Script Key as → CREATE To → New Query Editor Window</strong> e cole o resultado como resposta do exercício.</li>
+<li>Crie um <strong>Database Diagram</strong> (seção 5.6) incluindo as tabelas <code>contribuinte</code>, <code>nfe</code> e <code>item_nfe</code>, e tire um print da tela mostrando as linhas de relacionamento.</li>
+</ol>
+<hr>
+<h2 id="11.-estudos-de-caso-%E2%80%94-erros-reais-de-integridade-em-ambientes-fiscais" tabindex="-1">11. Estudos de Caso — Erros Reais de Integridade em Ambientes Fiscais</h2>
+<p><strong>Caso 1 — &quot;NF-e órfã&quot; na importação de EFD</strong>
+Durante a carga de um arquivo EFD, um registro C100 referenciava uma chave de acesso de NF-e que nunca havia sido recebida pela SEFAZ. Sem uma <code>FOREIGN KEY</code> (ou validação equivalente antes da carga), o registro foi inserido normalmente, gerando inconsistência na malha fiscal. <strong>Lição:</strong> integridade referencial deve ser validada tanto no banco quanto na rotina de importação (ETL/SSIS).</p>
+<p><strong>Caso 2 — Duplicidade de chave de acesso</strong>
+Um reprocessamento de lote de NF-e, sem constraint <code>UNIQUE</code> em <code>chave_acesso</code>, resultou em documentos duplicados na base, inflando indevidamente o valor total de operações de um contribuinte em relatórios gerenciais. <strong>Lição:</strong> <code>UNIQUE</code> é uma proteção barata comparada ao custo de corrigir relatórios e reprocessar auditorias.</p>
+<p><strong>Caso 3 — Cancelamento fora de sequência</strong>
+Uma aplicação permitiu que um CT-e fosse marcado como <code>CANCELADO</code> e, em seguida, revertido para <code>AUTORIZADO</code> por um erro de usuário, sem trilha de auditoria. <strong>Lição:</strong> regras de transição de estado (via <code>TRIGGER</code>) e auditoria de alterações (tabelas de log, ou <code>Temporal Tables</code> do SQL Server) são complementares às constraints estruturais.</p>
+<blockquote>
+<p><strong>Atividade em grupo:</strong> discuta com a turma um caso real (anonimizado) já observado no ambiente de trabalho de vocês na SEFAZ-PB e identifique qual constraint teria evitado o problema.</p>
+</blockquote>
+<hr>
+<h2 id="12.-gloss%C3%A1rio" tabindex="-1">12. Glossário</h2>
+<table>
+<thead>
+<tr>
+<th>Termo</th>
+<th>Definição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Constraint</strong></td>
+<td>Regra declarada no esquema do banco que restringe os valores/relacionamentos permitidos</td>
+</tr>
+<tr>
+<td><strong>T-SQL</strong></td>
+<td>Transact-SQL, dialeto de SQL utilizado pelo Microsoft SQL Server</td>
+</tr>
+<tr>
+<td><strong>SSMS</strong></td>
+<td>SQL Server Management Studio, ferramenta gráfica de administração do SQL Server</td>
+</tr>
+<tr>
+<td><strong>Chave de acesso</strong></td>
+<td>Código numérico de 44 dígitos que identifica unicamente um documento fiscal eletrônico</td>
+</tr>
+<tr>
+<td><strong>CFOP</strong></td>
+<td>Código Fiscal de Operações e Prestações</td>
+</tr>
+<tr>
+<td><strong>NCM</strong></td>
+<td>Nomenclatura Comum do Mercosul</td>
+</tr>
+<tr>
+<td><strong>EFD</strong></td>
+<td>Escrituração Fiscal Digital</td>
+</tr>
+<tr>
+<td><strong>Malha fiscal</strong></td>
+<td>Processo de cruzamento de informações fiscais para identificar inconsistências</td>
+</tr>
+<tr>
+<td><strong>Cascade</strong></td>
+<td>Ação que propaga uma exclusão/alteração da tabela &quot;pai&quot; para a tabela &quot;filha&quot;</td>
+</tr>
+<tr>
+<td><strong>Trigger</strong></td>
+<td>Rotina executada automaticamente pelo SQL Server em resposta a eventos de INSERT/UPDATE/DELETE</td>
+</tr>
+<tr>
+<td><strong>inserted / deleted</strong></td>
+<td>Tabelas virtuais disponíveis dentro de uma trigger T-SQL, contendo as linhas afetadas</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="13.-refer%C3%AAncias" tabindex="-1">13. Referências</h2>
+<ul>
+<li>Documentação oficial da Microsoft — &quot;CREATE TABLE (Transact-SQL)&quot;: https://learn.microsoft.com/sql/t-sql/statements/create-table-transact-sql</li>
+<li>Documentação oficial da Microsoft — &quot;CREATE TRIGGER (Transact-SQL)&quot;: https://learn.microsoft.com/sql/t-sql/statements/create-trigger-transact-sql</li>
+<li>Documentação oficial da Microsoft — &quot;Uniqueness Constraints and Check Constraints&quot;: https://learn.microsoft.com/sql/relational-databases/tables/unique-constraints-and-check-constraints</li>
+<li>Documentação do SQL Server Management Studio: https://learn.microsoft.com/sql/ssms/sql-server-management-studio-ssms</li>
+<li>Manual de Orientação do Contribuinte — NF-e (Encontros Nacionais de Administradores Tributários — ENCAT): https://www.nfe.fazenda.gov.br</li>
+<li>Manual de Orientação do Contribuinte — CT-e: https://www.cte.fazenda.gov.br</li>
+<li>Guia Prático da EFD ICMS/IPI: http://sped.rfb.gov.br</li>
+<li>ELMASRI, R.; NAVATHE, S. <em>Sistemas de Banco de Dados</em>. 7ª ed. Pearson.</li>
+<li>DATE, C. J. <em>Introdução a Sistemas de Banco de Dados</em>. 8ª ed. Campus.</li>
+</ul>
+<hr>
+<p><em>Material elaborado para uso interno no curso de Banco de Dados Relacionais — Módulo Restrições e Regras de Integridade — SEFAZ-PB.</em></p>
+
+    </div>
+</body>
+</html>

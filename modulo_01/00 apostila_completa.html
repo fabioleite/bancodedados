@@ -1,0 +1,1765 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<title>Apostila Completa — Módulo 01</title>
+<style>
+:root {
+    --cor-titulo: #1a3c6e;
+    --cor-texto: #222;
+    --cor-borda: #d7dde5;
+    --cor-fundo-code: #f4f6f8;
+}
+* { box-sizing: border-box; }
+body {
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+    color: var(--cor-texto);
+    line-height: 1.55;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 40px 32px 80px 32px;
+    font-size: 15px;
+}
+h1, h2, h3, h4, h5 {
+    color: var(--cor-titulo);
+    line-height: 1.25;
+}
+h1 { font-size: 1.9em; border-bottom: 3px solid var(--cor-titulo); padding-bottom: 8px; margin-top: 2.2em; }
+h1:first-of-type { margin-top: 0; }
+h2 { font-size: 1.4em; border-bottom: 1px solid var(--cor-borda); padding-bottom: 4px; margin-top: 1.8em; }
+h3 { font-size: 1.15em; margin-top: 1.4em; }
+h4 { font-size: 1.02em; margin-top: 1.2em; }
+p { margin: 0.7em 0; }
+a { color: #0b5fa5; }
+code {
+    background: var(--cor-fundo-code);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 0.92em;
+}
+pre {
+    background: var(--cor-fundo-code);
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    padding: 12px 14px;
+    overflow-x: auto;
+}
+pre code { background: none; padding: 0; }
+blockquote {
+    border-left: 4px solid var(--cor-titulo);
+    margin: 1em 0;
+    padding: 0.4em 1em;
+    background: #f7f9fb;
+    color: #333;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+    font-size: 0.94em;
+}
+th, td {
+    border: 1px solid var(--cor-borda);
+    padding: 6px 10px;
+    text-align: left;
+}
+th { background: #eef2f7; }
+img { max-width: 100%; height: auto; display: block; margin: 0.8em auto; }
+hr { border: none; border-top: 1px solid var(--cor-borda); margin: 2em 0; }
+.page-break { page-break-before: always; break-before: page; }
+.toc {
+    background: #f7f9fb;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    padding: 14px 22px;
+    margin: 1.5em 0 2.5em 0;
+}
+.toc ul { margin: 0.2em 0; }
+@media print {
+    body { max-width: 100%; padding: 0 8mm; font-size: 12px; }
+    a { color: inherit; text-decoration: none; }
+}
+</style>
+</head>
+<body>
+<h1 id="apostila-completa-modulo-01">Apostila Completa — Módulo 01</h1>
+<h2 id="fundamentos-de-banco-de-dados-modelagem-conceitual-e-pratica-inicial">Fundamentos de Banco de Dados, Modelagem Conceitual e Prática Inicial</h2>
+<p><strong>Curso:</strong> Banco de Dados Relacionais
+<strong>Professor:</strong> Dr. Fábio Leite
+<strong>Instituição:</strong> Universidade Estadual da Paraíba (UEPB), Campus I — Campina Grande, PB</p>
+<p>Este documento reúne, em um único arquivo, todo o conteúdo do Módulo 01, organizado na mesma sequência em que os arquivos originais aparecem na pasta <code>modulo_01</code>:</p>
+<ol>
+<li>Introdução a Bancos de Dados</li>
+<li>Serviços de um SGBD</li>
+<li>Prático Inicial de Banco de Dados</li>
+<li>Projeto Conceitual e Modelagem Entidade-Relacionamento</li>
+<li>Exercícios de Modelagem Entidade-Relacionamento</li>
+</ol>
+<div class="page-break"></div>
+
+<h1 id="parte-01-introducao-a-bancos-de-dados">Parte 01 — Introdução a Bancos de Dados</h1>
+<h2 id="introducao-a-bancos-de-dados">INTRODUÇÃO A BANCOS DE DADOS</h2>
+<p><em>Apresentação: Dr. Fábio Leite</em></p>
+<h2 id="banco-de-dados">BANCO DE DADOS</h2>
+<ul>
+<li>
+<p>Por que usar?</p>
+</li>
+<li>
+<p>Quais as vantagens e desvantagens?</p>
+</li>
+</ul>
+<p>Banco de dados é uma coleção de <strong>dados estruturados e relacionados</strong>.
+O termo "estruturado" se refere a um formato bem definido e organizado. O SGBD (Sistema de Gerenciamento de Banco de Dados) é o software que permite aos usuários criar e manter essa coleção de dados. A característica "relacionado" é fundamental: os dados devem possuir um significado implícito e lógico, representando fatos conhecidos do "mundo real" que foram registrados.</p>
+<p>Embora um banco de dados possa ser teoricamente não-computadorizado, o foco principal é em bancos de dados computadorizados. O SGBD, ao gerenciar esses <strong>dados armazenados eletronicamente</strong>, utiliza estruturas de armazenamento eficientes e mecanismos de controle para garantir que eles sejam manipulados de forma segura, correta e rápida.</p>
+<p>Ele permite o gerenciamento eficiente de grandes volumes de informações, facilitando a <strong>inserção, consulta, atualização e remoção de dados</strong>.
+ Estas quatro operações (inserção, consulta, atualização e remoção) são conhecidas coletivamente como as operações básicas de manipulação de dados. </p>
+<p>O SGBD facilita essas operações ao fornecer:</p>
+<ul>
+<li><strong>Linguagens de Consulta:</strong> Como o SQL, que são de alto nível e fáceis de usar para os usuários finais e programadores.</li>
+<li><strong>Otimização:</strong> O SGBD utiliza otimizadores de consulta e índices para garantir que a consulta e a recuperação (busca) dos dados sejam realizadas de forma a minimizar o tempo de resposta, mesmo em grandes volumes.</li>
+</ul>
+<h2 id="elementos-de-um-sgbd">ELEMENTOS DE UM SGBD</h2>
+<p>O SGBD lida com diversos <strong>Usuários e Programas</strong> (os Atores, como o DBA, Designers e Usuários Finais) que acessam o sistema para executar suas requisições. </p>
+<p>O ponto central dessa interação é a <strong>Consulta (Query)</strong>. Estas requisições são processadas pelo Processador de Consultas, que tem a função de analisar a sintaxe (geralmente SQL), traduzir e otimizar a solicitação, gerando um plano de execução eficiente para máxima performance na recuperação dos dados. Sendo assim, são tratadas por todos os elementos do SGBD para retornar o que foi requerido.</p>
+<p>Para alterações seguras, o SGBD utiliza <strong>Transações</strong>, que são unidades de execução regidas pelas propriedades ACID: Atomicidade (ou completa, ou desfeita), Consistência (mantém o estado válido), Isolamento (execução independente) e Durabilidade (alterações permanentes). O SGBD garante o cumprimento do ACID por meio de seus módulos de Controle de Concorrência e Recuperação de falhas.</p>
+<div align="center">
+    <img src="image/sgbd.png" width="50%" />
+</div>
+
+<h2 id="projeto-de-banco-de-dados">PROJETO DE BANCO DE DADOS</h2>
+<ul>
+<li>
+<p><strong>Definir</strong> um banco de dados envolve especificar: </p>
+<ul>
+<li>Tipos de dados </li>
+<li>Estruturas </li>
+<li>Restrições sobre os dados armazenados </li>
+</ul>
+</li>
+<li>
+<p><strong>Construir</strong> um banco de dados é a fase de implementação do esquema, utilizando a Linguagem de Definição de Dados (DDL) para criar a estrutura. Em seguida, os dados são armazenados no meio físico, com o SGBD controlando esses detalhes para abstrair o usuário dos pormenores de armazenamento.</p>
+</li>
+<li><strong>Manipular</strong> os dados é a execução das operações básicas de Inserção, Remoção, Modificação e Recuperação (Consultas). Essa manipulação é feita através da Linguagem de Manipulação de Dados (DML), permitindo a recuperação da informação (incluindo a geração de relatórios) e garantindo a evolução segura dos dados mantidos por meio de Transações ACID.</li>
+</ul>
+<h2 id="formas-de-acesso-oferecidas-pelo-sgbd">FORMAS DE ACESSO OFERECIDAS PELO SGBD</h2>
+<p>Um <strong>SGBD</strong> provê acesso aos dados de forma:</p>
+<ul>
+<li><strong>Eficiente</strong>: O SGBD usa estruturas de armazenamento eficientes e um Otimizador de Consultas para o acesso rápido aos dados.</li>
+<li><strong>Confiável:</strong> O sistema impõe Restrições de Integridade e usa subsistemas de Recuperação e Backup para proteger a base contra falhas, garantindo a durabilidade e a validade dos dados.</li>
+<li><strong>Conveniente:</strong> O SGBD oferece abstração da visão física e usa linguagens de alto nível (DML) para simplificar a interação do usuário.</li>
+<li><strong>Acesso concorrente e multi-usuários:</strong> Esta é uma função vital do SGBD, gerenciada pelo Sistema de Controle de Concorrência para garantir o Isolamento das transações e permitir que múltiplos usuários trabalhem ao mesmo tempo.</li>
+<li><strong>Massiva e persistente:</strong> O SGBD é inerentemente projetado para lidar com grandes volumes de dados (massivo) e garantir que as alterações confirmadas sejam permanentes (persistente).</li>
+</ul>
+<h2 id="servicos-de-um-sgbd">SERVIÇOS DE UM SGBD</h2>
+<p>Sendo assim, os principais serviços são:</p>
+<ul>
+<li>Persistência</li>
+<li>Segurança</li>
+<li>Backup e recuperação de falhas</li>
+<li>Otimização de consultas</li>
+<li>Logging</li>
+<li>Performance Tunning</li>
+<li>Replicação</li>
+<li>Suporte a aplicações avançadas:<ul>
+<li>Data warehouse e mining</li>
+<li>Machine learning</li>
+<li>Business Intelligence</li>
+</ul>
+</li>
+</ul>
+<h2 id="historia-de-sgbds">HISTORIA DE SGBDS</h2>
+<p>A história dos Sistemas Gerenciadores de Banco de Dados (SGBDs) começou na década de 1950 com o ineficiente Processamento de Arquivos individualizados. A necessidade de centralizar dados levou à criação dos primeiros SGBDs de Primeira Geração nos anos 1960 (Modelos Hierárquico e de Rede). A verdadeira revolução veio nos anos 1970 com o Modelo Relacional de E.F. Codd, dando origem aos SGBDs de Segunda Geração, que utilizam tabelas e a linguagem SQL, separando a lógica dos dados do seu armazenamento físico. A evolução continuou com os modelos Objeto-Relacionais nos anos 80/90 (Terceira Geração) e, mais recentemente, com o surgimento dos sistemas NoSQL, que oferecem alta escalabilidade para lidar com o volume e a variedade do Big Data moderno.</p>
+<div style="display: flex; gap: 20px;" align="center">
+    <img src="image/historia-sgbds.png" width="50%">
+    <img src="image/historia-sgbds-1.png" width="60%">
+</div>
+
+<hr />
+<h2 id="classificacao-quanto-ao-proposito">CLASSIFICAÇÃO QUANTO AO PROPÓSITO</h2>
+<h3 id="producao">PRODUÇÃO</h3>
+<ul>
+<li>Bancos de dados que armazenam os dados para manter as aplicações e sistemas funcionando.</li>
+<li>É conhecido como <strong>Online Transaction Processing (OLTP)</strong>.</li>
+<li>Podem ser <strong>relacionais, NoSQL, Graph DB, entre outros</strong>.</li>
+</ul>
+<h3 id="analitico">ANALÍTICO</h3>
+<ul>
+<li>Bancos de dados para análise e apoio à tomada de decisão.</li>
+<li>São <strong>Fontes de dados para modelos de ML</strong> (Machine Learning).</li>
+<li>Podem ser: <strong>Data warehouses, Data Lakes ou Lakehouses</strong>.</li>
+</ul>
+<h3 id="operacional-monitoramento">OPERACIONAL (MONITORAMENTO)</h3>
+<ul>
+<li>Bancos de dados montados para provê suporte à aplicações de <strong>monitoramento, logs, segurança, entre outros</strong>.</li>
+<li>Podem ser: <strong>key-value stores, time series, logs + search DBs</strong>.</li>
+</ul>
+<h3 id="tipos-de-players-no-mercado">TIPOS DE PLAYERS NO MERCADO</h3>
+<div align="center">
+    <img src="image/database-ecosystem.png" width="60%" />
+</div>
+
+<h2 id="niveis-de-abstracao">NÍVEIS DE ABSTRAÇÃO</h2>
+<p>O SGBD utiliza uma arquitetura de três esquemas para garantir a independência de dados, separando as diferentes formas como o banco de dados é visto e implementado.</p>
+<ul>
+<li>
+<p><strong>Visões do usuário</strong></p>
+<ul>
+<li><strong>Módulos do sistema:</strong> O SGBD permite que cada grupo de usuários (como programadores ou usuários finais) tenha uma visão personalizada do banco de dados, que é apenas uma parte do banco de dados real.</li>
+<li><strong>Linguagem voltada aos stakeholders:</strong> As visões escondem dados irrelevantes e a complexidade do banco de dados real (o Esquema Conceitual), garantindo que cada usuário acesse apenas o que é necessário para sua aplicação, o que é crucial para a segurança e a conveniência.</li>
+</ul>
+</li>
+<li>
+<p><strong>Conceitual</strong></p>
+<ul>
+<li><strong>Entidades e relacionamentos entre os dados:</strong> Este esquema descreve a estrutura do banco de dados inteiro para uma comunidade de usuários.</li>
+<li><strong>Visão simplificada:</strong> É uma visão totalmente lógica da base de dados. Ela descreve quais dados são armazenados e os relacionamentos entre eles, e todas as restrições de integridade que devem ser aplicadas. Este nível é independente tanto do armazenamento físico quanto das visões externas dos usuários.</li>
+</ul>
+</li>
+<li>
+<p><strong>Físico</strong></p>
+<ul>
+<li><strong>Nível de implementação no SGBD</strong> Este nível especifica a organização física dos dados armazenados.</li>
+<li><strong>Estruturas de dados, registros, arquivos, índices, etc..</strong> Ele detalha como os dados são realmente armazenados e gerenciados.</li>
+</ul>
+</li>
+</ul>
+<div align="center">
+    <img src="image/niveis-abstracao.png" width="60%" />
+</div>
+
+<h2 id="principio-da-independencia-de-dados">PRINCÍPIO DA INDEPENDÊNCIA DE DADOS</h2>
+<p><em>"Deve ser possível que esquemas de dados possam mudar sem afetar as definições de esquemas de níveis superiores."</em></p>
+<p>Edgar F. Codd</p>
+<hr />
+<h3 id="independencia-fisica-de-dados">Independência física de dados</h3>
+<ul>
+<li>Capacidade de modificar o <strong>esquema físico</strong> sem a necessidade de reescrever os programas aplicativos que usam a base. As modificações no nível físico são ocasionalmente necessárias para melhorar o desempenho ou estruturas internas.</li>
+</ul>
+<h3 id="independencia-logica-de-dados">Independência lógica de dados</h3>
+<ul>
+<li>Capacidade de modificar o <strong>esquema conceitual</strong> sem a necessidade de reescrever os programas que acessam os dados. As modificações no nível conceitual são necessárias quanto a <strong>estrutura lógica</strong> do banco de dados é alterada.</li>
+</ul>
+<h3 id="principio-da-independencia-de-dados_1">PRINCÍPIO DA INDEPENDÊNCIA DE DADOS</h3>
+<p><strong>Modelo Conceitual</strong></p>
+<ul>
+<li><strong>Descrição de maneira independente ao SGBD</strong>, ou seja, define os dados a serem registrados no BD, porém sem se importar com a implementação que se dará ao BD.</li>
+<li>Uma das técnicas mais utilizadas dentre os profissionais da área é a <strong>abordagem entidade-relacionamento (ER)</strong>, onde o modelo é representado graficamente através do <strong>Diagrama Entidade-Relacionamento (DER)</strong>.</li>
+</ul>
+<p><strong>Modelo Lógico</strong></p>
+<ul>
+<li>Descreve o BD no nível do SGBD, ou seja, depende do tipo particular de SGBD que será usado. O tipo de SGBD que o modelo lógico trata é se o mesmo é relacional, orientado a objetos, hierárquico, etc.</li>
+</ul>
+<div align="center">
+    <img src="image/independencia_dados.png" width="60%" />
+</div>
+
+<h2 id="tabelas-do-modelo-relacional">TABELAS DO MODELO RELACIONAL</h2>
+<table style="width:100%; border: none; border-collapse: collapse;">
+<tr>
+<td style="width:25%; vertical-align: top; padding: 10px; border: none;">
+<h4>Departamento</h4>
+
+<table>
+<thead><tr>
+<th>CodDepto</th>
+<th>Nome</th>
+</tr></thead>
+<tbody>
+<tr><td>1</td><td>D1</td></tr>
+<tr><td>2</td><td>D2</td></tr>
+<tr><td>3</td><td>D3</td></tr>
+</tbody></table>
+
+</td>
+<td style="width:35%; vertical-align: top; padding: 10px; border: none;">
+<h4>Empregado</h4>
+
+<table>
+<thead><tr>
+<th>CodEmp</th>
+<th>Nome</th>
+<th>CodDepto</th>
+</tr></thead>
+<tbody>
+<tr><td>1</td><td>José</td><td>3</td></tr>
+<tr><td>2</td><td>Maria</td><td>2</td></tr>
+<tr><td>3</td><td>João</td><td>2</td></tr>
+<tr><td>4</td><td>João</td><td>1</td></tr>
+<tr><td>5</td><td>Pedro</td><td>3</td></tr>
+<tr><td>6</td><td>Ana</td><td>2</td></tr>
+</tbody></table>
+
+</td>
+<td style="width:40%; vertical-align: top; padding: 10px; border: none;">
+<h4>Dependente</h4>
+
+<table>
+<thead><tr>
+<th>CodDep</th>
+<th>Nome</th>
+<th>CodEmp</th>
+</tr></thead>
+<tbody>
+<tr><td>1</td><td>Francisco</td><td>3</td></tr>
+<tr><td>2</td><td>Juliana</td><td>3</td></tr>
+<tr><td>3</td><td>Juliana</td><td>4</td></tr>
+<tr><td>4</td><td>Manuel</td><td>1</td></tr>
+<tr><td>5</td><td>Miguel</td><td>3</td></tr>
+<tr><td>6</td><td>Hugo</td><td>2</td></tr>
+<tr><td>7</td><td>Marcos</td><td>6</td></tr>
+<tr><td>8</td><td>Daniela</td><td>1</td></tr>
+<tr><td>9</td><td>Marieta</td><td>2</td></tr>
+</tbody></table>
+</td>
+  </tr>
+</table>
+
+<h2 id="vantagens-de-usar-sgbds">VANTAGENS DE USAR SGBDS</h2>
+<ul>
+<li>Controle de redundância</li>
+<li>Restrição de acesso desautorizado</li>
+<li>Armazenamento Persistente para objetos dos programas</li>
+<li>Estruturas de armazenamento e técnicas de buscas para processamento eficiente de consultas</li>
+<li>Backup e restauração</li>
+<li>Múltiplas interfaces de usuários</li>
+<li>Representação de relacionamentos complexos entre os dados</li>
+<li>Garantia de restrições de integridade</li>
+<li>Permite inferência e ações automáticas usando regras e gatilhos</li>
+</ul>
+<h2 id="desvantagens-de-usar-sgbds">DESVANTAGENS DE USAR SGBDS</h2>
+<ul>
+<li>Controle de redundância</li>
+<li>Restrição de acesso desautorizado</li>
+<li>Armazenamento Persistente para objetos dos programas</li>
+<li>Estruturas de armazenamento e técnicas de buscas para processamento eficiente de consultas</li>
+<li>Backup e restauração</li>
+<li>Múltiplas interfaces de usuários</li>
+<li>Representação de relacionamentos complexos entre os dados</li>
+<li>Garantia de restrições de integridade</li>
+<li>Permite inferência e ações automáticas usando regras e gatilhos</li>
+</ul>
+<h3 id="resumo-das-desvantagens-de-um-sgbd">Resumo das Desvantagens de um SGBD</h3>
+<table>
+<thead><tr>
+<th>Desvantagem</th>
+<th>Impacto</th>
+</tr></thead>
+<tbody>
+<tr><td>Alto custo</td><td>Licenças, hardware e suporte.</td></tr>
+<tr><td>Complexidade</td><td>Exige configuração, administração e gerenciamento do banco de dados.</td></tr>
+<tr><td>Consumo de recursos</td><td>Maior utilização de CPU, memória RAM e espaço em disco.</td></tr>
+<tr><td>Necessidade de especialistas</td><td>Requer DBAs e desenvolvedores com conhecimento em bancos de dados.</td></tr>
+<tr><td>Sobrecarga (Overhead)</td><td>O controle de transações, concorrência e segurança pode reduzir o desempenho em alguns cenários.</td></tr>
+<tr><td>Dependência do fornecedor</td><td>Pode dificultar a migração para outro SGBD devido a recursos proprietários.</td></tr>
+<tr><td>Implantação mais lenta</td><td>Exige planejamento, modelagem e configuração antes do uso.</td></tr>
+<tr><td>Ponto único de falha</td><td>A indisponibilidade do banco pode interromper diversos sistemas que dependem dele.</td></tr>
+<tr><td>Manutenção contínua</td><td>Necessita de backups, atualizações, monitoramento e otimização periódicos.</td></tr>
+<tr><td>Curva de aprendizagem</td><td>Exige conhecimento em SQL, modelagem de dados, transações, índices e otimização de consultas.</td></tr>
+</tbody></table>
+
+<h2 id="referencias-bibliograficas">REFERÊNCIAS BIBLIOGRÁFICAS</h2>
+<ul>
+<li><strong>ELMASRI, Ramez; NAVATHE, Shamkant.</strong> <em>Fundamentals of Database Systems</em>. 7th ed., 2021. </li>
+<li><strong>GAMES, Pete; THOMAS.COM.</strong> <em>A Brief History of Databases: Types, Phases &amp; Products</em>. (2017-2018). Disponível sob Licença Creative Commons Attribution 4.0 International. </li>
+</ul>
+<h2 id="contato">CONTATO</h2>
+<ul>
+<li><strong>Telefone:</strong> +55 83 996577959 </li>
+<li><strong>E-mail:</strong> fabioleite@servidor.uepb.edu.br </li>
+<li><strong>Endereço:</strong> Universidade Estadual da Paraíba, Campus I - Campina Grande, PB</li>
+</ul>
+<div class="page-break"></div>
+
+<h1 id="parte-02-servicos-de-um-sgbd">Parte 02 — Serviços de um SGBD</h1>
+<h2 id="0307-servicos-de-um-sgbd">03.07 – Serviços de um SGBD</h2>
+<blockquote>
+<p><strong>Observação:</strong> Este capítulo apresenta os principais serviços oferecidos por um Sistema Gerenciador de Banco de Dados (SGBD).</p>
+</blockquote>
+<h3 id="conteudo">Conteúdo</h3>
+<ol>
+<li>Introdução</li>
+<li>Persistência</li>
+<li>Segurança</li>
+<li>Backup e recuperação de falhas</li>
+<li>Logging</li>
+<li>Otimização de consultas</li>
+<li>Performance Tuning</li>
+<li>Replicação</li>
+<li>Suporte a aplicações avançadas</li>
+<li>Data Warehouse</li>
+<li>Data Mining</li>
+<li>Machine Learning</li>
+<li>Business Intelligence</li>
+<li>Exercícios Propostos</li>
+<li>Referências</li>
+</ol>
+<hr />
+<h2 id="introducao">Introdução</h2>
+<p>Um SGBD moderno oferece muito mais do que armazenamento de dados. Entre seus serviços estão persistência, segurança, recuperação de falhas, otimização de consultas, replicação, suporte analítico e integração com BI e Machine Learning.</p>
+<blockquote>
+<p><strong>Este arquivo é um modelo estruturado para o capítulo.</strong> Expanda cada seção conforme o material do curso.</p>
+</blockquote>
+<h3 id="2-persistencia">2. Persistência</h3>
+<p>Persistência refere-se à forma como os dados são armazenados de maneira durável em disco e recuperados pelo SGBD. Componentes importantes:</p>
+<ul>
+<li>Storage engine: gerencia páginas (8 KB no SQL Server), extents (conjunto de páginas) e alocação de espaço.</li>
+<li>Transações e ACID: Atomicidade, Consistência, Isolamento e Durabilidade garantem integridade mesmo em falhas.</li>
+<li>MVCC vs locking: mecanismos para controlar concorrência e visibilidade de versões.</li>
+</ul>
+<pre><code class="language-mermaid">flowchart TD
+    A[Aplicação] --&gt;|SQL| B[Storage Engine]
+    B --&gt; C[Páginas / Extents]
+    C --&gt; D[Armazenamento em disco]
+    B --&gt; E[Transaction Log]
+    E --&gt; F[Durabilidade / Recovery]
+    B --&gt; G[ACID]
+    G --&gt; H[Atomicidade]
+    G --&gt; I[Consistência]
+    G --&gt; J[Isolamento]
+    G --&gt; K[Durabilidade]
+</code></pre>
+<p>Exemplo prático (SQL Server): transação com rollback/commit</p>
+<pre><code class="language-sql">BEGIN TRANSACTION;
+INSERT INTO Clientes (Nome, Email) VALUES ('Ana', 'ana@exemplo.com');
+-- validar alterações
+IF (@@ERROR = 0)
+    COMMIT TRANSACTION;
+ELSE
+    ROLLBACK TRANSACTION;
+</code></pre>
+<p>Boas práticas: projetar transações curtas, escolher esquema de armazenamento adequado (heap vs clustered), e manter estatísticas atualizadas.</p>
+<h3 id="3-seguranca">3. Segurança</h3>
+<p>Segurança em SGBD cobre autenticação, autorização, criptografia e auditoria.</p>
+<ul>
+<li>Autenticação: login de usuários (Windows Auth vs SQL Auth no SQL Server).</li>
+<li>Autorização: permissões (GRANT/REVOKE), roles e separation of duties.</li>
+<li>Roles: agrupar permissões (ex.: db_datareader, db_datawriter, custom roles).</li>
+<li>Criptografia: TDE (Transparent Data Encryption) para dados em disco; Always Encrypted para proteger colunas sensíveis; TLS para conexões.</li>
+<li>Auditoria: uso de logs, SQL Audit/Extended Events para rastrear atividades.</li>
+</ul>
+<pre><code class="language-mermaid">flowchart LR
+    A[Usuário / Aplicação] --&gt; B[Autenticação]
+    B --&gt; C{Sucesso}
+    C --&gt;|Sim| D[Autorização]
+    C --&gt;|Não| E[Acesso negado]
+    D --&gt; F[Roles / Permissões]
+    D --&gt; G[Cryptografia]
+    G --&gt; H[TDE / Always Encrypted]
+    D --&gt; I[Auditoria]
+</code></pre>
+<p>Exemplo (criar role e conceder permissão):</p>
+<pre><code class="language-sql">CREATE ROLE app_readonly;
+GRANT SELECT ON SCHEMA::dbo TO app_readonly;
+EXEC sp_addrolemember 'app_readonly', 'usuario_app';
+</code></pre>
+<h3 id="4-backup-e-recuperacao">4. Backup e Recuperação</h3>
+<p>Tipos principais de backup:</p>
+<ul>
+<li>Full: captura todo o banco.</li>
+<li>Differential: captura mudanças desde o último full.</li>
+<li>Transaction log (ou incremental): permite point-in-time recovery.</li>
+</ul>
+<p>Recovery models (SQL Server): SIMPLE, BULK_LOGGED, FULL — definem comportamento de logging e possibilidade de restauração ponto-a-ponto.</p>
+<pre><code class="language-mermaid">flowchart TD
+    A[Backup Full] --&gt; B[Base completa]
+    A --&gt; C[Restaurar base completa]
+    D[Backup Differential] --&gt; E[Diferenças desde o último Full]
+    D --&gt; F[Restaurar: Full + Differential]
+    G[Backup de Log] --&gt; H[Transações desde o último log]
+    G --&gt; I[Restaurar: Full + Differential + Log até ponto desejado]
+</code></pre>
+<p>Exemplo (SQL Server): backup full e log</p>
+<pre><code class="language-sql">BACKUP DATABASE MeuBanco TO DISK = 'C:\backups\MeuBanco_full.bak' WITH FORMAT;
+BACKUP LOG MeuBanco TO DISK = 'C:\backups\MeuBanco_log.trn';
+</code></pre>
+<p>Políticas: definir frequência de backups, retenção e testar restores regularmente.</p>
+<h3 id="5-logging">5. Logging</h3>
+<p>O logging garante durabilidade e recuperação. Padrões comuns:</p>
+<ul>
+<li>Transaction log (SQL Server): registro sequencial de operações que permite rollback e recuperação.</li>
+<li>Write-Ahead Logging (WAL): garantir que modificações de log sejam escritas antes das páginas de dados.</li>
+<li>Rollback/Redo: durante recovery, o motor aplica redo e undo conforme necessário.</li>
+</ul>
+<pre><code class="language-mermaid">flowchart LR
+    A[Transação inicia] --&gt; B[Grava no Transaction Log]
+    B --&gt; C[Dados de página atualizados em buffer]
+    C --&gt; D[Checkpoint grava páginas sujas em disco]
+    D --&gt; E[Log pode ser truncado]
+    B --&gt; F[Rollback/Redo possível em falha]
+</code></pre>
+<p>Impacto operacional: gerenciamento do tamanho do log, checkpoints e truncation (dependem do recovery model).</p>
+<h3 id="6-otimizacao-de-consultas">6. Otimização de Consultas</h3>
+<p>O otimizador transforma SQL em um plano de execução. Elementos relevantes:</p>
+<ul>
+<li>Estatísticas: informações sobre distribuição de dados que guiam o otimizador.</li>
+<li>Índices: permitem seeks vs scans; escolha de chaves e includes influencia planos.</li>
+<li>Hints e reescrita de consultas: quando necessário para forçar planos.</li>
+</ul>
+<p>Exemplo: ver plano estimado/executado no SSMS; usar <code>SET STATISTICS IO ON</code> para medir I/O.</p>
+<pre><code class="language-sql">SET STATISTICS IO ON;
+SELECT * FROM Pedidos WHERE ClienteId = 123;
+SET STATISTICS IO OFF;
+</code></pre>
+<pre><code class="language-mermaid">flowchart TD
+    A[SQL] --&gt; B[Otimizador]
+    B --&gt; C[Estatísticas]
+    B --&gt; D[Escolha de Índices]
+    B --&gt; E[Plano Estimado]
+    E --&gt; F[Plano de Execução]
+    F --&gt; G[Operações: Seek, Scan, Join, Sort]
+</code></pre>
+<h3 id="7-performance-tuning">7. Performance Tuning</h3>
+<p>Atividades típicas:</p>
+<ul>
+<li>Identificar gargalos com wait stats, DMVs e Query Store.</li>
+<li>Criar/ajustar índices (incluindo índices filtrados e índices columnstore para analytics).</li>
+<li>Particionamento para gerenciar I/O e manutenção.</li>
+<li>Compressão de dados e escolha de tipos adequados.</li>
+</ul>
+<p>Ferramentas: <code>sys.dm_exec_query_stats</code>, <code>sys.dm_db_index_physical_stats</code>, Performance Monitor, Query Store.</p>
+<pre><code class="language-mermaid">flowchart LR
+    A[Identificar gargalo] --&gt; B[Analisar wait stats / Query Store]
+    B --&gt; C[Índices / Estatísticas]
+    B --&gt; D[Particionamento / Compressão]
+    C --&gt; E[Testar consultas]
+    D --&gt; E
+    E --&gt; F[Monitorar resultados]
+    F --&gt; A
+</code></pre>
+<h3 id="8-replicacao">8. Replicação</h3>
+<p>Modelos de replicação:</p>
+<ul>
+<li>Snapshot: envia cópia completa periodicamente — simples, sem latência mínima.</li>
+<li>Transacional: replica mudanças continuamente (baixo latency) — bom para sincronização OLTP.</li>
+<li>Replicação física (log shipping, Always On Availability Groups): cópias redundantes para alta disponibilidade.</li>
+<li>Replicação lógica: replicação de dados a nível lógico (geral) e tipos de publicação/assinatura.</li>
+</ul>
+<p>Escolha baseada em requisitos de RTO/RPO, consistência e topologia.</p>
+<pre><code class="language-mermaid">flowchart TB
+    A[Base primária] --&gt; B[Snapshot Replication]
+    A --&gt; C[Transactional Replication]
+    A --&gt; D[Always On / Log Shipping]
+    C --&gt; E[Distribuir mudanças contínuas]
+    D --&gt; F[Failover / Read-only secundário]
+    B --&gt; G[Atualização periódica]
+</code></pre>
+<h3 id="9-suporte-a-aplicacoes-avancadas">9. Suporte a aplicações avançadas</h3>
+<p>Funcionalidades modernas que um SGBD pode oferecer:</p>
+<ul>
+<li>JSON / XML: armazenamento e consulta de documentos (ex.: <code>OPENJSON</code>, <code>FOR JSON</code> no SQL Server).</li>
+<li>Spatial: tipos e funções geoespaciais (ex.: <code>geometry</code>, <code>geography</code>).</li>
+<li>Full-Text Search: índices de texto para buscas linguísticas.</li>
+<li>Stored Procedures e Triggers: lógica próxima aos dados (cuidado com complexidade e manutenção).</li>
+</ul>
+<p>Exemplo JSON (SQL Server):</p>
+<pre><code class="language-sql">SELECT * FROM Clientes
+WHERE JSON_VALUE(DocumentoJson, '$.tipo') = 'CPF';
+</code></pre>
+<pre><code class="language-mermaid">flowchart LR
+    A[Aplicação / Usuário] --&gt; B[JSON / XML]
+    A --&gt; C[Spatial]
+    A --&gt; D[Full-Text Search]
+    A --&gt; E[Stored Procedures / Triggers]
+    B --&gt; F[Consultas dinâmicas]
+    C --&gt; G[Análises geoespaciais]
+    D --&gt; H[Busca por texto]
+    E --&gt; I[Lógica de negócio no banco]
+</code></pre>
+<h3 id="10-data-warehouse">10. Data Warehouse</h3>
+<p>Conceitos principais:</p>
+<ul>
+<li>ETL/ELT: extrair, transformar e carregar dados para o armazém.</li>
+<li>OLTP × OLAP: transacional vs analítico (latência, agregação e schema diferentes).</li>
+<li>Modelos: Star schema (fatos e dimensões), Snowflake.</li>
+<li>Slowly Changing Dimensions (SCD) para lidar com mudanças históricas.</li>
+</ul>
+<p>Processos típicos: carga inicial (bulk), atualizações incrementais, atualização de estatísticas e manutenção de agregações.</p>
+<pre><code class="language-mermaid">flowchart LR
+    A[Fontes OLTP] --&gt; B[ETL/ELT]
+    B --&gt; C[Data Warehouse]
+    C --&gt; D[Modelos Star e Snowflake]
+    D --&gt; E[Relatórios / OLAP]
+    C --&gt; F[Manutenção de Agregações]
+</code></pre>
+<h3 id="11-data-mining">11. Data Mining</h3>
+<p>Definição e aplicações:</p>
+<ul>
+<li>Técnicas: clustering, classification, association rules, and anomaly detection.</li>
+<li>Ferramentas: bibliotecas e serviços que integraram-se a SGBDs (ex.: SQL Server Analysis Services histórico; atualmente integração com R/Python e ferramentas externas).</li>
+</ul>
+<pre><code class="language-mermaid">flowchart LR
+    A[Dados do Data Warehouse] --&gt; B[Data Mining]
+    B --&gt; C[Clustering]
+    B --&gt; D[Classification]
+    B --&gt; E[Association Rules]
+    B --&gt; F[Anomaly Detection]
+    F --&gt; G[Detecção de fraudes]
+    C --&gt; H[Segmentação de clientes]
+</code></pre>
+<p>Exemplo de uso: gerar clusters de clientes para segmentação de marketing.</p>
+<h3 id="12-machine-learning">12. Machine Learning</h3>
+<p>Integração com SGBD:</p>
+<ul>
+<li>Treinar modelos usando dados diretamente no banco (SQL Server Machine Learning Services integra R/Python).</li>
+<li>Operacionalizar modelos: scoring em tempo real via procedures ou serviços externos.</li>
+</ul>
+<p>Boas práticas: preparar dados no banco, extrair features, treinar fora do horário crítico e implantar modelos de forma controlada.</p>
+<pre><code class="language-mermaid">flowchart LR
+    A[Dados de produção] --&gt; B[Preparação de features]
+    B --&gt; C[Treinamento R/Python]
+    C --&gt; D[Modelo treinado]
+    D --&gt; E[Deploy / Scoring]
+    E --&gt; F[Resultados em tempo real]
+    F --&gt; G[Ajuste de modelo]
+</code></pre>
+<h3 id="13-business-intelligence">13. Business Intelligence</h3>
+<p>Componentes:</p>
+<ul>
+<li>ETL/ELT para alimentar modelos analíticos.</li>
+<li>Cubos/Modelos semânticos e camadas de apresentação.</li>
+<li>Ferramentas de visualização: Power BI, Tableau, etc.</li>
+</ul>
+<p>Padrões: criação de uma camada semântica, tabelas agregadas e índices/columnstore para acelerar relatórios.</p>
+<pre><code class="language-mermaid">flowchart LR
+    A[Dados analíticos] --&gt; B[ETL/ELT]
+    B --&gt; C[Modelo semântico / Cubo]
+    C --&gt; D[Power BI / Tableau]
+    D --&gt; E[Dashboards / Relatórios]
+    C --&gt; F[Agregações / Columnstore]
+</code></pre>
+<h3 id="14-exercicios-propostos">14. Exercícios Propostos</h3>
+<ol>
+<li>
+<p>Explique o modelo ACID e dê um exemplo de como cada propriedade é garantida pelo SGBD.</p>
+</li>
+<li>
+<p>Configure um plano de backup para um banco com alta criticidade (descreva full/diff/log e frequência).</p>
+</li>
+<li>
+<p>Dado um workload OLTP com lentidão em consultas por cliente, descreva um processo de diagnóstico e as possíveis soluções (índices, estatísticas, reescrita de query).</p>
+</li>
+<li>
+<p>Modele um Star Schema simples para vendas (fato Vendas e dimensões Cliente, Produto, Tempo) e escreva uma query que calcule vendas por mês e categoria.</p>
+</li>
+<li>
+<p>Compare <code>SELECT INTO</code> e <code>CREATE TABLE</code> + <code>INSERT</code> e descreva quando cada abordagem é mais adequada.</p>
+</li>
+</ol>
+<h3 id="15-referencias">15. Referências</h3>
+<ul>
+<li>Elmasri, R. &amp; Navathe, S. — Fundamentals of Database Systems.</li>
+<li>Silberschatz, A.; Korth, H. F.; Sudarshan, S. — Database System Concepts.</li>
+<li>Date, C. J. — An Introduction to Database Systems.</li>
+<li>Microsoft Docs — SQL Server documentation: https://docs.microsoft.com/sql</li>
+<li>Brent Ozar, SQLServerCentral, SQLskills — blogs e artigos técnicos.</li>
+</ul>
+<div class="page-break"></div>
+
+<h1 id="parte-03-pratico-inicial-de-banco-de-dados">Parte 03 — Prático Inicial de Banco de Dados</h1>
+<h2 id="pratico-inicial-banco-de-dados">Prático Inicial - Banco de Dados</h2>
+<p><strong>Professor:</strong> Dr. Fábio Leite<br />
+<strong>Instituição:</strong> Universidade Estadual da Paraíba — UEPB, Campina Grande, PB  </p>
+<blockquote>
+<p><strong>SGBDs abordados:</strong> SQL Server · PostgreSQL  </p>
+</blockquote>
+<hr />
+<h3 id="sumario">Sumário</h3>
+<ol>
+<li><a href="#1-instalação-dos-sgbds">Instalação dos SGBDs</a>  </li>
+<li><a href="#2-criação-de-banco-de-dados">Criação de Banco de Dados</a>  </li>
+<li><a href="#3-esquemas-e-tabelas">Esquemas e Tabelas</a>  </li>
+<li><a href="#4-operações-dml">Operações DML</a>  </li>
+</ol>
+<hr />
+<h3 id="1-instalacao-dos-sgbds">1. Instalação dos SGBDs</h3>
+<blockquote>
+<p>📋 <strong>Antes de começar:</strong> Verifique se o seu computador tem pelo menos <strong>4 GB de RAM</strong> e <strong>10 GB de espaço livre em disco</strong>. Feche outros programas pesados durante a instalação.</p>
+</blockquote>
+<hr />
+<h4 id="11-sql-server-windows">1.1 SQL Server — Windows</h4>
+<p>O SQL Server é instalado em duas etapas: primeiro o <strong>servidor de banco de dados</strong>, depois o <strong>SQL Server Management Studio (SSMS)</strong>, que é a interface gráfica usada para interagir com ele.</p>
+<hr />
+<h5 id="parte-a-instalar-o-sql-server">Parte A — Instalar o SQL Server</h5>
+<p><strong>Passo 1 — Baixar o instalador</strong></p>
+<ol>
+<li>Abra o navegador e acesse: <strong>https://www.microsoft.com/pt-br/sql-server/sql-server-downloads</strong></li>
+<li>Role a página até a seção <strong>"Ou escolha uma edição gratuita especializada"</strong>.</li>
+<li>Clique em <strong>"Baixar agora"</strong> abaixo de <strong>Developer</strong>.
+   - A edição Developer é gratuita e tem todos os recursos da versão paga — destinada a desenvolvimento e aprendizado.</li>
+<li>O arquivo <code>SQL2022-SSEI-Dev.exe</code> (ou similar) será baixado. Salve na pasta <strong>Downloads</strong>.</li>
+</ol>
+<p><strong>Passo 2 — Executar o instalador</strong></p>
+<ol>
+<li>Dê um duplo clique no arquivo baixado.</li>
+<li>Se o Windows exibir <em>"Deseja permitir que este aplicativo faça alterações no seu dispositivo?"</em>, clique em <strong>Sim</strong>.</li>
+<li>Uma janela com três opções aparecerá. Clique em <strong>Básico</strong>.</li>
+<li>Na tela de <strong>Termos de Licença</strong>, clique em <strong>Aceitar</strong>.</li>
+<li>Mantenha o local de instalação padrão e clique em <strong>Instalar</strong>.</li>
+<li>Aguarde entre 5 e 15 minutos.</li>
+<li>
+<p>Quando aparecer <strong>"A instalação foi concluída com êxito!"</strong>, <strong>anote ou tire print</strong> do campo <strong>CADEIA DE CONEXÃO</strong>, que será parecido com:
+   <code>Server=localhost;Database=master;Trusted_Connection=True;</code></p>
+</li>
+<li>
+<p>Não feche essa janela ainda.</p>
+</li>
+</ol>
+<hr />
+<h5 id="parte-b-instalar-o-ssms-interface-grafica">Parte B — Instalar o SSMS (interface gráfica)</h5>
+<p><strong>Passo 3 — Baixar e instalar o SSMS</strong></p>
+<ol>
+<li>Na janela de conclusão da etapa anterior, clique em <strong>"Instalar SSMS"</strong>. O navegador abrirá a página de download.
+   - Caso a janela já tenha sido fechada, acesse: <strong>https://aka.ms/ssmsfullsetup</strong></li>
+<li>Clique no link de download do SSMS (ex.: <strong>"Baixar o SSMS 20.x"</strong>).</li>
+<li>Execute o arquivo <code>SSMS-Setup-PTB.exe</code> baixado. Clique em <strong>Sim</strong> se solicitado.</li>
+<li>Clique em <strong>Instalar</strong> e aguarde de 5 a 10 minutos.</li>
+<li>Ao final, clique em <strong>Fechar</strong>. <strong>Reinicie o computador</strong> se o instalador solicitar.</li>
+</ol>
+<p><strong>Passo 4 — Abrir o SSMS e conectar ao servidor</strong></p>
+<ol>
+<li>Abra o menu <strong>Iniciar</strong>, digite <strong>SSMS</strong> e clique no programa.</li>
+<li>A janela <strong>"Conectar ao Servidor"</strong> abrirá automaticamente. Preencha:
+   - <strong>Tipo de servidor:</strong> <code>Mecanismo de Banco de Dados</code> <em>(já vem preenchido)</em>
+   - <strong>Nome do servidor:</strong> <code>localhost</code>
+   - <strong>Autenticação:</strong> <code>Autenticação do Windows</code></li>
+<li>Clique em <strong>Conectar</strong>.</li>
+<li>O painel <strong>Object Explorer</strong> aparecerá à esquerda com o servidor conectado.</li>
+</ol>
+<blockquote>
+<p>✅ <strong>Verificando a instalação</strong></p>
+<ol>
+<li>Clique em <strong>Nova Consulta</strong> na barra de ferramentas (ou <code>Ctrl + N</code>).</li>
+<li>Na área de texto, digite:
+   <code>sql
+   SELECT @@VERSION;</code></li>
+<li>Clique em <strong>Executar</strong> (botão ▶ ou <code>F5</code>).</li>
+<li>Na aba <strong>Resultados</strong> (parte inferior), deve aparecer a versão do SQL Server. ✅</li>
+</ol>
+</blockquote>
+<p><strong>Problemas comuns — SQL Server</strong></p>
+<table>
+<thead><tr>
+<th>Problema</th>
+<th>Causa provável</th>
+<th>Solução</th>
+</tr></thead>
+<tbody>
+<tr><td>SSMS não conecta</td><td>Serviço do SQL Server parado</td><td>Busque **"Gerenciador de Configurações do SQL Server"** no menu Iniciar. Verifique se **SQL Server (MSSQLSERVER)** está **Em Execução**. Se não estiver, clique com botão direito → **Iniciar**.</td></tr>
+<tr><td>Mensagem "Login falhou"</td><td>Tipo de autenticação errado</td><td>Escolha **Autenticação do Windows**, não SQL Server.</td></tr>
+<tr><td>Instalador trava ou fecha</td><td>Pouco espaço em disco</td><td>Verifique se há pelo menos 10 GB livres no disco C: e execute o instalador como Administrador (botão direito → *Executar como administrador*).</td></tr>
+</tbody></table>
+
+<hr />
+<h4 id="12-sql-server-linux">1.2 SQL Server — Linux</h4>
+<blockquote>
+<p>⚠️ O SQL Server não tem suporte completo para Ubuntu/Debian em ambiente didático. <strong>Alunos com Linux devem usar o PostgreSQL</strong> (seção 1.4).</p>
+</blockquote>
+<hr />
+<h4 id="13-postgresql-windows">1.3 PostgreSQL — Windows</h4>
+<p><strong>Passo 1 — Baixar o instalador</strong></p>
+<ol>
+<li>Acesse: <strong>https://www.postgresql.org/download/windows</strong></li>
+<li>Clique em <strong>"Download the installer"</strong>.</li>
+<li>Na tabela, localize a versão mais recente (ex.: <strong>16.x</strong>) e clique no ícone de download na coluna <strong>Windows x86-64</strong>.</li>
+<li>O arquivo <code>postgresql-16.x-windows-x64.exe</code> será baixado.</li>
+</ol>
+<p><strong>Passo 2 — Executar o instalador</strong></p>
+<ol>
+<li>Dê duplo clique no arquivo. Clique em <strong>Sim</strong> se solicitado.</li>
+<li><strong>Boas-vindas:</strong> clique em <strong>Next</strong>.</li>
+<li><strong>Diretório de instalação:</strong> mantenha o padrão. Clique em <strong>Next</strong>.</li>
+<li><strong>Componentes:</strong> mantenha todos marcados (PostgreSQL Server, pgAdmin 4, Stack Builder, Command Line Tools). Clique em <strong>Next</strong>.</li>
+<li><strong>Diretório de dados:</strong> mantenha o padrão. Clique em <strong>Next</strong>.</li>
+<li><strong>Senha do superusuário:</strong> defina uma senha para o usuário <code>postgres</code>.
+   - ⚠️ <strong>ANOTE ESSA SENHA.</strong> Sem ela você não conseguirá acessar o banco. Sugestão: <code>postgres123</code>.</li>
+<li><strong>Porta:</strong> mantenha <code>5432</code>. Clique em <strong>Next</strong>.</li>
+<li><strong>Locale:</strong> mantenha o padrão. Clique em <strong>Next</strong> → <strong>Next</strong> → aguarde a instalação.</li>
+<li>Ao final, <strong>desmarque</strong> <em>"Launch Stack Builder at exit"</em> e clique em <strong>Finish</strong>.</li>
+</ol>
+<p><strong>Passo 3 — Abrir o pgAdmin 4 e conectar</strong></p>
+<ol>
+<li>Abra o menu <strong>Iniciar</strong>, digite <strong>pgAdmin</strong> e clique em <strong>pgAdmin 4</strong>.</li>
+<li>O pgAdmin abrirá no navegador padrão (é um aplicativo web local). Aguarde carregar.</li>
+<li>Na primeira abertura, defina uma <strong>senha mestra do pgAdmin</strong> (protege o próprio pgAdmin) e clique em <strong>OK</strong>.</li>
+<li>No painel esquerdo (<strong>Browser</strong>), expanda <strong>Servers</strong> → clique em <strong>PostgreSQL 16</strong>.</li>
+<li>Digite a senha definida no Passo 2. Marque <strong>Save Password</strong>. Clique em <strong>OK</strong>.</li>
+<li>O servidor aparecerá conectado.</li>
+</ol>
+<p><strong>Passo 4 — Abrir o Query Tool</strong></p>
+<ol>
+<li>Expanda <strong>Servers → PostgreSQL 16 → Databases → postgres</strong>.</li>
+<li>Clique com botão direito em <strong>postgres</strong> → <strong>Query Tool</strong>.</li>
+<li>Uma aba com área de texto abrirá — é aqui onde você escreverá os comandos SQL.</li>
+</ol>
+<blockquote>
+<p>✅ <strong>Verificando a instalação</strong></p>
+<ol>
+<li>Na área de texto do Query Tool, digite:
+   <code>sql
+   SELECT version();</code></li>
+<li>Clique em <strong>▶ Execute</strong> (ou <code>F5</code>).</li>
+<li>Na aba <strong>Data Output</strong> (parte inferior), deve aparecer a versão do PostgreSQL. ✅</li>
+</ol>
+</blockquote>
+<p><strong>Problemas comuns — PostgreSQL (Windows)</strong></p>
+<table>
+<thead><tr>
+<th>Problema</th>
+<th>Causa provável</th>
+<th>Solução</th>
+</tr></thead>
+<tbody>
+<tr><td>pgAdmin não abre</td><td>Falha no serviço</td><td>Reinicie o computador e tente novamente.</td></tr>
+<tr><td>Erro de senha ao conectar</td><td>Senha digitada errada</td><td>Confirme a senha criada na instalação. Se esqueceu, será necessário reinstalar.</td></tr>
+<tr><td>pgAdmin não conecta ao servidor</td><td>Serviço parado</td><td>`Win + R` → `services.msc` → localize **postgresql-x64-16** → botão direito → **Iniciar**.</td></tr>
+<tr><td>Porta 5432 ocupada</td><td>Outro serviço usando a porta</td><td>Reinstale usando a porta `5433` e lembre de configurar o pgAdmin com essa porta.</td></tr>
+</tbody></table>
+
+<hr />
+<h4 id="14-postgresql-linux-ubuntu-debian">1.4 PostgreSQL — Linux (Ubuntu / Debian)</h4>
+<p>No Linux, o PostgreSQL é instalado pelo <strong>Terminal</strong> usando o gerenciador de pacotes <code>apt</code>.</p>
+<p><strong>Passo 1 — Abrir o Terminal</strong></p>
+<p>Pressione <code>Ctrl + Alt + T</code>, ou busque por <strong>Terminal</strong> no menu de aplicativos.</p>
+<p><strong>Passo 2 — Atualizar o sistema</strong></p>
+<pre><code class="language-bash">sudo apt update
+</code></pre>
+<p>O sistema pedirá sua senha de usuário (a mesma do login). Digite e pressione Enter.</p>
+<p><strong>Passo 3 — Instalar o PostgreSQL</strong></p>
+<pre><code class="language-bash">sudo apt install postgresql postgresql-contrib -y
+</code></pre>
+<p>Aguarde o download e a instalação.</p>
+<p><strong>Passo 4 — Verificar se o serviço está rodando</strong></p>
+<pre><code class="language-bash">sudo systemctl status postgresql
+</code></pre>
+<p>Você verá algo parecido com:</p>
+<pre><code>● postgresql.service - PostgreSQL RDBMS
+     Active: active (running) since ...
+</code></pre>
+<p>A linha <strong><code>Active: active (running)</code></strong> confirma que está funcionando. Pressione <code>Q</code> para sair.</p>
+<p><strong>Passo 5 — Definir a senha do usuário postgres</strong></p>
+<pre><code class="language-bash">sudo -i -u postgres
+</code></pre>
+<p>O prompt mudará. Agora abra o console do PostgreSQL:</p>
+<pre><code class="language-bash">psql
+</code></pre>
+<p>O prompt mudará para <code>postgres=#</code>. Defina a senha:</p>
+<pre><code class="language-sql">ALTER USER postgres PASSWORD 'postgres123';
+</code></pre>
+<blockquote>
+<p>Troque <code>postgres123</code> pela senha que preferir. <strong>Anote essa senha.</strong></p>
+</blockquote>
+<p>Saia do psql e volte ao seu usuário:</p>
+<pre><code class="language-bash">\q
+exit
+</code></pre>
+<p><strong>Passo 6 — Instalar o pgAdmin 4</strong></p>
+<p>Execute os comandos abaixo <strong>um de cada vez</strong> no terminal:</p>
+<pre><code class="language-bash">curl -fsS https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo gpg --dearmor -o /usr/share/keyrings/packages-pgadmin-org.gpg
+</code></pre>
+<pre><code class="language-bash">sudo sh -c 'echo &quot;deb [signed-by=/usr/share/keyrings/packages-pgadmin-org.gpg] https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(lsb_release -cs) pgadmin4 main&quot; &gt; /etc/apt/sources.list.d/pgadmin4.list'
+</code></pre>
+<pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt install pgadmin4-desktop -y
+</code></pre>
+<p>Após a instalação, o <strong>pgAdmin 4</strong> aparecerá no menu de aplicativos.</p>
+<p><strong>Passo 7 — Conectar ao servidor no pgAdmin 4</strong></p>
+<ol>
+<li>Abra o <strong>pgAdmin 4</strong> pelo menu de aplicativos.</li>
+<li>Defina a <strong>senha mestra</strong> na primeira abertura. Clique em <strong>OK</strong>.</li>
+<li>Clique com botão direito em <strong>Servers</strong> → <strong>Register</strong> → <strong>Server</strong>.</li>
+<li>Aba <strong>General</strong> → <strong>Name:</strong> <code>PostgreSQL Local</code></li>
+<li>Aba <strong>Connection</strong> → preencha:
+   - <strong>Host:</strong> <code>localhost</code>
+   - <strong>Port:</strong> <code>5432</code>
+   - <strong>Username:</strong> <code>postgres</code>
+   - <strong>Password:</strong> a senha do Passo 5 (ex.: <code>postgres123</code>)
+   - Marque <strong>Save password</strong></li>
+<li>Clique em <strong>Save</strong>. O servidor aparecerá conectado.</li>
+</ol>
+<blockquote>
+<p>✅ <strong>Verificando a instalação (Linux)</strong></p>
+<p><strong>Pelo pgAdmin:</strong> expanda <strong>Servers → PostgreSQL Local → Databases → postgres</strong> → clique com botão direito → <strong>Query Tool</strong> → execute:
+<code>sql
+SELECT version();</code></p>
+<p><strong>Pelo Terminal:</strong>
+<code>bash
+psql -U postgres -c "SELECT version();"</code>
+Digite a senha quando solicitado.</p>
+</blockquote>
+<p><strong>Problemas comuns — PostgreSQL (Linux)</strong></p>
+<table>
+<thead><tr>
+<th>Problema</th>
+<th>Causa provável</th>
+<th>Solução</th>
+</tr></thead>
+<tbody>
+<tr><td>`sudo: apt: command not found`</td><td>Distro diferente</td><td>Use `dnf` no lugar de `apt` (Fedora/RHEL).</td></tr>
+<tr><td>`psql: error: connection refused`</td><td>Serviço parado</td><td>`sudo systemctl start postgresql`</td></tr>
+<tr><td>Erro de autenticação no psql</td><td>Método `peer` ativo</td><td>Sempre acesse com `sudo -i -u postgres` antes de rodar `psql`.</td></tr>
+<tr><td>pgAdmin não instala</td><td>`curl` ausente</td><td>Execute `sudo apt install curl -y` e repita o Passo 6.</td></tr>
+</tbody></table>
+
+<hr />
+<h3 id="2-criacao-de-banco-de-dados">2. Criação de Banco de Dados</h3>
+<p>Um <strong>banco de dados</strong> é o contêiner principal onde todos os objetos (tabelas, esquemas, views) serão armazenados. Veja como criá-lo em cada SGBD.</p>
+<h4 id="sql-server">🗄 SQL Server</h4>
+<p><strong>Via SSMS (interface gráfica):</strong></p>
+<ol>
+<li>No painel <em>Object Explorer</em>, clique com botão direito em <strong>Databases</strong>.</li>
+<li>Selecione <strong>New Database...</strong>.</li>
+<li>Digite o nome do banco (ex.: <code>BancoDeTestes</code>) e clique em <strong>OK</strong>.</li>
+</ol>
+<p><strong>Via SQL (T-SQL):</strong></p>
+<pre><code class="language-sql">-- Criar banco de dados
+CREATE DATABASE BancoDeTestes;
+
+-- Selecionar o banco para uso
+USE BancoDeTestes;
+
+-- Verificar bancos existentes
+SELECT name FROM sys.databases;
+</code></pre>
+<hr />
+<h4 id="postgresql">🐘 PostgreSQL</h4>
+<p><strong>Via pgAdmin (interface gráfica):</strong></p>
+<ol>
+<li>Expanda o servidor no painel esquerdo do pgAdmin.</li>
+<li>Clique com botão direito em <strong>Databases</strong> → <strong>Create</strong> → <strong>Database...</strong>.</li>
+<li>Preencha o campo <strong>Database</strong> com o nome (ex.: <code>banco_testes</code>) e clique em <strong>Save</strong>.</li>
+</ol>
+<p><strong>Via SQL:</strong></p>
+<pre><code class="language-sql">-- Criar banco de dados
+CREATE DATABASE banco_testes;
+
+-- Conectar ao banco (no psql terminal)
+\c banco_testes
+
+-- Listar bancos existentes
+\l
+
+-- Ou via SQL padrão:
+SELECT datname FROM pg_database;
+</code></pre>
+<blockquote>
+<p>💡 <strong>Convenção de nomes:</strong><br />
+No SQL Server é comum usar <strong>PascalCase</strong> (ex.: <code>BancoDeTestes</code>).<br />
+No PostgreSQL, prefira <strong>snake_case</strong> com letras minúsculas (ex.: <code>banco_testes</code>), pois o sistema converte identificadores para minúsculas por padrão.</p>
+</blockquote>
+<hr />
+<h3 id="3-esquemas-e-tabelas">3. Esquemas e Tabelas</h3>
+<p>Um <strong>esquema (schema)</strong> é um agrupamento lógico de objetos dentro de um banco de dados — funciona como uma "pasta" que organiza tabelas, views e outros objetos.<br />
+As <strong>tabelas</strong> são onde os dados são efetivamente armazenados, em linhas e colunas.</p>
+<hr />
+<h4 id="31-principais-tipos-de-dados">3.1 Principais Tipos de Dados</h4>
+<table>
+<thead><tr>
+<th>Tipo</th>
+<th>SQL Server</th>
+<th>PostgreSQL</th>
+<th>Descrição</th>
+</tr></thead>
+<tbody>
+<tr><td>Inteiro</td><td>`INT`</td><td>`INTEGER`</td><td>Números inteiros</td></tr>
+<tr><td>Inteiro longo</td><td>`BIGINT`</td><td>`BIGINT`</td><td>Inteiros grandes</td></tr>
+<tr><td>Decimal</td><td>`DECIMAL(p,s)`</td><td>`NUMERIC(p,s)`</td><td>Número com casas decimais</td></tr>
+<tr><td>Texto fixo</td><td>`CHAR(n)`</td><td>`CHAR(n)`</td><td>Texto de tamanho fixo</td></tr>
+<tr><td>Texto variável</td><td>`VARCHAR(n)`</td><td>`VARCHAR(n)`</td><td>Texto até *n* caracteres</td></tr>
+<tr><td>Texto longo</td><td>`NVARCHAR(MAX)`</td><td>`TEXT`</td><td>Texto sem limite definido</td></tr>
+<tr><td>Data</td><td>`DATE`</td><td>`DATE`</td><td>Apenas data (AAAA-MM-DD)</td></tr>
+<tr><td>Data e hora</td><td>`DATETIME`</td><td>`TIMESTAMP`</td><td>Data e hora</td></tr>
+<tr><td>Booleano</td><td>`BIT` (0 ou 1)</td><td>`BOOLEAN`</td><td>Verdadeiro / Falso</td></tr>
+</tbody></table>
+
+<hr />
+<h4 id="32-criando-esquemas">3.2 Criando Esquemas</h4>
+<h5 id="sql-server_1">🗄 SQL Server</h5>
+<pre><code class="language-sql">-- Criar esquemas
+CREATE SCHEMA Academico;
+CREATE SCHEMA Financeiro;
+
+-- Listar esquemas existentes
+SELECT name FROM sys.schemas;
+</code></pre>
+<h5 id="postgresql_1">🐘 PostgreSQL</h5>
+<pre><code class="language-sql">-- Criar esquemas
+CREATE SCHEMA academico;
+CREATE SCHEMA financeiro;
+
+-- Listar esquemas existentes
+SELECT schema_name FROM information_schema.schemata;
+</code></pre>
+<hr />
+<h4 id="33-criando-tabelas">3.3 Criando Tabelas</h4>
+<p>As tabelas a seguir são as mesmas usadas no material teórico da disciplina: <strong>Departamento</strong>, <strong>Empregado</strong> e <strong>Dependente</strong>.</p>
+<h5 id="sql-server_2">🗄 SQL Server</h5>
+<pre><code class="language-sql">USE BancoDeTestes;
+
+-- Tabela Departamento
+CREATE TABLE Academico.Departamento (
+    CodDepto  INT           NOT NULL,
+    Nome      VARCHAR(100)  NOT NULL,
+    CONSTRAINT PK_Departamento PRIMARY KEY (CodDepto)
+);
+
+-- Tabela Empregado
+CREATE TABLE Academico.Empregado (
+    CodEmp    INT           NOT NULL,
+    Nome      VARCHAR(100)  NOT NULL,
+    CodDepto  INT           NOT NULL,
+    CONSTRAINT PK_Empregado  PRIMARY KEY (CodEmp),
+    CONSTRAINT FK_Emp_Depto  FOREIGN KEY (CodDepto)
+        REFERENCES Academico.Departamento(CodDepto)
+);
+
+-- Tabela Dependente
+CREATE TABLE Academico.Dependente (
+    CodDep    INT           NOT NULL,
+    Nome      VARCHAR(100)  NOT NULL,
+    CodEmp    INT           NOT NULL,
+    CONSTRAINT PK_Dependente PRIMARY KEY (CodDep),
+    CONSTRAINT FK_Dep_Emp    FOREIGN KEY (CodEmp)
+        REFERENCES Academico.Empregado(CodEmp)
+);
+</code></pre>
+<h5 id="postgresql_2">🐘 PostgreSQL</h5>
+<pre><code class="language-sql">-- Garantir que está no banco certo
+\c banco_testes
+
+-- Tabela Departamento
+CREATE TABLE academico.departamento (
+    cod_depto  INTEGER      NOT NULL,
+    nome       VARCHAR(100) NOT NULL,
+    CONSTRAINT pk_departamento PRIMARY KEY (cod_depto)
+);
+
+-- Tabela Empregado
+CREATE TABLE academico.empregado (
+    cod_emp    INTEGER      NOT NULL,
+    nome       VARCHAR(100) NOT NULL,
+    cod_depto  INTEGER      NOT NULL,
+    CONSTRAINT pk_empregado  PRIMARY KEY (cod_emp),
+    CONSTRAINT fk_emp_depto  FOREIGN KEY (cod_depto)
+        REFERENCES academico.departamento(cod_depto)
+);
+
+-- Tabela Dependente
+CREATE TABLE academico.dependente (
+    cod_dep    INTEGER      NOT NULL,
+    nome       VARCHAR(100) NOT NULL,
+    cod_emp    INTEGER      NOT NULL,
+    CONSTRAINT pk_dependente PRIMARY KEY (cod_dep),
+    CONSTRAINT fk_dep_emp    FOREIGN KEY (cod_emp)
+        REFERENCES academico.empregado(cod_emp)
+);
+</code></pre>
+<blockquote>
+<p>🔑 <strong>Constraints importantes:</strong><br />
+- <code>PRIMARY KEY</code> — identifica unicamente cada linha<br />
+- <code>NOT NULL</code> — o campo não pode ficar vazio<br />
+- <code>FOREIGN KEY</code> — garante a integridade referencial entre tabelas  </p>
+</blockquote>
+<hr />
+<h3 id="4-operacoes-dml">4. Operações DML</h3>
+<p><strong>DML (Data Manipulation Language)</strong> é o conjunto de comandos SQL usado para manipular os dados dentro das tabelas. As quatro operações fundamentais são:</p>
+<table>
+<thead><tr>
+<th>Comando</th>
+<th>Operação</th>
+<th>Descrição</th>
+</tr></thead>
+<tbody>
+<tr><td>`INSERT`</td><td>Inserção</td><td>Adiciona novas linhas à tabela</td></tr>
+<tr><td>`SELECT`</td><td>Consulta</td><td>Recupera dados da tabela</td></tr>
+<tr><td>`UPDATE`</td><td>Atualização</td><td>Modifica dados existentes</td></tr>
+<tr><td>`DELETE`</td><td>Remoção</td><td>Remove linhas da tabela</td></tr>
+</tbody></table>
+
+<blockquote>
+<p>⚠️ Os exemplos a seguir usam as tabelas <strong>Departamento</strong>, <strong>Empregado</strong> e <strong>Dependente</strong> criadas no Módulo 3. Execute os INSERTs antes dos SELECTs, UPDATEs e DELETEs.</p>
+</blockquote>
+<hr />
+<h4 id="41-insert-inserindo-dados">4.1 INSERT — Inserindo Dados</h4>
+<p>O <code>INSERT</code> adiciona uma nova linha à tabela. A ordem dos valores deve corresponder à ordem das colunas declaradas.</p>
+<p><strong>Sintaxe:</strong></p>
+<pre><code class="language-sql">INSERT INTO esquema.Tabela (coluna1, coluna2, ...)
+VALUES (valor1, valor2, ...);
+</code></pre>
+<h5 id="sql-server_3">🗄 SQL Server</h5>
+<pre><code class="language-sql">USE BancoDeTestes;
+
+-- Inserindo Departamentos
+INSERT INTO Academico.Departamento (CodDepto, Nome) VALUES (1, 'D1');
+INSERT INTO Academico.Departamento (CodDepto, Nome) VALUES (2, 'D2');
+INSERT INTO Academico.Departamento (CodDepto, Nome) VALUES (3, 'D3');
+
+-- Inserindo Empregados
+INSERT INTO Academico.Empregado (CodEmp, Nome, CodDepto) VALUES (1, 'José',  3);
+INSERT INTO Academico.Empregado (CodEmp, Nome, CodDepto) VALUES (2, 'Maria', 2);
+INSERT INTO Academico.Empregado (CodEmp, Nome, CodDepto) VALUES (3, 'João',  2);
+INSERT INTO Academico.Empregado (CodEmp, Nome, CodDepto) VALUES (4, 'João',  1);
+INSERT INTO Academico.Empregado (CodEmp, Nome, CodDepto) VALUES (5, 'Pedro', 3);
+INSERT INTO Academico.Empregado (CodEmp, Nome, CodDepto) VALUES (6, 'Ana',   2);
+
+-- Inserindo Dependentes
+INSERT INTO Academico.Dependente (CodDep, Nome, CodEmp) VALUES (1, 'Francisco', 3);
+INSERT INTO Academico.Dependente (CodDep, Nome, CodEmp) VALUES (2, 'Juliana',   3);
+INSERT INTO Academico.Dependente (CodDep, Nome, CodEmp) VALUES (3, 'Juliana',   4);
+INSERT INTO Academico.Dependente (CodDep, Nome, CodEmp) VALUES (4, 'Manuel',    1);
+INSERT INTO Academico.Dependente (CodDep, Nome, CodEmp) VALUES (5, 'Miguel',    3);
+INSERT INTO Academico.Dependente (CodDep, Nome, CodEmp) VALUES (6, 'Hugo',      2);
+INSERT INTO Academico.Dependente (CodDep, Nome, CodEmp) VALUES (7, 'Marcos',    6);
+INSERT INTO Academico.Dependente (CodDep, Nome, CodEmp) VALUES (8, 'Daniela',   1);
+INSERT INTO Academico.Dependente (CodDep, Nome, CodEmp) VALUES (9, 'Marieta',   2);
+</code></pre>
+<h5 id="postgresql_3">🐘 PostgreSQL</h5>
+<pre><code class="language-sql">\c banco_testes
+
+-- Inserindo Departamentos
+INSERT INTO academico.departamento (cod_depto, nome) VALUES (1, 'D1');
+INSERT INTO academico.departamento (cod_depto, nome) VALUES (2, 'D2');
+INSERT INTO academico.departamento (cod_depto, nome) VALUES (3, 'D3');
+
+-- Inserindo Empregados
+INSERT INTO academico.empregado (cod_emp, nome, cod_depto) VALUES (1, 'José',  3);
+INSERT INTO academico.empregado (cod_emp, nome, cod_depto) VALUES (2, 'Maria', 2);
+INSERT INTO academico.empregado (cod_emp, nome, cod_depto) VALUES (3, 'João',  2);
+INSERT INTO academico.empregado (cod_emp, nome, cod_depto) VALUES (4, 'João',  1);
+INSERT INTO academico.empregado (cod_emp, nome, cod_depto) VALUES (5, 'Pedro', 3);
+INSERT INTO academico.empregado (cod_emp, nome, cod_depto) VALUES (6, 'Ana',   2);
+
+-- Inserindo Dependentes
+INSERT INTO academico.dependente (cod_dep, nome, cod_emp) VALUES (1, 'Francisco', 3);
+INSERT INTO academico.dependente (cod_dep, nome, cod_emp) VALUES (2, 'Juliana',   3);
+INSERT INTO academico.dependente (cod_dep, nome, cod_emp) VALUES (3, 'Juliana',   4);
+INSERT INTO academico.dependente (cod_dep, nome, cod_emp) VALUES (4, 'Manuel',    1);
+INSERT INTO academico.dependente (cod_dep, nome, cod_emp) VALUES (5, 'Miguel',    3);
+INSERT INTO academico.dependente (cod_dep, nome, cod_emp) VALUES (6, 'Hugo',      2);
+INSERT INTO academico.dependente (cod_dep, nome, cod_emp) VALUES (7, 'Marcos',    6);
+INSERT INTO academico.dependente (cod_dep, nome, cod_emp) VALUES (8, 'Daniela',   1);
+INSERT INTO academico.dependente (cod_dep, nome, cod_emp) VALUES (9, 'Marieta',   2);
+</code></pre>
+<blockquote>
+<p>💡 <strong>Atenção à ordem dos INSERTs:</strong> sempre insira primeiro na tabela <strong>pai</strong> antes da <strong>filha</strong>. No exemplo, Departamento → Empregado → Dependente, pois as FKs dependem dessa ordem.</p>
+</blockquote>
+<hr />
+<h4 id="42-select-consultando-dados">4.2 SELECT — Consultando Dados</h4>
+<p>O <code>SELECT</code> é o comando mais utilizado em SQL. Permite recuperar dados de uma ou mais tabelas.</p>
+<p><strong>Sintaxe básica:</strong></p>
+<pre><code class="language-sql">SELECT coluna1, coluna2
+FROM esquema.Tabela
+WHERE condição;
+</code></pre>
+<h5 id="sql-server-postgresql-sintaxe-identica">🗄 SQL Server · 🐘 PostgreSQL <em>(sintaxe idêntica)</em></h5>
+<pre><code class="language-sql">-- Selecionar todas as colunas de uma tabela
+SELECT * FROM Academico.Departamento;
+
+-- Selecionar colunas específicas
+SELECT CodEmp, Nome FROM Academico.Empregado;
+
+-- Filtrar com WHERE
+SELECT * FROM Academico.Empregado
+WHERE CodDepto = 2;
+
+-- Filtrar com múltiplas condições
+SELECT * FROM Academico.Empregado
+WHERE CodDepto = 2 AND Nome = 'Maria';
+
+-- Ordenar resultados (ASC = crescente, DESC = decrescente)
+SELECT * FROM Academico.Empregado
+ORDER BY Nome ASC;
+
+-- Contar registros
+SELECT COUNT(*) AS TotalEmpregados
+FROM Academico.Empregado;
+
+-- JOIN: combinar dados de duas tabelas
+SELECT e.CodEmp, e.Nome AS Empregado, d.Nome AS Departamento
+FROM Academico.Empregado e
+JOIN Academico.Departamento d ON e.CodDepto = d.CodDepto;
+
+-- JOIN triplo: empregado, departamento e seus dependentes
+SELECT e.Nome AS Empregado, d.Nome AS Departamento, dep.Nome AS Dependente
+FROM Academico.Empregado e
+JOIN Academico.Departamento d   ON e.CodDepto = d.CodDepto
+JOIN Academico.Dependente   dep ON dep.CodEmp  = e.CodEmp
+ORDER BY e.Nome;
+</code></pre>
+<blockquote>
+<p>💡 <strong>Dica:</strong> No PostgreSQL, substitua <code>Academico.</code> por <code>academico.</code> e os nomes de colunas/tabelas por snake_case (ex.: <code>cod_emp</code>, <code>empregado</code>).</p>
+</blockquote>
+<hr />
+<h4 id="43-update-atualizando-dados">4.3 UPDATE — Atualizando Dados</h4>
+<p>O <code>UPDATE</code> modifica valores em linhas já existentes. <strong>Sempre use <code>WHERE</code></strong> para não atualizar a tabela inteira por acidente.</p>
+<p><strong>Sintaxe:</strong></p>
+<pre><code class="language-sql">UPDATE esquema.Tabela
+SET coluna1 = novo_valor
+WHERE condição;
+</code></pre>
+<h5 id="sql-server_4">🗄 SQL Server</h5>
+<pre><code class="language-sql">-- Alterar o departamento de um empregado
+UPDATE Academico.Empregado
+SET CodDepto = 1
+WHERE CodEmp = 2;
+
+-- Alterar o nome de um departamento
+UPDATE Academico.Departamento
+SET Nome = 'Tecnologia'
+WHERE CodDepto = 1;
+
+-- Verificar o resultado
+SELECT * FROM Academico.Empregado WHERE CodEmp = 2;
+SELECT * FROM Academico.Departamento WHERE CodDepto = 1;
+</code></pre>
+<h5 id="postgresql_4">🐘 PostgreSQL</h5>
+<pre><code class="language-sql">-- Alterar o departamento de um empregado
+UPDATE academico.empregado
+SET cod_depto = 1
+WHERE cod_emp = 2;
+
+-- Alterar o nome de um departamento
+UPDATE academico.departamento
+SET nome = 'Tecnologia'
+WHERE cod_depto = 1;
+
+-- Verificar o resultado
+SELECT * FROM academico.empregado WHERE cod_emp = 2;
+SELECT * FROM academico.departamento WHERE cod_depto = 1;
+</code></pre>
+<blockquote>
+<p>⚠️ <strong>CUIDADO:</strong> Um <code>UPDATE</code> sem <code>WHERE</code> atualiza <strong>todas</strong> as linhas da tabela. Execute sempre com cautela.</p>
+</blockquote>
+<hr />
+<h4 id="44-delete-removendo-dados">4.4 DELETE — Removendo Dados</h4>
+<p>O <code>DELETE</code> remove linhas de uma tabela. Assim como o <code>UPDATE</code>, <strong>sempre use <code>WHERE</code></strong> para não apagar todos os registros.</p>
+<p><strong>Sintaxe:</strong></p>
+<pre><code class="language-sql">DELETE FROM esquema.Tabela
+WHERE condição;
+</code></pre>
+<h5 id="sql-server_5">🗄 SQL Server</h5>
+<pre><code class="language-sql">-- Remover um dependente específico
+DELETE FROM Academico.Dependente
+WHERE CodDep = 9;
+
+-- Remover todos os dependentes de um empregado
+DELETE FROM Academico.Dependente
+WHERE CodEmp = 3;
+
+-- Verificar o resultado
+SELECT * FROM Academico.Dependente;
+</code></pre>
+<h5 id="postgresql_5">🐘 PostgreSQL</h5>
+<pre><code class="language-sql">-- Remover um dependente específico
+DELETE FROM academico.dependente
+WHERE cod_dep = 9;
+
+-- Remover todos os dependentes de um empregado
+DELETE FROM academico.dependente
+WHERE cod_emp = 3;
+
+-- Verificar o resultado
+SELECT * FROM academico.dependente;
+</code></pre>
+<blockquote>
+<p>⚠️ <strong>CUIDADO com FKs:</strong> Não é possível deletar um registro pai enquanto existirem registros filhos referenciando-o. No exemplo, para deletar um Empregado, seus Dependentes devem ser removidos primeiro.</p>
+<p>💡 <strong>Diferença entre DELETE e TRUNCATE:</strong>
+- <code>DELETE FROM Tabela WHERE ...</code> — remove linhas específicas, pode ser desfeito com ROLLBACK.
+- <code>TRUNCATE TABLE Tabela</code> — remove <strong>todas</strong> as linhas de uma vez, mais rápido, mas não pode ser filtrado.</p>
+</blockquote>
+<hr />
+<p><em>Universidade Estadual da Paraíba — UEPB | Prof. Dr. Fábio Leite | fabioleite@servidor.uepb.edu.br | +55 83 99657-7959</em></p>
+<div class="page-break"></div>
+
+<h1 id="parte-04-projeto-conceitual-e-modelagem-entidade-relacionamento">Parte 04 — Projeto Conceitual e Modelagem Entidade-Relacionamento</h1>
+<h2 id="projeto-conceitual-e-modelagem-entidade-e-relacionamentos">PROJETO CONCEITUAL E MODELAGEM ENTIDADE E RELACIONAMENTOS</h2>
+<p><em>Apresentação: Fábio Leite</em></p>
+<h3 id="agenda">AGENDA</h3>
+<ol>
+<li>Propósito</li>
+<li>Projeto conceitual</li>
+<li>Modelo E/R e notações</li>
+<li>
+<p>Elementos e Conceitos</p>
+<p>a. Entidades e tipos de entidades</p>
+<p>b. Atributos e tipos de atributos</p>
+<p>c. Relacionamento e cardinalidade</p>
+</li>
+<li>
+<p>Notações</p>
+</li>
+<li>Modelagem na prática</li>
+</ol>
+<h2 id="proposito">PROPÓSITO</h2>
+<p><strong>Esquema conceitual</strong> é o estágio onde os requisitos de dados são documentados e transformados em uma representação estruturada, usando um modelo de dados conceitual de alto nível (como o MER/ER). Ele serve como uma descrição concisa e formal dos requisitos de dados.</p>
+<p>O projeto conceitual envolve a identificação dos componentes básicos:</p>
+<ul>
+<li>
+<p><strong>Entidades e Relacionamentos:</strong> Quais são os tipos de entidade (e seus atributos) e os tipos de relacionamento no negócio.</p>
+</li>
+<li>
+<p><strong>Informações Persistidas:</strong> O projeto conceitual visa identificar os tipos de dados, relacionamentos e restrições que precisam ser armazenados no banco de dados.</p>
+</li>
+<li>
+<p><strong>Expressão em Alto Nível e Comunicação:</strong> Modelos como o MER/ER são utilizados por serem expressivos e simples, o que promove uma melhor comunicação no projeto entre projetistas e usuários.</p>
+</li>
+<li>
+<p><strong>Restrições de Integridade:</strong> São especificadas como parte do esquema conceitual (ex: chaves, cardinalidade, participação), permitindo que projetistas se concentrem na especificação das propriedades do mundo real que o banco deve modelar.</p>
+</li>
+</ul>
+<h3 id="projeto-conceitual">Projeto conceitual</h3>
+<ul>
+<li>Quais são as entidades e os relacionamentos no negócio?</li>
+</ul>
+<p>O projeto conceitual utiliza o Modelo Entidade-Relacionamento (MER) para representar os requisitos de dados. Entidades (conceitos no mundo real) e Relacionamentos (associações entre entidades) são os construtos fundamentais. Nesta fase, são definidos os tipos de Entidade (e seus atributos) e os tipos de Relacionamento.</p>
+<ul>
+<li>Quais informações devem ser persistidas no banco?</li>
+</ul>
+<p>O projeto conceitual deve mapear as informações cruciais para o negócio, que serão representadas pelos Atributos dos tipos de entidade e relacionamento. O objetivo é identificar não apenas o que será armazenado, mas também como será estruturado: quais são os valores de domínio, se os atributos são simples ou compostos, monovalorados ou multivalorados, e se são armazenados ou derivados.</p>
+<ul>
+<li>Quais são as restrições de integridade?</li>
+</ul>
+<p>O esquema conceitual deve especificar as restrições que definem a validade dos dados. No MER, as principais restrições são: </p>
+<ol>
+<li>Chaves: Definição dos atributos-chave para identificar univocamente cada entidade. </li>
+<li>Cardinalidade: Especifica o número máximo de participações de uma entidade em um relacionamento (ex: 1:1, 1:N, M:N). </li>
+<li>Participação: Define se a participação em um relacionamento é total (obrigatória) ou parcial (opcional).</li>
+</ol>
+<ul>
+<li>O esquema do banco de dados pode ser representado de forma gráfico</li>
+</ul>
+<p>O Diagrama Entidade-Relacionamento (Diagrama ER) é a notação gráfica padrão utilizada pelo MER. Essa representação visual utiliza símbolos (retângulos para entidades, losangos para relacionamentos, elipses para atributos) para exibir o esquema conceitual de forma intuitiva, facilitando a compreensão.</p>
+<ul>
+<li>Podemos transformar MER em esquemas lógicos</li>
+</ul>
+<p>O processo é chamado de Mapeamento do Modelo Conceitual para o Modelo Lógico (ou Projeto Lógico). As regras de mapeamento são bem definidas, especialmente para transformar o Diagrama ER em um conjunto de Esquemas de Relação (tabelas) no Modelo Relacional, que é o modelo lógico mais comum.</p>
+<h2 id="engenharia-de-software">ENGENHARIA DE SOFTWARE</h2>
+<div style="display: flex; gap: 20px;" align="center">
+    <img src="image/fases_projeto_bd.png" width="50%" />
+    <img src="image/exemplo.png" width="50%" />
+</div>
+
+<p>A primeira imagem acima representa o panorama das <strong>Fases do Projeto de Banco de Dados</strong>, que começa com a Coleta e Análise de Requisitos e avança para o Projeto Conceitual. Este fluxograma estabelece a ordem e a relação entre as etapas (Conceitual, Lógica e Física), guiando o desenvolvedor desde a descrição das necessidades do usuário até a implementação no SGBD.</p>
+<p>Já na segunda imagem, exemplifica a fase de <strong>Projeto Conceitual</strong>, sendo um Diagrama ER/EER (Modelo Entidade-Relacionamento/Estendido). Utiliza-se essa notação gráfica de alto nível para formalizar a estrutura do banco de dados, mostrando os tipos de entidade, os atributos, os relacionamentos e as restrições que governam os dados (como a cardinalidade). Esta representação é crucial por ser independente de qualquer SGBD e servir como a especificação formal que será traduzida para o esquema lógico na fase seguinte.</p>
+<hr />
+<h2 id="elementos">ELEMENTOS</h2>
+<h3 id="entidades">Entidades</h3>
+<p>O conceito de Entidade no MER refere-se a <strong>algo do mundo real</strong> com existência independente, seja ela <strong>física ou conceitual</strong>. O que é modelado é o Tipo de Entidade, a descrição abstrata de um conjunto de instâncias que compartilham os mesmos Atributos e estrutura. As entidades são puramente estruturais, focando no estado dos dados sem incluir <strong>comportamentos (métodos)</strong> como na programação orientada a objetos. Os atributos definem a informação da entidade e <strong>possuem um domínio (conjunto de valores válidos)</strong>. Um <strong>Atributo-Chave</strong> é crucial para identificar unicamente cada entidade. Os atributos são classificados como: <strong>simples ou compostos</strong> (ex: Endereço), monovalorados ou multivalorados (ex: Telefones), e armazenados ou derivados (ex: Idade). Todos esses detalhes devem ser formalmente registrados no <strong>Dicionário de Dados.</strong></p>
+<h3 id="entidades-fracas">Entidades fracas</h3>
+<ul>
+<li>São entidades que dependem da existência de outras ou de identificação de outra entidade</li>
+<li>Instância subordinada e dominante<ul>
+<li>Ex.: "Dependente e cliente"</li>
+</ul>
+</li>
+</ul>
+<table border="0">
+  <tr>
+    <td valign="top" style="width: 25%;">
+      <img src="image/entidade_fraca.png" alt="Símbolo de Entidade Fraca" width="100%" />
+    </td>
+    <td valign="top" style="width: 75%; padding-left: 15px;">
+      *Entidades fracas dependem de algum outro tipo de entidade. Elas não possuem chaves primárias e não têm significância no diagrama sem sua entidade primária.*
+    </td>
+  </tr>
+</table>
+
+<h3 id="exemplos">Exemplos</h3>
+<div align="center">
+    <img src="image/elementos.png" width="50%" />
+</div>
+<div align="center">
+  Duas entidades, empregado e1 e empresa c1, e seus atributos.
+</div>
+
+<h3 id="_1"></h3>
+<div align="center">
+    <img src="image/elementos1.png" width="50%" />
+</div>
+<div align="center">
+  Dois tipos de entidade, EMPREGADO e EMPRESA, e algumas entidades-membro de cada um.
+</div>
+
+<h3 id="tipos-de-atributos">Tipos de atributos</h3>
+<ul>
+<li><strong>Atributos compostos</strong><ul>
+<li>Podem ser divididos em subpartes menores, que representam atributos básicos com significados independentes</li>
+<li>Ex.: Endereço (cidade, estado, CEP, bairro, etc...)</li>
+</ul>
+</li>
+<li><strong>Atributos simples</strong><ul>
+<li>São indivisíveis ou atômicos</li>
+</ul>
+</li>
+<li><strong>Atributos Monovalorados e Multivalorados</strong><ul>
+<li>Valor único para cada entidade</li>
+<li>Diversos valores para cada entidade</li>
+<li>Ex.: Cor do carro, números de telefone</li>
+</ul>
+</li>
+</ul>
+<div align="center">
+    <img src="image/tipos_atributos.png" width="50%" />
+</div>
+
+<h3 id="notacao-para-diagramas-er">Notação para diagramas ER:</h3>
+<div align="center">
+    <img src="image/notacao.png" width="50%" />
+</div>
+
+<div align="center">
+    <img src="image/notacao1.png" width="50%" />
+</div>
+
+<h3 id="tipos-de-atributos_1">Tipos de atributos</h3>
+<ul>
+<li><strong>Armazenados e derivados</strong></li>
+</ul>
+<p>Classificação que diferencia se o valor é guardado explicitamente (Armazenado) ou se é calculado/obtido a partir do valor de outros atributos relacionados (Derivado). O valor de um atributo derivado não é armazenado no banco de dados, mas pode ser determinado (calculado) a partir de um atributo armazenado, como no seu exemplo: <em>a Idade é derivada da Data de Nascimento</em></p>
+<ul>
+<li><strong>Atributos complexos</strong><ul>
+<li>Atributos multivalorados organizados e agrupados</li>
+</ul>
+</li>
+</ul>
+<hr />
+<p><strong>Chaves</strong> são um conjunto mínimo de atributos que identificam unicamente uma entidade num conjunto</p>
+<ul>
+<li><strong>Chave primária</strong></li>
+</ul>
+<p>É uma das Chaves Candidatas que é escolhida pelo projetista do banco de dados para ser o identificador principal da relação. É o identificador mais importante, usado para referências e indexação.</p>
+<ul>
+<li><strong>Chave candidata</strong></li>
+</ul>
+<p>É uma Superchave mínima. Mínima significa que se você remover qualquer atributo do conjunto, o restante dos atributos não será mais uma Superchave (perde a propriedade de unicidade).</p>
+<ul>
+<li><strong>Chaves compostas</strong> </li>
+</ul>
+<p>Qualquer chave (Superchave, Candidata ou Primária) que consiste em dois ou mais atributos. Muitas vezes usada em tabelas resultantes de relacionamentos Muitos-para-Muitos.</p>
+<ul>
+<li><strong>Integridade de chaves</strong> (Identificação, imutável, não reutilização)</li>
+</ul>
+<h3 id="relacionamentos">RELACIONAMENTOS</h3>
+<ul>
+<li>É uma associação entre duas entidades</li>
+<li>Uma função que mapeia elementos de um tipo a outro<ul>
+<li>Ex. Um cliente <em>aluga</em> uma fita</li>
+</ul>
+</li>
+</ul>
+<div align="center">
+    <img src="image/relacionamentos.png" width="50%" />
+</div>
+
+<p>Garantimos que o Banco de Dados, que possui:</p>
+<ul>
+<li>Um conjunto de objetos classificados como pessoas (entidade EMPREGADO)</li>
+<li>Um conjunto de objetos classificados como departamentos (entidade DEPARTAMENTO)</li>
+<li><strong>Um conjuntos de associações, que ligam um departamento a uma pessoa.</strong> (relacionamento LOTAÇÃO). --&gt; tais associações são definidas por relacionamentos e implementadas de alguma forma no banco de dados.</li>
+</ul>
+<hr />
+<div align="center">
+    <img src="image/empreg_depat.png" width="50%" />
+</div>
+
+<p>A imagem acima é uma visualização direta do Conjunto de Relacionamento, ilustrando como as associações ocorrem na prática no banco de dados. O losango central, que representa o Tipo de Relacionamento TRABALHA_PARA, define a regra de conexão entre as entidades FUNCIONARIO e DEPARTAMENTO. As linhas que partem do losango e unem instâncias específicas, como o funcionário $f_1$ ao departamento $d_1$, são as Instâncias de Relacionamento individuais. O diagrama, portanto, mostra a totalidade dos fatos registrados no sistema, agrupando visualmente os funcionários ($f_1, f_3, f_6$, etc.) sob seus respectivos departamentos, demonstrando o conjunto de relacionamento completo.</p>
+<h3 id="cardinalidade">Cardinalidade</h3>
+<p>É uma propriedade importante que diz respeito a <strong>quantas (máxima e mínima) ocorrências</strong> de uma entidade podem estar associadas a uma determinada ocorrência através do relacionamento</p>
+<p><strong>Cardinalidade Mínima:</strong> é o <strong>número mínimo</strong> de ocorrências de entidade associadas a uma ocorrência da entidade em questão através do relacionamento</p>
+<p><strong>Cardinalidade Máxima:</strong> é o <strong>número máximo</strong> de ocorrências de entidade associadas a uma ocorrência da entidade em questão através do relacionamento</p>
+<h3 id="tipos-de-cardinalidade">Tipos de Cardinalidade</h3>
+<table border="0">
+  <tr>
+    <td valign="top" style="width: 40%;">
+      <img src="image/cardinalidade.png" alt="Símbolo de Entidade Fraca" width="100%" />
+      <img src="image/cardinalidade1.png" alt="Símbolo de Entidade Fraca" width="100%" />
+    </td>
+    <td valign="top" style="width: 75%; padding-left: 15px;">
+      <ul>
+        <li>Muitos para muitos</li>
+        <li>Um para Um</li>
+        <li>Muitos para Um</li>
+        <li>Um para Muitos</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+<h3 id="cardinalidade-notacao-pe-de-galinha">Cardinalidade Notação "Pé-de-galinha"</h3>
+<p>Símbolos e notação de diagramas ER:</p>
+<div align="center">
+    <img src="image/relacionamentos1.png" width="50%" />
+</div>
+
+<hr />
+<p>Exemplo de diagrama com uso das cardinalidades:</p>
+<div align="center">
+    <img src="image/diagrama.png" width="50%" />
+</div>
+
+<hr />
+<h2 id="restricoes-de-integridade">RESTRIÇÕES DE INTEGRIDADE</h2>
+<ul>
+<li>Delimitam o comportamento dos relacionamentos<ul>
+<li>Ex. Todo empregado deve estar num departamento</li>
+<li>Todo dependente deve ter um cliente associado</li>
+</ul>
+</li>
+<li>Cardinalidade<ul>
+<li>O número de instância que participam do relacionamento</li>
+</ul>
+</li>
+<li>Totalidade<ul>
+<li>Obrigatoriedade da ocorrência das instâncias nos relacionamentos</li>
+</ul>
+</li>
+</ul>
+<h2 id="principios-de-modelagem-conceitual">PRINCÍPIOS DE MODELAGEM CONCEITUAL</h2>
+<ul>
+<li>Quando um conceito deveria ser modelado como entidade ou atributo?</li>
+</ul>
+<p>Atributos descrevem propriedades de entidades. Se um conceito for significativo o suficiente para ter seus próprios atributos ou participar de múltiplos relacionamentos, ele deve ser uma Entidade. Caso contrário, é um Atributo.</p>
+<ul>
+<li>Quando um conceito deve ser modelado como relacionamento ou entidade</li>
+</ul>
+<p>Um Relacionamento pode ser elevado a uma Entidade (chamada de Entidade de Relacionamento ou Entidade Associativa). Isso é necessário quando o relacionamento possui seus próprios atributos (Ex.: o relacionamento TRABALHA_PARA pode ter o atributo Data_de_Início) ou quando ele precisa participar em outros relacionamentos.</p>
+<ul>
+<li>Identificar relacionamentos binários e ternários<ul>
+<li><strong>Relacionamento Binário</strong>: Envolve apenas dois tipos de entidade (Ex.: $E_1$ se relaciona com $E_2$). São os mais comuns e preferidos.</li>
+<li><strong>Relacionamento Ternário</strong>: Envolve três tipos de entidade (Ex.: FORNECEDOR, PEÇA, PROJETO em um relacionamento FORNECE).</li>
+</ul>
+</li>
+<li>Restrições e regras de entidades</li>
+<li>Muita semântica deve ser capturada</li>
+<li>Algumas restrições não podem ser capturadas no modelo E/R</li>
+<li>Evitar redundância em seus projetos</li>
+<li>Problema do endereço (entidade ou atributos?)</li>
+</ul>
+<h2 id="notacoes">NOTAÇÕES</h2>
+<p>Existem diferentes representações/notações (ou "padronizações") para desenvolvimento de diagramas. Alguns modelos mais usados na literatura são:</p>
+<ul>
+<li>Notação de Barker <strong>Barker's Notation</strong></li>
+<li>Notação de CHEN <strong>Chen Notation</strong></li>
+<li>IDEF1X <strong>IDEF1X Notation</strong></li>
+<li>Notação das Setas <strong>Arrow Notation</strong></li>
+<li>UML <strong>UML Notation</strong></li>
+<li>Notação "pé-de-galinha" <strong>Crow's Foot Notation</strong></li>
+</ul>
+<p>Neste <a href="https://medium.com/@ericgcc/dont-get-wrong-explained-guide-to-choosing-a-database-design-notation-for-erd-in-a-while-7747925a7531">link</a> podemos encontrar um resumo sobre as notações mais utilizadas.</p>
+<ul>
+<li>É comum também encontrarmos autores, softwares, ferramentas cases, ides, etc. que usam notação própria ou uma mistura das notações mais conhecidas. Portanto, ao procurarem modelos ou ao estudarem material adicional podem encontrar exemplos de modelos ER que são construídos com símbolos de mais de uma dessas notações.</li>
+<li>Nesse outro <a href="https://medium.com/@ericgcc/dont-get-wrong-explained-guide-to-choosing-a-database-design-notation-for-erd-in-a-while-7747925a7531">link</a>
+ encontramos uma análise das notações Chen, Chen-alternativa, James Martin (IE ou Pé de Galinha), UML, Barker e IDEF1X (essa é só mencionada...veja porque...) mostrando softwares que possibilitam o design de cada uma delas.</li>
+</ul>
+<div align="center">
+    <img src="image/chen_notacao.jpg" width="50%" />
+</div>
+
+<h2 id="er-extendido">ER-EXTENDIDO</h2>
+<table border="0">
+  <tr>
+    <td valign="top" style="width: 40%;">
+      <img src="image/paciente_medico.png" alt="Símbolo de Entidade Fraca" width="100%" />
+    </td>
+    <td valign="top" style="width: 75%; padding-left: 15px;">
+      <ul>
+        <li>Herança</li>
+        <li>Agregação </li>
+        <li>Relacionamentos ternários e dependentes</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+<hr />
+<h3 id="james-martin">James Martin</h3>
+<ul>
+<li>A notação James Martin tem o objetivo de produzir diagramas enxutos;</li>
+<li>O diagrama possui mais simbolismos;</li>
+<li>Apenas relacionamentos binários são aceitos</li>
+</ul>
+<div align="center">
+    <img src="image/james_martin.png" width="50%" />
+</div>
+
+<hr />
+<table border="0" style="width: 70%; margin: 0 auto;">
+  <tr>
+    <td valign="top" style="width: 60%;">
+      <img src="image/depart_func.png" alt="Símbolo de Entidade Fraca" width="100%" />
+    </td>
+    <td valign="top" style="width: 60%; padding-left: 15px;">
+      <ul>
+        <li>Cardinalidade <strong>N:N</strong></li>
+        <li>Cardinalidade <strong>1:N</strong></li>
+        <li>Cardinalidade <strong>1:1</strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+<h3 id="resumo-james-martin">Resumo / James Martin</h3>
+<div align="center">
+    <img src="image/resumo.jpg" width="50%" />
+</div>
+
+<h2 id="contato_1">CONTATO</h2>
+<ul>
+<li><strong>Telefone:</strong> +55 83 996577959 </li>
+<li><strong>E-mail:</strong> fabioleite@servidor.uepb.edu.br </li>
+<li><strong>Endereço:</strong> Universidade Estadual da Paraíba, Campus I - Campina Grande, PB</li>
+</ul>
+<div class="page-break"></div>
+
+<h1 id="parte-05-exercicios-de-modelagem-entidade-relacionamento">Parte 05 — Exercícios de Modelagem Entidade-Relacionamento</h1>
+<h2 id="exercicios-de-modelagem-entidade-relacionamento">Exercícios de Modelagem Entidade-Relacionamento</h2>
+<p>A seguir estão exercícios práticos de modelagem entidade-relacionamento (MER) com base em cenários da fiscalização tributária, especialmente envolvendo EFD, NF-e e itens de NF-e.</p>
+<h3 id="1-identificacao-de-entidades">1. Identificação de entidades</h3>
+<p>Considere o cenário abaixo:</p>
+<ul>
+<li>Uma empresa emite notas fiscais eletrônicas (NF-e).</li>
+<li>Cada NF-e possui vários itens.</li>
+<li>A Escrituração Fiscal Digital (EFD) registra documentos fiscais de uma empresa em determinado período.</li>
+</ul>
+<h4 id="exercicio-1">Exercício 1</h4>
+<p>Liste as entidades principais que deveriam existir nesse cenário e indique pelo menos dois atributos para cada uma.</p>
+<p>Exemplo de resposta esperada:</p>
+<ul>
+<li><code>CONTRIBUINTE</code> — <code>id_contribuinte</code>, <code>cnpj</code>, <code>razao_social</code></li>
+<li><code>NFE</code> — <code>id_nfe</code>, <code>chave_acesso</code>, <code>valor_total</code></li>
+<li><code>ITEM_NFE</code> — <code>id_item</code>, <code>descricao</code>, <code>valor_item</code></li>
+<li><code>EFD</code> — <code>id_efd</code>, <code>periodo</code>, <code>data_inicial</code>, <code>data_final</code></li>
+</ul>
+<hr />
+<h3 id="2-definicao-de-relacionamentos">2. Definição de relacionamentos</h3>
+<h4 id="exercicio-2">Exercício 2</h4>
+<p>Represente, em linguagem natural, os relacionamentos entre as entidades abaixo:</p>
+<ul>
+<li>Um contribuinte emite várias NF-e.</li>
+<li>Cada NF-e possui vários itens.</li>
+<li>Uma EFD pode registrar várias NF-e ou documentos fiscais.</li>
+</ul>
+<p>Resposta esperada:</p>
+<ul>
+<li>Um <code>CONTRIBUINTE</code> emite uma ou muitas <code>NFE</code>.</li>
+<li>Uma <code>NFE</code> possui um ou muitos <code>ITEM_NFE</code>.</li>
+<li>Uma <code>EFD</code> registra uma ou muitas <code>NFE</code>.</li>
+</ul>
+<hr />
+<h3 id="3-transformacao-para-modelo-er">3. Transformação para modelo ER</h3>
+<h4 id="exercicio-3">Exercício 3</h4>
+<p>Desenhe o modelo ER simplificado para este cenário usando cardinalidade:</p>
+<ul>
+<li><code>CONTRIBUINTE</code> 1:N <code>NFE</code></li>
+<li><code>NFE</code> 1:N <code>ITEM_NFE</code></li>
+<li><code>EFD</code> 1:N <code>NFE</code></li>
+</ul>
+<p>Dica: utilize o conceito de:</p>
+<ul>
+<li>um para muitos;</li>
+<li>muitos para muitos apenas quando houver necessidade real de uma tabela associativa.</li>
+</ul>
+<hr />
+<h3 id="4-modelagem-de-atributos-e-chaves">4. Modelagem de atributos e chaves</h3>
+<h4 id="exercicio-4">Exercício 4</h4>
+<p>Para a entidade <code>NFE</code>, defina:</p>
+<ul>
+<li>uma chave primária;</li>
+<li>uma chave candidata;</li>
+<li>pelo menos dois atributos obrigatórios;</li>
+<li>um atributo opcional.</li>
+</ul>
+<p>Exemplo:</p>
+<ul>
+<li><code>id_nfe</code> → chave primária</li>
+<li><code>chave_acesso</code> → chave candidata</li>
+<li><code>data_emissao</code> → atributo obrigatório</li>
+<li><code>observacao</code> → atributo opcional</li>
+</ul>
+<hr />
+<h3 id="5-exercicio-com-tabelas-fiscais-reais">5. Exercício com tabelas fiscais reais</h3>
+<h4 id="exercicio-5">Exercício 5</h4>
+<p>Considere as seguintes entidades:</p>
+<ul>
+<li><code>EFD_0000</code> — cabeçalho da escrituração fiscal</li>
+<li><code>EFD_C100</code> — documentos fiscais registrados na EFD</li>
+<li><code>EFD_C170</code> — itens dos documentos fiscais</li>
+</ul>
+<p>Elabore o relacionamento entre elas e justifique sua resposta.</p>
+<p>Resposta esperada:</p>
+<ul>
+<li><code>EFD_0000</code> 1:N <code>EFD_C100</code></li>
+<li><code>EFD_C100</code> 1:N <code>EFD_C170</code></li>
+</ul>
+<p>Isso ocorre porque uma escrituração possui vários registros de documentos e cada documento possui vários itens.</p>
+<hr />
+<h3 id="6-exercicio-de-normalizacao-simples">6. Exercício de normalização simples</h3>
+<h4 id="exercicio-6">Exercício 6</h4>
+<p>Considere a seguinte tabela:</p>
+<p><code>NFE</code> com os atributos: <code>id_nfe</code>, <code>chave_acesso</code>, <code>emitente</code>, <code>valor_total</code>, <code>item_descricao</code>, <code>item_valor</code></p>
+<p>Identifique o problema de modelagem e proponha uma estrutura melhor.</p>
+<p>Resposta esperada:</p>
+<ul>
+<li>A tabela mistura informações da NF-e com informações dos itens.</li>
+<li>O ideal é separar em duas entidades: <code>NFE</code> e <code>ITEM_NFE</code>.</li>
+</ul>
+<hr />
+<h3 id="7-exercicio-de-criacao-de-diagrama-mermaid">7. Exercício de criação de diagrama Mermaid</h3>
+<h4 id="exercicio-7">Exercício 7</h4>
+<p>Crie um diagrama Mermaid com as entidades:</p>
+<ul>
+<li><code>CONTRIBUINTE</code></li>
+<li><code>NFE</code></li>
+<li><code>ITEM_NFE</code></li>
+<li><code>EFD</code></li>
+</ul>
+<p>E especifique as cardinalidades entre elas.</p>
+<p>Exemplo de estrutura inicial:</p>
+<pre><code class="language-mermaid">erDiagram
+    CONTRIBUINTE ||--o{ NFE : emite
+    NFE ||--o{ ITEM_NFE : possui
+    EFD ||--o{ NFE : registra
+</code></pre>
+<hr />
+<h3 id="8-exercicio-de-interpretacao">8. Exercício de interpretação</h3>
+<h4 id="exercicio-8">Exercício 8</h4>
+<p>Leia a seguinte situação:</p>
+<blockquote>
+<p>Uma NF-e foi cadastrada, mas um de seus itens foi inserido sem referenciar corretamente a nota.</p>
+</blockquote>
+<p>Quais problemas isso pode causar na fiscalização tributária?</p>
+<p>Resposta esperada:</p>
+<ul>
+<li>inconsistência entre os dados;</li>
+<li>dificuldade de cruzamento entre NF-e e EFD;</li>
+<li>erros em relatórios e auditoria;</li>
+<li>risco de apuração tributária incorreta.</li>
+</ul>
+<hr />
+<h3 id="9-exercicio-de-conclusao">9. Exercício de conclusão</h3>
+<h4 id="exercicio-9">Exercício 9</h4>
+<p>Elabore um modelo conceitual simplificado para um sistema de fiscalização tributária que deve armazenar:</p>
+<ul>
+<li>contribuintes;</li>
+<li>notas fiscais eletrônicas;</li>
+<li>itens de NF-e;</li>
+<li>escrituração fiscal digital.</li>
+</ul>
+<p>Seu modelo deve conter:</p>
+<ul>
+<li>entidades;</li>
+<li>atributos;</li>
+<li>relacionamentos;</li>
+<li>cardinalidades.</li>
+</ul>
+<hr />
+<h3 id="10-gabarito-resumido">10. Gabarito resumido</h3>
+<ul>
+<li><code>CONTRIBUINTE</code> 1:N <code>NFE</code></li>
+<li><code>NFE</code> 1:N <code>ITEM_NFE</code></li>
+<li><code>EFD</code> 1:N <code>NFE</code> ou <code>EFD</code> 1:N <code>EFD_C100</code></li>
+<li><code>EFD_C100</code> 1:N <code>EFD_C170</code></li>
+<li>A separação entre cabeçalho e detalhe é essencial para evitar redundância e facilitar a auditoria.</li>
+</ul>
+</body>
+</html>

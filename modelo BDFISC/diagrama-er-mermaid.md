@@ -4,12 +4,14 @@ Este documento apresenta um diagrama entidade-relacionamento (MER) em Mermaid co
 
 ## Diagrama Mermaid
 
+O diagrama abaixo representa o núcleo do banco fiscal trabalhado nas aulas. As marcações `PK` identificam as chaves primárias e as marcações `FK` identificam os atributos que mantêm os relacionamentos entre as tabelas.
+
 ```mermaid
 erDiagram
-    EFD_0000 ||--o{ EFD_C100 : "recebe registros"
-    EFD_C100 ||--o{ EFD_C170 : "contém itens"
-    NFE ||--o{ ITEM_NFE : "possui itens"
-    EFD_C100 ||--o| NFE : "pode referenciar"
+    EFD_0000 ||--o{ EFD_C100 : "possui documentos"
+    EFD_C100 ||--o{ EFD_C170 : "possui itens EFD"
+    NFE ||--o{ ITEM_NFE : "possui itens NF-e"
+    EFD_C100 }o..o| NFE : "pode referenciar"
 
     EFD_0000 {
         int sqcontrib PK

@@ -1,6 +1,7 @@
 # Ignorar diretório de dados locais
 dados/
 modelo BDFISC/dados/
+modulo_05/roteiro_integrador_bdfisc/abcfarma_completo_20260101_170957.csv
 
 # Arquivos temporários e IDE
 .vscode/

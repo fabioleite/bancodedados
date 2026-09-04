@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="900" height="470" fill="#ffffff"/>
+
+  <!-- linha do tempo -->
+  <text x="20" y="30" font-size="13" font-weight="bold" fill="#243b53">Linha do tempo da cadeia de backups — como o point-in-time restore funciona</text>
+  <line x1="60" y1="120" x2="850" y2="120" stroke="#8a9aa8" stroke-width="2"/>
+  <g font-size="10" fill="#555">
+    <text x="60" y="145">02:00</text><text x="200" y="145">06:00</text><text x="340" y="145">10:00</text>
+    <text x="480" y="145">14:00</text><text x="620" y="145">18:00</text><text x="790" y="145">22:00</text>
+  </g>
+  <!-- FULL -->
+  <rect x="46" y="96" width="52" height="24" rx="3" fill="#4a7ab0"/>
+  <text x="72" y="112" font-size="10" fill="#fff" text-anchor="middle">FULL</text>
+  <text x="72" y="86" font-size="10" fill="#4a7ab0" text-anchor="middle">02:00</text>
+  <!-- LOGs -->
+  <g>
+    <rect x="150" y="102" width="34" height="18" rx="2" fill="#8bbf8b"/><text x="167" y="115" font-size="9" fill="#123" text-anchor="middle">LOG</text>
+    <rect x="220" y="102" width="34" height="18" rx="2" fill="#8bbf8b"/><text x="237" y="115" font-size="9" fill="#123" text-anchor="middle">LOG</text>
+    <rect x="290" y="102" width="34" height="18" rx="2" fill="#8bbf8b"/><text x="307" y="115" font-size="9" fill="#123" text-anchor="middle">LOG</text>
+    <rect x="360" y="102" width="34" height="18" rx="2" fill="#8bbf8b"/><text x="377" y="115" font-size="9" fill="#123" text-anchor="middle">LOG</text>
+    <rect x="430" y="102" width="34" height="18" rx="2" fill="#8bbf8b"/><text x="447" y="115" font-size="9" fill="#123" text-anchor="middle">LOG</text>
+    <rect x="500" y="102" width="34" height="18" rx="2" fill="#8bbf8b"/><text x="517" y="115" font-size="9" fill="#123" text-anchor="middle">LOG</text>
+    <rect x="570" y="102" width="34" height="18" rx="2" fill="#8bbf8b"/><text x="587" y="115" font-size="9" fill="#123" text-anchor="middle">LOG</text>
+    <rect x="640" y="102" width="34" height="18" rx="2" fill="#8bbf8b"/><text x="657" y="115" font-size="9" fill="#123" text-anchor="middle">LOG</text>
+  </g>
+  <!-- DIFF -->
+  <rect x="392" y="96" width="52" height="24" rx="3" fill="#d9a13b" opacity="0"/>
+  <!-- evento -->
+  <line x1="530" y1="60" x2="530" y2="150" stroke="#c0392b" stroke-width="2" stroke-dasharray="4,3"/>
+  <text x="536" y="58" font-size="11" font-weight="bold" fill="#c0392b">14:47 — exclusão indevida de NF-e do 1º tri/2025</text>
+  <text x="536" y="168" font-size="11" fill="#c0392b">↑ restaurar até 14:46:59</text>
+
+  <rect x="60" y="196" width="790" height="48" rx="4" fill="#eef4fa" stroke="#a9c6e0"/>
+  <text x="72" y="216" font-size="11" fill="#1b3f60">Restauração = FULL das 02:00 (NORECOVERY) + todos os LOGs em ordem até o das 18:00 (NORECOVERY),</text>
+  <text x="72" y="234" font-size="11" fill="#1b3f60">sendo o último aplicado com STOPAT = '2026-08-10 14:46:59' e finalizado com RECOVERY.</text>
+
+  <!-- Dialog restore -->
+  <rect x="60" y="264" width="790" height="190" fill="#f5f5f5" stroke="#a8a8a8"/>
+  <rect x="60" y="264" width="790" height="26" fill="#3c5a78"/>
+  <text x="74" y="282" fill="#ffffff" font-size="12">Restaurar Banco de Dados — DB_FISCAL_PERICIA</text>
+
+  <rect x="72" y="300" width="766" height="142" fill="#ffffff" stroke="#c8c8c8"/>
+  <text x="84" y="320" font-size="11" font-weight="bold" fill="#243b53">Destino</text>
+  <text x="92" y="340" font-size="11" fill="#333">Banco de dados:</text>
+  <rect x="210" y="328" width="230" height="18" fill="#ffffff" stroke="#a8b8c8"/>
+  <text x="216" y="341" font-size="11" fill="#111">DB_FISCAL_PERICIA</text>
+  <text x="470" y="340" font-size="11" fill="#333">Restaurar até:</text>
+  <rect x="560" y="328" width="180" height="18" fill="#ffffff" stroke="#a8b8c8"/>
+  <text x="566" y="341" font-size="10.5" fill="#111">10/08/2026 14:46:59</text>
+  <rect x="748" y="326" width="80" height="22" fill="#eceff2" stroke="#a8b8c8"/>
+  <text x="760" y="341" font-size="10.5" fill="#333">Linha do Tempo…</text>
+
+  <text x="84" y="368" font-size="11" font-weight="bold" fill="#243b53">Conjuntos de backup a restaurar</text>
+  <rect x="92" y="376" width="736" height="20" fill="#eef1f4" stroke="#cfd6dd"/>
+  <g font-size="10" font-weight="bold" fill="#243b53">
+    <text x="102" y="390">Restaurar</text><text x="176" y="390">Nome</text><text x="420" y="390">Componente</text><text x="530" y="390">Tipo</text><text x="620" y="390">Data/hora</text>
+  </g>
+  <g font-size="10" fill="#222">
+    <rect x="104" y="402" width="10" height="10" fill="#4a7ab0"/><text x="176" y="411">DB_FISCAL-Full Database Backup</text><text x="420" y="411">Banco de Dados</text><text x="530" y="411">Completo</text><text x="620" y="411">10/08/2026 02:00</text>
+    <rect x="104" y="420" width="10" height="10" fill="#4a7ab0"/><text x="176" y="429">DB_FISCAL-Transaction Log Backup</text><text x="420" y="429">Log</text><text x="530" y="429">Log Trans.</text><text x="620" y="429">10/08/2026 06:00 … 18:00</text>
+  </g>
+</svg>

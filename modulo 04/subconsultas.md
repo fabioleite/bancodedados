@@ -80,18 +80,20 @@ Subconsultas podem ser classificadas sob duas óticas complementares:
 
 ### 3.1 Quanto ao formato do retorno
 
-| Tipo | Retorna | Onde costuma ser usada |
-|---|---|---|
-| **Escalar** | Uma única linha, uma única coluna (um valor) | Após `=`, `>`, `<`, em `SELECT`, em `SET` de `UPDATE` |
-| **De linha** (*row*) | Uma única linha, múltiplas colunas | Menos comum no T-SQL puro; usada em comparações de tupla em alguns SGBDs — no SQL Server, geralmente reescrita como múltiplas condições ou `EXISTS` |
-| **De tabela** (*table*) | Múltiplas linhas, múltiplas colunas | Em `FROM` (derived table), com `IN`/`ANY`/`ALL`/`EXISTS` |
+
+| Tipo                    | Retorna                                        | Onde costuma ser usada                                                                                                                                   |
+| ------------------------- | ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Escalar**             | Uma única linha, uma única coluna (um valor) | Após`=`, `>`, `<`, em `SELECT`, em `SET` de `UPDATE`                                                                                                    |
+| **De linha** (*row*)    | Uma única linha, múltiplas colunas           | Menos comum no T-SQL puro; usada em comparações de tupla em alguns SGBDs — no SQL Server, geralmente reescrita como múltiplas condições ou`EXISTS` |
+| **De tabela** (*table*) | Múltiplas linhas, múltiplas colunas          | Em`FROM` (derived table), com `IN`/`ANY`/`ALL`/`EXISTS`                                                                                                  |
 
 ### 3.2 Quanto à dependência da consulta externa
 
-| Tipo | Característica | Desempenho típico |
-|---|---|---|
-| **Independente** (*não correlacionada*) | Executada **uma única vez**, de forma isolada; não referencia colunas da consulta externa | Geralmente mais previsível — o otimizador pode calculá-la uma vez e reutilizar o resultado |
-| **Correlacionada** | Referencia uma ou mais colunas da consulta externa; conceitualmente reexecutada **para cada linha** candidata da consulta externa | Pode ser cara em tabelas grandes se não houver índice de apoio — ver [seção 7](#7-subconsultas-correlacionadas) e [seção 13](#13-desempenho-e-plano-de-execução) |
+
+| Tipo                                     | Característica                                                                                                                  | Desempenho típico                                                                                                                                                       |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Independente** (*não correlacionada*) | Executada**uma única vez**, de forma isolada; não referencia colunas da consulta externa                                       | Geralmente mais previsível — o otimizador pode calculá-la uma vez e reutilizar o resultado                                                                            |
+| **Correlacionada**                       | Referencia uma ou mais colunas da consulta externa; conceitualmente reexecutada**para cada linha** candidata da consulta externa | Pode ser cara em tabelas grandes se não houver índice de apoio — ver[seção 7](#7-subconsultas-correlacionadas) e [seção 13](#13-desempenho-e-plano-de-execução) |
 
 > **Nota:** dizer que uma subconsulta correlacionada "executa uma vez por linha" é a forma didática de explicar a semântica lógica do comando. Na prática, o **otimizador de consultas** do SQL Server frequentemente reescreve a subconsulta correlacionada como um `JOIN`/`APPLY` internamente, evitando a execução literal linha a linha. Ainda assim, o comportamento lógico (o resultado) é sempre equivalente a uma reavaliação por linha.
 
@@ -232,12 +234,13 @@ WHERE n.valor_total > ALL (
 
 `> ALL (...)` equivale a "maior que o **maior** valor do conjunto". Contribuintes retornados aqui emitiram uma nota mais valiosa do que **qualquer** nota do Simples Nacional.
 
-| Operador | Equivalência lógica | Cuidado |
-|---|---|---|
-| `= ANY (...)` | Equivalente a `IN (...)` | — |
-| `<> ALL (...)` | Equivalente a `NOT IN (...)` (mas sem a armadilha do `NULL`, se reescrito com `EXISTS`) | Prefira `NOT EXISTS` quando o conjunto pode ter `NULL` |
-| `> ANY (...)` | Maior que o mínimo do conjunto | Se o conjunto vier vazio, a condição é `FALSE` |
-| `> ALL (...)` | Maior que o máximo do conjunto | Se o conjunto vier vazio, a condição é `TRUE` (comportamento contraintuitivo — testar sempre) |
+
+| Operador       | Equivalência lógica                                                                  | Cuidado                                                                                          |
+| ---------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `= ANY (...)`  | Equivalente a`IN (...)`                                                                | —                                                                                               |
+| `<> ALL (...)` | Equivalente a`NOT IN (...)` (mas sem a armadilha do `NULL`, se reescrito com `EXISTS`) | Prefira`NOT EXISTS` quando o conjunto pode ter `NULL`                                            |
+| `> ANY (...)`  | Maior que o mínimo do conjunto                                                        | Se o conjunto vier vazio, a condição é`FALSE`                                                 |
+| `> ALL (...)`  | Maior que o máximo do conjunto                                                        | Se o conjunto vier vazio, a condição é`TRUE` (comportamento contraintuitivo — testar sempre) |
 
 ---
 
@@ -277,13 +280,14 @@ Retorna contribuintes que **nunca** emitiram nota cancelada — semanticamente e
 
 ### 6.3 `EXISTS` x `IN`: quando preferir cada um
 
-| Critério | `IN` | `EXISTS` |
-|---|---|---|
-| Coluna única, sem risco de `NULL` | Ambos funcionam igual | Ambos funcionam igual |
-| Coluna com possibilidade de `NULL` (especialmente com `NOT IN`) | Risco de resultado vazio inesperado | Seguro |
-| Múltiplas condições de correlação | Não se aplica diretamente | Natural — pode combinar várias colunas no `WHERE` interno |
-| Legibilidade para "existe pelo menos um relacionado" | Boa | Geralmente mais clara para quem já pensa em termos relacionais |
-| Desempenho | O otimizador do SQL Server, na prática, costuma gerar planos equivalentes para `IN`/`EXISTS` bem escritos | Idem |
+
+| Critério                                                      | `IN`                                                                                                      | `EXISTS`                                                        |
+| ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| Coluna única, sem risco de`NULL`                              | Ambos funcionam igual                                                                                     | Ambos funcionam igual                                           |
+| Coluna com possibilidade de`NULL` (especialmente com `NOT IN`) | Risco de resultado vazio inesperado                                                                       | Seguro                                                          |
+| Múltiplas condições de correlação                         | Não se aplica diretamente                                                                                | Natural — pode combinar várias colunas no`WHERE` interno      |
+| Legibilidade para "existe pelo menos um relacionado"           | Boa                                                                                                       | Geralmente mais clara para quem já pensa em termos relacionais |
+| Desempenho                                                     | O otimizador do SQL Server, na prática, costuma gerar planos equivalentes para`IN`/`EXISTS` bem escritos | Idem                                                            |
 
 ---
 
@@ -427,10 +431,11 @@ OUTER APPLY (
 
 Diferente de `CROSS APPLY`, o `OUTER APPLY` **preserva** contribuintes sem nenhuma nota fiscal (as colunas `ultima.*` vêm como `NULL`), da mesma forma que um `LEFT JOIN` preserva o lado esquerdo.
 
-| Cláusula | Comportamento quando a subconsulta não retorna linhas |
-|---|---|
-| `CROSS APPLY` | Descarta a linha externa (como `INNER JOIN`) |
-| `OUTER APPLY` | Mantém a linha externa com `NULL` nas colunas da subconsulta (como `LEFT JOIN`) |
+
+| Cláusula     | Comportamento quando a subconsulta não retorna linhas                          |
+| --------------- | --------------------------------------------------------------------------------- |
+| `CROSS APPLY` | Descarta a linha externa (como`INNER JOIN`)                                     |
+| `OUTER APPLY` | Mantém a linha externa com`NULL` nas colunas da subconsulta (como `LEFT JOIN`) |
 
 ---
 
@@ -506,13 +511,14 @@ JOIN contribuintes_com_nota AS ccn
     ON ccn.id_contribuinte = c.id_contribuinte;
 ```
 
-| Critério | Subconsulta (`EXISTS`/`IN`) | `JOIN` | CTE (`WITH`) |
-|---|---|---|---|
-| Quando a intenção é **"filtrar por existência"** | Mais natural e direto | Exige `DISTINCT`/cuidado com duplicação | Funciona, mas é mais verboso para esse caso simples |
-| Quando é preciso **trazer colunas** da tabela relacionada | Não serve (subconsulta não expõe colunas para o `SELECT` externo) | Ideal | Ideal |
-| Reaproveitar o mesmo resultado intermediário **várias vezes** na mesma consulta | Repetiria a subconsulta em cada lugar | Repetiria o `JOIN` | Ideal — a CTE é definida uma vez e referenciada quantas vezes for preciso |
-| Consultas recursivas (ex.: hierarquia de contas contábeis) | Não suportado | Não suportado diretamente | **Único que suporta** (`WITH ... AS (... UNION ALL ...)`) |
-| Legibilidade em consultas com 3+ níveis de aninhamento | Degrada rapidamente | Não se aplica | Mantém legibilidade (blocos nomeados e sequenciais) |
+
+| Critério                                                                        | Subconsulta (`EXISTS`/`IN`)                                         | `JOIN`                                   | CTE (`WITH`)                                                                |
+| ---------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------ | ----------------------------------------------------------------------------- |
+| Quando a intenção é**"filtrar por existência"**                              | Mais natural e direto                                               | Exige`DISTINCT`/cuidado com duplicação | Funciona, mas é mais verboso para esse caso simples                        |
+| Quando é preciso**trazer colunas** da tabela relacionada                        | Não serve (subconsulta não expõe colunas para o`SELECT` externo) | Ideal                                    | Ideal                                                                       |
+| Reaproveitar o mesmo resultado intermediário**várias vezes** na mesma consulta | Repetiria a subconsulta em cada lugar                               | Repetiria o`JOIN`                        | Ideal — a CTE é definida uma vez e referenciada quantas vezes for preciso |
+| Consultas recursivas (ex.: hierarquia de contas contábeis)                      | Não suportado                                                      | Não suportado diretamente               | **Único que suporta** (`WITH ... AS (... UNION ALL ...)`)                  |
+| Legibilidade em consultas com 3+ níveis de aninhamento                          | Degrada rapidamente                                                 | Não se aplica                           | Mantém legibilidade (blocos nomeados e sequenciais)                        |
 
 **Regra prática:** comece pela forma mais direta para a pergunta de negócio (`EXISTS` para "existe?", `JOIN` para "traga os dados relacionados"); migre para CTE quando a consulta precisar reutilizar um resultado intermediário mais de uma vez ou quando o aninhamento de subconsultas passar de dois níveis.
 
@@ -596,16 +602,17 @@ Essa consulta responde: *"quais contribuintes, que nunca tiveram nota cancelada,
 
 ## 16. Glossário
 
-| Termo | Definição |
-|---|---|
-| **Subconsulta (subquery)** | Instrução `SELECT` aninhada dentro de outra instrução SQL |
-| **Consulta externa / interna** | A instrução que contém a subconsulta (externa) e a subconsulta propriamente dita (interna) |
-| **Subconsulta escalar** | Subconsulta que retorna um único valor (uma linha, uma coluna) |
-| **Subconsulta correlacionada** | Subconsulta que referencia colunas da consulta externa, sendo logicamente reavaliada a cada linha candidata |
-| **Tabela derivada (derived table)** | Subconsulta usada na cláusula `FROM`, tratada como uma tabela temporária com alias obrigatório |
-| **`APPLY` (`CROSS`/`OUTER`)** | Extensão T-SQL que junta cada linha externa ao resultado de uma subconsulta correlacionada, mesmo que ela retorne múltiplas linhas/colunas |
-| **Lógica de três valores** | Modelo lógico do SQL em que uma comparação pode resultar em `TRUE`, `FALSE` ou `UNKNOWN` (quando envolve `NULL`) |
-| **Plano de execução** | Representação, gerada pelo otimizador, de como o SQL Server efetivamente executará uma consulta (operadores como *Seek*, *Scan*, *Nested Loops*, *Hash Match*) |
+
+| Termo                               | Definição                                                                                                                                                      |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Subconsulta (subquery)**          | Instrução`SELECT` aninhada dentro de outra instrução SQL                                                                                                     |
+| **Consulta externa / interna**      | A instrução que contém a subconsulta (externa) e a subconsulta propriamente dita (interna)                                                                    |
+| **Subconsulta escalar**             | Subconsulta que retorna um único valor (uma linha, uma coluna)                                                                                                  |
+| **Subconsulta correlacionada**      | Subconsulta que referencia colunas da consulta externa, sendo logicamente reavaliada a cada linha candidata                                                      |
+| **Tabela derivada (derived table)** | Subconsulta usada na cláusula`FROM`, tratada como uma tabela temporária com alias obrigatório                                                                 |
+| **`APPLY` (`CROSS`/`OUTER`)**       | Extensão T-SQL que junta cada linha externa ao resultado de uma subconsulta correlacionada, mesmo que ela retorne múltiplas linhas/colunas                     |
+| **Lógica de três valores**        | Modelo lógico do SQL em que uma comparação pode resultar em`TRUE`, `FALSE` ou `UNKNOWN` (quando envolve `NULL`)                                               |
+| **Plano de execução**             | Representação, gerada pelo otimizador, de como o SQL Server efetivamente executará uma consulta (operadores como*Seek*, *Scan*, *Nested Loops*, *Hash Match*) |
 
 ---
 
@@ -657,4 +664,3 @@ Requisitos:
 - **Microsoft Learn — EXISTS (Transact-SQL)** e **IN (Transact-SQL)**: sintaxe e semântica detalhada de cada operador.
 - **Itzik Ben-Gan — "T-SQL Querying"** (Microsoft Press): capítulo dedicado a subconsultas, `APPLY` e lógica de três valores, com discussão aprofundada da armadilha do `NOT IN`/`NULL`.
 - Consulte também [00 Comandos SQL.md](../modulo_02/00%20Comandos%20SQL.md) para revisão das cláusulas DQL básicas antes deste módulo.
-</content>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 380" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="860" height="380" fill="#ffffff"/>
+  <text x="20" y="30" font-size="13" font-weight="bold" fill="#243b53">Resultado esperado do Laboratório 2 — impacto do índice IX_nf_cnpj_data</text>
+  <text x="20" y="50" font-size="10.5" fill="#666">Tabela dbo.nota_fiscal com 1.000.000 de linhas. Valores ilustrativos; a ordem de grandeza se reproduz no laboratório.</text>
+
+  <!-- eixo -->
+  <line x1="150" y1="90" x2="150" y2="290" stroke="#b0b8c0"/>
+  <line x1="150" y1="290" x2="820" y2="290" stroke="#b0b8c0"/>
+
+  <!-- grupo 1: leituras logicas -->
+  <text x="60" y="126" font-size="11" fill="#333" text-anchor="start">Leituras</text>
+  <text x="60" y="140" font-size="11" fill="#333" text-anchor="start">lógicas</text>
+  <rect x="150" y="106" width="620" height="24" fill="#e2867a"/>
+  <text x="780" y="123" font-size="10.5" fill="#a3271b" font-weight="bold">8.412</text>
+  <rect x="150" y="136" width="6" height="24" fill="#5aa35a"/>
+  <text x="164" y="153" font-size="10.5" fill="#2d6a2d" font-weight="bold">64  (−99,2%)</text>
+
+  <!-- grupo 2: tempo -->
+  <text x="60" y="204" font-size="11" fill="#333">Tempo de</text>
+  <text x="60" y="218" font-size="11" fill="#333">execução</text>
+  <rect x="150" y="184" width="620" height="24" fill="#e2867a"/>
+  <text x="780" y="201" font-size="10.5" fill="#a3271b" font-weight="bold">1.980 ms</text>
+  <rect x="150" y="214" width="14" height="24" fill="#5aa35a"/>
+  <text x="172" y="231" font-size="10.5" fill="#2d6a2d" font-weight="bold">42 ms  (−97,9%)</text>
+
+  <!-- grupo 3: linhas lidas -->
+  <text x="60" y="268" font-size="11" fill="#333">Linhas lidas</text>
+  <rect x="150" y="248" width="620" height="24" fill="#e2867a"/>
+  <text x="780" y="265" font-size="10.5" fill="#a3271b" font-weight="bold">1.000.000</text>
+  <rect x="150" y="278" width="8" height="10" fill="#5aa35a"/>
+  <text x="166" y="288" font-size="10.5" fill="#2d6a2d" font-weight="bold">12.480  (−98,8%)</text>
+
+  <!-- legenda -->
+  <rect x="150" y="310" width="14" height="14" fill="#e2867a"/>
+  <text x="172" y="322" font-size="11" fill="#333">Antes do índice — Clustered Index Scan</text>
+  <rect x="440" y="310" width="14" height="14" fill="#5aa35a"/>
+  <text x="462" y="322" font-size="11" fill="#333">Depois do índice — Index Seek</text>
+
+  <rect x="150" y="338" width="670" height="28" rx="3" fill="#eef4fa" stroke="#a9c6e0"/>
+  <text x="160" y="356" font-size="10.5" fill="#1b3f60">Custo do índice: ocupa espaço em disco e torna INSERT/UPDATE ligeiramente mais lentos — por isso a criação é decisão do DBA.</text>
+</svg>

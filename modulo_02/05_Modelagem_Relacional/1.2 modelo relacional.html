@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>1.2 modelo relacional.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 id="m%C3%B3dulo%3A-o-modelo-relacional-%E2%80%94-conceitos-fundamentais" tabindex="-1">Módulo: O Modelo Relacional — Conceitos Fundamentais</h1>
+<p><strong>Curso:</strong> Banco de Dados Relacionais aplicado à Administração Tributária
+<strong>Público-alvo:</strong> Profissionais da Secretaria de Estado da Fazenda da Paraíba (SEFAZ-PB)
+<strong>SGBD utilizado:</strong> Microsoft SQL Server (T-SQL) — ferramenta: SQL Server Management Studio (SSMS)
+<strong>Carga horária sugerida:</strong> 8 horas (5h teoria + 3h prática)
+<strong>Base teórica:</strong> conceitos clássicos do Modelo Relacional (Codd, 1970), na linha adotada por ELMASRI &amp; NAVATHE, <em>Fundamentals of Database Systems</em></p>
+<hr>
+<h2 id="sum%C3%A1rio" tabindex="-1">Sumário</h2>
+<ol>
+<li><a href="#1-objetivos-do-m%C3%B3dulo">Objetivos do Módulo</a></li>
+<li><a href="#2-contexto-hist%C3%B3rico-do-modelo-relacional">Contexto Histórico do Modelo Relacional</a></li>
+<li><a href="#3-conceitos-fundamentais-rela%C3%A7%C3%A3o-tupla-atributo-e-dom%C3%ADnio">Conceitos Fundamentais: Relação, Tupla, Atributo e Domínio</a></li>
+<li><a href="#4-esquema-de-rela%C3%A7%C3%A3o--inst%C3%A2ncia-snapshot">Esquema de Relação × Instância (Snapshot)</a></li>
+<li><a href="#5-grau-da-rela%C3%A7%C3%A3o-e-propriedades-formais">Grau da Relação e Propriedades Formais</a></li>
+<li><a href="#6-chaves-de-uma-rela%C3%A7%C3%A3o">Chaves de uma Relação</a></li>
+<li><a href="#7-chave-estrangeira-e-autorrelacionamento">Chave Estrangeira e Autorrelacionamento</a></li>
+<li><a href="#8-regras-de-integridade">Regras de Integridade</a></li>
+<li><a href="#9-opera%C3%A7%C3%B5es-de-atualiza%C3%A7%C3%A3o-e-viola%C3%A7%C3%B5es-de-integridade">Operações de Atualização e Violações de Integridade</a></li>
+<li><a href="#10-%C3%A1lgebra-relacional--fundamentos-e-operadores-b%C3%A1sicos">Álgebra Relacional — Fundamentos e Operadores Básicos</a></li>
+<li><a href="#11-operadores-derivados-jun%C3%A7%C3%A3o-interse%C3%A7%C3%A3o-e-divis%C3%A3o">Operadores Derivados: Junção, Interseção e Divisão</a></li>
+<li><a href="#12-roteiro-pr%C3%A1tico--do-conceito-formal-ao-t-sql">Roteiro Prático — Do Conceito Formal ao T-SQL</a></li>
+<li><a href="#13-exerc%C3%ADcios-pr%C3%A1ticos">Exercícios Práticos</a></li>
+<li><a href="#14-gloss%C3%A1rio">Glossário</a></li>
+<li><a href="#15-refer%C3%AAncias">Referências</a></li>
+</ol>
+<hr>
+<h2 id="1.-objetivos-do-m%C3%B3dulo" tabindex="-1">1. Objetivos do Módulo</h2>
+<p>Ao final deste módulo, o participante será capaz de:</p>
+<ul>
+<li>Situar o Modelo Relacional em seu contexto histórico e explicar por que ele se tornou o padrão dominante em SGBDs comerciais.</li>
+<li>Definir com rigor os conceitos de <strong>relação</strong>, <strong>tupla</strong>, <strong>atributo</strong>, <strong>domínio</strong>, <strong>grau</strong> e <strong>instância (snapshot)</strong>.</li>
+<li>Explicar as propriedades formais que distinguem uma relação matemática de uma tabela SQL comum.</li>
+<li>Diferenciar <strong>superchave</strong>, <strong>chave candidata</strong>, <strong>chave primária</strong> e <strong>chave estrangeira</strong>, inclusive em <strong>autorrelacionamentos</strong>.</li>
+<li>Enunciar e aplicar as três regras de integridade do modelo relacional: <strong>integridade de chave</strong>, <strong>integridade de entidade (identidade)</strong> e <strong>integridade referencial</strong>.</li>
+<li>Analisar as consequências de operações de inserção, remoção e atualização sobre a integridade dos dados, e as estratégias possíveis diante de uma violação.</li>
+<li>Compreender a <strong>álgebra relacional</strong> como fundamento formal das consultas SQL, aplicando os operadores de seleção, projeção, produto cartesiano, união, diferença, junção, interseção e divisão.</li>
+<li>Traduzir cada operador da álgebra relacional para sua construção equivalente em <strong>T-SQL</strong>.</li>
+</ul>
+<hr>
+<h2 id="2.-contexto-hist%C3%B3rico-do-modelo-relacional" tabindex="-1">2. Contexto Histórico do Modelo Relacional</h2>
+<p>O Modelo Relacional foi proposto em 1970 pelo matemático e pesquisador <strong>Edgar F. Codd</strong>, então na IBM, em um artigo que revolucionou a forma de organizar dados em sistemas computacionais. Antes de Codd, os bancos de dados dominantes eram os modelos <strong>hierárquico</strong> e <strong>em rede</strong>, que exigiam que o programador conhecesse antecipadamente os caminhos de acesso físico aos dados (ponteiros entre registros). Codd propôs, em vez disso, representar os dados como <strong>relações matemáticas</strong> — na prática, tabelas — manipuláveis por meio de uma linguagem declarativa, sem que o usuário precisasse saber <em>como</em> os dados estavam fisicamente organizados.</p>
+<p><strong>Por que o modelo se popularizou:</strong></p>
+<ul>
+<li><strong>Simplicidade conceitual:</strong> dados organizados em tabelas são intuitivos, inclusive para usuários não técnicos (por exemplo, um auditor fiscal consegue entender uma tabela de &quot;Autos de Infração&quot; sem conhecer detalhes de implementação).</li>
+<li><strong>Independência de dados:</strong> a estrutura lógica (tabelas, colunas) é separada da estrutura física de armazenamento, permitindo otimizações internas do SGBD sem afetar as consultas.</li>
+<li><strong>Base matemática sólida:</strong> por se apoiar na teoria de conjuntos e na lógica de predicados, o modelo permite provar formalmente propriedades das consultas (a <strong>álgebra relacional</strong>, tratada na seção 10).</li>
+<li><strong>Desempenho competitivo:</strong> os primeiros protótipos (como o <strong>System R</strong>, da IBM) demonstraram que era possível implementar o modelo com desempenho aceitável para aplicações comerciais reais.</li>
+</ul>
+<p>O <strong>System R</strong> foi um dos primeiros SGBDs a implementar esses conceitos na prática, e a partir dele — e de trabalhos correlatos — surgiram sistemas como <strong>DB2</strong> (IBM), <strong>Oracle</strong>, <strong>Informix</strong>, <strong>Ingres</strong>, <strong>Sybase</strong>, e, mais tarde, o próprio <strong>Microsoft SQL Server</strong>, todos seguindo a mesma base teórica relacional que usaremos ao longo deste curso.</p>
+<blockquote>
+<p><strong>Por que isso importa para a SEFAZ-PB:</strong> todo o ecossistema de sistemas fiscais brasileiros — desde o cadastro de contribuintes até os sistemas que recebem NF-e, CT-e e EFD — é construído sobre SGBDs relacionais. Entender os fundamentos do modelo relacional é entender a lógica que rege <em>qualquer</em> consulta, relatório ou cruzamento de dados que a SEFAZ-PB venha a produzir.</p>
+</blockquote>
+<hr>
+<h2 id="3.-conceitos-fundamentais%3A-rela%C3%A7%C3%A3o%2C-tupla%2C-atributo-e-dom%C3%ADnio" tabindex="-1">3. Conceitos Fundamentais: Relação, Tupla, Atributo e Domínio</h2>
+<p>O Modelo Relacional representa os dados de um banco de dados como uma <strong>coleção de relações</strong> — na prática, um conjunto de tabelas.</p>
+<h3 id="3.1-rela%C3%A7%C3%A3o-(relation)" tabindex="-1">3.1 Relação (Relation)</h3>
+<p>Uma <strong>relação</strong> corresponde a uma tabela. Toda relação tem um <strong>nome único</strong> dentro do banco de dados e um conjunto de <strong>atributos</strong> (colunas), cada um com seu próprio nome e domínio.</p>
+<p><strong>Exemplo fiscal — a relação <code>AuditorFiscal</code>:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Matrícula</th>
+<th>Nome</th>
+<th>Endereço</th>
+<th>Função</th>
+<th>Salário</th>
+<th>Unidade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>Ana Ribeiro</td>
+<td>R. Pedro I, 12, Alto Branco</td>
+<td>Auditor Tributário</td>
+<td>12.500,00</td>
+<td>UF1</td>
+</tr>
+<tr>
+<td>250</td>
+<td>Pedro Souza</td>
+<td>R. J. Silva, 24, Liberdade</td>
+<td>Auditor Fiscal Chefe</td>
+<td>18.900,00</td>
+<td>UF1</td>
+</tr>
+<tr>
+<td>108</td>
+<td>André Lima</td>
+<td>R. Itália, 33, Bairro das Nações</td>
+<td>Técnico Tributário</td>
+<td>8.700,00</td>
+<td>UF2</td>
+</tr>
+<tr>
+<td>210</td>
+<td>Paula Nogueira</td>
+<td>R. Pará, 98, Bairro dos Estados</td>
+<td>Auditora Fiscal Chefe</td>
+<td>19.200,00</td>
+<td>UF2</td>
+</tr>
+</tbody>
+</table>
+<p>Cada linha desta tabela representa um auditor fiscal distinto. Cada coluna representa uma característica (atributo) que se aplica a todos os auditores.</p>
+<h3 id="3.2-tupla-(tuple)" tabindex="-1">3.2 Tupla (Tuple)</h3>
+<p>Uma <strong>tupla</strong> é uma linha da relação — um conjunto de valores, um para cada atributo da relação.</p>
+<blockquote>
+<p>Exemplo: a tupla <code>(100, 'Ana Ribeiro', 'R. Pedro I, 12, Alto Branco', 'Auditor Tributário', 12500.00, 'UF1')</code> é uma ocorrência específica da relação <code>AuditorFiscal</code>.</p>
+</blockquote>
+<h3 id="3.3-atributo-(attribute)" tabindex="-1">3.3 Atributo (Attribute)</h3>
+<p>Um <strong>atributo</strong> é uma coluna da relação: um nome que representa um &quot;papel&quot; desempenhado por um domínio dentro daquela relação. Na tabela acima, <code>Matrícula</code>, <code>Nome</code>, <code>Endereço</code>, <code>Função</code>, <code>Salário</code> e <code>Unidade</code> são os cinco atributos da relação <code>AuditorFiscal</code>.</p>
+<blockquote>
+<p><strong>Detalhe importante:</strong> um mesmo domínio pode desempenhar papéis diferentes — e portanto ter nomes de atributo diferentes — em relações distintas. Por exemplo, o domínio &quot;texto de até 6 caracteres representando um código de unidade&quot; pode aparecer como o atributo <code>Unidade</code> em <code>AuditorFiscal</code> e como <code>CodigoUnidade</code> em <code>UnidadeFiscal</code> — são o mesmo domínio, mas com papéis (nomes) diferentes.</p>
+</blockquote>
+<h3 id="3.4-dom%C3%ADnio-(domain)" tabindex="-1">3.4 Domínio (Domain)</h3>
+<p>Um <strong>domínio</strong> é um conjunto de valores atômicos (indivisíveis) permitidos para um atributo. A cada domínio associa-se um tipo de dado ou formato.</p>
+<table>
+<thead>
+<tr>
+<th>Atributo</th>
+<th>Domínio (descrição)</th>
+<th>Tipo de dado em T-SQL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Matrícula</code></td>
+<td>Números inteiros positivos de até 6 dígitos</td>
+<td><code>INT</code></td>
+</tr>
+<tr>
+<td><code>Salário</code></td>
+<td>Valores decimais não negativos, com 2 casas decimais</td>
+<td><code>NUMERIC(15,2)</code></td>
+</tr>
+<tr>
+<td><code>Unidade</code></td>
+<td>Um dos códigos de unidade fiscal cadastrados</td>
+<td><code>CHAR(3)</code> + <code>CHECK</code>/<code>FOREIGN KEY</code></td>
+</tr>
+<tr>
+<td><code>ChaveDeAcessoNFe</code></td>
+<td>Sequência de exatamente 44 dígitos numéricos</td>
+<td><code>CHAR(44)</code> + <code>CHECK</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Domínio não é apenas tipo de dado:</strong> o domínio de <code>Salário</code> não é simplesmente &quot;qualquer número decimal&quot; — é o <strong>conjunto de valores que fazem sentido no mundo real</strong> para aquele atributo (por exemplo, nenhum salário é negativo). Um tipo de dado (<code>NUMERIC(15,2)</code>) é uma <em>aproximação técnica</em> do domínio; a constraint <code>CHECK (salario &gt;= 0)</code>, estudada no módulo de Restrições e Integridade, é o que efetivamente impõe o domínio correto.</p>
+</blockquote>
+<h3 id="3.5-esquema-de-rela%C3%A7%C3%A3o-(relation-schema)" tabindex="-1">3.5 Esquema de Relação (Relation Schema)</h3>
+<p>Um <strong>esquema de relação</strong>, denotado por <code>R(A1, A2, ..., An)</code>, descreve a <strong>estrutura</strong> de uma relação <code>R</code> como um conjunto de atributos <code>{A1, A2, ..., An}</code>. É a &quot;planta&quot; da tabela — nome da relação e nomes dos atributos — <strong>sem os dados propriamente ditos</strong>.</p>
+<p>Esquema:  AuditorFiscal(<strong>Matricula</strong>, Nome, Endereco, Funcao, Salario, Unidade)</p>
+<p>Por convenção, os atributos que compõem a <strong>chave primária</strong> são sublinhados (ou, em texto simples, destacados em <strong>negrito</strong>):</p>
+<p>AuditorFiscal(<strong>Matricula</strong>, Nome, Endereco, Funcao, Salario, Unidade)</p>
+<hr>
+<h2 id="4.-esquema-de-rela%C3%A7%C3%A3o-%C3%97-inst%C3%A2ncia-(snapshot)" tabindex="-1">4. Esquema de Relação × Instância (Snapshot)</h2>
+<p>É essencial distinguir dois conceitos que, na prática do dia a dia, costumam ser confundidos:</p>
+<table>
+<thead>
+<tr>
+<th>Conceito</th>
+<th>O que é</th>
+<th>Estabilidade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Esquema de relação</strong> <code>R(A1, ..., An)</code></td>
+<td>A estrutura — nomes de atributos, domínios, chaves</td>
+<td>Muda raramente (apenas por<code>ALTER TABLE</code>)</td>
+</tr>
+<tr>
+<td><strong>Instância (ou &quot;snapshot&quot;) de relação</strong> <code>r(R)</code></td>
+<td>O conjunto de tuplas armazenadas<strong>em um dado momento</strong></td>
+<td>Muda a cada<code>INSERT</code>, <code>UPDATE</code> ou <code>DELETE</code></td>
+</tr>
+</tbody>
+</table>
+<p>Formalmente, uma instância <code>r(R)</code> é um <strong>subconjunto do produto cartesiano</strong> dos domínios dos atributos de <code>R</code>:</p>
+<pre class='hljs'><code><div>r(R) ⊆ (dom(A1) × dom(A2) × ... × dom(An))
+</div></code></pre>
+<p>Em outras palavras: uma instância é qualquer combinação válida de valores dos domínios dos atributos que, de fato, <strong>existe naquele momento</strong> na tabela.</p>
+<blockquote>
+<p><strong>Exemplo fiscal:</strong> o esquema <code>AutoInfracao(NumeroAuto, Contribuinte, TipoInfracao, ValorMulta, DataLavratura)</code> não muda com o tempo. Já a <strong>instância</strong> dessa relação — quais autos de infração realmente existem hoje na base — muda constantemente, à medida que novos autos são lavrados, anulados ou quitados. Uma consulta de &quot;quantos autos de infração foram lavrados este mês&quot; está, na prática, perguntando sobre a <strong>instância atual</strong>, não sobre o esquema.</p>
+</blockquote>
+<hr>
+<h2 id="5.-grau-da-rela%C3%A7%C3%A3o-e-propriedades-formais" tabindex="-1">5. Grau da Relação e Propriedades Formais</h2>
+<h3 id="5.1-grau-(degree)" tabindex="-1">5.1 Grau (Degree)</h3>
+<p>O <strong>grau</strong> de uma relação é o número de atributos (colunas) do seu esquema.</p>
+<blockquote>
+<p>A relação <code>AuditorFiscal(Matricula, Nome, Endereco, Funcao, Salario, Unidade)</code> tem <strong>grau 6</strong>.</p>
+</blockquote>
+<p>Não confundir grau (número de colunas, uma propriedade do <strong>esquema</strong>, estável) com <strong>cardinalidade da relação</strong> (número de linhas em um dado momento, uma propriedade da <strong>instância</strong>, que muda o tempo todo).</p>
+<h3 id="5.2-propriedades-formais-de-uma-rela%C3%A7%C3%A3o" tabindex="-1">5.2 Propriedades Formais de uma Relação</h3>
+<p>O Modelo Relacional, por derivar da teoria dos conjuntos, impõe quatro propriedades que <strong>nem sempre são evidentes</strong> para quem só conhece SQL na prática:</p>
+<p><strong>(a) A ordem das tuplas não tem significado.</strong>
+Matematicamente, uma relação é um <strong>conjunto</strong> de tuplas, e conjuntos não têm ordem inerente. Isso significa que, formalmente, não existe &quot;primeira&quot; ou &quot;última&quot; linha em uma relação — a ordem de exibição é responsabilidade da consulta (<code>ORDER BY</code>), não da relação em si.</p>
+<blockquote>
+<p>Consequência prática: uma consulta <code>SELECT * FROM auto_infracao</code> sem <code>ORDER BY</code> <strong>não tem garantia alguma de ordem</strong> — mesmo que, na prática, o SQL Server costume devolver as linhas na ordem física de armazenamento. Para qualquer relatório fiscal onde a ordem importa (ex.: &quot;os 10 maiores autos de infração&quot;), é indispensável usar <code>ORDER BY</code> explicitamente.</p>
+</blockquote>
+<p><strong>(b) A ordem dos atributos não tem significado (no nível teórico).</strong>
+Assim como as tuplas, os atributos de um esquema formam um <strong>conjunto</strong>, não uma sequência. Na prática do SQL, colunas têm uma ordem física de armazenamento, mas semanticamente <code>SELECT Nome, Matricula FROM AuditorFiscal</code> traz a mesma informação que <code>SELECT Matricula, Nome FROM AuditorFiscal</code> — apenas em ordem diferente de exibição.</p>
+<p><strong>(c) Todo atributo tem valor atômico.</strong>
+Um valor de atributo, numa dada tupla, deve ser <strong>um único valor indivisível</strong> do domínio daquele atributo — nunca um conjunto de valores. Este é o princípio que fundamenta a <strong>1ª Forma Normal</strong>, e é exatamente a razão pela qual, no módulo anterior, a &quot;Duplicata da NF-e&quot; (que poderia ter vários valores para uma mesma nota) precisou virar uma tabela separada, em vez de uma única coluna com múltiplos valores concatenados.</p>
+<p><strong>(d) Todas as tuplas de uma relação devem ser únicas (não há tuplas duplicadas).</strong>
+Como uma relação é, formalmente, um <strong>conjunto</strong>, não pode haver duas tuplas idênticas em todos os seus atributos.</p>
+<blockquote>
+<p><strong>Atenção — divergência importante entre teoria e prática do SQL:</strong> o SQL Server (como qualquer SGBD comercial) <strong>não impõe automaticamente</strong> essa regra. Uma tabela T-SQL sem <code>PRIMARY KEY</code> ou <code>UNIQUE</code> é, tecnicamente, um <strong>multiconjunto (multiset ou &quot;bag&quot;)</strong>, que <strong>permite linhas duplicadas</strong>. Por exemplo, nada impede, por padrão, que a mesma combinação de <code>(Contribuinte, TipoInfracao, DataLavratura, ValorMulta)</code> seja inserida duas vezes em <code>auto_infracao</code>, gerando dois autos de infração &quot;clones&quot; — um erro operacional grave em um contexto fiscal. <strong>É exatamente por isso que a definição de uma <code>PRIMARY KEY</code> (ou de constraints <code>UNIQUE</code> adequadas), tema do módulo de Restrições e Integridade, é o que aproxima uma tabela SQL real do conceito formal de &quot;relação&quot; no sentido matemático.</strong></p>
+</blockquote>
+<hr>
+<h2 id="6.-chaves-de-uma-rela%C3%A7%C3%A3o" tabindex="-1">6. Chaves de uma Relação</h2>
+<p>As definições de chave no Modelo Relacional seguem a mesma lógica dos identificadores discutidos no módulo de Modelagem Relacional Básica — aqui as revisitamos com mais formalismo, segundo a tradição de Codd/Elmasri.</p>
+<h3 id="6.1-superchave-(superkey)" tabindex="-1">6.1 Superchave (Superkey)</h3>
+<p>Uma <strong>superchave</strong> é qualquer subconjunto de atributos de uma relação que garante <strong>unicidade</strong> — ou seja, não existem (nem podem existir) duas tuplas distintas com os mesmos valores para todos os atributos da superchave.</p>
+<blockquote>
+<p>Exemplo: em <code>AuditorFiscal</code>, o conjunto <code>{Matricula}</code> é uma superchave. O conjunto <code>{Matricula, Nome}</code> também é uma superchave (mas contém um atributo redundante, já que <code>Matricula</code> sozinha já garante a unicidade).</p>
+</blockquote>
+<h3 id="6.2-chave-candidata-(candidate-key)" tabindex="-1">6.2 Chave Candidata (Candidate Key)</h3>
+<p>Uma <strong>chave candidata</strong> é uma superchave <strong>mínima</strong>: nenhum subconjunto próprio dela também é uma superchave.</p>
+<blockquote>
+<p>Em <code>AuditorFiscal</code>, <code>{Matricula}</code> é uma chave candidata. Se o CPF do auditor também estivesse na tabela, <code>{CPF}</code> seria uma segunda chave candidata.</p>
+</blockquote>
+<h3 id="6.3-chave-prim%C3%A1ria-(primary-key)" tabindex="-1">6.3 Chave Primária (Primary Key)</h3>
+<p>Dentre as chaves candidatas, uma é <strong>escolhida</strong> pelo projetista para ser a <strong>chave primária</strong> — o identificador oficial das tuplas daquela relação, e a que será referenciada por chaves estrangeiras de outras relações.</p>
+<p>Por convenção, na notação de esquema, sublinha-se (ou destaca-se em negrito) o(s) atributo(s) que compõem a chave primária:</p>
+<pre class='hljs'><code><div>AuditorFiscal(**Matricula**, Nome, Endereco, Funcao, Salario, Unidade)
+</div></code></pre>
+<h3 id="6.4-chave-alternativa-(alternate-key)" tabindex="-1">6.4 Chave Alternativa (Alternate Key)</h3>
+<p>Toda chave candidata que <strong>não</strong> foi escolhida como chave primária é chamada de <strong>chave alternativa</strong>. Ela continua sendo única, mas não é o identificador oficial nem é referenciada por chaves estrangeiras (a menos que explicitamente declarada com <code>UNIQUE</code>).</p>
+<blockquote>
+<p>No exemplo do módulo anterior, <code>CNPJ/CPF</code> do contribuinte é uma chave alternativa (<code>UNIQUE</code>), enquanto <code>id_contribuinte</code> (surrogate key) foi escolhida como chave primária.</p>
+</blockquote>
+<hr>
+<h2 id="7.-chave-estrangeira-e-autorrelacionamento" tabindex="-1">7. Chave Estrangeira e Autorrelacionamento</h2>
+<h3 id="7.1-defini%C3%A7%C3%A3o-formal-de-chave-estrangeira" tabindex="-1">7.1 Definição Formal de Chave Estrangeira</h3>
+<p>Formalmente, um conjunto de atributos de uma relação <code>R1</code> é uma <strong>chave estrangeira</strong> se satisfaz <strong>duas condições</strong>:</p>
+<ol>
+<li>Os atributos da chave estrangeira <strong>compartilham o mesmo domínio</strong> dos atributos que formam a chave primária de outra relação <code>R2</code> (ou da própria <code>R1</code>, no caso de autorrelacionamento).</li>
+<li>Para toda tupla <code>t1</code> de <code>R1</code>, o valor da chave estrangeira em <code>t1</code> <strong>ou</strong> corresponde ao valor da chave primária de alguma tupla <code>t2</code> em <code>R2</code>, <strong>ou</strong> é <code>NULO</code>. Esta segunda condição é exatamente a <strong>integridade referencial</strong> (seção 8.3).</li>
+</ol>
+<h3 id="7.2-exemplo-fiscal-completo" tabindex="-1">7.2 Exemplo Fiscal Completo</h3>
+<p>Considere as relações <code>UnidadeFiscal</code> e <code>AuditorFiscal</code>, com a seguinte instância:</p>
+<p><strong><code>UnidadeFiscal</code></strong></p>
+<table>
+<thead>
+<tr>
+<th>CodUnidade</th>
+<th>Nome</th>
+<th>MatriculaChefe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UF2</td>
+<td>Regional Fiscalização Sul</td>
+<td>210</td>
+</tr>
+<tr>
+<td>UF1</td>
+<td>Regional Fiscalização Norte</td>
+<td>100</td>
+</tr>
+<tr>
+<td>UF3</td>
+<td>Regional Fiscalização Sertão</td>
+<td>NULO</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>AuditorFiscal</code></strong></p>
+<table>
+<thead>
+<tr>
+<th>Matrícula</th>
+<th>Nome</th>
+<th>Endereço</th>
+<th>Função</th>
+<th>Salário</th>
+<th>Unidade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>Ana Ribeiro</td>
+<td>R. Pedro I, 12, Alto Branco</td>
+<td>Auditor Tributário</td>
+<td>12.500,00</td>
+<td>UF1</td>
+</tr>
+<tr>
+<td>250</td>
+<td>Pedro Souza</td>
+<td>R. J. Silva, 24, Liberdade</td>
+<td>Auditor Fiscal Chefe</td>
+<td>18.900,00</td>
+<td>UF1</td>
+</tr>
+<tr>
+<td>108</td>
+<td>André Lima</td>
+<td>R. Itália, 33, Bairro das Nações</td>
+<td>Técnico Tributário</td>
+<td>8.700,00</td>
+<td>UF2</td>
+</tr>
+<tr>
+<td>210</td>
+<td>Paula Nogueira</td>
+<td>R. Pará, 98, Bairro dos Estados</td>
+<td>Auditora Fiscal Chefe</td>
+<td>19.200,00</td>
+<td>UF2</td>
+</tr>
+</tbody>
+</table>
+<p>Aqui temos <strong>duas</strong> chaves estrangeiras envolvidas:</p>
+<ul>
+<li><code>AuditorFiscal.Unidade</code> é uma chave estrangeira que referencia <code>UnidadeFiscal.CodUnidade</code> — todo auditor pertence a uma unidade fiscal existente.</li>
+<li><code>UnidadeFiscal.MatriculaChefe</code> é uma chave estrangeira que referencia <code>AuditorFiscal.Matricula</code> — o chefe de uma unidade é ele próprio um auditor cadastrado. Note que a unidade <code>UF3</code> tem <code>MatriculaChefe = NULO</code>: pela definição formal (condição 2 acima), isso é <strong>permitido</strong> — significa apenas que aquela unidade momentaneamente não tem chefe designado, e não viola a integridade referencial.</li>
+</ul>
+<p>Em T-SQL:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE TABLE</span> unidade_fiscal (
+    cod_unidade       <span class="hljs-type">CHAR</span>(<span class="hljs-number">3</span>)      <span class="hljs-keyword">NOT NULL</span>,
+    nome               <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT NULL</span>,
+    matricula_chefe      <span class="hljs-type">INT</span>          <span class="hljs-keyword">NULL</span>,      <span class="hljs-comment">-- pode ser NULO</span>
+    <span class="hljs-keyword">CONSTRAINT</span> pk_unidade_fiscal <span class="hljs-keyword">PRIMARY KEY</span> (cod_unidade)
+);
+
+<span class="hljs-keyword">CREATE TABLE</span> auditor_fiscal (
+    matricula     <span class="hljs-type">INT</span>           <span class="hljs-keyword">NOT NULL</span>,
+    nome           <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">150</span>)  <span class="hljs-keyword">NOT NULL</span>,
+    endereco        <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">200</span>)  <span class="hljs-keyword">NOT NULL</span>,
+    funcao           <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>)   <span class="hljs-keyword">NOT NULL</span>,
+    salario           <span class="hljs-type">NUMERIC</span>(<span class="hljs-number">15</span>,<span class="hljs-number">2</span>) <span class="hljs-keyword">NOT NULL</span>,
+    cod_unidade        <span class="hljs-type">CHAR</span>(<span class="hljs-number">3</span>)       <span class="hljs-keyword">NOT NULL</span>,
+    <span class="hljs-keyword">CONSTRAINT</span> pk_auditor_fiscal <span class="hljs-keyword">PRIMARY KEY</span> (matricula),
+    <span class="hljs-keyword">CONSTRAINT</span> fk_auditor_unidade <span class="hljs-keyword">FOREIGN KEY</span> (cod_unidade)
+        <span class="hljs-keyword">REFERENCES</span> unidade_fiscal (cod_unidade)
+);
+
+<span class="hljs-comment">-- Só é possível criar esta FK depois que &#x27;auditor_fiscal&#x27; já existe,</span>
+<span class="hljs-comment">-- pois ela referencia &#x27;auditor_fiscal.matricula&#x27;:</span>
+<span class="hljs-keyword">ALTER TABLE</span> unidade_fiscal
+<span class="hljs-keyword">ADD CONSTRAINT</span> fk_unidade_chefe <span class="hljs-keyword">FOREIGN KEY</span> (matricula_chefe)
+    <span class="hljs-keyword">REFERENCES</span> auditor_fiscal (matricula);
+</div></code></pre>
+<blockquote>
+<p><strong>Observação de ordem de criação:</strong> este exemplo ilustra uma situação comum em modelagem — duas tabelas <strong>referenciam-se mutuamente</strong> (<code>auditor_fiscal</code> referencia <code>unidade_fiscal</code>, e <code>unidade_fiscal</code> referencia <code>auditor_fiscal</code>). Nesses casos, é preciso criar uma das FKs <strong>depois</strong> que ambas as tabelas já existirem, usando <code>ALTER TABLE ... ADD CONSTRAINT</code>, como feito acima.</p>
+</blockquote>
+<h3 id="7.3-autorrelacionamento-(self-referencing-foreign-key)" tabindex="-1">7.3 Autorrelacionamento (Self-Referencing Foreign Key)</h3>
+<p>Uma chave estrangeira pode referenciar a <strong>própria relação</strong> a que pertence — é o chamado <strong>autorrelacionamento</strong>.</p>
+<blockquote>
+<p>Exemplo clássico: <code>AuditorFiscal(Matricula, Nome, Salario, MatriculaSupervisor)</code>, em que <code>MatriculaSupervisor</code> referencia <code>AuditorFiscal.Matricula</code> — ou seja, um auditor pode ter outro auditor como supervisor direto.</p>
+</blockquote>
+<pre class='hljs'><code><div><span class="hljs-keyword">ALTER TABLE</span> auditor_fiscal
+<span class="hljs-keyword">ADD</span> matricula_supervisor <span class="hljs-type">INT</span> <span class="hljs-keyword">NULL</span>;
+
+<span class="hljs-keyword">ALTER TABLE</span> auditor_fiscal
+<span class="hljs-keyword">ADD CONSTRAINT</span> fk_auditor_supervisor
+    <span class="hljs-keyword">FOREIGN KEY</span> (matricula_supervisor) <span class="hljs-keyword">REFERENCES</span> auditor_fiscal (matricula);
+</div></code></pre>
+<p>Este é o mesmo padrão já estudado no módulo de Modelagem Relacional Básica (Regra 6 de mapeamento) e no módulo de Regras de Mapeamento MER→Relacional (NF-e que referencia outra NF-e) — a chave estrangeira simplesmente aponta para a chave primária da mesma tabela em que está definida.</p>
+<hr>
+<h2 id="8.-regras-de-integridade" tabindex="-1">8. Regras de Integridade</h2>
+<p>O Modelo Relacional define três regras de integridade estruturais, que qualquer SGBD relacional — incluindo o SQL Server — deve ser capaz de garantir.</p>
+<h3 id="8.1-integridade-de-chave-(key-integrity)" tabindex="-1">8.1 Integridade de Chave (Key Integrity)</h3>
+<p>Toda tupla de uma relação deve possuir um conjunto de atributos (a chave) que a identifica de forma única dentro daquela relação. Esta é a regra mais básica, subjacente à própria noção de chave candidata (seção 6.2).</p>
+<h3 id="8.2-integridade-de-entidade-(entity-integrity-%2F-integridade-de-identidade)" tabindex="-1">8.2 Integridade de Entidade (Entity Integrity / Integridade de Identidade)</h3>
+<p><strong>Nenhum atributo que faça parte da chave primária pode ter valor <code>NULO</code>.</strong></p>
+<blockquote>
+<p>Exemplo fiscal: seria impossível ter um <code>AutoInfracao</code> sem <code>NumeroAuto</code> (sua chave primária) — um auto de infração sem número não pode, por definição, ser identificado unicamente, o que inviabilizaria toda referência a ele (por exemplo, em um recurso administrativo).</p>
+</blockquote>
+<p>Em T-SQL, esta regra é garantida automaticamente pela constraint <code>PRIMARY KEY</code>, que implicitamente torna a(s) coluna(s) <code>NOT NULL</code>.</p>
+<h3 id="8.3-integridade-referencial-(referential-integrity)" tabindex="-1">8.3 Integridade Referencial (Referential Integrity)</h3>
+<p>Como já formalizado na seção 7.1: toda chave estrangeira deve, em cada tupla, <strong>ou</strong> corresponder a um valor de chave primária existente na relação referenciada, <strong>ou</strong> ser <code>NULA</code> (quando a FK permite <code>NULL</code>).</p>
+<blockquote>
+<p>Exemplo fiscal: um <code>AutoInfracao.MatriculaAuditor</code> (chave estrangeira para <code>AuditorFiscal</code>) não pode conter uma matrícula que não exista em <code>AuditorFiscal</code> — isso representaria um auto de infração lavrado por um auditor &quot;fantasma&quot;.</p>
+</blockquote>
+<hr>
+<h2 id="9.-opera%C3%A7%C3%B5es-de-atualiza%C3%A7%C3%A3o-e-viola%C3%A7%C3%B5es-de-integridade" tabindex="-1">9. Operações de Atualização e Violações de Integridade</h2>
+<p>As três operações básicas que alteram uma instância de relação — <strong>inserção</strong>, <strong>remoção</strong> e <strong>atualização (modificação)</strong> — podem, cada uma, violar uma ou mais das regras de integridade vistas na seção 8. É importante entender <strong>o que fazer diante de cada tipo de violação</strong>, pois essa decisão de design tem impacto direto nos dados fiscais.</p>
+<h3 id="9.1-inser%C3%A7%C3%A3o-(insert)" tabindex="-1">9.1 Inserção (INSERT)</h3>
+<p>Ao inserir uma nova tupla, podem ocorrer violações de:</p>
+<ul>
+<li><strong>Integridade de entidade</strong>: tentar inserir uma tupla sem valor para a chave primária, ou com uma chave primária já existente.</li>
+<li><strong>Integridade referencial</strong>: tentar inserir uma tupla cuja chave estrangeira aponta para um valor inexistente na relação referenciada.</li>
+<li><strong>Restrições de domínio</strong> (<code>CHECK</code>, tipo de dado): tentar inserir um valor fora do domínio esperado do atributo.</li>
+</ul>
+<blockquote>
+<p>Exemplo fiscal: tentar inserir o auto de infração <code>('A-2026-00931', 'Contribuinte X', 'Sonegação', -500.00, '2026-07-20', matricula_auditor=9999)</code> — aqui há <strong>duas</strong> violações simultâneas: <code>ValorMulta</code> negativo (violação de domínio) e <code>matricula_auditor = 9999</code> inexistente (violação de integridade referencial).</p>
+</blockquote>
+<p><strong>O que fazer diante da violação numa inserção?</strong> Basicamente duas estratégias:</p>
+<ol>
+<li><strong>Rejeitar a inserção</strong> (comportamento padrão do SQL Server: a transação falha e nenhuma linha é inserida) — é a opção <strong>recomendada</strong> em bases fiscais, pois impede a entrada de dados inconsistentes desde a origem.</li>
+<li><strong>Permitir a inserção &quot;provisória&quot; e corrigir depois</strong> — abordagem mais arriscada, geralmente usada apenas em cargas em lote de sistemas legados, com posterior rotina de saneamento de dados. <strong>Não recomendada</strong> como prática permanente em bases de produção fiscal, pois abre uma janela de inconsistência.</li>
+</ol>
+<h3 id="9.2-remo%C3%A7%C3%A3o-(delete)" tabindex="-1">9.2 Remoção (DELETE)</h3>
+<p>Uma remoção só pode violar a <strong>integridade referencial</strong> (nunca a integridade de entidade ou de domínio, pois remover uma tupla não introduz valores novos). O problema surge quando a tupla removida é <strong>referenciada por chave estrangeira em outra relação</strong>.</p>
+<blockquote>
+<p>Exemplo fiscal: tentar excluir um <code>Contribuinte</code> que já possui <code>NotasFiscais</code> ou <code>AutosDeInfracao</code> associados.</p>
+</blockquote>
+<p><strong>O que fazer diante da violação numa remoção?</strong> Três estratégias possíveis (já estudadas em profundidade no módulo de Restrições e Integridade, seção de <code>ON DELETE</code>):</p>
+<ol>
+<li><strong>Rejeitar a remoção</strong> (<code>NO ACTION</code>, padrão do SQL Server) — impede a exclusão do &quot;pai&quot; enquanto existirem &quot;filhos&quot;. <strong>Recomendado</strong> para preservar o histórico fiscal (contribuintes, NF-e, autos de infração não devem desaparecer silenciosamente).</li>
+<li><strong>Efeito cascata (<code>CASCADE</code>)</strong> — remove automaticamente todas as tuplas que referenciam a tupla excluída. Adequado apenas para relações de &quot;parte de um todo&quot;, como itens de um documento (<code>ItemNFe</code> em relação a <code>NFe</code>).</li>
+<li><strong>Modificar a chave estrangeira referenciada para <code>NULO</code></strong> (<code>SET NULL</code>) — só é possível se a FK permitir <code>NULL</code> e não fizer parte da chave primária da tabela &quot;filha&quot;. Adequado quando a referência é opcional (ex.: transportadora de um CT-e).</li>
+</ol>
+<h3 id="9.3-atualiza%C3%A7%C3%A3o-(update)" tabindex="-1">9.3 Atualização (UPDATE)</h3>
+<p>Uma atualização pode violar qualquer uma das três regras de integridade, dependendo de qual atributo é alterado:</p>
+<ul>
+<li>Alterar a <strong>chave primária</strong> de uma tupla pode violar a integridade de entidade (se o novo valor já existir em outra tupla) e também exige decidir o que fazer com as chaves estrangeiras que a referenciavam em outras tabelas (<code>ON UPDATE CASCADE</code>, visto no módulo anterior).</li>
+<li>Alterar um <strong>atributo de domínio restrito</strong> (ex.: mudar <code>Situacao</code> de uma NF-e para um valor não previsto) viola a integridade de domínio, sendo barrada por um <code>CHECK</code>.</li>
+<li>Alterar a <strong>chave estrangeira</strong> para um valor inexistente na relação referenciada viola a integridade referencial, da mesma forma que na inserção.</li>
+</ul>
+<blockquote>
+<p><strong>Ligação direta com o módulo de Restrições e Integridade:</strong> a <em>trigger</em> <code>trg_impede_reabertura_nfe</code>, estudada naquele módulo, é um exemplo prático de como impedir uma atualização especificamente inválida (mudar a situação de uma NF-e de <code>CANCELADA</code> para <code>AUTORIZADA</code>) — uma regra de negócio que vai além das três regras de integridade estruturais, mas segue a mesma lógica de &quot;avaliar a operação de atualização antes de permiti-la&quot;.</p>
+</blockquote>
+<hr>
+<h2 id="10.-%C3%A1lgebra-relacional-%E2%80%94-fundamentos-e-operadores-b%C3%A1sicos" tabindex="-1">10. Álgebra Relacional — Fundamentos e Operadores Básicos</h2>
+<h3 id="10.1-o-que-%C3%A9-a-%C3%A1lgebra-relacional" tabindex="-1">10.1 O que é a Álgebra Relacional</h3>
+<p>A <strong>álgebra relacional</strong> é uma linguagem de consulta <strong>procedural</strong> e <strong>formal</strong>: cada operador recebe uma ou duas relações como entrada (operandos) e produz <strong>uma nova relação</strong> como resultado. Essa propriedade — o resultado de qualquer operação ser, ele próprio, uma relação — chama-se <strong>fechamento (closure)</strong>, e é o que permite <strong>compor</strong> operadores em expressões mais complexas (o resultado de uma operação vira o operando de outra).</p>
+<p>A álgebra relacional é o fundamento teórico sobre o qual o SQL foi construído: toda consulta SQL, por mais complexa que pareça, pode ser reduzida a uma combinação dos operadores que veremos a seguir. Compreendê-la profundamente ajuda a <strong>entender e otimizar</strong> consultas SQL do dia a dia, além de facilitar a comunicação técnica sobre o que uma consulta efetivamente faz.</p>
+<p>Cinco operadores são considerados <strong>fundamentais</strong> — todos os demais podem ser expressos a partir deles (a interseção, a junção e a divisão, vistas na seção 11, são chamadas de <strong>operadores derivados</strong> por esse motivo).</p>
+<h3 id="10.2-sele%C3%A7%C3%A3o-(selection)-%E2%80%94-%CF%83" tabindex="-1">10.2 Seleção (Selection) — σ</h3>
+<p><strong>Seleciona um subconjunto das tuplas</strong> de uma relação que satisfazem uma condição lógica (predicado), mantendo todos os atributos.</p>
+<pre class='hljs'><code><div>σ condição (Relação)
+</div></code></pre>
+<blockquote>
+<p><strong>Exemplo fiscal:</strong> selecionar todos os autos de infração com valor de multa superior a R$ 10.000,00.</p>
+<pre class='hljs'><code><div>σ ValorMulta &gt; 10000 (AutoInfracao)
+</div></code></pre>
+</blockquote>
+<p>Em T-SQL, a seleção corresponde à cláusula <code>WHERE</code>:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span>
+<span class="hljs-keyword">FROM</span> auto_infracao
+<span class="hljs-keyword">WHERE</span> valor_multa <span class="hljs-operator">&gt;</span> <span class="hljs-number">10000</span>;
+</div></code></pre>
+<h3 id="10.3-proje%C3%A7%C3%A3o-(projection)-%E2%80%94-%CF%80" tabindex="-1">10.3 Projeção (Projection) — π</h3>
+<p><strong>Copia</strong> a relação dada, mas mantendo apenas os <strong>atributos especificados</strong>, descartando os demais. Como o resultado é uma relação (um conjunto), <strong>linhas duplicadas resultantes são eliminadas</strong>.</p>
+<pre class='hljs'><code><div>π atributo1, atributo2 (Relação)
+</div></code></pre>
+<blockquote>
+<p><strong>Exemplo fiscal:</strong> obter apenas a matrícula e o nome de todos os auditores fiscais, sem repetir combinações idênticas.</p>
+<pre class='hljs'><code><div>π Matricula, Nome (AuditorFiscal)
+</div></code></pre>
+</blockquote>
+<p>Em T-SQL:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DISTINCT</span> matricula, nome
+<span class="hljs-keyword">FROM</span> auditor_fiscal;
+</div></code></pre>
+<blockquote>
+<p><strong>Nuance importante:</strong> em álgebra relacional pura, a projeção <strong>sempre</strong> remove duplicatas (por definição de relação como conjunto — seção 5.2-d). Em SQL, por padrão, <code>SELECT</code> <strong>não</strong> remove duplicatas automaticamente — é preciso usar <code>DISTINCT</code> explicitamente para reproduzir fielmente a semântica da projeção formal. Essa é uma das diferenças mais citadas entre a álgebra relacional teórica e o SQL prático.</p>
+</blockquote>
+<h3 id="10.4-produto-cartesiano-(cartesian-product)-%E2%80%94-%C3%97" tabindex="-1">10.4 Produto Cartesiano (Cartesian Product) — ×</h3>
+<p>Combina <strong>cada tupla</strong> de uma relação com <strong>cada tupla</strong> de outra, produzindo todas as combinações possíveis. Se <code>R1</code> tem <code>m</code> tuplas e <code>R2</code> tem <code>n</code> tuplas, o resultado <code>R1 × R2</code> terá <code>m × n</code> tuplas.</p>
+<pre class='hljs'><code><div>AuditorFiscal × UnidadeFiscal
+</div></code></pre>
+<blockquote>
+<p><strong>Exemplo fiscal:</strong> combinar cada auditor com cada unidade fiscal — mesmo que o auditor não pertença àquela unidade. Sozinho, o produto cartesiano quase nunca é útil para responder a uma pergunta de negócio real (a maioria das combinações geradas não faz sentido); ele serve principalmente como <strong>base</strong> para a operação de junção (seção 11.2), que filtra apenas as combinações relevantes.</p>
+</blockquote>
+<p>Em T-SQL, o produto cartesiano corresponde a um <code>CROSS JOIN</code>:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span>
+<span class="hljs-keyword">FROM</span> auditor_fiscal
+<span class="hljs-keyword">CROSS</span> <span class="hljs-keyword">JOIN</span> unidade_fiscal;
+</div></code></pre>
+<blockquote>
+<p><strong>Cuidado prático:</strong> um <code>CROSS JOIN</code> (ou uma consulta com múltiplas tabelas no <code>FROM</code> sem condição de junção) entre tabelas fiscais grandes — por exemplo, <code>Contribuinte</code> × <code>NotaFiscal</code> — pode gerar <strong>bilhões de linhas</strong> e travar o servidor. É importante que os profissionais da SEFAZ-PB reconheçam esse padrão de erro (esquecer a condição de junção) como uma das causas mais comuns de consultas SQL que &quot;nunca terminam&quot;.</p>
+</blockquote>
+<h3 id="10.5-uni%C3%A3o-(union)-%E2%80%94-%E2%88%AA" tabindex="-1">10.5 União (Union) — ∪</h3>
+<p>Combina o conjunto de tuplas de duas relações em uma única relação, <strong>eliminando duplicatas</strong>. Exige que as duas relações tenham o <strong>mesmo esquema</strong> (mesmo número e tipo de atributos, com significado compatível) — condição chamada de <strong>compatibilidade de união (union compatibility)</strong>.</p>
+<pre class='hljs'><code><div>ContribuintesEmMalhaFiscal ∪ ContribuintesInadimplentes
+</div></code></pre>
+<blockquote>
+<p><strong>Exemplo fiscal:</strong> obter o conjunto de todos os contribuintes que estão <strong>ou</strong> na malha fiscal (por inconsistências de cruzamento NF-e × EFD), <strong>ou</strong> inadimplentes (débitos em aberto), sem repetir contribuintes que se enquadrem em ambas as situações.</p>
+</blockquote>
+<p>Em T-SQL:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> id_contribuinte <span class="hljs-keyword">FROM</span> contribuinte_em_malha_fiscal
+<span class="hljs-keyword">UNION</span>
+<span class="hljs-keyword">SELECT</span> id_contribuinte <span class="hljs-keyword">FROM</span> contribuinte_inadimplente;
+</div></code></pre>
+<blockquote>
+<p>Assim como a projeção, a <code>UNION</code> do T-SQL já remove duplicatas por padrão (correspondendo fielmente à álgebra relacional). Se a eliminação de duplicatas <strong>não</strong> for desejada — por exemplo, para contar quantas vezes um contribuinte aparece em cada critério —, usa-se <code>UNION ALL</code>, que <strong>não</strong> tem equivalente direto na álgebra relacional pura (pois um multiconjunto não é uma relação, no sentido formal).</p>
+</blockquote>
+<h3 id="10.6-diferen%C3%A7a-entre-conjuntos-(set-difference)-%E2%80%94-%E2%88%92" tabindex="-1">10.6 Diferença entre Conjuntos (Set Difference) — −</h3>
+<p>Produz as tuplas que existem na <strong>primeira</strong> relação, mas <strong>não</strong> existem na segunda. Assim como a união, exige compatibilidade de união entre as duas relações.</p>
+<pre class='hljs'><code><div>TodosOsContribuintesAtivos − ContribuintesComEFDEntregue
+</div></code></pre>
+<blockquote>
+<p><strong>Exemplo fiscal:</strong> obter todos os contribuintes ativos que <strong>ainda não</strong> entregaram a EFD do período — um indício direto e imediato de possível omissão de escrituração.</p>
+</blockquote>
+<p>Em T-SQL, a diferença de conjuntos corresponde ao operador <code>EXCEPT</code>:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> id_contribuinte <span class="hljs-keyword">FROM</span> contribuinte <span class="hljs-keyword">WHERE</span> situacao_cadastral <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;ATIVO&#x27;</span>
+<span class="hljs-keyword">EXCEPT</span>
+<span class="hljs-keyword">SELECT</span> id_contribuinte <span class="hljs-keyword">FROM</span> efd_arquivo <span class="hljs-keyword">WHERE</span> periodo_apuracao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;07/2026&#x27;</span>;
+</div></code></pre>
+<blockquote>
+<p><strong>Atenção à ordem dos operandos:</strong> ao contrário da união (que é comutativa: <code>A ∪ B = B ∪ A</code>), a diferença <strong>não é comutativa</strong> (<code>A − B ≠ B − A</code>). Trocar a ordem no <code>EXCEPT</code> muda completamente o significado da consulta — de &quot;quem não entregou&quot; para &quot;quem entregou, mas por algum motivo não está mais ativo&quot;.</p>
+</blockquote>
+<hr>
+<h2 id="11.-operadores-derivados%3A-jun%C3%A7%C3%A3o%2C-interse%C3%A7%C3%A3o-e-divis%C3%A3o" tabindex="-1">11. Operadores Derivados: Junção, Interseção e Divisão</h2>
+<p>Embora os cinco operadores da seção 10 sejam formalmente suficientes para expressar qualquer consulta relacional, três operadores adicionais — derivados a partir dos fundamentais — são tão utilizados na prática que merecem tratamento próprio.</p>
+<h3 id="11.1-interse%C3%A7%C3%A3o-(intersection)-%E2%80%94-%E2%88%A9" tabindex="-1">11.1 Interseção (Intersection) — ∩</h3>
+<p>Produz as tuplas que existem <strong>em ambas</strong> as relações. Pode ser expressa a partir da diferença: <code>A ∩ B = A − (A − B)</code>. Exige compatibilidade de união.</p>
+<blockquote>
+<p><strong>Exemplo fiscal:</strong> contribuintes que estão <strong>simultaneamente</strong> na malha fiscal <strong>e</strong> inadimplentes — um grupo de prioridade máxima para ação de cobrança e fiscalização conjunta.</p>
+</blockquote>
+<p>Em T-SQL, a interseção corresponde ao operador <code>INTERSECT</code>:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> id_contribuinte <span class="hljs-keyword">FROM</span> contribuinte_em_malha_fiscal
+<span class="hljs-keyword">INTERSECT</span>
+<span class="hljs-keyword">SELECT</span> id_contribuinte <span class="hljs-keyword">FROM</span> contribuinte_inadimplente;
+</div></code></pre>
+<h3 id="11.2-jun%C3%A7%C3%A3o-(join)-%E2%80%94-%E2%8B%88" tabindex="-1">11.2 Junção (Join) — ⋈</h3>
+<p>A <strong>junção</strong> é, na prática, o operador mais usado no dia a dia de consultas fiscais. Ela combina tuplas de duas relações que satisfazem uma condição sobre atributos comuns — formalmente, pode ser expressa como um <strong>produto cartesiano seguido de uma seleção</strong>:</p>
+<pre class='hljs'><code><div>R1 ⋈ condição R2   ≡   σ condição (R1 × R2)
+</div></code></pre>
+<p>Um caso particular muito comum é a <strong>junção natural (natural join)</strong>, em que a condição de junção é a igualdade entre atributos de mesmo nome (tipicamente, uma chave estrangeira e a chave primária que ela referencia), e a coluna duplicada é eliminada do resultado.</p>
+<blockquote>
+<p><strong>Exemplo fiscal:</strong> obter o nome do auditor responsável junto com os dados de cada auto de infração que ele lavrou.</p>
+<pre class='hljs'><code><div>AutoInfracao ⋈ AutoInfracao.MatriculaAuditor = AuditorFiscal.Matricula AuditorFiscal
+</div></code></pre>
+</blockquote>
+<p>Em T-SQL, a junção corresponde ao <code>INNER JOIN</code> (ou, na sintaxe mais antiga, a listar as tabelas no <code>FROM</code> separadas por vírgula, com a condição no <code>WHERE</code> — desaconselhada, pois mistura visualmente a junção com filtros de seleção comuns):</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Forma recomendada (deixa explícita a diferença entre condição de junção e filtro)</span>
+<span class="hljs-keyword">SELECT</span> a.numero_auto, a.valor_multa, af.nome <span class="hljs-keyword">AS</span> nome_auditor
+<span class="hljs-keyword">FROM</span> auto_infracao a
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> auditor_fiscal af <span class="hljs-keyword">ON</span> a.matricula_auditor <span class="hljs-operator">=</span> af.matricula
+<span class="hljs-keyword">WHERE</span> a.valor_multa <span class="hljs-operator">&gt;</span> <span class="hljs-number">10000</span>;
+</div></code></pre>
+<blockquote>
+<p>Repare como esta consulta única já combina, na prática, <strong>três</strong> operadores da álgebra relacional: uma <strong>junção</strong> (<code>INNER JOIN ... ON</code>), uma <strong>seleção</strong> (<code>WHERE a.valor_multa &gt; 10000</code>) e uma <strong>projeção</strong> (a lista de colunas do <code>SELECT</code>). Isso ilustra bem por que a álgebra relacional é útil: qualquer consulta SQL, por mais complexa, pode ser decomposta nesses blocos fundamentais para fins de entendimento, depuração e otimização.</p>
+</blockquote>
+<h3 id="11.3-divis%C3%A3o-(division)-%E2%80%94-%C3%B7" tabindex="-1">11.3 Divisão (Division) — ÷</h3>
+<p>A <strong>divisão</strong> é o operador mais elaborado (e menos intuitivo) da álgebra relacional, mas resolve um tipo específico de pergunta muito comum em fiscalização: <strong>&quot;quem satisfaz TODAS as condições de um determinado conjunto?&quot;</strong></p>
+<blockquote>
+<p><strong>Exemplo fiscal:</strong> identificar quais <strong>auditores fiscais</strong> participaram de <strong>absolutamente todas</strong> as unidades fiscais existentes ao longo de sua carreira (por exemplo, para fins de elegibilidade a um cargo que exige rodízio completo entre regionais).</p>
+</blockquote>
+<p>Formalmente, dadas duas relações <code>R(A, B)</code> e <code>S(B)</code>, a divisão <code>R ÷ S</code> produz os valores de <code>A</code> que aparecem em <code>R</code> associados a <strong>todos</strong> os valores de <code>B</code> presentes em <code>S</code>.</p>
+<p>Não existe uma cláusula única <code>DIVIDE</code> em T-SQL — a divisão é tipicamente implementada combinando <code>GROUP BY</code>, <code>HAVING</code> e uma subconsulta de contagem:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Auditores que já atuaram em TODAS as unidades fiscais cadastradas</span>
+<span class="hljs-keyword">SELECT</span> h.matricula_auditor
+<span class="hljs-keyword">FROM</span> historico_lotacao_auditor h
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> h.matricula_auditor
+<span class="hljs-keyword">HAVING</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> h.cod_unidade) <span class="hljs-operator">=</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> unidade_fiscal);
+</div></code></pre>
+<blockquote>
+<p>A lógica aqui é: para cada auditor, contamos <strong>quantas unidades distintas</strong> ele já integrou (<code>COUNT(DISTINCT h.cod_unidade)</code>), e comparamos com o <strong>total de unidades fiscais existentes</strong> (<code>SELECT COUNT(*) FROM unidade_fiscal</code>). Se os dois números coincidirem, aquele auditor &quot;cobriu&quot; todas as unidades — exatamente o resultado que a divisão relacional formal produziria.</p>
+</blockquote>
+<hr>
+<h2 id="12.-roteiro-pr%C3%A1tico-%E2%80%94-do-conceito-formal-ao-t-sql" tabindex="-1">12. Roteiro Prático — Do Conceito Formal ao T-SQL</h2>
+<p><strong>Objetivo:</strong> implementar as relações <code>UnidadeFiscal</code> e <code>AuditorFiscal</code> (seção 7.2) no SSMS e reproduzir, em T-SQL, cada operador da álgebra relacional estudado.</p>
+<ol>
+<li>No SSMS, execute o script de criação de tabelas da seção 7.2 no banco <code>curso_integridade_fiscal</code>.</li>
+<li>Insira as tuplas de exemplo apresentadas na seção 7.2 (atenção à ordem de inserção: como as tabelas se referenciam mutuamente, pode ser necessário inserir primeiro os auditores sem <code>matricula_supervisor</code>/<code>unidade_fiscal.matricula_chefe</code>, e depois usar <code>UPDATE</code> para completar essas referências).</li>
+<li>Para cada expressão de álgebra relacional abaixo, escreva e execute o comando T-SQL equivalente, e confira o resultado:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Expressão em álgebra relacional (informal)</th>
+<th>O que fazer no SSMS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>a</td>
+<td>σ Salario &gt; 15000 (AuditorFiscal)</td>
+<td>Escrever o<code>SELECT ... WHERE</code> equivalente</td>
+</tr>
+<tr>
+<td>b</td>
+<td>π Nome, Unidade (AuditorFiscal)</td>
+<td>Escrever o<code>SELECT DISTINCT</code> equivalente</td>
+</tr>
+<tr>
+<td>c</td>
+<td>AuditorFiscal ⋈ Unidade=CodUnidade UnidadeFiscal</td>
+<td>Escrever o<code>INNER JOIN</code> equivalente, trazendo <code>auditor.nome</code> e <code>unidade.nome</code></td>
+</tr>
+<tr>
+<td>d</td>
+<td>Auditores da UF1 ∪ Auditores da UF2</td>
+<td>Escrever a consulta com<code>UNION</code></td>
+</tr>
+<tr>
+<td>e</td>
+<td>Auditores da UF1 − Auditores com Salario &gt; 15000</td>
+<td>Escrever a consulta com<code>EXCEPT</code></td>
+</tr>
+</tbody>
+</table>
+<ol start="4">
+<li>Discuta em grupo: para qual dessas expressões o <code>DISTINCT</code>/eliminação de duplicatas fez diferença real no resultado, e para qual não fez (por quê)?</li>
+</ol>
+<hr>
+<h2 id="13.-exerc%C3%ADcios-pr%C3%A1ticos" tabindex="-1">13. Exercícios Práticos</h2>
+<h3 id="exerc%C3%ADcio-1-%E2%80%94-identificando-os-conceitos-(te%C3%B3rico)" tabindex="-1">Exercício 1 — Identificando os conceitos (teórico)</h3>
+<p>Com base na relação <code>AutoInfracao(NumeroAuto, Contribuinte, TipoInfracao, ValorMulta, DataLavratura, MatriculaAuditor)</code>:
+a) Qual é o grau desta relação?
+b) Aponte um exemplo de superchave que não seja uma chave candidata.
+c) Qual atributo você recomendaria como chave primária, e por quê?
+d) Qual atributo é uma chave estrangeira, e para qual relação ele aponta?</p>
+<h3 id="exerc%C3%ADcio-2-%E2%80%94-esquema-%C3%97-inst%C3%A2ncia" tabindex="-1">Exercício 2 — Esquema × Instância</h3>
+<p>Explique, com suas próprias palavras e um exemplo fiscal, por que a afirmação &quot;a tabela <code>NotaFiscal</code> tem 3 milhões de linhas&quot; é uma afirmação sobre a <strong>instância</strong>, e não sobre o <strong>esquema</strong>, da relação <code>NotaFiscal</code>.</p>
+<h3 id="exerc%C3%ADcio-3-%E2%80%94-diagnosticando-viola%C3%A7%C3%B5es-de-integridade" tabindex="-1">Exercício 3 — Diagnosticando violações de integridade</h3>
+<p>Para cada operação abaixo, indique <strong>qual regra de integridade</strong> seria violada (chave, entidade/identidade ou referencial), ou se nenhuma seria violada:</p>
+<p>a) <code>INSERT</code> em <code>AutoInfracao</code> com <code>NumeroAuto = NULL</code>.
+b) <code>INSERT</code> em <code>AutoInfracao</code> com <code>MatriculaAuditor = 9999</code> (matrícula inexistente).
+c) <code>DELETE</code> em <code>Contribuinte</code> de um contribuinte que já possui NF-e emitidas.
+d) <code>UPDATE</code> em <code>AuditorFiscal</code> mudando a <code>Matricula</code> de um auditor que é referenciado por vários autos de infração já lavrados, sem <code>ON UPDATE CASCADE</code>.</p>
+<h3 id="exerc%C3%ADcio-4-%E2%80%94-traduzindo-%C3%A1lgebra-relacional-para-t-sql" tabindex="-1">Exercício 4 — Traduzindo álgebra relacional para T-SQL</h3>
+<p>Traduza cada expressão para uma consulta T-SQL equivalente, assumindo o esquema da seção 7.2 (mais <code>AutoInfracao</code>, já estudada em módulos anteriores):</p>
+<p>a) <code>π Nome (σ Salario &gt; 15000 (AuditorFiscal))</code>
+b) <code>σ TipoInfracao = 'Sonegação' (AutoInfracao) ⋈ MatriculaAuditor=Matricula AuditorFiscal</code>
+c) <code>π Contribuinte (AutoInfracao) − π id_contribuinte (ContribuinteInadimplente)</code></p>
+<h3 id="exerc%C3%ADcio-5-%E2%80%94-divis%C3%A3o-relacional-na-pr%C3%A1tica" tabindex="-1">Exercício 5 — Divisão relacional na prática</h3>
+<p>Considerando a tabela <code>historico_lotacao_auditor(matricula_auditor, cod_unidade, data_inicio, data_fim)</code>, escreva uma consulta T-SQL que identifique quais auditores <strong>nunca</strong> atuaram na unidade <code>'UF3'</code> — este é o <strong>complemento</strong> da divisão relacional (quem NÃO satisfaz uma condição para determinado valor específico). Compare com a consulta de divisão apresentada na seção 11.3 e explique a diferença de abordagem.</p>
+<h3 id="exerc%C3%ADcio-6-(desafio)-%E2%80%94-rela%C3%A7%C3%A3o-como-conjunto-vs.-tabela-sql" tabindex="-1">Exercício 6 (Desafio) — Relação como conjunto vs. tabela SQL</h3>
+<p>A tabela <code>auto_infracao</code>, no SQL Server, foi criada <strong>sem</strong> nenhuma <code>PRIMARY KEY</code> ou <code>UNIQUE</code> (um erro de modelagem). Um analista insere, por engano, o mesmo auto de infração duas vezes, com todos os atributos idênticos.
+a) Isso seria possível em uma relação, no sentido formal do Modelo Relacional? Justifique com base na seção 5.2(d).
+b) O SQL Server, por padrão, aceitaria essa segunda inserção? Por quê?
+c) Escreva o <code>ALTER TABLE</code> que corrige essa tabela, adicionando uma <code>PRIMARY KEY</code> adequada.</p>
+<hr>
+<h2 id="14.-gloss%C3%A1rio" tabindex="-1">14. Glossário</h2>
+<table>
+<thead>
+<tr>
+<th>Termo</th>
+<th>Definição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Relação</strong></td>
+<td>Estrutura formal equivalente a uma tabela; um conjunto de tuplas com os mesmos atributos</td>
+</tr>
+<tr>
+<td><strong>Tupla</strong></td>
+<td>Uma linha de uma relação</td>
+</tr>
+<tr>
+<td><strong>Atributo</strong></td>
+<td>Uma coluna de uma relação; um papel desempenhado por um domínio</td>
+</tr>
+<tr>
+<td><strong>Domínio</strong></td>
+<td>Conjunto de valores atômicos válidos para um atributo</td>
+</tr>
+<tr>
+<td><strong>Esquema de relação</strong></td>
+<td>A estrutura (nomes de atributos e domínios) de uma relação, denotada R(A1,...,An)</td>
+</tr>
+<tr>
+<td><strong>Instância (snapshot)</strong></td>
+<td>O conjunto de tuplas armazenadas em uma relação em um dado momento</td>
+</tr>
+<tr>
+<td><strong>Grau</strong></td>
+<td>Número de atributos de uma relação</td>
+</tr>
+<tr>
+<td><strong>Cardinalidade da relação</strong></td>
+<td>Número de tuplas de uma relação em um dado momento</td>
+</tr>
+<tr>
+<td><strong>Superchave</strong></td>
+<td>Conjunto de atributos que garante unicidade de tuplas (pode ter atributos redundantes)</td>
+</tr>
+<tr>
+<td><strong>Chave candidata</strong></td>
+<td>Superchave mínima</td>
+</tr>
+<tr>
+<td><strong>Chave primária</strong></td>
+<td>Chave candidata escolhida como identificador oficial da relação</td>
+</tr>
+<tr>
+<td><strong>Chave alternativa</strong></td>
+<td>Chave candidata não escolhida como primária</td>
+</tr>
+<tr>
+<td><strong>Chave estrangeira</strong></td>
+<td>Atributo(s) que referenciam a chave primária de outra relação (ou da mesma, em autorrelacionamento)</td>
+</tr>
+<tr>
+<td><strong>Integridade de chave</strong></td>
+<td>Toda tupla deve ser identificável de forma única</td>
+</tr>
+<tr>
+<td><strong>Integridade de entidade</strong></td>
+<td>Nenhum atributo da chave primária pode ser nulo</td>
+</tr>
+<tr>
+<td><strong>Integridade referencial</strong></td>
+<td>Toda chave estrangeira deve referenciar um valor existente, ou ser nula</td>
+</tr>
+<tr>
+<td><strong>Álgebra relacional</strong></td>
+<td>Linguagem formal e procedural de consulta, cujos operadores produzem relações a partir de relações</td>
+</tr>
+<tr>
+<td><strong>Fechamento (closure)</strong></td>
+<td>Propriedade pela qual o resultado de qualquer operação da álgebra relacional é, ele próprio, uma relação</td>
+</tr>
+<tr>
+<td><strong>Seleção (σ)</strong></td>
+<td>Filtra tuplas de uma relação segundo uma condição</td>
+</tr>
+<tr>
+<td><strong>Projeção (π)</strong></td>
+<td>Mantém apenas os atributos especificados, eliminando duplicatas</td>
+</tr>
+<tr>
+<td><strong>Produto cartesiano (×)</strong></td>
+<td>Combina todas as tuplas de duas relações entre si</td>
+</tr>
+<tr>
+<td><strong>União (∪)</strong></td>
+<td>Combina as tuplas de duas relações compatíveis, eliminando duplicatas</td>
+</tr>
+<tr>
+<td><strong>Diferença (−)</strong></td>
+<td>Tuplas presentes na primeira relação, mas ausentes na segunda</td>
+</tr>
+<tr>
+<td><strong>Interseção (∩)</strong></td>
+<td>Tuplas presentes em ambas as relações</td>
+</tr>
+<tr>
+<td><strong>Junção (⋈)</strong></td>
+<td>Produto cartesiano seguido de seleção sobre atributos relacionados</td>
+</tr>
+<tr>
+<td><strong>Divisão (÷)</strong></td>
+<td>Identifica valores associados a TODOS os valores de outro conjunto</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="15.-refer%C3%AAncias" tabindex="-1">15. Referências</h2>
+<ul>
+<li>CODD, E. F. &quot;A Relational Model of Data for Large Shared Data Banks&quot;. <em>Communications of the ACM</em>, 1970.</li>
+<li>ELMASRI, R.; NAVATHE, S. <em>Fundamentals of Database Systems</em> (edição em português: <em>Sistemas de Banco de Dados</em>). 7ª ed. Pearson.</li>
+<li>DATE, C. J. <em>Introdução a Sistemas de Banco de Dados</em>. 8ª ed. Campus.</li>
+<li>HEUSER, C. A. <em>Projeto de Banco de Dados</em>. 6ª ed. Bookman.</li>
+<li>Documentação oficial da Microsoft — &quot;SELECT (Transact-SQL)&quot;: https://learn.microsoft.com/sql/t-sql/queries/select-transact-sql</li>
+<li>Documentação oficial da Microsoft — &quot;Set Operators (EXCEPT, INTERSECT)&quot;: https://learn.microsoft.com/sql/t-sql/language-elements/set-operators-except-and-intersect</li>
+</ul>
+<hr>
+<p><em>Material elaborado para uso interno no curso de Banco de Dados Relacionais — Módulo O Modelo Relacional — Conceitos Fundamentais — SEFAZ-PB.</em></p>
+
+    </div>
+</body>
+</html>

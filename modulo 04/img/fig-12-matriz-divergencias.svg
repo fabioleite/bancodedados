@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 520" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="940" height="520" fill="#ffffff"/>
+  <text x="20" y="28" font-size="14" font-weight="bold" fill="#243b53">Matriz de decisão da auditoria: NF-e de saída (XML) × escrituração no C100</text>
+  <text x="20" y="47" font-size="10.5" fill="#666">Esta matriz é a tradução direta do CASE da view fisc.VW_AUD_DIVERG_SAIDAS. Cada célula é um achado com enquadramento próprio.</text>
+
+  <!-- cabeçalho colunas -->
+  <rect x="230" y="62" width="690" height="46" fill="#eef1f4" stroke="#cfd6dd"/>
+  <text x="575" y="80" font-size="11" font-weight="bold" text-anchor="middle" fill="#243b53">Situação na EFD (registro C100 — campo COD_SIT)</text>
+  <line x1="230" y1="86" x2="920" y2="86" stroke="#cfd6dd"/>
+  <text x="290" y="102" font-size="10" font-weight="bold" text-anchor="middle" fill="#243b53">Ausente</text>
+  <text x="440" y="102" font-size="10" font-weight="bold" text-anchor="middle" fill="#243b53">0/1 — Regular</text>
+  <text x="610" y="102" font-size="10" font-weight="bold" text-anchor="middle" fill="#243b53">2/3 — Cancelado</text>
+  <text x="780" y="102" font-size="10" font-weight="bold" text-anchor="middle" fill="#243b53">Regular, valor ≠</text>
+  <text x="880" y="102" font-size="10" font-weight="bold" text-anchor="middle" fill="#243b53">Repetido</text>
+
+  <rect x="20" y="62" width="210" height="46" fill="#eef1f4" stroke="#cfd6dd"/>
+  <text x="125" y="90" font-size="11" font-weight="bold" text-anchor="middle" fill="#243b53">Situação no XML (stnfe)</text>
+
+  <!-- linha 1: autorizada -->
+  <rect x="20" y="108" width="210" height="86" fill="#f7fafd" stroke="#cfd6dd"/>
+  <text x="32" y="132" font-size="10.5" font-weight="bold" fill="#173a5e">A / O — AUTORIZADA</text>
+  <text x="32" y="150" font-size="9.5" fill="#33587a">(dentro ou fora do prazo)</text>
+  <text x="32" y="168" font-size="9.5" fill="#33587a">Documento válido, gerou</text>
+  <text x="32" y="182" font-size="9.5" fill="#33587a">obrigação principal.</text>
+
+  <rect x="230" y="108" width="120" height="86" fill="#fdecea" stroke="#cfd6dd"/>
+  <text x="290" y="132" font-size="10" font-weight="bold" text-anchor="middle" fill="#a3271b">FALTA DE</text>
+  <text x="290" y="146" font-size="10" font-weight="bold" text-anchor="middle" fill="#a3271b">LANÇAMENTO</text>
+  <text x="290" y="166" font-size="9" text-anchor="middle" fill="#7a3b33">Omissão de saída.</text>
+  <text x="290" y="180" font-size="9" text-anchor="middle" fill="#7a3b33">Débito de ICMS.</text>
+
+  <rect x="350" y="108" width="180" height="86" fill="#f2fbf2" stroke="#cfd6dd"/>
+  <text x="440" y="146" font-size="10.5" font-weight="bold" text-anchor="middle" fill="#2d6a2d">OK — conforme</text>
+  <text x="440" y="166" font-size="9" text-anchor="middle" fill="#3d6b3d">Nenhuma ação.</text>
+
+  <rect x="530" y="108" width="160" height="86" fill="#fdecea" stroke="#cfd6dd"/>
+  <text x="610" y="132" font-size="10" font-weight="bold" text-anchor="middle" fill="#a3271b">ESCRITURADA</text>
+  <text x="610" y="146" font-size="10" font-weight="bold" text-anchor="middle" fill="#a3271b">COMO CANCELADA</text>
+  <text x="610" y="166" font-size="9" text-anchor="middle" fill="#7a3b33">Nota válida excluída</text>
+  <text x="610" y="180" font-size="9" text-anchor="middle" fill="#7a3b33">da apuração.</text>
+
+  <rect x="690" y="108" width="150" height="86" fill="#fff8e5" stroke="#cfd6dd"/>
+  <text x="765" y="132" font-size="10" font-weight="bold" text-anchor="middle" fill="#7a5c00">VALOR CONTÁBIL</text>
+  <text x="765" y="146" font-size="10" font-weight="bold" text-anchor="middle" fill="#7a5c00">A MENOR</text>
+  <text x="765" y="166" font-size="9" text-anchor="middle" fill="#5c4600">Diferença = base de</text>
+  <text x="765" y="180" font-size="9" text-anchor="middle" fill="#5c4600">cálculo subtributada.</text>
+
+  <rect x="840" y="108" width="80" height="86" fill="#fff8e5" stroke="#cfd6dd"/>
+  <text x="880" y="140" font-size="9.5" font-weight="bold" text-anchor="middle" fill="#7a5c00">LANÇADA</text>
+  <text x="880" y="153" font-size="9.5" font-weight="bold" text-anchor="middle" fill="#7a5c00">EM DUPLIC.</text>
+  <text x="880" y="172" font-size="9" text-anchor="middle" fill="#5c4600">Ver alerta</text>
+
+  <!-- linha 2: cancelada -->
+  <rect x="20" y="194" width="210" height="76" fill="#f7fafd" stroke="#cfd6dd"/>
+  <text x="32" y="218" font-size="10.5" font-weight="bold" fill="#173a5e">C — CANCELADA</text>
+  <text x="32" y="236" font-size="9.5" fill="#33587a">Evento 110111 registrado</text>
+  <text x="32" y="250" font-size="9.5" fill="#33587a">e homologado.</text>
+
+  <rect x="230" y="194" width="120" height="76" fill="#f2fbf2" stroke="#cfd6dd"/>
+  <text x="290" y="228" font-size="10" font-weight="bold" text-anchor="middle" fill="#2d6a2d">Aceitável</text>
+  <text x="290" y="246" font-size="9" text-anchor="middle" fill="#3d6b3d">(recomenda-se</text>
+  <text x="290" y="258" font-size="9" text-anchor="middle" fill="#3d6b3d">escriturar como 2)</text>
+
+  <rect x="350" y="194" width="180" height="76" fill="#fdecea" stroke="#cfd6dd"/>
+  <text x="440" y="222" font-size="10" font-weight="bold" text-anchor="middle" fill="#a3271b">CANCELADA LANÇADA</text>
+  <text x="440" y="236" font-size="10" font-weight="bold" text-anchor="middle" fill="#a3271b">COMO REGULAR</text>
+  <text x="440" y="256" font-size="9" text-anchor="middle" fill="#7a3b33">Inflaciona receita / crédito do destinatário.</text>
+
+  <rect x="530" y="194" width="160" height="76" fill="#f2fbf2" stroke="#cfd6dd"/>
+  <text x="610" y="234" font-size="10.5" font-weight="bold" text-anchor="middle" fill="#2d6a2d">OK — conforme</text>
+
+  <rect x="690" y="194" width="230" height="76" fill="#f5f5f7" stroke="#cfd6dd"/>
+  <text x="805" y="228" font-size="10" text-anchor="middle" fill="#55556a">Não aplicável</text>
+  <text x="805" y="246" font-size="9" text-anchor="middle" fill="#777">(nota cancelada não tem valor a confrontar)</text>
+
+  <!-- linha 3: denegada -->
+  <rect x="20" y="270" width="210" height="70" fill="#f7fafd" stroke="#cfd6dd"/>
+  <text x="32" y="294" font-size="10.5" font-weight="bold" fill="#173a5e">D / I / U — DENEGADA</text>
+  <text x="32" y="312" font-size="9.5" fill="#33587a">Nunca produziu efeitos.</text>
+  <text x="32" y="326" font-size="9.5" fill="#33587a">Numeração inutilizada.</text>
+
+  <rect x="230" y="270" width="120" height="70" fill="#f2fbf2" stroke="#cfd6dd"/>
+  <text x="290" y="310" font-size="10.5" font-weight="bold" text-anchor="middle" fill="#2d6a2d">OK</text>
+
+  <rect x="350" y="270" width="180" height="70" fill="#fdecea" stroke="#cfd6dd"/>
+  <text x="440" y="300" font-size="10" font-weight="bold" text-anchor="middle" fill="#a3271b">DENEGADA LANÇADA</text>
+  <text x="440" y="314" font-size="10" font-weight="bold" text-anchor="middle" fill="#a3271b">COMO REGULAR</text>
+
+  <rect x="530" y="270" width="390" height="70" fill="#f5f5f7" stroke="#cfd6dd"/>
+  <text x="725" y="310" font-size="10" text-anchor="middle" fill="#55556a">Escriturar com COD_SIT = 4 (denegado) — situação regular</text>
+
+  <!-- rodape -->
+  <rect x="20" y="360" width="900" height="146" rx="4" fill="#f7fafd" stroke="#9dbbd8"/>
+  <text x="34" y="382" font-size="11" font-weight="bold" fill="#1b3f60">Como esta matriz vira código</text>
+  <g font-family="Consolas, monospace" font-size="10">
+    <text x="34" y="404" fill="#0000ff">CASE</text>
+    <text x="34" y="420" fill="#222">  </text><text x="58" y="420" fill="#0000ff">WHEN</text><text x="92" y="420" fill="#222"> C.C100_CHV_NFE </text><text x="212" y="420" fill="#0000ff">IS NULL</text><text x="270" y="420" fill="#222">                                        </text><text x="470" y="420" fill="#0000ff">THEN</text><text x="504" y="420" fill="#a31515"> '1 - FALTA DE LANCAMENTO NA EFD'</text>
+    <text x="58" y="436" fill="#0000ff">WHEN</text><text x="92" y="436" fill="#222"> C.C100_COD_SIT </text><text x="212" y="436" fill="#0000ff">LIKE</text><text x="246" y="436" fill="#a31515"> '2 -%' </text><text x="304" y="436" fill="#0000ff">OR</text><text x="326" y="436" fill="#222"> C.C100_COD_SIT </text><text x="446" y="436" fill="#0000ff">LIKE</text><text x="480" y="436" fill="#a31515"> '3 -%' </text><text x="538" y="436" fill="#0000ff">THEN</text><text x="572" y="436" fill="#a31515"> '2 - ESCRITURADA COMO CANCELADA'</text>
+    <text x="58" y="452" fill="#0000ff">WHEN</text><text x="92" y="452" fill="#222"> C.C100_VL_DOC &lt; X.NF_VNF - 0.01                                </text><text x="470" y="452" fill="#0000ff">THEN</text><text x="504" y="452" fill="#a31515"> '3 - VALOR CONTABIL A MENOR'</text>
+    <text x="58" y="468" fill="#0000ff">WHEN</text><text x="92" y="468" fill="#222"> C.C100_VL_DOC &gt; X.NF_VNF + 0.01                                </text><text x="470" y="468" fill="#0000ff">THEN</text><text x="504" y="468" fill="#a31515"> '4 - VALOR CONTABIL A MAIOR'</text>
+    <text x="58" y="484" fill="#0000ff">ELSE</text><text x="92" y="484" fill="#a31515"> '0 - CONFORME'</text>
+    <text x="34" y="500" fill="#0000ff">END</text><text x="62" y="500" fill="#222"> AS TIPO_DIVERGENCIA</text>
+  </g>
+</svg>

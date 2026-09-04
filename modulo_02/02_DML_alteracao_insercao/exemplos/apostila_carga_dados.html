@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>apostila_carga_dados.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 id="apostila%3A-carga-de-dados-fiscais-com-bulk-insert" tabindex="-1">Apostila: carga de dados fiscais com BULK INSERT</h1>
+<h2 id="sumario" tabindex="-1">Sumario</h2>
+<ol>
+<li>Objetivos e arquitetura do processo</li>
+<li>Arquivos utilizados</li>
+<li>Pre-requisitos do SQL Server</li>
+<li>Etapa 1 - preparacao e construcao das tabelas de staging</li>
+<li>Etapa 1 - carga bruta para staging</li>
+<li>Validacao das tabelas de staging</li>
+<li>Etapa 2 - consolidacao nas tabelas fiscais finais</li>
+<li>Passo a passo da consolidacao de cada tabela</li>
+<li>Conferencia dos resultados</li>
+<li>Tratamento de erros e reprocessamento</li>
+<li>Boas praticas e problemas comuns</li>
+</ol>
+<hr>
+<h2 id="1.-objetivos-e-arquitetura-do-processo" tabindex="-1">1. Objetivos e arquitetura do processo</h2>
+<p>Esta apostila apresenta um fluxo completo de ingestao de arquivos CSV no SQL Server. O processo possui duas etapas bem separadas:</p>
+<pre class='hljs'><code><div>CSV -&gt; BULK INSERT -&gt; tabelas staging -&gt; validacao/conversao -&gt; tabelas fiscal
+</div></code></pre>
+<h3 id="etapa-1---staging" tabindex="-1">Etapa 1 - staging</h3>
+<p>Os arquivos sao carregados primeiro em tabelas do schema <code>staging</code>. Os campos que vieram dos arquivos sao armazenados como <code>NVARCHAR</code>. Assim, um valor como <code>ABC</code> em uma coluna que deveria ser numerica nao interrompe a ingestao. O problema sera identificado na etapa de validacao.</p>
+<h3 id="etapa-2---tabelas-finais" tabindex="-1">Etapa 2 - tabelas finais</h3>
+<p>Os dados sao convertidos com <code>TRY_CONVERT</code> e inseridos nas tabelas do schema <code>fiscal</code>. Nessa etapa passam a valer as regras de negocio e integridade definidas no arquivo <code>criar_tabelas_fiscais_finais.sql</code>: chaves primarias, chaves estrangeiras, valores nao negativos e dominios de situacao.</p>
+<p>Essa separacao preserva o dado bruto e permite auditar, corrigir e reprocessar arquivos sem perder a origem.</p>
+<hr>
+<h2 id="2.-arquivos-utilizados" tabindex="-1">2. Arquivos utilizados</h2>
+<p>Todos os arquivos desta apostila estao no diretorio <code>exemplos</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Arquivo</th>
+<th>Tabela staging</th>
+<th style="text-align:right">Quantidade de campos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>staging_nfe_20.csv</code></td>
+<td><code>staging.stg_nfe_bulk</code></td>
+<td style="text-align:right">6</td>
+</tr>
+<tr>
+<td><code>staging_item_nfe_20.csv</code></td>
+<td><code>staging.stg_item_nfe_bulk</code></td>
+<td style="text-align:right">4</td>
+</tr>
+<tr>
+<td><code>staging_nfce_20.csv</code></td>
+<td><code>staging.stg_nfce_bulk</code></td>
+<td style="text-align:right">5</td>
+</tr>
+<tr>
+<td><code>staging_item_nfce_20.csv</code></td>
+<td><code>staging.stg_item_nfce_bulk</code></td>
+<td style="text-align:right">4</td>
+</tr>
+<tr>
+<td><code>staging_cte_20.csv</code></td>
+<td><code>staging.stg_cte_bulk</code></td>
+<td style="text-align:right">5</td>
+</tr>
+<tr>
+<td><code>staging_efd_registro_20.csv</code></td>
+<td><code>staging.stg_efd_registro_bulk</code></td>
+<td style="text-align:right">4</td>
+</tr>
+</tbody>
+</table>
+<p>Os CSVs usam:</p>
+<ul>
+<li><code>;</code> como separador de campos;</li>
+<li>UTF-8, indicado por <code>CODEPAGE = '65001'</code>;</li>
+<li>cabecalho na primeira linha;</li>
+<li>fim de linha LF, carregado com <code>ROWTERMINATOR = '0x0A'</code>;</li>
+<li>datas no formato <code>YYYY-MM-DD</code>, exceto <code>periodo_apuracao</code>, que usa <code>MM/YYYY</code>;</li>
+<li>valores monetarios com ponto decimal.</li>
+</ul>
+<p>O arquivo <code>nfe_sample.csv</code> tem outro layout e pertence ao exemplo antigo de NF-e. Ele nao deve ser carregado nas tabelas <code>stg_*</code> desta apostila.</p>
+<hr>
+<h2 id="3.-pre-requisitos-do-sql-server" tabindex="-1">3. Pre-requisitos do SQL Server</h2>
+<h3 id="3.1-caminho-dos-arquivos" tabindex="-1">3.1 Caminho dos arquivos</h3>
+<p>O <code>BULK INSERT</code> e executado pelo servico do SQL Server. Portanto, o caminho informado deve ser acessivel pela conta do servico, e nao somente pelo usuario que abriu o SSMS ou o VS Code.</p>
+<p>Copie os seis CSVs para um diretorio acessivel, por exemplo:</p>
+<pre class='hljs'><code><div>C:\dados\staging\
+</div></code></pre>
+<p>Em servidor remoto, prefira um compartilhamento UNC com permissao de leitura:</p>
+<pre class='hljs'><code><div>\\servidor\dados\staging\
+</div></code></pre>
+<h3 id="3.2-permissao-de-carga" tabindex="-1">3.2 Permissao de carga</h3>
+<p>O usuario precisa ter permissao <code>ADMINISTER BULK OPERATIONS</code> ou pertencer a uma role adequada, como <code>bulkadmin</code>, conforme a politica do ambiente.</p>
+<h3 id="3.3-ordem-de-execucao" tabindex="-1">3.3 Ordem de execucao</h3>
+<p>Execute os scripts nesta ordem:</p>
+<ol>
+<li><code>staging_bulk_tabelas.sql</code> ou a parte de criacao de staging de <code>criar_stg_nfe_bulk.sql</code>;</li>
+<li>os comandos de <code>BULK INSERT</code> desta apostila;</li>
+<li><code>criar_tabelas_fiscais_finais.sql</code>;</li>
+<li>os comandos de consolidacao da Etapa 2.</li>
+</ol>
+<p>Em um ambiente limpo, tambem e possivel usar o <code>criar_stg_nfe_bulk.sql</code>, que recria as tabelas e carrega os seis arquivos. Ajuste primeiro a variavel <code>@pasta_csv</code> nesse script.</p>
+<blockquote>
+<p>Atencao: o comando <code>CREATE SCHEMA IF NOT EXISTS</code> presente em <code>staging_bulk_tabelas.sql</code> nao e sintaxe valida do SQL Server. Use o bloco <code>IF NOT EXISTS ... EXEC('CREATE SCHEMA staging')</code> existente em <code>criar_stg_nfe_bulk.sql</code> ou crie o schema manualmente.</p>
+</blockquote>
+<hr>
+<h2 id="4.-etapa-1---preparacao-e-construcao-das-tabelas-de-staging" tabindex="-1">4. Etapa 1 - preparacao e construcao das tabelas de staging</h2>
+<p>Antes de importar qualquer arquivo, crie o schema <code>staging</code> e as tabelas que receberao os dados brutos. A estrutura deve corresponder ao cabecalho e a ordem das colunas de cada CSV.</p>
+<h3 id="4.1-criar-o-schema" tabindex="-1">4.1 Criar o schema</h3>
+<p><code>CREATE SCHEMA IF NOT EXISTS</code> nao existe no SQL Server. Use uma verificacao com <code>sys.schemas</code>:</p>
+<pre class='hljs'><code><div>IF <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span> <span class="hljs-keyword">FROM</span> sys.schemas <span class="hljs-keyword">WHERE</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;staging&#x27;</span>)
+<span class="hljs-keyword">BEGIN</span>
+  <span class="hljs-keyword">EXEC</span>(<span class="hljs-string">&#x27;CREATE SCHEMA staging&#x27;</span>);
+<span class="hljs-keyword">END</span>;
+GO
+</div></code></pre>
+<h3 id="4.2-criar-as-tabelas-de-staging" tabindex="-1">4.2 Criar as tabelas de staging</h3>
+<p>As colunas de origem sao textuais de proposito. A staging deve receber o conteudo bruto sem tentar transformar datas, identificadores ou valores monetarios. A coluna <code>imported_dt</code> e uma coluna de controle e nao faz parte dos CSVs.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE TABLE</span> staging.stg_nfe_bulk (
+  chave_acesso                 NVARCHAR(<span class="hljs-number">44</span>) <span class="hljs-keyword">NOT NULL</span>,
+  id_contribuinte_emitente     NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>,
+  id_contribuinte_destinatario NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>,
+  data_emissao                 NVARCHAR(<span class="hljs-number">10</span>) <span class="hljs-keyword">NULL</span>,
+  valor_total                  NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>,
+  situacao                     NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>
+);
+GO
+
+<span class="hljs-keyword">CREATE TABLE</span> staging.stg_item_nfe_bulk (
+  id_nfe      NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>,
+  ncm         NVARCHAR(<span class="hljs-number">8</span>) <span class="hljs-keyword">NULL</span>,
+  cfop        NVARCHAR(<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+  valor_item  NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>
+);
+GO
+
+<span class="hljs-keyword">CREATE TABLE</span> staging.stg_nfce_bulk (
+  chave_acesso             NVARCHAR(<span class="hljs-number">44</span>) <span class="hljs-keyword">NOT NULL</span>,
+  id_contribuinte_emitente NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>,
+  data_emissao             NVARCHAR(<span class="hljs-number">10</span>) <span class="hljs-keyword">NULL</span>,
+  valor_total              NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>,
+  situacao                 NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>
+);
+GO
+
+<span class="hljs-keyword">CREATE TABLE</span> staging.stg_item_nfce_bulk (
+  id_nfce     NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>,
+  ncm         NVARCHAR(<span class="hljs-number">8</span>) <span class="hljs-keyword">NULL</span>,
+  cfop        NVARCHAR(<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+  valor_item  NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>
+);
+GO
+
+<span class="hljs-keyword">CREATE TABLE</span> staging.stg_cte_bulk (
+  chave_acesso              NVARCHAR(<span class="hljs-number">44</span>) <span class="hljs-keyword">NOT NULL</span>,
+  id_contribuinte_emitente  NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>,
+  id_nfe_vinculada           NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>,
+  valor_frete                NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>,
+  situacao                   NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>
+);
+GO
+
+<span class="hljs-keyword">CREATE TABLE</span> staging.stg_efd_registro_bulk (
+  id_contribuinte        NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>,
+  tipo_registro           NVARCHAR(<span class="hljs-number">10</span>) <span class="hljs-keyword">NULL</span>,
+  periodo_apuracao        NVARCHAR(<span class="hljs-number">7</span>) <span class="hljs-keyword">NULL</span>,
+  id_nfe_referenciada     NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>
+);
+GO
+</div></code></pre>
+<h3 id="4.3-coluna-de-controle-da-importacao" tabindex="-1">4.3 Coluna de controle da importacao</h3>
+<p>Como <code>imported_dt</code> nao existe no arquivo, adicione-a depois dos <code>BULK INSERT</code>. O valor padrao sera preenchido pelo SQL Server para as linhas carregadas:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">ALTER TABLE</span> staging.stg_nfe_bulk
+<span class="hljs-keyword">ADD</span> imported_dt DATETIME2 <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">CONSTRAINT</span> DF_stg_nfe_bulk_imported_dt <span class="hljs-keyword">DEFAULT</span> SYSUTCDATETIME();
+GO
+
+<span class="hljs-keyword">ALTER TABLE</span> staging.stg_item_nfe_bulk
+<span class="hljs-keyword">ADD</span> imported_dt DATETIME2 <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">CONSTRAINT</span> DF_stg_item_nfe_bulk_imported_dt <span class="hljs-keyword">DEFAULT</span> SYSUTCDATETIME();
+GO
+
+<span class="hljs-keyword">ALTER TABLE</span> staging.stg_nfce_bulk
+<span class="hljs-keyword">ADD</span> imported_dt DATETIME2 <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">CONSTRAINT</span> DF_stg_nfce_bulk_imported_dt <span class="hljs-keyword">DEFAULT</span> SYSUTCDATETIME();
+GO
+
+<span class="hljs-keyword">ALTER TABLE</span> staging.stg_item_nfce_bulk
+<span class="hljs-keyword">ADD</span> imported_dt DATETIME2 <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">CONSTRAINT</span> DF_stg_item_nfce_bulk_imported_dt <span class="hljs-keyword">DEFAULT</span> SYSUTCDATETIME();
+GO
+
+<span class="hljs-keyword">ALTER TABLE</span> staging.stg_cte_bulk
+<span class="hljs-keyword">ADD</span> imported_dt DATETIME2 <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">CONSTRAINT</span> DF_stg_cte_bulk_imported_dt <span class="hljs-keyword">DEFAULT</span> SYSUTCDATETIME();
+GO
+
+<span class="hljs-keyword">ALTER TABLE</span> staging.stg_efd_registro_bulk
+<span class="hljs-keyword">ADD</span> imported_dt DATETIME2 <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">CONSTRAINT</span> DF_stg_efd_registro_bulk_imported_dt <span class="hljs-keyword">DEFAULT</span> SYSUTCDATETIME();
+GO
+</div></code></pre>
+<p>O arquivo <code>staging_bulk_tabelas.sql</code> apresenta a mesma estrutura com <code>imported_dt</code> declarado dentro do <code>CREATE TABLE</code>. Para cargas com <code>BULK INSERT</code> sem arquivo de formato, a estrategia usada nesta apostila e criar primeiro apenas as colunas presentes no CSV, carregar os dados e adicionar a coluna de controle depois. Isso evita que uma coluna que nao existe no arquivo seja interpretada como parte do registro.</p>
+<h3 id="4.4-recriar-as-tabelas-em-um-ambiente-de-testes" tabindex="-1">4.4 Recriar as tabelas em um ambiente de testes</h3>
+<p>Se o exercicio for repetido, remova as tabelas dependentes antes das tabelas pai ou use o <code>criar_stg_nfe_bulk.sql</code>, que ja recria as seis tabelas. Em uma base sem dependencias, o padrao e:</p>
+<pre class='hljs'><code><div>IF OBJECT_ID(<span class="hljs-string">&#x27;staging.stg_efd_registro_bulk&#x27;</span>, <span class="hljs-string">&#x27;U&#x27;</span>) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> staging.stg_efd_registro_bulk;
+IF OBJECT_ID(<span class="hljs-string">&#x27;staging.stg_cte_bulk&#x27;</span>, <span class="hljs-string">&#x27;U&#x27;</span>) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> staging.stg_cte_bulk;
+IF OBJECT_ID(<span class="hljs-string">&#x27;staging.stg_item_nfce_bulk&#x27;</span>, <span class="hljs-string">&#x27;U&#x27;</span>) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> staging.stg_item_nfce_bulk;
+IF OBJECT_ID(<span class="hljs-string">&#x27;staging.stg_nfce_bulk&#x27;</span>, <span class="hljs-string">&#x27;U&#x27;</span>) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> staging.stg_nfce_bulk;
+IF OBJECT_ID(<span class="hljs-string">&#x27;staging.stg_item_nfe_bulk&#x27;</span>, <span class="hljs-string">&#x27;U&#x27;</span>) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> staging.stg_item_nfe_bulk;
+IF OBJECT_ID(<span class="hljs-string">&#x27;staging.stg_nfe_bulk&#x27;</span>, <span class="hljs-string">&#x27;U&#x27;</span>) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> staging.stg_nfe_bulk;
+GO
+</div></code></pre>
+<p>Depois execute novamente os <code>CREATE TABLE</code> da secao 4.2.</p>
+<h2 id="5.-etapa-1---carga-bruta-para-staging" tabindex="-1">5. Etapa 1 - carga bruta para staging</h2>
+<h3 id="4.1-por-que-usar-sql-dinamico%3F" tabindex="-1">4.1 Por que usar SQL dinamico?</h3>
+<p>O caminho da clausula <code>FROM</code> do <code>BULK INSERT</code> nao aceita uma variavel diretamente em um comando estatico. Por isso, o caminho e o nome do arquivo sao concatenados em uma string e executados com <code>sys.sp_executesql</code>.</p>
+<p>O trecho abaixo e um modelo para todos os arquivos:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@pasta_csv</span> NVARCHAR(<span class="hljs-number">260</span>) <span class="hljs-operator">=</span> N<span class="hljs-string">&#x27;C:\dados\staging\&#x27;</span>;
+<span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@sql</span> NVARCHAR(MAX);
+
+<span class="hljs-keyword">SET</span> <span class="hljs-variable">@sql</span> <span class="hljs-operator">=</span> N<span class="hljs-string">&#x27;BULK INSERT staging.stg_nfe_bulk
+FROM &#x27;&#x27;&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-variable">@pasta_csv</span> <span class="hljs-operator">+</span> N<span class="hljs-string">&#x27;staging_nfe_20.csv&#x27;&#x27;
+WITH (
+    FIRSTROW = 2,
+    FIELDTERMINATOR = &#x27;&#x27;;&#x27;&#x27;,
+    ROWTERMINATOR = &#x27;&#x27;0x0A&#x27;&#x27;,
+    CODEPAGE = &#x27;&#x27;65001&#x27;&#x27;,
+    TABLOCK
+);&#x27;</span>;
+
+<span class="hljs-keyword">EXEC</span> sys.sp_executesql <span class="hljs-variable">@sql</span>;
+</div></code></pre>
+<p>Explicacao dos parametros:</p>
+<table>
+<thead>
+<tr>
+<th>Parametro</th>
+<th>Funcao</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FIRSTROW = 2</code></td>
+<td>ignora o cabecalho</td>
+</tr>
+<tr>
+<td><code>FIELDTERMINATOR = ';'</code></td>
+<td>informa que as colunas sao separadas por ponto e virgula</td>
+</tr>
+<tr>
+<td><code>ROWTERMINATOR = '0x0A'</code></td>
+<td>informa que as linhas terminam com LF</td>
+</tr>
+<tr>
+<td><code>CODEPAGE = '65001'</code></td>
+<td>interpreta o arquivo como UTF-8</td>
+</tr>
+<tr>
+<td><code>TABLOCK</code></td>
+<td>aplica bloqueio de tabela e pode melhorar o desempenho</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4.2-carga-dos-seis-arquivos" tabindex="-1">4.2 Carga dos seis arquivos</h3>
+<p>O bloco a seguir carrega cada arquivo na tabela correspondente. As tabelas precisam existir antes da execucao.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@pasta_csv</span> NVARCHAR(<span class="hljs-number">260</span>) <span class="hljs-operator">=</span> N<span class="hljs-string">&#x27;C:\dados\staging\&#x27;</span>;
+<span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@sql</span> NVARCHAR(MAX);
+
+<span class="hljs-keyword">SET</span> <span class="hljs-variable">@sql</span> <span class="hljs-operator">=</span> N<span class="hljs-string">&#x27;BULK INSERT staging.stg_nfe_bulk
+FROM &#x27;&#x27;&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-variable">@pasta_csv</span> <span class="hljs-operator">+</span> N<span class="hljs-string">&#x27;staging_nfe_20.csv&#x27;&#x27;
+WITH (FIRSTROW = 2, FIELDTERMINATOR = &#x27;&#x27;;&#x27;&#x27;, ROWTERMINATOR = &#x27;&#x27;0x0A&#x27;&#x27;, CODEPAGE = &#x27;&#x27;65001&#x27;&#x27;, TABLOCK);&#x27;</span>;
+<span class="hljs-keyword">EXEC</span> sys.sp_executesql <span class="hljs-variable">@sql</span>;
+
+<span class="hljs-keyword">SET</span> <span class="hljs-variable">@sql</span> <span class="hljs-operator">=</span> N<span class="hljs-string">&#x27;BULK INSERT staging.stg_item_nfe_bulk
+FROM &#x27;&#x27;&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-variable">@pasta_csv</span> <span class="hljs-operator">+</span> N<span class="hljs-string">&#x27;staging_item_nfe_20.csv&#x27;&#x27;
+WITH (FIRSTROW = 2, FIELDTERMINATOR = &#x27;&#x27;;&#x27;&#x27;, ROWTERMINATOR = &#x27;&#x27;0x0A&#x27;&#x27;, CODEPAGE = &#x27;&#x27;65001&#x27;&#x27;, TABLOCK);&#x27;</span>;
+<span class="hljs-keyword">EXEC</span> sys.sp_executesql <span class="hljs-variable">@sql</span>;
+
+<span class="hljs-keyword">SET</span> <span class="hljs-variable">@sql</span> <span class="hljs-operator">=</span> N<span class="hljs-string">&#x27;BULK INSERT staging.stg_nfce_bulk
+FROM &#x27;&#x27;&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-variable">@pasta_csv</span> <span class="hljs-operator">+</span> N<span class="hljs-string">&#x27;staging_nfce_20.csv&#x27;&#x27;
+WITH (FIRSTROW = 2, FIELDTERMINATOR = &#x27;&#x27;;&#x27;&#x27;, ROWTERMINATOR = &#x27;&#x27;0x0A&#x27;&#x27;, CODEPAGE = &#x27;&#x27;65001&#x27;&#x27;, TABLOCK);&#x27;</span>;
+<span class="hljs-keyword">EXEC</span> sys.sp_executesql <span class="hljs-variable">@sql</span>;
+
+<span class="hljs-keyword">SET</span> <span class="hljs-variable">@sql</span> <span class="hljs-operator">=</span> N<span class="hljs-string">&#x27;BULK INSERT staging.stg_item_nfce_bulk
+FROM &#x27;&#x27;&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-variable">@pasta_csv</span> <span class="hljs-operator">+</span> N<span class="hljs-string">&#x27;staging_item_nfce_20.csv&#x27;&#x27;
+WITH (FIRSTROW = 2, FIELDTERMINATOR = &#x27;&#x27;;&#x27;&#x27;, ROWTERMINATOR = &#x27;&#x27;0x0A&#x27;&#x27;, CODEPAGE = &#x27;&#x27;65001&#x27;&#x27;, TABLOCK);&#x27;</span>;
+<span class="hljs-keyword">EXEC</span> sys.sp_executesql <span class="hljs-variable">@sql</span>;
+
+<span class="hljs-keyword">SET</span> <span class="hljs-variable">@sql</span> <span class="hljs-operator">=</span> N<span class="hljs-string">&#x27;BULK INSERT staging.stg_cte_bulk
+FROM &#x27;&#x27;&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-variable">@pasta_csv</span> <span class="hljs-operator">+</span> N<span class="hljs-string">&#x27;staging_cte_20.csv&#x27;&#x27;
+WITH (FIRSTROW = 2, FIELDTERMINATOR = &#x27;&#x27;;&#x27;&#x27;, ROWTERMINATOR = &#x27;&#x27;0x0A&#x27;&#x27;, CODEPAGE = &#x27;&#x27;65001&#x27;&#x27;, TABLOCK);&#x27;</span>;
+<span class="hljs-keyword">EXEC</span> sys.sp_executesql <span class="hljs-variable">@sql</span>;
+
+<span class="hljs-keyword">SET</span> <span class="hljs-variable">@sql</span> <span class="hljs-operator">=</span> N<span class="hljs-string">&#x27;BULK INSERT staging.stg_efd_registro_bulk
+FROM &#x27;&#x27;&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-variable">@pasta_csv</span> <span class="hljs-operator">+</span> N<span class="hljs-string">&#x27;staging_efd_registro_20.csv&#x27;&#x27;
+WITH (FIRSTROW = 2, FIELDTERMINATOR = &#x27;&#x27;;&#x27;&#x27;, ROWTERMINATOR = &#x27;&#x27;0x0A&#x27;&#x27;, CODEPAGE = &#x27;&#x27;65001&#x27;&#x27;, TABLOCK);&#x27;</span>;
+<span class="hljs-keyword">EXEC</span> sys.sp_executesql <span class="hljs-variable">@sql</span>;
+</div></code></pre>
+<h3 id="4.3-carga-repetivel" tabindex="-1">4.3 Carga repetivel</h3>
+<p>O script <code>criar_stg_nfe_bulk.sql</code> adiciona <code>imported_dt</code> depois da carga. Isso evita que a coluna de controle seja interpretada como um campo do CSV. Para executar o processo novamente, recrie as tabelas ou use <code>TRUNCATE TABLE</code> antes de carregar, desde que nao existam dependencias que impeçam o truncate.</p>
+<p>Nao execute o mesmo <code>BULK INSERT</code> duas vezes sobre uma tabela ja carregada sem limpar os dados, pois os registros serao duplicados.</p>
+<hr>
+<h2 id="6.-validacao-das-tabelas-de-staging" tabindex="-1">6. Validacao das tabelas de staging</h2>
+<h3 id="5.1-conferir-quantidade-de-registros" tabindex="-1">5.1 Conferir quantidade de registros</h3>
+<p>Cada arquivo de exemplo possui 20 registros:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;NFE&#x27;</span> <span class="hljs-keyword">AS</span> origem, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> total <span class="hljs-keyword">FROM</span> staging.stg_nfe_bulk
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;ITEM_NFE&#x27;</span>, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> staging.stg_item_nfe_bulk
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;NFCE&#x27;</span>, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> staging.stg_nfce_bulk
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;ITEM_NFCE&#x27;</span>, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> staging.stg_item_nfce_bulk
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;CTE&#x27;</span>, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> staging.stg_cte_bulk
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;EFD_REGISTRO&#x27;</span>, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> staging.stg_efd_registro_bulk;
+</div></code></pre>
+<p>Resultado esperado: 20 linhas para cada tabela.</p>
+<h3 id="5.2-procurar-valores-que-nao-convertem" tabindex="-1">5.2 Procurar valores que nao convertem</h3>
+<p>Antes da consolidacao, teste os campos que serao convertidos:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span>
+<span class="hljs-keyword">FROM</span> staging.stg_nfe_bulk
+<span class="hljs-keyword">WHERE</span> TRY_CONVERT(<span class="hljs-type">BIGINT</span>, id_contribuinte_emitente) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+   <span class="hljs-keyword">OR</span> TRY_CONVERT(<span class="hljs-type">BIGINT</span>, id_contribuinte_destinatario) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+   <span class="hljs-keyword">OR</span> TRY_CONVERT(<span class="hljs-type">DATE</span>, data_emissao) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+   <span class="hljs-keyword">OR</span> TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>), valor_total) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>;
+</div></code></pre>
+<p>O mesmo padrao pode ser usado para <code>valor_item</code>, <code>valor_frete</code>, <code>id_nfe</code>, <code>id_nfce</code> e <code>id_nfe_referenciada</code>.</p>
+<h3 id="5.3-procurar-situacoes-fora-do-dominio" tabindex="-1">5.3 Procurar situacoes fora do dominio</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DISTINCT</span> situacao <span class="hljs-keyword">FROM</span> staging.stg_nfe_bulk;
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DISTINCT</span> situacao <span class="hljs-keyword">FROM</span> staging.stg_nfce_bulk;
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DISTINCT</span> situacao <span class="hljs-keyword">FROM</span> staging.stg_cte_bulk;
+</div></code></pre>
+<p>As situacoes devem corresponder aos <code>CHECK</code> das tabelas finais.</p>
+<hr>
+<h2 id="7.-etapa-2---consolidacao-nas-tabelas-fiscais-finais" tabindex="-1">7. Etapa 2 - consolidacao nas tabelas fiscais finais</h2>
+<h3 id="6.1-criar-o-modelo-definitivo" tabindex="-1">6.1 Criar o modelo definitivo</h3>
+<p>Execute <code>criar_tabelas_fiscais_finais.sql</code>. Ele cria:</p>
+<ul>
+<li><code>fiscal.CONTRIBUINTE</code>;</li>
+<li><code>fiscal.NFE</code>;</li>
+<li><code>fiscal.ITEM_NFE</code>;</li>
+<li><code>fiscal.NFCE</code>;</li>
+<li><code>fiscal.ITEM_NFCE</code>;</li>
+<li><code>fiscal.CTE</code>;</li>
+<li><code>fiscal.EFD_REGISTRO</code>.</li>
+</ul>
+<p>As tabelas finais usam <code>IDENTITY</code>. Portanto, seus identificadores sao gerados pelo SQL Server e nao devem ser confundidos automaticamente com todos os identificadores textuais existentes nos CSVs.</p>
+<h3 id="6.2-cadastrar-contribuintes-antes-dos-documentos" tabindex="-1">6.2 Cadastrar contribuintes antes dos documentos</h3>
+<p>As tabelas <code>NFE</code>, <code>NFCE</code>, <code>CTE</code> e <code>EFD_REGISTRO</code> possuem chaves estrangeiras para <code>fiscal.CONTRIBUINTE</code>. O cadastro deve existir antes da carga dos documentos.</p>
+<p>Para este conjunto didatico, os CSVs usam IDs de contribuinte de <code>1</code> a <code>10</code>. Em um banco vazio, um cadastro minimo pode ser criado assim:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">INSERT INTO</span> fiscal.CONTRIBUINTE (cnpj, razao_social, uf)
+<span class="hljs-keyword">VALUES</span>
+ (<span class="hljs-string">&#x27;10000000000001&#x27;</span>, <span class="hljs-string">&#x27;Contribuinte 01&#x27;</span>, <span class="hljs-string">&#x27;PB&#x27;</span>),
+ (<span class="hljs-string">&#x27;10000000000002&#x27;</span>, <span class="hljs-string">&#x27;Contribuinte 02&#x27;</span>, <span class="hljs-string">&#x27;PB&#x27;</span>),
+ (<span class="hljs-string">&#x27;10000000000003&#x27;</span>, <span class="hljs-string">&#x27;Contribuinte 03&#x27;</span>, <span class="hljs-string">&#x27;PB&#x27;</span>),
+ (<span class="hljs-string">&#x27;10000000000004&#x27;</span>, <span class="hljs-string">&#x27;Contribuinte 04&#x27;</span>, <span class="hljs-string">&#x27;PB&#x27;</span>),
+ (<span class="hljs-string">&#x27;10000000000005&#x27;</span>, <span class="hljs-string">&#x27;Contribuinte 05&#x27;</span>, <span class="hljs-string">&#x27;PB&#x27;</span>),
+ (<span class="hljs-string">&#x27;10000000000006&#x27;</span>, <span class="hljs-string">&#x27;Contribuinte 06&#x27;</span>, <span class="hljs-string">&#x27;PB&#x27;</span>),
+ (<span class="hljs-string">&#x27;10000000000007&#x27;</span>, <span class="hljs-string">&#x27;Contribuinte 07&#x27;</span>, <span class="hljs-string">&#x27;PB&#x27;</span>),
+ (<span class="hljs-string">&#x27;10000000000008&#x27;</span>, <span class="hljs-string">&#x27;Contribuinte 08&#x27;</span>, <span class="hljs-string">&#x27;PB&#x27;</span>),
+ (<span class="hljs-string">&#x27;10000000000009&#x27;</span>, <span class="hljs-string">&#x27;Contribuinte 09&#x27;</span>, <span class="hljs-string">&#x27;PB&#x27;</span>),
+ (<span class="hljs-string">&#x27;10000000000010&#x27;</span>, <span class="hljs-string">&#x27;Contribuinte 10&#x27;</span>, <span class="hljs-string">&#x27;PB&#x27;</span>);
+</div></code></pre>
+<p>Em um ambiente real, nao se deve presumir que a identidade 1 corresponde ao contribuinte 1 do arquivo. Deve-se localizar o contribuinte por uma chave natural, como CNPJ, ou manter uma tabela de mapeamento entre o identificador de origem e o identificador interno.</p>
+<hr>
+<h2 id="8.-passo-a-passo-da-consolidacao-de-cada-tabela" tabindex="-1">8. Passo a passo da consolidacao de cada tabela</h2>
+<p>Os comandos seguintes assumem que as tabelas de staging foram validadas e que o cadastro de contribuintes esta preenchido.</p>
+<h3 id="7.1-nfe" tabindex="-1">7.1 NFE</h3>
+<h4 id="campos-de-origem-e-destino" tabindex="-1">Campos de origem e destino</h4>
+<table>
+<thead>
+<tr>
+<th>Staging</th>
+<th>Tabela final</th>
+<th>Conversao</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>chave_acesso</code></td>
+<td><code>fiscal.NFE.chave_acesso</code></td>
+<td>texto de 44 digitos</td>
+</tr>
+<tr>
+<td><code>id_contribuinte_emitente</code></td>
+<td><code>id_contribuinte_emitente</code></td>
+<td><code>BIGINT</code></td>
+</tr>
+<tr>
+<td><code>id_contribuinte_destinatario</code></td>
+<td><code>id_contribuinte_destinatario</code></td>
+<td><code>BIGINT</code></td>
+</tr>
+<tr>
+<td><code>data_emissao</code></td>
+<td><code>data_emissao</code></td>
+<td><code>DATE</code></td>
+</tr>
+<tr>
+<td><code>valor_total</code></td>
+<td><code>valor_total</code></td>
+<td><code>DECIMAL(16,2)</code></td>
+</tr>
+<tr>
+<td><code>situacao</code></td>
+<td><code>situacao</code></td>
+<td>texto validado pelo<code>CHECK</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="carga" tabindex="-1">Carga</h4>
+<pre class='hljs'><code><div>;<span class="hljs-keyword">WITH</span> dados_validos <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span>
+        s.chave_acesso,
+        TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_contribuinte_emitente) <span class="hljs-keyword">AS</span> id_emitente,
+        TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_contribuinte_destinatario) <span class="hljs-keyword">AS</span> id_destinatario,
+        TRY_CONVERT(<span class="hljs-type">DATE</span>, s.data_emissao) <span class="hljs-keyword">AS</span> data_emissao,
+        TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>), s.valor_total) <span class="hljs-keyword">AS</span> valor_total,
+        s.situacao
+    <span class="hljs-keyword">FROM</span> staging.stg_nfe_bulk <span class="hljs-keyword">AS</span> s
+)
+<span class="hljs-keyword">INSERT INTO</span> fiscal.NFE (
+    chave_acesso, id_contribuinte_emitente, id_contribuinte_destinatario,
+    data_emissao, valor_total, situacao
+)
+<span class="hljs-keyword">SELECT</span>
+    d.chave_acesso, d.id_emitente, d.id_destinatario,
+    d.data_emissao, d.valor_total, d.situacao
+<span class="hljs-keyword">FROM</span> dados_validos <span class="hljs-keyword">AS</span> d
+<span class="hljs-keyword">JOIN</span> fiscal.CONTRIBUINTE <span class="hljs-keyword">AS</span> ce <span class="hljs-keyword">ON</span> ce.id_contribuinte <span class="hljs-operator">=</span> d.id_emitente
+<span class="hljs-keyword">JOIN</span> fiscal.CONTRIBUINTE <span class="hljs-keyword">AS</span> cd <span class="hljs-keyword">ON</span> cd.id_contribuinte <span class="hljs-operator">=</span> d.id_destinatario
+<span class="hljs-keyword">WHERE</span> LEN(d.chave_acesso) <span class="hljs-operator">=</span> <span class="hljs-number">44</span>
+  <span class="hljs-keyword">AND</span> d.chave_acesso <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%[^0-9]%&#x27;</span>
+  <span class="hljs-keyword">AND</span> d.id_emitente <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">AND</span> d.id_destinatario <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">AND</span> d.id_emitente <span class="hljs-operator">&lt;&gt;</span> d.id_destinatario
+  <span class="hljs-keyword">AND</span> d.data_emissao <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">AND</span> d.valor_total <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">AND</span> d.valor_total <span class="hljs-operator">&gt;=</span> <span class="hljs-number">0</span>
+  <span class="hljs-keyword">AND</span> d.situacao <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>, <span class="hljs-string">&#x27;CANCELADA&#x27;</span>, <span class="hljs-string">&#x27;DENEGADA&#x27;</span>, <span class="hljs-string">&#x27;INUTILIZADA&#x27;</span>)
+  <span class="hljs-keyword">AND</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> (
+      <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span> <span class="hljs-keyword">FROM</span> fiscal.NFE <span class="hljs-keyword">AS</span> n
+      <span class="hljs-keyword">WHERE</span> n.chave_acesso <span class="hljs-operator">=</span> d.chave_acesso
+  );
+</div></code></pre>
+<p>O <code>JOIN</code> garante que os dois contribuintes existam. O <code>NOT EXISTS</code> torna a carga idempotente em relacao a <code>chave_acesso</code>.</p>
+<h3 id="7.2-item_nfe" tabindex="-1">7.2 ITEM_NFE</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">INSERT INTO</span> fiscal.ITEM_NFE (id_nfe, ncm, cfop, valor_item)
+<span class="hljs-keyword">SELECT</span>
+    TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_nfe),
+    s.ncm,
+    s.cfop,
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>), s.valor_item)
+<span class="hljs-keyword">FROM</span> staging.stg_item_nfe_bulk <span class="hljs-keyword">AS</span> s
+<span class="hljs-keyword">JOIN</span> fiscal.NFE <span class="hljs-keyword">AS</span> n
+  <span class="hljs-keyword">ON</span> n.id_nfe <span class="hljs-operator">=</span> TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_nfe)
+<span class="hljs-keyword">WHERE</span> TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_nfe) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">AND</span> LEN(s.ncm) <span class="hljs-operator">=</span> <span class="hljs-number">8</span>
+  <span class="hljs-keyword">AND</span> s.ncm <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%[^0-9]%&#x27;</span>
+  <span class="hljs-keyword">AND</span> LEN(s.cfop) <span class="hljs-operator">=</span> <span class="hljs-number">4</span>
+  <span class="hljs-keyword">AND</span> s.cfop <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%[^0-9]%&#x27;</span>
+  <span class="hljs-keyword">AND</span> <span class="hljs-keyword">LEFT</span>(s.cfop, <span class="hljs-number">1</span>) <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;1&#x27;</span>, <span class="hljs-string">&#x27;2&#x27;</span>, <span class="hljs-string">&#x27;3&#x27;</span>, <span class="hljs-string">&#x27;5&#x27;</span>, <span class="hljs-string">&#x27;6&#x27;</span>, <span class="hljs-string">&#x27;7&#x27;</span>)
+  <span class="hljs-keyword">AND</span> TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>), s.valor_item) <span class="hljs-operator">&gt;=</span> <span class="hljs-number">0</span>;
+</div></code></pre>
+<p>O <code>JOIN</code> impede a insercao de um item sem NF-e pai. Neste material, <code>id_nfe</code> do CSV foi preparado para coincidir com o <code>id_nfe</code> gerado no exercicio. Em um processo real, o CSV de itens deve trazer uma chave natural da NF-e ou uma tabela de mapeamento, pois valores <code>IDENTITY</code> nao devem ser presumidos.</p>
+<h3 id="7.3-nfce" tabindex="-1">7.3 NFCE</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">INSERT INTO</span> fiscal.NFCE (
+    chave_acesso, id_contribuinte_emitente, data_emissao, valor_total, situacao
+)
+<span class="hljs-keyword">SELECT</span>
+    s.chave_acesso,
+    TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_contribuinte_emitente),
+    TRY_CONVERT(<span class="hljs-type">DATE</span>, s.data_emissao),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>), s.valor_total),
+    s.situacao
+<span class="hljs-keyword">FROM</span> staging.stg_nfce_bulk <span class="hljs-keyword">AS</span> s
+<span class="hljs-keyword">JOIN</span> fiscal.CONTRIBUINTE <span class="hljs-keyword">AS</span> c
+  <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_contribuinte_emitente)
+<span class="hljs-keyword">WHERE</span> LEN(s.chave_acesso) <span class="hljs-operator">=</span> <span class="hljs-number">44</span>
+  <span class="hljs-keyword">AND</span> s.chave_acesso <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%[^0-9]%&#x27;</span>
+  <span class="hljs-keyword">AND</span> TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_contribuinte_emitente) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">AND</span> TRY_CONVERT(<span class="hljs-type">DATE</span>, s.data_emissao) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">AND</span> TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>), s.valor_total) <span class="hljs-operator">&gt;=</span> <span class="hljs-number">0</span>
+  <span class="hljs-keyword">AND</span> s.situacao <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>, <span class="hljs-string">&#x27;CANCELADA&#x27;</span>, <span class="hljs-string">&#x27;DENEGADA&#x27;</span>)
+  <span class="hljs-keyword">AND</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> (
+      <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span> <span class="hljs-keyword">FROM</span> fiscal.NFCE <span class="hljs-keyword">AS</span> n
+      <span class="hljs-keyword">WHERE</span> n.chave_acesso <span class="hljs-operator">=</span> s.chave_acesso
+  );
+</div></code></pre>
+<p>NFCE possui somente o contribuinte emitente. O consumidor final nao e incluido como contribuinte neste modelo.</p>
+<h3 id="7.4-item_nfce" tabindex="-1">7.4 ITEM_NFCE</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">INSERT INTO</span> fiscal.ITEM_NFCE (id_nfce, ncm, cfop, valor_item)
+<span class="hljs-keyword">SELECT</span>
+    TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_nfce),
+    s.ncm,
+    s.cfop,
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>), s.valor_item)
+<span class="hljs-keyword">FROM</span> staging.stg_item_nfce_bulk <span class="hljs-keyword">AS</span> s
+<span class="hljs-keyword">JOIN</span> fiscal.NFCE <span class="hljs-keyword">AS</span> n
+  <span class="hljs-keyword">ON</span> n.id_nfce <span class="hljs-operator">=</span> TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_nfce)
+<span class="hljs-keyword">WHERE</span> TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_nfce) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">AND</span> LEN(s.ncm) <span class="hljs-operator">=</span> <span class="hljs-number">8</span>
+  <span class="hljs-keyword">AND</span> s.ncm <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%[^0-9]%&#x27;</span>
+  <span class="hljs-keyword">AND</span> LEN(s.cfop) <span class="hljs-operator">=</span> <span class="hljs-number">4</span>
+  <span class="hljs-keyword">AND</span> s.cfop <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%[^0-9]%&#x27;</span>
+  <span class="hljs-keyword">AND</span> <span class="hljs-keyword">LEFT</span>(s.cfop, <span class="hljs-number">1</span>) <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;1&#x27;</span>, <span class="hljs-string">&#x27;2&#x27;</span>, <span class="hljs-string">&#x27;3&#x27;</span>, <span class="hljs-string">&#x27;5&#x27;</span>, <span class="hljs-string">&#x27;6&#x27;</span>, <span class="hljs-string">&#x27;7&#x27;</span>)
+  <span class="hljs-keyword">AND</span> TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>), s.valor_item) <span class="hljs-operator">&gt;=</span> <span class="hljs-number">0</span>;
+</div></code></pre>
+<p>Assim como em <code>ITEM_NFE</code>, o <code>JOIN</code> valida a existencia da nota pai e a conversao evita que um valor invalido interrompa toda a consulta.</p>
+<h3 id="7.5-cte" tabindex="-1">7.5 CTE</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">INSERT INTO</span> fiscal.CTE (
+    chave_acesso, id_contribuinte_emitente, id_nfe_vinculada,
+    valor_frete, situacao
+)
+<span class="hljs-keyword">SELECT</span>
+    s.chave_acesso,
+    TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_contribuinte_emitente),
+    TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_nfe_vinculada),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>), s.valor_frete),
+    s.situacao
+<span class="hljs-keyword">FROM</span> staging.stg_cte_bulk <span class="hljs-keyword">AS</span> s
+<span class="hljs-keyword">JOIN</span> fiscal.CONTRIBUINTE <span class="hljs-keyword">AS</span> c
+  <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_contribuinte_emitente)
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> fiscal.NFE <span class="hljs-keyword">AS</span> n
+  <span class="hljs-keyword">ON</span> n.id_nfe <span class="hljs-operator">=</span> TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_nfe_vinculada)
+<span class="hljs-keyword">WHERE</span> LEN(s.chave_acesso) <span class="hljs-operator">=</span> <span class="hljs-number">44</span>
+  <span class="hljs-keyword">AND</span> s.chave_acesso <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%[^0-9]%&#x27;</span>
+  <span class="hljs-keyword">AND</span> TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_contribuinte_emitente) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">AND</span> TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>), s.valor_frete) <span class="hljs-operator">&gt;=</span> <span class="hljs-number">0</span>
+  <span class="hljs-keyword">AND</span> s.situacao <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;AUTORIZADO&#x27;</span>, <span class="hljs-string">&#x27;CANCELADO&#x27;</span>, <span class="hljs-string">&#x27;DENEGADO&#x27;</span>)
+  <span class="hljs-keyword">AND</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> (
+      <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span> <span class="hljs-keyword">FROM</span> fiscal.CTE <span class="hljs-keyword">AS</span> x
+      <span class="hljs-keyword">WHERE</span> x.chave_acesso <span class="hljs-operator">=</span> s.chave_acesso
+  );
+</div></code></pre>
+<p>O <code>LEFT JOIN</code> permite que o CT-e seja carregado mesmo quando a NF-e vinculada nao foi localizada. O modelo final aceita <code>id_nfe_vinculada = NULL</code>.</p>
+<h3 id="7.6-efd_registro" tabindex="-1">7.6 EFD_REGISTRO</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">INSERT INTO</span> fiscal.EFD_REGISTRO (
+    id_contribuinte, tipo_registro, periodo_apuracao, id_nfe_referenciada
+)
+<span class="hljs-keyword">SELECT</span>
+    TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_contribuinte),
+    s.tipo_registro,
+    s.periodo_apuracao,
+    TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_nfe_referenciada)
+<span class="hljs-keyword">FROM</span> staging.stg_efd_registro_bulk <span class="hljs-keyword">AS</span> s
+<span class="hljs-keyword">JOIN</span> fiscal.CONTRIBUINTE <span class="hljs-keyword">AS</span> c
+  <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_contribuinte)
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> fiscal.NFE <span class="hljs-keyword">AS</span> n
+  <span class="hljs-keyword">ON</span> n.id_nfe <span class="hljs-operator">=</span> TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_nfe_referenciada)
+<span class="hljs-keyword">WHERE</span> TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_contribuinte) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">AND</span> s.tipo_registro <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;C100&#x27;</span>, <span class="hljs-string">&#x27;C170&#x27;</span>)
+  <span class="hljs-keyword">AND</span> s.periodo_apuracao <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;[0-1][0-9]/[1-2][0-9][0-9][0-9]&#x27;</span>;
+</div></code></pre>
+<p>O <code>LEFT JOIN</code> mantem o registro EFD quando a NF-e referenciada nao existe, porque a FK da tabela final e opcional. O <code>CHECK</code> de periodo valida o formato <code>MM/YYYY</code>.</p>
+<hr>
+<h2 id="9.-conferencia-dos-resultados" tabindex="-1">9. Conferencia dos resultados</h2>
+<h3 id="8.1-contagens-nas-tabelas-finais" tabindex="-1">8.1 Contagens nas tabelas finais</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;CONTRIBUINTE&#x27;</span> <span class="hljs-keyword">AS</span> tabela, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> total <span class="hljs-keyword">FROM</span> fiscal.CONTRIBUINTE
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;NFE&#x27;</span>, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> fiscal.NFE
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;ITEM_NFE&#x27;</span>, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> fiscal.ITEM_NFE
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;NFCE&#x27;</span>, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> fiscal.NFCE
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;ITEM_NFCE&#x27;</span>, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> fiscal.ITEM_NFCE
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;CTE&#x27;</span>, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> fiscal.CTE
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;EFD_REGISTRO&#x27;</span>, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> fiscal.EFD_REGISTRO;
+</div></code></pre>
+<h3 id="8.2-conferir-relacionamentos" tabindex="-1">8.2 Conferir relacionamentos</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> i.id_item_nfe
+<span class="hljs-keyword">FROM</span> fiscal.ITEM_NFE <span class="hljs-keyword">AS</span> i
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> fiscal.NFE <span class="hljs-keyword">AS</span> n <span class="hljs-keyword">ON</span> n.id_nfe <span class="hljs-operator">=</span> i.id_nfe
+<span class="hljs-keyword">WHERE</span> n.id_nfe <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>;
+
+<span class="hljs-keyword">SELECT</span> i.id_item_nfce
+<span class="hljs-keyword">FROM</span> fiscal.ITEM_NFCE <span class="hljs-keyword">AS</span> i
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> fiscal.NFCE <span class="hljs-keyword">AS</span> n <span class="hljs-keyword">ON</span> n.id_nfce <span class="hljs-operator">=</span> i.id_nfce
+<span class="hljs-keyword">WHERE</span> n.id_nfce <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>;
+
+<span class="hljs-keyword">SELECT</span> c.id_cte
+<span class="hljs-keyword">FROM</span> fiscal.CTE <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> fiscal.NFE <span class="hljs-keyword">AS</span> n <span class="hljs-keyword">ON</span> n.id_nfe <span class="hljs-operator">=</span> c.id_nfe_vinculada
+<span class="hljs-keyword">WHERE</span> c.id_nfe_vinculada <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">AND</span> n.id_nfe <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>;
+</div></code></pre>
+<p>As tres consultas devem retornar zero linhas.</p>
+<h3 id="8.3-conferir-situacoes-e-valores" tabindex="-1">8.3 Conferir situacoes e valores</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> situacao, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> total
+<span class="hljs-keyword">FROM</span> fiscal.NFE
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> situacao;
+
+<span class="hljs-keyword">SELECT</span> situacao, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> total
+<span class="hljs-keyword">FROM</span> fiscal.NFCE
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> situacao;
+
+<span class="hljs-keyword">SELECT</span> situacao, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> total
+<span class="hljs-keyword">FROM</span> fiscal.CTE
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> situacao;
+
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> valores_negativos
+<span class="hljs-keyword">FROM</span> fiscal.NFE
+<span class="hljs-keyword">WHERE</span> valor_total <span class="hljs-operator">&lt;</span> <span class="hljs-number">0</span>;
+</div></code></pre>
+<hr>
+<h2 id="10.-tratamento-de-erros-e-reprocessamento" tabindex="-1">10. Tratamento de erros e reprocessamento</h2>
+<h3 id="9.1-diferenca-entre-erro-de-layout-e-erro-de-conteudo" tabindex="-1">9.1 Diferenca entre erro de layout e erro de conteudo</h3>
+<p>Um arquivo com quantidade incorreta de campos, delimitador errado ou quebra de linha incompatível pode falhar no <code>BULK INSERT</code>. Esse e um erro de estrutura do arquivo.</p>
+<p>Um arquivo com <code>valor_total = 'ABC'</code> pode entrar na staging, pois a coluna e textual. Esse e um erro de conteudo e deve ser tratado na consolidacao com <code>TRY_CONVERT</code>.</p>
+<h3 id="9.2-listar-linhas-rejeitadas-antes-da-carga-final" tabindex="-1">9.2 Listar linhas rejeitadas antes da carga final</h3>
+<p>Exemplo para NF-e:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> s.<span class="hljs-operator">*</span>,
+       <span class="hljs-keyword">CASE</span>
+           <span class="hljs-keyword">WHEN</span> LEN(s.chave_acesso) <span class="hljs-operator">&lt;&gt;</span> <span class="hljs-number">44</span>
+             <span class="hljs-keyword">OR</span> s.chave_acesso <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%[^0-9]%&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;Chave invalida&#x27;</span>
+           <span class="hljs-keyword">WHEN</span> TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_contribuinte_emitente) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+             <span class="hljs-keyword">OR</span> TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_contribuinte_destinatario) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+             <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;Contribuinte invalido&#x27;</span>
+           <span class="hljs-keyword">WHEN</span> TRY_CONVERT(<span class="hljs-type">DATE</span>, s.data_emissao) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;Data invalida&#x27;</span>
+           <span class="hljs-keyword">WHEN</span> TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>), s.valor_total) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+             <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;Valor invalido&#x27;</span>
+           <span class="hljs-keyword">WHEN</span> TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>), s.valor_total) <span class="hljs-operator">&lt;</span> <span class="hljs-number">0</span>
+             <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;Valor negativo&#x27;</span>
+           <span class="hljs-keyword">WHEN</span> s.situacao <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>, <span class="hljs-string">&#x27;CANCELADA&#x27;</span>, <span class="hljs-string">&#x27;DENEGADA&#x27;</span>, <span class="hljs-string">&#x27;INUTILIZADA&#x27;</span>)
+             <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;Situacao invalida&#x27;</span>
+           <span class="hljs-keyword">ELSE</span> <span class="hljs-string">&#x27;Verificar relacionamento ou duplicidade&#x27;</span>
+       <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> motivo
+<span class="hljs-keyword">FROM</span> staging.stg_nfe_bulk <span class="hljs-keyword">AS</span> s
+<span class="hljs-keyword">WHERE</span> LEN(s.chave_acesso) <span class="hljs-operator">&lt;&gt;</span> <span class="hljs-number">44</span>
+   <span class="hljs-keyword">OR</span> s.chave_acesso <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%[^0-9]%&#x27;</span>
+   <span class="hljs-keyword">OR</span> TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_contribuinte_emitente) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+   <span class="hljs-keyword">OR</span> TRY_CONVERT(<span class="hljs-type">BIGINT</span>, s.id_contribuinte_destinatario) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+   <span class="hljs-keyword">OR</span> TRY_CONVERT(<span class="hljs-type">DATE</span>, s.data_emissao) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+   <span class="hljs-keyword">OR</span> TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>), s.valor_total) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+   <span class="hljs-keyword">OR</span> TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>), s.valor_total) <span class="hljs-operator">&lt;</span> <span class="hljs-number">0</span>
+   <span class="hljs-keyword">OR</span> s.situacao <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>, <span class="hljs-string">&#x27;CANCELADA&#x27;</span>, <span class="hljs-string">&#x27;DENEGADA&#x27;</span>, <span class="hljs-string">&#x27;INUTILIZADA&#x27;</span>);
+</div></code></pre>
+<p>Em um processo de producao, o resultado deve ser gravado em uma tabela de rejeicoes com a origem, o motivo, os valores brutos e a data da analise.</p>
+<h3 id="9.3-transacao-na-consolidacao" tabindex="-1">9.3 Transacao na consolidacao</h3>
+<p>Quando varias tabelas finais precisam ser atualizadas como uma unidade, use uma transacao e trate excecoes:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">BEGIN</span> TRY
+    <span class="hljs-keyword">BEGIN</span> TRANSACTION;
+
+    <span class="hljs-comment">-- INSERTs de consolidacao validados entram aqui.</span>
+
+    <span class="hljs-keyword">COMMIT</span> TRANSACTION;
+<span class="hljs-keyword">END</span> TRY
+<span class="hljs-keyword">BEGIN</span> CATCH
+    IF XACT_STATE() <span class="hljs-operator">&lt;&gt;</span> <span class="hljs-number">0</span>
+        <span class="hljs-keyword">ROLLBACK</span> TRANSACTION;
+    THROW;
+<span class="hljs-keyword">END</span> CATCH;
+</div></code></pre>
+<p>Os dados da staging nao devem ser apagados antes de conferir as contagens e as rejeicoes.</p>
+<hr>
+<h2 id="11.-boas-praticas-e-problemas-comuns" tabindex="-1">11. Boas praticas e problemas comuns</h2>
+<h3 id="rowterminator" tabindex="-1"><code>ROWTERMINATOR</code></h3>
+<p>Se o arquivo for criado no Windows e usar CRLF, teste <code>ROWTERMINATOR = '0x0A'</code> ou <code>ROWTERMINATOR = '\r\n'</code> conforme o arquivo real. O terminador deve ser confirmado no arquivo, nao escolhido apenas pelo sistema operacional.</p>
+<h3 id="codificacao" tabindex="-1">Codificacao</h3>
+<p>Use <code>CODEPAGE = '65001'</code> para UTF-8. Se o arquivo vier em outra codificacao, ajuste o parametro depois de confirmar a origem.</p>
+<h3 id="coluna-de-controle" tabindex="-1">Coluna de controle</h3>
+<p><code>imported_dt</code> nao vem dos CSVs. Por isso, no <code>criar_stg_nfe_bulk.sql</code>, ela e adicionada depois da ingestao com <code>DEFAULT SYSUTCDATETIME()</code>. Se a tabela ja tiver essa coluna antes do <code>BULK INSERT</code>, o mapeamento posicional pode causar erro ou carregar dados no lugar errado.</p>
+<h3 id="chaves-identity" tabindex="-1">Chaves <code>IDENTITY</code></h3>
+<p>IDs gerados nas tabelas finais podem mudar entre cargas. Para integrar arquivos de entidades relacionadas, prefira chaves naturais ou capture o mapeamento dos IDs gerados. A coincidencia entre os IDs dos arquivos de exemplo e os IDs das tabelas finais e uma simplificacao didatica.</p>
+<h3 id="execucao-repetida" tabindex="-1">Execucao repetida</h3>
+<p>Limpe a staging antes de reimportar e verifique se as tabelas finais ja possuem dados. As restricoes <code>UNIQUE</code> e as chaves estrangeiras protegem a integridade, mas nao substituem o controle do lote.</p>
+<h3 id="maxerrors-e-errorfile" tabindex="-1"><code>MAXERRORS</code> e <code>ERRORFILE</code></h3>
+<p>Para arquivos externos, pode-se acrescentar <code>MAXERRORS</code> e <code>ERRORFILE</code> ao <code>BULK INSERT</code>. O arquivo indicado por <code>ERRORFILE</code> precisa estar em um caminho gravavel pelo servico do SQL Server e nao pode existir previamente com o mesmo nome.</p>
+<p>Exemplo:</p>
+<pre class='hljs'><code><div>BULK <span class="hljs-keyword">INSERT</span> staging.stg_nfe_bulk
+<span class="hljs-keyword">FROM</span> <span class="hljs-string">&#x27;C:\dados\staging\staging_nfe_20.csv&#x27;</span>
+<span class="hljs-keyword">WITH</span> (
+    FIRSTROW <span class="hljs-operator">=</span> <span class="hljs-number">2</span>,
+    FIELDTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;;&#x27;</span>,
+    ROWTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;0x0A&#x27;</span>,
+    CODEPAGE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;65001&#x27;</span>,
+    TABLOCK,
+    MAXERRORS <span class="hljs-operator">=</span> <span class="hljs-number">0</span>,
+    ERRORFILE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;C:\dados\staging\erros_staging_nfe.log&#x27;</span>
+);
+</div></code></pre>
+<p>Com <code>MAXERRORS = 0</code>, a carga para no primeiro erro. Isso e adequado quando nenhum erro de layout pode ser aceito silenciosamente. Para erros de conteudo, mantenha a staging textual e trate-os com consultas de validacao.</p>
+<hr>
+<h2 id="conclusao" tabindex="-1">Conclusao</h2>
+<p>O fluxo completo deste material e:</p>
+<ol>
+<li>disponibilizar os CSVs em um caminho acessivel ao SQL Server;</li>
+<li>criar o schema e as tabelas de staging;</li>
+<li>carregar os seis arquivos com <code>BULK INSERT</code>;</li>
+<li>conferir contagens e formatos na staging;</li>
+<li>criar o schema e as tabelas finais;</li>
+<li>garantir que os contribuintes existam;</li>
+<li>inserir NFE e NFCE;</li>
+<li>inserir itens, CT-e e registros EFD respeitando os relacionamentos;</li>
+<li>conferir chaves, situacoes, valores e quantidades;</li>
+<li>preservar e tratar as linhas rejeitadas antes de limpar qualquer staging.</li>
+</ol>
+<p>Esse desenho transforma uma carga de arquivos em um processo controlado, auditavel e reprocessavel.</p>
+
+    </div>
+</body>
+</html>

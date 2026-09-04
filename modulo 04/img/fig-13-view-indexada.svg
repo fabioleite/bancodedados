@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 560" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="940" height="560" fill="#ffffff"/>
+  <text x="20" y="28" font-size="14" font-weight="bold" fill="#243b53">Visão comum × visão indexada: o que muda no plano de execução</text>
+
+  <!-- ANTES -->
+  <rect x="20" y="46" width="440" height="240" rx="5" fill="#fff4f4" stroke="#c96a6a" stroke-width="2"/>
+  <rect x="20" y="46" width="440" height="24" rx="5" fill="#c96a6a"/>
+  <text x="240" y="63" font-size="11.5" text-anchor="middle" font-weight="bold" fill="#ffffff">Visão COMUM (sem índice)</text>
+  <text x="34" y="88" font-size="10" fill="#7a3b33">O SQL Server "expande" o texto da view dentro da consulta</text>
+  <text x="34" y="102" font-size="10" fill="#7a3b33">e reexecuta a agregação inteira a cada chamada.</text>
+
+  <g>
+    <rect x="40" y="118" width="96" height="50" rx="4" fill="#ffffff" stroke="#c96a6a"/>
+    <text x="88" y="140" font-size="10" text-anchor="middle" fill="#222">SELECT</text>
+    <text x="88" y="156" font-size="9" text-anchor="middle" fill="#666">0%</text>
+  </g>
+  <line x1="176" y1="143" x2="140" y2="143" stroke="#5a7fa5" stroke-width="5"/><polygon points="140,143 152,138 152,148" fill="#5a7fa5"/>
+  <g>
+    <rect x="178" y="118" width="110" height="50" rx="4" fill="#ffffff" stroke="#c96a6a"/>
+    <text x="233" y="138" font-size="10" text-anchor="middle" fill="#222">Hash Match</text>
+    <text x="233" y="152" font-size="9" text-anchor="middle" fill="#666">(Aggregate) 21%</text>
+  </g>
+  <line x1="330" y1="143" x2="292" y2="143" stroke="#5a7fa5" stroke-width="22"/><polygon points="292,143 310,127 310,159" fill="#5a7fa5"/>
+  <g>
+    <rect x="332" y="112" width="112" height="62" rx="4" fill="#fdecea" stroke="#c96a6a" stroke-width="2"/>
+    <text x="388" y="132" font-size="10" text-anchor="middle" font-weight="bold" fill="#222">Clustered</text>
+    <text x="388" y="145" font-size="10" text-anchor="middle" font-weight="bold" fill="#222">Index Scan</text>
+    <text x="388" y="162" font-size="9.5" text-anchor="middle" font-weight="bold" fill="#a33">dbo.NFE — 79%</text>
+  </g>
+
+  <rect x="40" y="186" width="404" height="86" rx="3" fill="#ffffff" stroke="#e0a8a8"/>
+  <text x="52" y="204" font-size="10" font-weight="bold" fill="#a3271b">Mensagens (SET STATISTICS IO ON)</text>
+  <g font-family="Consolas, monospace" font-size="9.5" fill="#444">
+    <text x="52" y="222">Tabela 'NFE'. Contagem de verificação 1,</text>
+    <text x="52" y="238">leituras lógicas 41.207, leituras físicas 0.</text>
+    <text x="52" y="258">Tempo de CPU = 1.263 ms, decorrido = 1.410 ms.</text>
+  </g>
+
+  <!-- DEPOIS -->
+  <rect x="480" y="46" width="440" height="240" rx="5" fill="#f2fbf2" stroke="#5aa35a" stroke-width="2"/>
+  <rect x="480" y="46" width="440" height="24" rx="5" fill="#5aa35a"/>
+  <text x="700" y="63" font-size="11.5" text-anchor="middle" font-weight="bold" fill="#ffffff">Visão INDEXADA (materializada)</text>
+  <text x="494" y="88" font-size="10" fill="#2f5c2f">O agregado já está gravado em disco. A consulta apenas lê</text>
+  <text x="494" y="102" font-size="10" fill="#2f5c2f">as poucas linhas do índice clusterizado da própria view.</text>
+
+  <g>
+    <rect x="500" y="118" width="96" height="50" rx="4" fill="#ffffff" stroke="#5aa35a"/>
+    <text x="548" y="140" font-size="10" text-anchor="middle" fill="#222">SELECT</text>
+    <text x="548" y="156" font-size="9" text-anchor="middle" fill="#666">0%</text>
+  </g>
+  <line x1="640" y1="143" x2="600" y2="143" stroke="#5a7fa5" stroke-width="5"/><polygon points="600,143 612,138 612,148" fill="#5a7fa5"/>
+  <g>
+    <rect x="642" y="108" width="256" height="70" rx="4" fill="#e2f5e2" stroke="#5aa35a" stroke-width="2"/>
+    <text x="770" y="128" font-size="10" text-anchor="middle" font-weight="bold" fill="#222">Clustered Index Seek</text>
+    <text x="770" y="144" font-size="9" text-anchor="middle" fill="#444">dbo.VW_NFE_SAIDA_RESUMO_MENSAL</text>
+    <text x="770" y="158" font-size="9" text-anchor="middle" fill="#444">.IXC_VW_NFE_SAIDA_RESUMO</text>
+    <text x="770" y="172" font-size="9.5" text-anchor="middle" font-weight="bold" fill="#2d6a2d">100% do custo — e o custo é minúsculo</text>
+  </g>
+
+  <rect x="500" y="186" width="404" height="86" rx="3" fill="#ffffff" stroke="#a8d4a8"/>
+  <text x="512" y="204" font-size="10" font-weight="bold" fill="#2d6a2d">Mensagens (SET STATISTICS IO ON)</text>
+  <g font-family="Consolas, monospace" font-size="9.5" fill="#444">
+    <text x="512" y="222">Tabela 'VW_NFE_SAIDA_RESUMO_MENSAL'. Contagem 1,</text>
+    <text x="512" y="238">leituras lógicas 3, leituras físicas 0.</text>
+    <text x="512" y="258">Tempo de CPU = 0 ms, decorrido = 2 ms.</text>
+  </g>
+
+  <!-- NOEXPAND -->
+  <rect x="20" y="300" width="900" height="112" rx="5" fill="#fff8e5" stroke="#e0c068"/>
+  <text x="34" y="322" font-size="11.5" font-weight="bold" fill="#7a5c00">A armadilha do NOEXPAND</text>
+  <text x="34" y="342" font-size="10" fill="#5c4600">Criar o índice na view não garante que ele seja usado. O casamento automático (a otimização em que o SQL Server percebe sozinho</text>
+  <text x="34" y="357" font-size="10" fill="#5c4600">que pode substituir a consulta pela view materializada) depende de edição e versão. Se o plano continuar mostrando Scan na tabela base,</text>
+  <text x="34" y="372" font-size="10" fill="#5c4600">force explicitamente — e confirme comparando as leituras lógicas antes e depois:</text>
+  <g font-family="Consolas, monospace" font-size="10.5">
+    <text x="34" y="398" fill="#0000ff">SELECT</text><text x="90" y="398" fill="#222"> * </text><text x="112" y="398" fill="#0000ff">FROM</text><text x="152" y="398" fill="#222"> dbo.VW_NFE_SAIDA_RESUMO_MENSAL </text><text x="404" y="398" fill="#0000ff">WITH</text><text x="440" y="398" fill="#222"> (</text><text x="452" y="398" fill="#c00000" font-weight="bold">NOEXPAND</text><text x="524" y="398" fill="#222">) </text><text x="540" y="398" fill="#0000ff">WHERE</text><text x="590" y="398" fill="#222"> ANO = 2025;</text>
+  </g>
+
+  <!-- SET OPTIONS -->
+  <rect x="20" y="424" width="900" height="122" rx="5" fill="#f7fafd" stroke="#9dbbd8"/>
+  <text x="34" y="446" font-size="11.5" font-weight="bold" fill="#1b3f60">As sete opções de sessão obrigatórias (esquecer uma = erro 1934 na criação do índice)</text>
+  <g font-family="Consolas, monospace" font-size="10.5" fill="#222">
+    <text x="34" y="470">SET ANSI_NULLS ON;              SET ANSI_PADDING ON;             SET ANSI_WARNINGS ON;</text>
+    <text x="34" y="490">SET ARITHABORT ON;              SET CONCAT_NULL_YIELDS_NULL ON;  SET QUOTED_IDENTIFIER ON;</text>
+    <text x="34" y="510">SET NUMERIC_ROUNDABORT OFF;   </text><text x="330" y="510" fill="#7a5c00">← a única que fica OFF</text>
+  </g>
+  <text x="34" y="534" font-size="9.5" fill="#33587a">Valem também para quem CONSULTA a view indexada: uma sessão com ARITHABORT OFF (padrão de alguns drivers) não usa o índice.</text>
+</svg>

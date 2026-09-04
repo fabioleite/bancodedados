@@ -421,4 +421,4 @@ ORDER BY id_nfe DESC;
 - **Microsoft Learn — Transactions (Database Engine)**: conceitos de `BEGIN/COMMIT/ROLLBACK TRANSACTION`, `SAVE TRANSACTION` e níveis de isolamento.
 - **ISO/IEC 9075 (SQL Standard)**: norma internacional que define o núcleo da linguagem SQL sobre o qual o T-SQL se apoia.
 - **Itzik Ben-Gan — "T-SQL Fundamentals"** (Microsoft Press): referência aprofundada sobre a lógica de processamento de consultas em T-SQL.
-- Consulte também o resumo de referências gerais do curso em [05.16-Resumo-Referencias.md](01%20modelagem%20física/05.16-Resumo-Referencias.md).
+- Consulte também o resumo de referências gerais do curso em [01.16-Resumo-Referencias.md](01_DDL_CREATE_ALTER/01.16-Resumo-Referencias.md).

@@ -1,0 +1,1932 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>roteiro_formatacao_tsql.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 id="roteiro-de-laborat%C3%B3rio-%E2%80%94-formata%C3%A7%C3%A3o%2C-apresenta%C3%A7%C3%A3o-e-tratamento-de-dados-no-select" tabindex="-1">Roteiro de Laboratório — Formatação, Apresentação e Tratamento de Dados no SELECT</h1>
+<p><strong>Curso de Banco de Dados Relacional aplicado à Fiscalização Tributária</strong>
+<strong>Módulo 11 — A lista de seleção como camada de apresentação</strong>
+<strong>SGBD: Microsoft SQL Server (T-SQL) — Banco: <code>curso_integridade_fiscal</code></strong></p>
+<hr>
+<h2 id="como-usar-este-roteiro" tabindex="-1">Como usar este roteiro</h2>
+<p>Este é um <strong>roteiro de laboratório</strong>, não um texto para leitura passiva. Cada etapa segue sempre a mesma estrutura:</p>
+<blockquote>
+<p><strong>O que fazer</strong> → a consulta a executar
+<strong>O que observar</strong> → o ponto que a consulta demonstra
+<strong>A armadilha</strong> → o erro que essa função costuma provocar em trabalho fiscal</p>
+</blockquote>
+<p>Execute cada consulta no SSMS, olhe o resultado e só então passe adiante. O tempo estimado é de <strong>3 a 4 horas</strong> com os exercícios.</p>
+<h3 id="prepara%C3%A7%C3%A3o" tabindex="-1">Preparação</h3>
+<pre class='hljs'><code><div>USE curso_integridade_fiscal;
+GO
+</div></code></pre>
+<p>O laboratório usa o banco montado pelos scripts da pasta <code>banco_fiscal/</code>. Uma tabela adicional é necessária — o quadro societário, que traz o <strong>CPF</strong> (o restante do modelo só tem CNPJ):</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Execute uma única vez, se ainda não executou:</span>
+<span class="hljs-comment">--   banco_fiscal\09_complemento_socios.sql</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> socios <span class="hljs-keyword">FROM</span> dbo.socio_administrador;   <span class="hljs-comment">-- deve retornar 138</span>
+</div></code></pre>
+<blockquote>
+<p><strong>Aviso sobre os resultados exibidos.</strong> Os valores mostrados nos quadros de &quot;resultado esperado&quot; vêm da base gerada pelos scripts do curso, com semente fixa. Se você regenerou os dados com outros parâmetros, os números mudam — a estrutura da resposta, não.</p>
+</blockquote>
+<hr>
+<h2 id="etapa-0-%E2%80%94-por-que-formatar-no-sql%3F" tabindex="-1">Etapa 0 — Por que formatar no SQL?</h2>
+<p>Antes da primeira função, uma decisão de projeto que o auditor precisa tomar conscientemente:</p>
+<table>
+<thead>
+<tr>
+<th>Formatar <strong>no SQL</strong></th>
+<th>Formatar <strong>na ferramenta</strong> (Excel, Power BI, relatório)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A saída já sai pronta para colar em ofício, e-mail ou processo</td>
+<td>O dado permanece numérico/data, permitindo ordenar, somar e filtrar corretamente</td>
+</tr>
+<tr>
+<td>Todos que executarem a consulta veem exatamente o mesmo formato</td>
+<td>Cada usuário aplica o formato que precisa</td>
+</tr>
+<tr>
+<td><strong>Transforma número em texto</strong> — e texto ordena como texto: <code>'9.000,00'</code> vem depois de <code>'10.000,00'</code></td>
+<td>Preserva o tipo e, portanto, a ordenação e a agregação</td>
+</tr>
+<tr>
+<td>Custa CPU no servidor, que é recurso compartilhado</td>
+<td>Custa na máquina do usuário</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Regra prática adotada neste curso:</strong></p>
+<ol>
+<li><strong>Consulta intermediária</strong> (que alimenta outra consulta, uma view, o Power Query ou o Power BI): <strong>não formate</strong>. Devolva <code>DECIMAL</code>, <code>DATE</code>, <code>CHAR</code>. Formatação ali quebra junção, ordenação e <em>query folding</em>.</li>
+<li><strong>Consulta final de apresentação</strong> (a listagem que vai para o ofício, para o auto de infração ou para a tela): <strong>formate à vontade</strong>, porque ali o destino é o olho humano.</li>
+<li><strong>Nunca formate no <code>WHERE</code></strong>. Aplicar função à coluna filtrada impede o uso de índice (predicado não <em>sargable</em>) — assunto do Módulo 10, seção 10.</li>
+</ol>
+<p>Guarde esta distinção: ela reaparece em todas as etapas.</p>
+<hr>
+<h2 id="etapa-1-%E2%80%94-arredondamento-e-truncamento" tabindex="-1">Etapa 1 — Arredondamento e truncamento</h2>
+<h3 id="1.1-round%2C-ceiling%2C-floor-e-o-terceiro-argumento-de-round" tabindex="-1">1.1 <code>ROUND</code>, <code>CEILING</code>, <code>FLOOR</code> e o terceiro argumento de <code>ROUND</code></h3>
+<p><strong>O que fazer:</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> n.chave_acesso,
+       n.valor_total,
+       ROUND(n.valor_total, <span class="hljs-number">0</span>)        <span class="hljs-keyword">AS</span> arredondado_inteiro,
+       ROUND(n.valor_total, <span class="hljs-number">-3</span>)       <span class="hljs-keyword">AS</span> arredondado_milhar,
+       <span class="hljs-built_in">CEILING</span>(n.valor_total)         <span class="hljs-keyword">AS</span> teto,
+       <span class="hljs-built_in">FLOOR</span>(n.valor_total)           <span class="hljs-keyword">AS</span> piso,
+       ROUND(n.valor_total, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>)     <span class="hljs-keyword">AS</span> truncado          <span class="hljs-comment">-- 3o argumento &lt;&gt; 0 = TRUNCA</span>
+<span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">WHERE</span>  n.id_nfe <span class="hljs-operator">&lt;=</span> <span class="hljs-number">5</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> n.id_nfe;
+</div></code></pre>
+<p><strong>O que observar:</strong> <code>ROUND(valor, 0)</code> devolve <code>13640.00</code> para <code>13640.16</code> — mantém as casas decimais do <strong>tipo</strong>, apenas zeradas. Quem quer o inteiro precisa converter: <code>CAST(ROUND(valor,0) AS INT)</code>.</p>
+<p>O <strong>terceiro argumento</strong> é o detalhe que quase ninguém conhece: quando diferente de zero, <code>ROUND</code> <strong>trunca</strong> em vez de arredondar. <code>ROUND(13640.16, 0, 1)</code> = <code>13640.00</code>; <code>ROUND(13640.96, 0, 1)</code> = <code>13640.00</code> também.</p>
+<p><strong>A armadilha — arredondar não é truncar, e a diferença vira valor de auto:</strong></p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Uma casa decimal a mais ou a menos, multiplicada por 30 mil itens</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">SUM</span>(ROUND(i.valor_total_item <span class="hljs-operator">*</span> <span class="hljs-number">0.18</span>, <span class="hljs-number">2</span>))   <span class="hljs-keyword">AS</span> icms_arredondado,
+       <span class="hljs-built_in">SUM</span>(ROUND(i.valor_total_item <span class="hljs-operator">*</span> <span class="hljs-number">0.18</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>)) <span class="hljs-keyword">AS</span> icms_truncado,
+       <span class="hljs-built_in">SUM</span>(ROUND(i.valor_total_item <span class="hljs-operator">*</span> <span class="hljs-number">0.18</span>, <span class="hljs-number">2</span>))
+     <span class="hljs-operator">-</span> <span class="hljs-built_in">SUM</span>(ROUND(i.valor_total_item <span class="hljs-operator">*</span> <span class="hljs-number">0.18</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>)) <span class="hljs-keyword">AS</span> diferenca
+<span class="hljs-keyword">FROM</span>   dbo.nfe_item <span class="hljs-keyword">AS</span> i;
+</div></code></pre>
+<p>A diferença é de centavos por item — e de milhares de reais no somatório. Em um auto de infração, o critério de arredondamento precisa estar declarado e ser o mesmo da legislação aplicável. <strong>Nunca deixe implícito.</strong></p>
+<h3 id="1.2-onde-arredondar%3A-antes-ou-depois-de-somar%3F" tabindex="-1">1.2 Onde arredondar: antes ou depois de somar?</h3>
+<p><strong>O que fazer:</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> ROUND(<span class="hljs-built_in">SUM</span>(i.valor_total_item <span class="hljs-operator">*</span> <span class="hljs-number">0.18</span>), <span class="hljs-number">2</span>) <span class="hljs-keyword">AS</span> soma_depois_arredonda,
+       <span class="hljs-built_in">SUM</span>(ROUND(i.valor_total_item <span class="hljs-operator">*</span> <span class="hljs-number">0.18</span>, <span class="hljs-number">2</span>)) <span class="hljs-keyword">AS</span> arredonda_depois_soma
+<span class="hljs-keyword">FROM</span>   dbo.nfe_item <span class="hljs-keyword">AS</span> i;
+</div></code></pre>
+<p><strong>O que observar:</strong> os dois números são diferentes. O primeiro é matematicamente mais preciso; o segundo reproduz o que acontece <strong>documento a documento</strong> no mundo real, onde cada nota já foi arredondada na emissão. Para conferir escrituração, o segundo costuma ser o correto — porque é o que o contribuinte fez.</p>
+<h3 id="1.3-divis%C3%A3o-inteira-e-o-tipo-do-resultado" tabindex="-1">1.3 Divisão inteira e o tipo do resultado</h3>
+<p><strong>O que fazer:</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-number">7</span> <span class="hljs-operator">/</span> <span class="hljs-number">2</span>                                   <span class="hljs-keyword">AS</span> divisao_inteira,        <span class="hljs-comment">-- 3  (!)</span>
+       <span class="hljs-number">7.0</span> <span class="hljs-operator">/</span> <span class="hljs-number">2</span>                                 <span class="hljs-keyword">AS</span> com_decimal,            <span class="hljs-comment">-- 3.500000</span>
+       <span class="hljs-built_in">CAST</span>(<span class="hljs-number">7</span> <span class="hljs-keyword">AS</span> <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">10</span>,<span class="hljs-number">2</span>)) <span class="hljs-operator">/</span> <span class="hljs-number">2</span>            <span class="hljs-keyword">AS</span> com_cast,               <span class="hljs-comment">-- 3.50</span>
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)                                <span class="hljs-keyword">AS</span> qtd_notas,
+       <span class="hljs-built_in">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> situacao<span class="hljs-operator">=</span><span class="hljs-string">&#x27;CANCELADA&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span> <span class="hljs-keyword">END</span>)              <span class="hljs-keyword">AS</span> canceladas,
+       <span class="hljs-built_in">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> situacao<span class="hljs-operator">=</span><span class="hljs-string">&#x27;CANCELADA&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span> <span class="hljs-keyword">END</span>) <span class="hljs-operator">/</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)   <span class="hljs-keyword">AS</span> pct_errado,
+       <span class="hljs-built_in">CAST</span>(<span class="hljs-built_in">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> situacao<span class="hljs-operator">=</span><span class="hljs-string">&#x27;CANCELADA&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span> <span class="hljs-keyword">END</span>) <span class="hljs-keyword">AS</span> <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">12</span>,<span class="hljs-number">4</span>))
+            <span class="hljs-operator">/</span> <span class="hljs-built_in">NULLIF</span>(<span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>), <span class="hljs-number">0</span>) <span class="hljs-operator">*</span> <span class="hljs-number">100</span>                                   <span class="hljs-keyword">AS</span> pct_correto
+<span class="hljs-keyword">FROM</span>   dbo.nfe;
+</div></code></pre>
+<p><strong>A armadilha:</strong> <code>pct_errado</code> retorna <strong>zero</strong>. Dois inteiros divididos produzem inteiro, e a parte fracionária é descartada antes de qualquer multiplicação. Todo percentual calculado sobre contagens precisa de <code>CAST(... AS DECIMAL(...))</code> <strong>antes</strong> da divisão. Este é, disparado, o erro de formatação mais comum em relatórios de fiscalização.</p>
+<h3 id="1.4-por-que-decimal-e-nunca-float-em-valor-monet%C3%A1rio" tabindex="-1">1.4 Por que <code>DECIMAL</code> e nunca <code>FLOAT</code> em valor monetário</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">CAST</span>(<span class="hljs-number">0.1</span> <span class="hljs-keyword">AS</span> <span class="hljs-type">FLOAT</span>) <span class="hljs-operator">+</span> <span class="hljs-built_in">CAST</span>(<span class="hljs-number">0.2</span> <span class="hljs-keyword">AS</span> <span class="hljs-type">FLOAT</span>)         <span class="hljs-keyword">AS</span> soma_float,      <span class="hljs-comment">-- 0.30000000000000004</span>
+       <span class="hljs-built_in">CAST</span>(<span class="hljs-number">0.1</span> <span class="hljs-keyword">AS</span> <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">10</span>,<span class="hljs-number">2</span>)) <span class="hljs-operator">+</span> <span class="hljs-built_in">CAST</span>(<span class="hljs-number">0.2</span> <span class="hljs-keyword">AS</span> <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">10</span>,<span class="hljs-number">2</span>)) <span class="hljs-keyword">AS</span> soma_decimal;  <span class="hljs-comment">-- 0.30</span>
+</div></code></pre>
+<p><code>FLOAT</code> é binário e não representa exatamente frações decimais. Em lançamento fiscal, isso produz diferenças de centavos que ninguém consegue explicar em impugnação. O modelo do curso usa <code>DECIMAL(15,2)</code> justamente por isso.</p>
+<hr>
+<h2 id="etapa-2-%E2%80%94-formata%C3%A7%C3%A3o-num%C3%A9rica" tabindex="-1">Etapa 2 — Formatação numérica</h2>
+<h3 id="2.1-format-com-cultura-brasileira" tabindex="-1">2.1 <code>FORMAT</code> com cultura brasileira</h3>
+<p><strong>O que fazer:</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> n.valor_total,
+       FORMAT(n.valor_total, <span class="hljs-string">&#x27;N2&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>)  <span class="hljs-keyword">AS</span> numero_br,     <span class="hljs-comment">-- 13.640,16</span>
+       FORMAT(n.valor_total, <span class="hljs-string">&#x27;C&#x27;</span>,  <span class="hljs-string">&#x27;pt-BR&#x27;</span>)  <span class="hljs-keyword">AS</span> moeda_br,      <span class="hljs-comment">-- R$ 13.640,16</span>
+       FORMAT(n.valor_total, <span class="hljs-string">&#x27;#,##0.00&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>) <span class="hljs-keyword">AS</span> mascara_explicita,
+       FORMAT(n.valor_icms <span class="hljs-operator">/</span> <span class="hljs-built_in">NULLIF</span>(n.valor_total,<span class="hljs-number">0</span>), <span class="hljs-string">&#x27;P2&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>) <span class="hljs-keyword">AS</span> carga_percentual
+<span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">WHERE</span>  n.id_nfe <span class="hljs-operator">&lt;=</span> <span class="hljs-number">5</span>;
+</div></code></pre>
+<p><strong>O que observar:</strong> o terceiro argumento (a <em>cultura</em>) é o que inverte ponto e vírgula. Sem ele, o SQL Server usa a cultura da sessão — que no servidor costuma ser <code>en-US</code>, produzindo <code>13,640.16</code>. Em material que vai para processo administrativo, o formato precisa ser o brasileiro <strong>explicitamente</strong>, não por sorte de configuração.</p>
+<p>Formatos numéricos padrão mais úteis:</p>
+<table>
+<thead>
+<tr>
+<th>Formato</th>
+<th>Resultado (pt-BR)</th>
+<th>Uso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>'N2'</code></td>
+<td><code>13.640,16</code></td>
+<td>valores em geral</td>
+</tr>
+<tr>
+<td><code>'N0'</code></td>
+<td><code>13.640</code></td>
+<td>quantidades</td>
+</tr>
+<tr>
+<td><code>'C'</code> / <code>'C2'</code></td>
+<td><code>R$ 13.640,16</code></td>
+<td>moeda</td>
+</tr>
+<tr>
+<td><code>'P2'</code></td>
+<td><code>21,66%</code></td>
+<td>percentual (multiplica por 100 automaticamente)</td>
+</tr>
+<tr>
+<td><code>'0000'</code></td>
+<td><code>0042</code></td>
+<td>preenchimento com zeros à esquerda</td>
+</tr>
+<tr>
+<td><code>'#,##0.00'</code></td>
+<td><code>13.640,16</code></td>
+<td>máscara explícita</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Atenção ao <code>P</code>:</strong> <code>FORMAT(0.2166, 'P2')</code> devolve <code>21,66%</code>. Se você já multiplicou por 100, vai exibir <code>2.166,00%</code>. Escolha um dos dois caminhos.</p>
+</blockquote>
+<h3 id="2.2-a-alternativa-r%C3%A1pida%3A-convert-com-money" tabindex="-1">2.2 A alternativa rápida: <code>CONVERT</code> com <code>MONEY</code></h3>
+<p><strong>O que fazer:</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">5</span>)
+       n.valor_total,
+       FORMAT(n.valor_total, <span class="hljs-string">&#x27;N2&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>)                                  <span class="hljs-keyword">AS</span> via_format,
+       REPLACE(REPLACE(REPLACE(<span class="hljs-keyword">CONVERT</span>(<span class="hljs-type">VARCHAR</span>(<span class="hljs-number">30</span>), <span class="hljs-built_in">CAST</span>(n.valor_total <span class="hljs-keyword">AS</span> MONEY), <span class="hljs-number">1</span>),
+              <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;|&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;,&#x27;</span>), <span class="hljs-string">&#x27;|&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)                                <span class="hljs-keyword">AS</span> via_convert
+<span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> n.id_nfe;
+</div></code></pre>
+<p><strong>O que observar:</strong> os dois produzem <code>13.640,16</code>. O caminho com <code>CONVERT</code> parece feio — e é —, mas roda <strong>muito mais rápido</strong>: <code>FORMAT</code> é implementado em CLR e chega a ser uma ordem de grandeza mais lento. A troca tripla de <code>REPLACE</code> funciona assim: <code>CONVERT(..., 1)</code> devolve <code>13,640.16</code> no padrão americano; trocamos a vírgula por um caractere neutro, o ponto por vírgula e, por fim, o neutro por ponto.</p>
+<p><strong>Meça você mesmo:</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SET</span> STATISTICS <span class="hljs-type">TIME</span> <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> (<span class="hljs-keyword">SELECT</span> FORMAT(valor_total, <span class="hljs-string">&#x27;N2&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>) <span class="hljs-keyword">AS</span> v <span class="hljs-keyword">FROM</span> dbo.nfe) <span class="hljs-keyword">AS</span> t;
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">CONVERT</span>(<span class="hljs-type">VARCHAR</span>(<span class="hljs-number">30</span>), <span class="hljs-built_in">CAST</span>(valor_total <span class="hljs-keyword">AS</span> MONEY), <span class="hljs-number">1</span>) <span class="hljs-keyword">AS</span> v <span class="hljs-keyword">FROM</span> dbo.nfe) <span class="hljs-keyword">AS</span> t;
+<span class="hljs-keyword">SET</span> STATISTICS <span class="hljs-type">TIME</span> OFF;
+</div></code></pre>
+<p><strong>A regra:</strong> <code>FORMAT</code> em listagem final de algumas centenas de linhas, sem problema. <code>FORMAT</code> sobre milhões de linhas de <code>nfe_item</code>, jamais.</p>
+<h3 id="2.3-alinhamento-de-colunas-em-sa%C3%ADda-de-texto" tabindex="-1">2.3 Alinhamento de colunas em saída de texto</h3>
+<p>Quando o resultado vai para um arquivo <code>.txt</code> de largura fixa (ainda comum em intimações e em intercâmbio com sistemas legados):</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">RIGHT</span>(REPLICATE(<span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-number">16</span>) <span class="hljs-operator">+</span> FORMAT(n.valor_total, <span class="hljs-string">&#x27;N2&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>), <span class="hljs-number">16</span>) <span class="hljs-keyword">AS</span> valor_alinhado,
+       <span class="hljs-keyword">LEFT</span>(c.razao_social <span class="hljs-operator">+</span> REPLICATE(<span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-number">40</span>), <span class="hljs-number">40</span>)                        <span class="hljs-keyword">AS</span> razao_40,
+       <span class="hljs-keyword">RIGHT</span>(REPLICATE(<span class="hljs-string">&#x27;0&#x27;</span>, <span class="hljs-number">9</span>) <span class="hljs-operator">+</span> <span class="hljs-built_in">CAST</span>(n.numero <span class="hljs-keyword">AS</span> <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">9</span>)), <span class="hljs-number">9</span>)           <span class="hljs-keyword">AS</span> numero_zeros
+<span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+<span class="hljs-keyword">WHERE</span>  n.id_nfe <span class="hljs-operator">&lt;=</span> <span class="hljs-number">8</span>;
+</div></code></pre>
+<p><strong>O que observar:</strong> o padrão <code>RIGHT(REPLICATE(caractere, n) + texto, n)</code> é a forma clássica de preencher à esquerda; <code>LEFT(texto + REPLICATE(' ', n), n)</code> preenche à direita. No SQL Server 2022 há <code>LPAD</code>/<code>RPAD</code> nativos, mas o padrão acima funciona em qualquer versão. Para ver o alinhamento, mude a saída para texto com <code>Ctrl+T</code>.</p>
+<hr>
+<h2 id="etapa-3-%E2%80%94-formata%C3%A7%C3%A3o-de-datas" tabindex="-1">Etapa 3 — Formatação de datas</h2>
+<h3 id="3.1-convert-com-estilo-%E2%80%94-o-caminho-tradicional" tabindex="-1">3.1 <code>CONVERT</code> com estilo — o caminho tradicional</h3>
+<p><strong>O que fazer:</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> n.data_emissao,
+       <span class="hljs-keyword">CONVERT</span>(<span class="hljs-type">VARCHAR</span>(<span class="hljs-number">10</span>), n.data_emissao, <span class="hljs-number">103</span>) <span class="hljs-keyword">AS</span> dd_mm_aaaa,   <span class="hljs-comment">-- 07/04/2025</span>
+       <span class="hljs-keyword">CONVERT</span>(<span class="hljs-type">VARCHAR</span>(<span class="hljs-number">10</span>), n.data_emissao, <span class="hljs-number">102</span>) <span class="hljs-keyword">AS</span> aaaa_mm_dd,   <span class="hljs-comment">-- 2025.04.07</span>
+       <span class="hljs-keyword">CONVERT</span>(<span class="hljs-type">VARCHAR</span>(<span class="hljs-number">8</span>),  n.data_emissao, <span class="hljs-number">112</span>) <span class="hljs-keyword">AS</span> aaaammdd,     <span class="hljs-comment">-- 20250407</span>
+       <span class="hljs-keyword">CONVERT</span>(<span class="hljs-type">VARCHAR</span>(<span class="hljs-number">10</span>), n.data_emissao, <span class="hljs-number">23</span>)  <span class="hljs-keyword">AS</span> iso,          <span class="hljs-comment">-- 2025-04-07</span>
+       <span class="hljs-keyword">CONVERT</span>(<span class="hljs-type">VARCHAR</span>(<span class="hljs-number">6</span>),  n.data_emissao, <span class="hljs-number">112</span>) <span class="hljs-keyword">AS</span> periodo_efd   <span class="hljs-comment">-- 202504</span>
+<span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">WHERE</span>  n.id_nfe <span class="hljs-operator">&lt;=</span> <span class="hljs-number">5</span>;
+</div></code></pre>
+<p><strong>O que observar:</strong> o estilo <strong>112</strong> (<code>AAAAMMDD</code>) é o mais útil na fiscalização, por dois motivos: é o formato do SPED e é o único literal de data <strong>imune</strong> a qualquer configuração de idioma. <code>CONVERT(VARCHAR(6), data, 112)</code> entrega direto o período de apuração <code>AAAAMM</code> usado em <code>efd_c100</code>.</p>
+<p>Estilos que valem memorizar:</p>
+<table>
+<thead>
+<tr>
+<th>Estilo</th>
+<th>Resultado</th>
+<th>Observação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>103</code></td>
+<td><code>07/04/2025</code></td>
+<td>padrão britânico/brasileiro</td>
+</tr>
+<tr>
+<td><code>112</code></td>
+<td><code>20250407</code></td>
+<td>ISO compacto — SPED e literais seguros</td>
+</tr>
+<tr>
+<td><code>23</code></td>
+<td><code>2025-04-07</code></td>
+<td>ISO com hífen</td>
+</tr>
+<tr>
+<td><code>120</code></td>
+<td><code>2025-04-07 00:00:00</code></td>
+<td>ODBC canônico</td>
+</tr>
+<tr>
+<td><code>108</code></td>
+<td><code>14:35:22</code></td>
+<td>só a hora</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3.2-format-para-datas-e-nomes-em-portugu%C3%AAs" tabindex="-1">3.2 <code>FORMAT</code> para datas e nomes em português</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> n.data_emissao,
+       FORMAT(n.data_emissao, <span class="hljs-string">&#x27;dd/MM/yyyy&#x27;</span>)                 <span class="hljs-keyword">AS</span> br,
+       FORMAT(n.data_emissao, <span class="hljs-string">&#x27;yyyyMM&#x27;</span>)                     <span class="hljs-keyword">AS</span> periodo,
+       FORMAT(n.data_emissao, <span class="hljs-string">&#x27;MMMM&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>)              <span class="hljs-keyword">AS</span> mes_extenso,
+       FORMAT(n.data_emissao, <span class="hljs-string">&#x27;MMM/yy&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>)            <span class="hljs-keyword">AS</span> mes_curto,
+       FORMAT(n.data_emissao, <span class="hljs-string">&#x27;dddd&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>)              <span class="hljs-keyword">AS</span> dia_semana,
+       FORMAT(n.data_emissao, <span class="hljs-string">&#x27;dd &#x27;&#x27;de&#x27;&#x27; MMMM &#x27;&#x27;de&#x27;&#x27; yyyy&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>) <span class="hljs-keyword">AS</span> por_extenso
+<span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">WHERE</span>  n.id_nfe <span class="hljs-operator">&lt;=</span> <span class="hljs-number">5</span>;
+</div></code></pre>
+<p><strong>O que observar:</strong> <code>MM</code> é mês e <code>mm</code> é <strong>minuto</strong>; <code>dd</code> é dia e <code>dddd</code> é o nome do dia da semana. Trocar a caixa das letras muda o significado — erro clássico. A cultura <code>'pt-BR'</code> é o que produz <code>abril</code> em vez de <code>April</code>.</p>
+<p>A data por extenso serve para o preâmbulo de documentos: <em>&quot;Lavrado em 07 de abril de 2025&quot;</em>.</p>
+<h3 id="3.3-aritm%C3%A9tica-de-datas-para-o-trabalho-fiscal" tabindex="-1">3.3 Aritmética de datas para o trabalho fiscal</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> os.numero_os,
+       os.data_abertura,
+       os.data_conclusao,
+       DATEDIFF(<span class="hljs-keyword">DAY</span>, os.data_abertura, <span class="hljs-built_in">COALESCE</span>(os.data_conclusao, GETDATE())) <span class="hljs-keyword">AS</span> dias_corridos,
+       DATEADD(<span class="hljs-keyword">DAY</span>, <span class="hljs-number">30</span>, os.data_abertura)                     <span class="hljs-keyword">AS</span> prazo_30_dias,
+       EOMONTH(os.data_abertura)                              <span class="hljs-keyword">AS</span> ultimo_dia_do_mes,
+       EOMONTH(os.data_abertura, <span class="hljs-number">-1</span>)                          <span class="hljs-keyword">AS</span> ultimo_dia_mes_anterior,
+       DATEPART(QUARTER, os.data_abertura)                    <span class="hljs-keyword">AS</span> trimestre,
+       DATENAME(<span class="hljs-keyword">MONTH</span>, os.data_abertura)                      <span class="hljs-keyword">AS</span> nome_mes_idioma_da_sessao
+<span class="hljs-keyword">FROM</span>   dbo.ordem_servico <span class="hljs-keyword">AS</span> os
+<span class="hljs-keyword">WHERE</span>  os.id_os <span class="hljs-operator">&lt;=</span> <span class="hljs-number">6</span>;
+</div></code></pre>
+<p><strong>O que observar:</strong> <code>DATENAME</code> depende do idioma da <strong>sessão</strong> (<code>SET LANGUAGE Portuguese;</code> muda o resultado); <code>FORMAT(..., 'MMMM', 'pt-BR')</code> não depende — é explícito. Prefira o explícito.</p>
+<p><code>EOMONTH</code> resolve de uma vez o cálculo de fim de período de apuração, incluindo fevereiro bissexto.</p>
+<h3 id="3.4-faixas-de-prazo-com-data-%E2%80%94-antecipando-o-case" tabindex="-1">3.4 Faixas de prazo com data — antecipando o <code>CASE</code></h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> os.numero_os,
+       FORMAT(os.data_abertura, <span class="hljs-string">&#x27;dd/MM/yyyy&#x27;</span>) <span class="hljs-keyword">AS</span> abertura,
+       DATEDIFF(<span class="hljs-keyword">DAY</span>, os.data_abertura, GETDATE()) <span class="hljs-keyword">AS</span> dias,
+       <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> os.data_conclusao <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;CONCLUIDA&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> DATEDIFF(<span class="hljs-keyword">DAY</span>, os.data_abertura, GETDATE()) <span class="hljs-operator">&gt;</span> <span class="hljs-number">180</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;CRITICA (+180 dias)&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> DATEDIFF(<span class="hljs-keyword">DAY</span>, os.data_abertura, GETDATE()) <span class="hljs-operator">&gt;</span>  <span class="hljs-number">90</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;ATENCAO (+90 dias)&#x27;</span>
+            <span class="hljs-keyword">ELSE</span> <span class="hljs-string">&#x27;NO PRAZO&#x27;</span>
+       <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> faixa_de_prazo
+<span class="hljs-keyword">FROM</span>   dbo.ordem_servico <span class="hljs-keyword">AS</span> os
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> dias <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<h3 id="3.5-a-armadilha-do-intervalo-de-datas" tabindex="-1">3.5 A armadilha do intervalo de datas</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- ERRADO em coluna DATETIME: perde os documentos emitidos ao longo do dia 31</span>
+<span class="hljs-keyword">WHERE</span> data_emissao <span class="hljs-keyword">BETWEEN</span> <span class="hljs-string">&#x27;2025-01-01&#x27;</span> <span class="hljs-keyword">AND</span> <span class="hljs-string">&#x27;2025-01-31&#x27;</span>
+
+<span class="hljs-comment">-- CORRETO e sargable</span>
+<span class="hljs-keyword">WHERE</span> data_emissao <span class="hljs-operator">&gt;=</span> <span class="hljs-string">&#x27;2025-01-01&#x27;</span> <span class="hljs-keyword">AND</span> data_emissao <span class="hljs-operator">&lt;</span> <span class="hljs-string">&#x27;2025-02-01&#x27;</span>
+
+<span class="hljs-comment">-- ERRADO por outro motivo: mata o índice</span>
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">YEAR</span>(data_emissao) <span class="hljs-operator">=</span> <span class="hljs-number">2025</span> <span class="hljs-keyword">AND</span> <span class="hljs-keyword">MONTH</span>(data_emissao) <span class="hljs-operator">=</span> <span class="hljs-number">1</span>
+
+<span class="hljs-comment">-- ERRADO e imprevisível: depende de SET DATEFORMAT</span>
+<span class="hljs-keyword">WHERE</span> data_emissao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;01/02/2025&#x27;</span>
+</div></code></pre>
+<p><strong>Regra:</strong> literal de data sempre em <code>'AAAA-MM-DD'</code> ou <code>'AAAAMMDD'</code>; intervalo sempre com <code>&gt;=</code> e <code>&lt;</code>; nunca aplique função sobre a coluna filtrada.</p>
+<hr>
+<h2 id="etapa-4-%E2%80%94-convers%C3%B5es-seguras" tabindex="-1">Etapa 4 — Conversões seguras</h2>
+<h3 id="4.1-cast%2C-convert-e-a-diferen%C3%A7a-entre-eles" tabindex="-1">4.1 <code>CAST</code>, <code>CONVERT</code> e a diferença entre eles</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">CAST</span>(<span class="hljs-string">&#x27;20250407&#x27;</span> <span class="hljs-keyword">AS</span> <span class="hljs-type">DATE</span>)                    <span class="hljs-keyword">AS</span> cast_data,
+       <span class="hljs-keyword">CONVERT</span>(<span class="hljs-type">DATE</span>, <span class="hljs-string">&#x27;20250407&#x27;</span>)                   <span class="hljs-keyword">AS</span> convert_data,
+       <span class="hljs-keyword">CONVERT</span>(<span class="hljs-type">VARCHAR</span>(<span class="hljs-number">10</span>), GETDATE(), <span class="hljs-number">103</span>)        <span class="hljs-keyword">AS</span> convert_com_estilo,
+       <span class="hljs-built_in">CAST</span>(<span class="hljs-number">13640.16</span> <span class="hljs-keyword">AS</span> <span class="hljs-type">INT</span>)                       <span class="hljs-keyword">AS</span> cast_int;     <span class="hljs-comment">-- 13640 (trunca!)</span>
+</div></code></pre>
+<p><code>CAST</code> é ANSI e portável; <code>CONVERT</code> é específico do T-SQL e aceita o <strong>estilo</strong> — que é justamente o que se precisa para datas. Use <code>CAST</code> quando o estilo não importa, <code>CONVERT</code> quando importa.</p>
+<blockquote>
+<p><code>CAST</code> para inteiro <strong>trunca</strong>, não arredonda. <code>CAST(13640.96 AS INT)</code> = <code>13640</code>.</p>
+</blockquote>
+<h3 id="4.2-try_cast-e-try_convert-%E2%80%94-converter-sem-derrubar-o-lote" tabindex="-1">4.2 <code>TRY_CAST</code> e <code>TRY_CONVERT</code> — converter sem derrubar o lote</h3>
+<p><strong>O que fazer:</strong></p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Sem TRY, um único valor invalido aborta a consulta inteira</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">CAST</span>(cpf <span class="hljs-keyword">AS</span> <span class="hljs-type">BIGINT</span>) <span class="hljs-keyword">FROM</span> dbo.socio_administrador;   <span class="hljs-comment">-- ERRO: conversion failed</span>
+
+<span class="hljs-comment">-- Com TRY, o valor invalido vira NULL e o restante continua</span>
+<span class="hljs-keyword">SELECT</span> s.id_socio,
+       s.cpf                       <span class="hljs-keyword">AS</span> cpf_original,
+       TRY_CAST(s.cpf <span class="hljs-keyword">AS</span> <span class="hljs-type">BIGINT</span>)   <span class="hljs-keyword">AS</span> cpf_numerico,
+       <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> TRY_CAST(s.cpf <span class="hljs-keyword">AS</span> <span class="hljs-type">BIGINT</span>) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;NAO CONVERSIVEL&#x27;</span>
+            <span class="hljs-keyword">ELSE</span> <span class="hljs-string">&#x27;OK&#x27;</span> <span class="hljs-keyword">END</span>          <span class="hljs-keyword">AS</span> resultado
+<span class="hljs-keyword">FROM</span>   dbo.socio_administrador <span class="hljs-keyword">AS</span> s
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> resultado, s.id_socio;
+</div></code></pre>
+<p><strong>O que observar:</strong> os CPF gravados com máscara (<code>942.513.327-17</code>) não convertem — e é exatamente isso que se quer descobrir. <code>TRY_CAST</code> transforma &quot;erro que aborta&quot; em &quot;coluna que se pode contar&quot;:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)                                              <span class="hljs-keyword">AS</span> total,
+       <span class="hljs-built_in">COUNT</span>(TRY_CAST(cpf <span class="hljs-keyword">AS</span> <span class="hljs-type">BIGINT</span>))                        <span class="hljs-keyword">AS</span> conversiveis,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-operator">-</span> <span class="hljs-built_in">COUNT</span>(TRY_CAST(cpf <span class="hljs-keyword">AS</span> <span class="hljs-type">BIGINT</span>))             <span class="hljs-keyword">AS</span> com_mascara_ou_sujeira
+<span class="hljs-keyword">FROM</span>   dbo.socio_administrador;
+</div></code></pre>
+<p>Esse é o <strong>diagnóstico de qualidade de dado</strong> que deve preceder qualquer cruzamento por CPF.</p>
+<h3 id="4.3-convertendo-o-per%C3%ADodo-da-efd-em-data" tabindex="-1">4.3 Convertendo o período da EFD em data</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DISTINCT</span>
+       e.periodo_apuracao,
+       <span class="hljs-keyword">CONVERT</span>(<span class="hljs-type">DATE</span>, e.periodo_apuracao <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;01&#x27;</span>)                 <span class="hljs-keyword">AS</span> primeiro_dia,
+       EOMONTH(<span class="hljs-keyword">CONVERT</span>(<span class="hljs-type">DATE</span>, e.periodo_apuracao <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;01&#x27;</span>))        <span class="hljs-keyword">AS</span> ultimo_dia,
+       FORMAT(<span class="hljs-keyword">CONVERT</span>(<span class="hljs-type">DATE</span>, e.periodo_apuracao <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;01&#x27;</span>), <span class="hljs-string">&#x27;MMM/yyyy&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>) <span class="hljs-keyword">AS</span> competencia
+<span class="hljs-keyword">FROM</span>   dbo.efd_c100 <span class="hljs-keyword">AS</span> e
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> e.periodo_apuracao;
+</div></code></pre>
+<p><strong>O que observar:</strong> <code>'202501' + '01'</code> produz <code>'20250101'</code>, que é o literal ISO compacto — converte sem ambiguidade. Se algum período estiver corrompido, troque por <code>TRY_CONVERT</code> e conte os nulos antes de prosseguir.</p>
+<h3 id="4.4-convers%C3%A3o-impl%C3%ADcita%3A-o-risco-silencioso" tabindex="-1">4.4 Conversão implícita: o risco silencioso</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Funciona, mas o SQL Server converte a coluna inteira para comparar</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">WHERE</span> cnpj <span class="hljs-operator">=</span> <span class="hljs-number">27712979000187</span>;      <span class="hljs-comment">-- numero!</span>
+
+<span class="hljs-comment">-- Correto: compara texto com texto</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">WHERE</span> cnpj <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;27712979000187&#x27;</span>;
+</div></code></pre>
+<p><strong>A armadilha:</strong> na primeira consulta, a precedência de tipos manda converter <code>cnpj</code> (texto) para número — o que impede o uso do índice e, pior, provoca erro quando algum registro não for numérico. Compare sempre tipos iguais. O CNPJ é <strong>texto</strong>, não número: tem zeros à esquerda e não se soma.</p>
+<hr>
+<h2 id="etapa-5-%E2%80%94-strings%2C-m%C3%A1scaras-e-a-limpeza-do-cpf-e-do-cnpj" tabindex="-1">Etapa 5 — Strings, máscaras e a limpeza do CPF e do CNPJ</h2>
+<h3 id="5.1-as-fun%C3%A7%C3%B5es-de-string-essenciais" tabindex="-1">5.1 As funções de string essenciais</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> s.id_socio,
+       <span class="hljs-string">&#x27;[&#x27;</span> <span class="hljs-operator">+</span> s.nome <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;]&#x27;</span>                              <span class="hljs-keyword">AS</span> nome_bruto,
+       <span class="hljs-string">&#x27;[&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">TRIM</span>(s.nome) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;]&#x27;</span>                        <span class="hljs-keyword">AS</span> sem_espacos,
+       <span class="hljs-string">&#x27;[&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">UPPER</span>(<span class="hljs-built_in">TRIM</span>(s.nome)) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;]&#x27;</span>                 <span class="hljs-keyword">AS</span> normalizado,
+       LEN(s.nome)                                     <span class="hljs-keyword">AS</span> len_ignora_espaco_a_direita,
+       DATALENGTH(s.nome)                              <span class="hljs-keyword">AS</span> bytes_reais,
+       <span class="hljs-keyword">LEFT</span>(<span class="hljs-built_in">TRIM</span>(s.nome), CHARINDEX(<span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-built_in">TRIM</span>(s.nome) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27; &#x27;</span>) <span class="hljs-operator">-</span> <span class="hljs-number">1</span>) <span class="hljs-keyword">AS</span> primeiro_nome
+<span class="hljs-keyword">FROM</span>   dbo.socio_administrador <span class="hljs-keyword">AS</span> s
+<span class="hljs-keyword">WHERE</span>  s.nome <span class="hljs-operator">&lt;&gt;</span> <span class="hljs-built_in">UPPER</span>(<span class="hljs-built_in">TRIM</span>(s.nome))
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> s.id_socio;
+</div></code></pre>
+<p><strong>O que observar:</strong> <code>LEN</code> <strong>ignora espaços à direita</strong>; <code>DATALENGTH</code> não. É por isso que uma coluna <code>CHAR(44)</code> com 43 caracteres devolve <code>LEN = 43</code> — o que permitiu o exercício de chave de acesso do Módulo 9.</p>
+<p><code>TRIM</code> (SQL Server 2017+) substitui <code>LTRIM(RTRIM(...))</code>. Em versões anteriores, use a forma composta.</p>
+<h3 id="5.2-aplicar-m%C3%A1scara-de-cnpj" tabindex="-1">5.2 Aplicar máscara de CNPJ</h3>
+<p>Duas formas, ambas válidas:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">10</span>)
+       c.cnpj                                                            <span class="hljs-keyword">AS</span> cnpj_limpo,
+       <span class="hljs-comment">-- Forma 1: concatenação com SUBSTRING (funciona em qualquer versão)</span>
+       <span class="hljs-built_in">SUBSTRING</span>(c.cnpj,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;.&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">SUBSTRING</span>(c.cnpj,<span class="hljs-number">3</span>,<span class="hljs-number">3</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;.&#x27;</span> <span class="hljs-operator">+</span>
+       <span class="hljs-built_in">SUBSTRING</span>(c.cnpj,<span class="hljs-number">6</span>,<span class="hljs-number">3</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;/&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">SUBSTRING</span>(c.cnpj,<span class="hljs-number">9</span>,<span class="hljs-number">4</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;-&#x27;</span> <span class="hljs-operator">+</span>
+       <span class="hljs-built_in">SUBSTRING</span>(c.cnpj,<span class="hljs-number">13</span>,<span class="hljs-number">2</span>)                                            <span class="hljs-keyword">AS</span> cnpj_mascara_1,
+       <span class="hljs-comment">-- Forma 2: FORMAT sobre valor numérico (mais curta, porém mais lenta)</span>
+       FORMAT(<span class="hljs-built_in">CAST</span>(c.cnpj <span class="hljs-keyword">AS</span> <span class="hljs-type">BIGINT</span>), <span class="hljs-string">&#x27;00\.000\.000\/0000\-00&#x27;</span>)          <span class="hljs-keyword">AS</span> cnpj_mascara_2,
+       <span class="hljs-comment">-- Forma 3: STUFF, inserindo os separadores de trás para frente</span>
+       STUFF(STUFF(STUFF(STUFF(c.cnpj, <span class="hljs-number">13</span>, <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;-&#x27;</span>), <span class="hljs-number">9</span>, <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;/&#x27;</span>), <span class="hljs-number">6</span>, <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;.&#x27;</span>), <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">AS</span> cnpj_mascara_3,
+       c.razao_social
+<span class="hljs-keyword">FROM</span>   dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> c.id_contribuinte;
+</div></code></pre>
+<p><strong>Resultado esperado (primeira linha):</strong></p>
+<table>
+<thead>
+<tr>
+<th>cnpj_limpo</th>
+<th>cnpj_mascara_1</th>
+<th>razao_social</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>27712979000187</code></td>
+<td><code>27.712.979/0001-87</code></td>
+<td>ALFA DISTRIBUIDORA DE BEBIDAS EIRELI</td>
+</tr>
+</tbody>
+</table>
+<p><strong>O que observar em <code>STUFF</code>:</strong> a função tem a assinatura <code>STUFF(texto, posição, quantos_apagar, o_que_inserir)</code>. Com <code>0</code> no terceiro argumento, ela <strong>insere sem apagar</strong>. As inserções são feitas <strong>da direita para a esquerda</strong> (13, 9, 6, 3) porque cada inserção desloca as posições seguintes — inserir da esquerda para a direita exigiria recalcular todas as posições.</p>
+<p><strong>A armadilha da forma 2:</strong> <code>CAST(cnpj AS BIGINT)</code> <strong>perde o zero à esquerda</strong>. Para o CNPJ do modelo, que sempre tem 14 dígitos significativos, funciona; para CPF, quebra (ver 5.4).</p>
+<h3 id="5.3-remover-m%C3%A1scara-%E2%80%94-a-normaliza%C3%A7%C3%A3o-que-precede-todo-cruzamento" tabindex="-1">5.3 Remover máscara — a normalização que precede todo cruzamento</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> s.id_socio,
+       s.cpf                                                        <span class="hljs-keyword">AS</span> original,
+       REPLACE(REPLACE(REPLACE(<span class="hljs-built_in">TRIM</span>(s.cpf), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;-&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">AS</span> so_digitos,
+       LEN(REPLACE(REPLACE(REPLACE(<span class="hljs-built_in">TRIM</span>(s.cpf), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;-&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>)) <span class="hljs-keyword">AS</span> qtd_digitos
+<span class="hljs-keyword">FROM</span>   dbo.socio_administrador <span class="hljs-keyword">AS</span> s
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> qtd_digitos, s.id_socio;
+</div></code></pre>
+<p><strong>O que observar:</strong> aparecem registros com <strong>10 e até 8 dígitos</strong>. Não são erros de digitação: são CPF que, em algum ponto do caminho, foram gravados como número e perderam os zeros à esquerda. É o defeito de dado mais frequente em base cadastral brasileira.</p>
+<h3 id="5.4-a-limpeza-completa-do-cpf%2C-em-uma-express%C3%A3o" tabindex="-1">5.4 A limpeza completa do CPF, em uma expressão</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">WITH</span> limpo <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> s.id_socio,
+           s.id_contribuinte,
+           <span class="hljs-built_in">UPPER</span>(<span class="hljs-built_in">TRIM</span>(s.nome)) <span class="hljs-keyword">AS</span> nome,
+           <span class="hljs-keyword">RIGHT</span>(<span class="hljs-string">&#x27;00000000000&#x27;</span> <span class="hljs-operator">+</span> REPLACE(REPLACE(REPLACE(<span class="hljs-built_in">TRIM</span>(s.cpf), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;-&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-number">11</span>) <span class="hljs-keyword">AS</span> cpf
+    <span class="hljs-keyword">FROM</span>   dbo.socio_administrador <span class="hljs-keyword">AS</span> s
+)
+<span class="hljs-keyword">SELECT</span> l.id_socio,
+       l.nome,
+       l.cpf                                                         <span class="hljs-keyword">AS</span> cpf_normalizado,
+       <span class="hljs-built_in">SUBSTRING</span>(l.cpf,<span class="hljs-number">1</span>,<span class="hljs-number">3</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;.&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">SUBSTRING</span>(l.cpf,<span class="hljs-number">4</span>,<span class="hljs-number">3</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;.&#x27;</span> <span class="hljs-operator">+</span>
+       <span class="hljs-built_in">SUBSTRING</span>(l.cpf,<span class="hljs-number">7</span>,<span class="hljs-number">3</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;-&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">SUBSTRING</span>(l.cpf,<span class="hljs-number">10</span>,<span class="hljs-number">2</span>)            <span class="hljs-keyword">AS</span> cpf_formatado,
+       c.razao_social
+<span class="hljs-keyword">FROM</span>   limpo <span class="hljs-keyword">AS</span> l
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> l.id_contribuinte
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> l.id_socio;
+</div></code></pre>
+<p><strong>O que observar:</strong> o padrão <code>RIGHT('00000000000' + digitos, 11)</code> recompõe os zeros perdidos — concatena onze zeros à esquerda e pega os onze últimos caracteres. É a mesma técnica do preenchimento visto em 2.3, aqui com finalidade de <strong>integridade</strong>, não de estética.</p>
+<p><strong>Por que isso importa na fiscalização:</strong> sem a normalização, o mesmo sócio aparece como três pessoas diferentes (<code>942.513.327-17</code>, <code>94251332717</code> e <code>9425133271 7</code>), e o cruzamento que procura o mesmo CPF em vários contribuintes — indício de grupo econômico ou de interposição de pessoas — simplesmente não encontra nada.</p>
+<h3 id="5.5-o-cruzamento-que-s%C3%B3-funciona-depois-da-limpeza" tabindex="-1">5.5 O cruzamento que só funciona depois da limpeza</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">WITH</span> socio_limpo <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">RIGHT</span>(<span class="hljs-string">&#x27;00000000000&#x27;</span> <span class="hljs-operator">+</span> REPLACE(REPLACE(REPLACE(<span class="hljs-built_in">TRIM</span>(cpf), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;-&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-number">11</span>) <span class="hljs-keyword">AS</span> cpf,
+           <span class="hljs-built_in">UPPER</span>(<span class="hljs-built_in">TRIM</span>(nome)) <span class="hljs-keyword">AS</span> nome,
+           id_contribuinte
+    <span class="hljs-keyword">FROM</span>   dbo.socio_administrador
+)
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">SUBSTRING</span>(sl.cpf,<span class="hljs-number">1</span>,<span class="hljs-number">3</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;.&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">SUBSTRING</span>(sl.cpf,<span class="hljs-number">4</span>,<span class="hljs-number">3</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;.&#x27;</span> <span class="hljs-operator">+</span>
+       <span class="hljs-built_in">SUBSTRING</span>(sl.cpf,<span class="hljs-number">7</span>,<span class="hljs-number">3</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;-&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">SUBSTRING</span>(sl.cpf,<span class="hljs-number">10</span>,<span class="hljs-number">2</span>)   <span class="hljs-keyword">AS</span> cpf,
+       <span class="hljs-built_in">MIN</span>(sl.nome)                                           <span class="hljs-keyword">AS</span> nome,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> sl.id_contribuinte)                     <span class="hljs-keyword">AS</span> qtd_empresas,
+       STRING_AGG(c.razao_social, <span class="hljs-string">&#x27; | &#x27;</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> c.razao_social) <span class="hljs-keyword">AS</span> empresas
+<span class="hljs-keyword">FROM</span>   socio_limpo <span class="hljs-keyword">AS</span> sl
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> sl.id_contribuinte
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> sl.cpf
+<span class="hljs-keyword">HAVING</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> sl.id_contribuinte) <span class="hljs-operator">&gt;=</span> <span class="hljs-number">3</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> qtd_empresas <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p><strong>Resultado esperado:</strong> 6 pessoas físicas que participam de 3 ou 4 empresas cada. Execute a mesma consulta <strong>sem</strong> a normalização (agrupando por <code>cpf</code> bruto) e compare: o resultado vem vazio ou incompleto. É a demonstração mais direta de que tratamento de dado não é cosmético.</p>
+<h3 id="5.6-m%C3%A1scaras-dos-demais-campos-fiscais" tabindex="-1">5.6 Máscaras dos demais campos fiscais</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">5</span>)
+       n.chave_acesso,
+       <span class="hljs-comment">-- chave em grupos de 4, como aparece no DANFE</span>
+       <span class="hljs-built_in">SUBSTRING</span>(n.chave_acesso,<span class="hljs-number">1</span>,<span class="hljs-number">4</span>)  <span class="hljs-operator">+</span> <span class="hljs-string">&#x27; &#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">SUBSTRING</span>(n.chave_acesso,<span class="hljs-number">5</span>,<span class="hljs-number">4</span>)  <span class="hljs-operator">+</span> <span class="hljs-string">&#x27; &#x27;</span> <span class="hljs-operator">+</span>
+       <span class="hljs-built_in">SUBSTRING</span>(n.chave_acesso,<span class="hljs-number">9</span>,<span class="hljs-number">4</span>)  <span class="hljs-operator">+</span> <span class="hljs-string">&#x27; &#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">SUBSTRING</span>(n.chave_acesso,<span class="hljs-number">13</span>,<span class="hljs-number">4</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27; &#x27;</span> <span class="hljs-operator">+</span>
+       <span class="hljs-built_in">SUBSTRING</span>(n.chave_acesso,<span class="hljs-number">17</span>,<span class="hljs-number">4</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27; &#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">SUBSTRING</span>(n.chave_acesso,<span class="hljs-number">21</span>,<span class="hljs-number">4</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27; &#x27;</span> <span class="hljs-operator">+</span>
+       <span class="hljs-built_in">SUBSTRING</span>(n.chave_acesso,<span class="hljs-number">25</span>,<span class="hljs-number">4</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27; &#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">SUBSTRING</span>(n.chave_acesso,<span class="hljs-number">29</span>,<span class="hljs-number">4</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27; &#x27;</span> <span class="hljs-operator">+</span>
+       <span class="hljs-built_in">SUBSTRING</span>(n.chave_acesso,<span class="hljs-number">33</span>,<span class="hljs-number">4</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27; &#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">SUBSTRING</span>(n.chave_acesso,<span class="hljs-number">37</span>,<span class="hljs-number">4</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27; &#x27;</span> <span class="hljs-operator">+</span>
+       <span class="hljs-built_in">SUBSTRING</span>(n.chave_acesso,<span class="hljs-number">41</span>,<span class="hljs-number">4</span>)                                    <span class="hljs-keyword">AS</span> chave_danfe,
+       i.ncm,
+       STUFF(STUFF(i.ncm, <span class="hljs-number">7</span>, <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;.&#x27;</span>), <span class="hljs-number">5</span>, <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;.&#x27;</span>)                        <span class="hljs-keyword">AS</span> ncm_formatado,   <span class="hljs-comment">-- 2204.21.00</span>
+       i.cfop,
+       STUFF(i.cfop, <span class="hljs-number">2</span>, <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;.&#x27;</span>)                                         <span class="hljs-keyword">AS</span> cfop_formatado,  <span class="hljs-comment">-- 5.405</span>
+       CONCAT_WS(<span class="hljs-string">&#x27; - &#x27;</span>, i.cfop, i.descricao)                            <span class="hljs-keyword">AS</span> cfop_descricao
+<span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.nfe_item <span class="hljs-keyword">AS</span> i <span class="hljs-keyword">ON</span> i.id_nfe <span class="hljs-operator">=</span> n.id_nfe
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> n.id_nfe, i.num_item;
+</div></code></pre>
+<p><strong>O que observar:</strong> <code>CONCAT</code> e <code>CONCAT_WS</code> (com separador) <strong>ignoram nulos</strong> — diferentemente do operador <code>+</code>, que propaga <code>NULL</code> e apaga a linha inteira:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;A&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-keyword">NULL</span> <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;B&#x27;</span>              <span class="hljs-keyword">AS</span> com_operador,   <span class="hljs-comment">-- NULL</span>
+       CONCAT(<span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-keyword">NULL</span>, <span class="hljs-string">&#x27;B&#x27;</span>)        <span class="hljs-keyword">AS</span> com_concat,     <span class="hljs-comment">-- AB</span>
+       CONCAT_WS(<span class="hljs-string">&#x27; - &#x27;</span>, <span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-keyword">NULL</span>, <span class="hljs-string">&#x27;B&#x27;</span>) <span class="hljs-keyword">AS</span> com_concat_ws;  <span class="hljs-comment">-- A - B</span>
+</div></code></pre>
+<p>Em endereço, nome fantasia e complemento — campos que aceitam nulo — use sempre <code>CONCAT</code>.</p>
+<hr>
+<h2 id="etapa-6-%E2%80%94-um-relat%C3%B3rio-de-apresenta%C3%A7%C3%A3o-completo" tabindex="-1">Etapa 6 — Um relatório de apresentação completo</h2>
+<p>Reúna o que foi visto até aqui em uma listagem pronta para anexar a uma ordem de serviço:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">20</span>)
+       <span class="hljs-built_in">SUBSTRING</span>(c.cnpj,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;.&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">SUBSTRING</span>(c.cnpj,<span class="hljs-number">3</span>,<span class="hljs-number">3</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;.&#x27;</span> <span class="hljs-operator">+</span>
+       <span class="hljs-built_in">SUBSTRING</span>(c.cnpj,<span class="hljs-number">6</span>,<span class="hljs-number">3</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;/&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">SUBSTRING</span>(c.cnpj,<span class="hljs-number">9</span>,<span class="hljs-number">4</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;-&#x27;</span> <span class="hljs-operator">+</span>
+       <span class="hljs-built_in">SUBSTRING</span>(c.cnpj,<span class="hljs-number">13</span>,<span class="hljs-number">2</span>)                                  <span class="hljs-keyword">AS</span> [CNPJ],
+       <span class="hljs-built_in">UPPER</span>(<span class="hljs-built_in">TRIM</span>(c.razao_social))                             <span class="hljs-keyword">AS</span> [Razao Social],
+       m.nome                                                  <span class="hljs-keyword">AS</span> [Municipio],
+       <span class="hljs-built_in">COALESCE</span>(m.regiao_fiscal, <span class="hljs-string">&#x27;FORA DA PB&#x27;</span>)                 <span class="hljs-keyword">AS</span> [Regiao Fiscal],
+       FORMAT(n.data_emissao, <span class="hljs-string">&#x27;dd/MM/yyyy&#x27;</span>)                    <span class="hljs-keyword">AS</span> [Emissao],
+       FORMAT(n.valor_total, <span class="hljs-string">&#x27;N2&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>)                    <span class="hljs-keyword">AS</span> [Valor Total],
+       FORMAT(n.valor_icms,  <span class="hljs-string">&#x27;N2&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>)                    <span class="hljs-keyword">AS</span> [ICMS],
+       FORMAT(n.valor_icms <span class="hljs-operator">/</span> <span class="hljs-built_in">NULLIF</span>(n.valor_total, <span class="hljs-number">0</span>), <span class="hljs-string">&#x27;P2&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>) <span class="hljs-keyword">AS</span> [Carga],
+       n.chave_acesso                                          <span class="hljs-keyword">AS</span> [Chave de Acesso]
+<span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.municipio    <span class="hljs-keyword">AS</span> m <span class="hljs-keyword">ON</span> m.id_municipio    <span class="hljs-operator">=</span> c.id_municipio
+<span class="hljs-keyword">WHERE</span>  n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+  <span class="hljs-keyword">AND</span>  n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+  <span class="hljs-keyword">AND</span>  n.data_emissao <span class="hljs-operator">&gt;=</span> <span class="hljs-string">&#x27;2025-01-01&#x27;</span> <span class="hljs-keyword">AND</span> n.data_emissao <span class="hljs-operator">&lt;</span> <span class="hljs-string">&#x27;2025-02-01&#x27;</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> n.valor_total <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p><strong>O que observar:</strong> os aliases entre colchetes com acento e espaço produzem cabeçalhos legíveis ao colar em documento. E note o <code>ORDER BY n.valor_total DESC</code> — pela coluna <strong>numérica original</strong>, não pela versão formatada. Ordenar por <code>[Valor Total]</code> (texto) colocaria <code>R$ 9.999,00</code> depois de <code>R$ 10.000,00</code>.</p>
+<p>Este é o ponto central de toda a etapa: <strong>formate para exibir, ordene e filtre pelo dado bruto.</strong></p>
+<hr>
+<h2 id="etapa-7-%E2%80%94-a-express%C3%A3o-case%2C-explicada" tabindex="-1">Etapa 7 — A expressão <code>CASE</code>, explicada</h2>
+<h3 id="7.1-o-que-case-%C3%A9-(e-o-que-n%C3%A3o-%C3%A9)" tabindex="-1">7.1 O que <code>CASE</code> é (e o que não é)</h3>
+<p><code>CASE</code> <strong>não é um comando</strong> — é uma <strong>expressão</strong>. A distinção não é preciosismo: comandos executam ações (<code>UPDATE</code>, <code>DELETE</code>); expressões <strong>produzem um valor</strong>. Como <code>CASE</code> produz um valor escalar, ele pode aparecer em qualquer lugar onde um valor caberia: na lista de seleção, no <code>WHERE</code>, no <code>ORDER BY</code>, no <code>GROUP BY</code>, no <code>HAVING</code>, dentro de uma função agregada, no <code>SET</code> de um <code>UPDATE</code>, no <code>ON</code> de uma junção.</p>
+<p>É o equivalente, em SQL, ao <code>se... então... senão</code> das linguagens de programação — com a diferença fundamental de que <strong>não desvia o fluxo</strong>: ele apenas escolhe qual valor devolver, linha a linha.</p>
+<h3 id="7.2-as-duas-formas" tabindex="-1">7.2 As duas formas</h3>
+<p><strong>Forma simples</strong> — compara uma expressão com valores constantes, por igualdade:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> e.ind_oper,
+       <span class="hljs-keyword">CASE</span> e.ind_oper
+            <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;ENTRADA / AQUISICAO&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;1&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;SAIDA / PRESTACAO&#x27;</span>
+            <span class="hljs-keyword">ELSE</span> <span class="hljs-string">&#x27;INDICADOR INVALIDO&#x27;</span>
+       <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> tipo_operacao,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> qtd
+<span class="hljs-keyword">FROM</span>   dbo.efd_c100 <span class="hljs-keyword">AS</span> e
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> e.ind_oper;
+</div></code></pre>
+<p><strong>Forma pesquisada</strong> — avalia condições booleanas quaisquer, na ordem em que foram escritas:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> c.razao_social,
+       c.faturamento_declarado,
+       <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> c.faturamento_declarado <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>     <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;NAO INFORMADO&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> c.faturamento_declarado <span class="hljs-operator">&lt;</span>    <span class="hljs-number">360000</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;MICROEMPRESA&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> c.faturamento_declarado <span class="hljs-operator">&lt;</span>   <span class="hljs-number">4800000</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;PEQUENO PORTE&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> c.faturamento_declarado <span class="hljs-operator">&lt;</span>  <span class="hljs-number">78000000</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;MEDIO PORTE&#x27;</span>
+            <span class="hljs-keyword">ELSE</span>                                          <span class="hljs-string">&#x27;GRANDE PORTE&#x27;</span>
+       <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> porte
+<span class="hljs-keyword">FROM</span>   dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> c.faturamento_declarado <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p>A forma simples só compara <strong>igualdade</strong> e não consegue testar <code>IS NULL</code> (porque <code>x = NULL</code> é UNKNOWN, nunca TRUE). Quando houver nulos ou faixas, use a forma pesquisada.</p>
+<h3 id="7.3-as-quatro-regras-que-governam-o-case" tabindex="-1">7.3 As quatro regras que governam o <code>CASE</code></h3>
+<p><strong>Regra 1 — a avaliação é sequencial e para na primeira condição verdadeira.</strong>
+Por isso, a ordem das linhas do exemplo acima importa: se <code>&lt; 78000000</code> viesse antes de <code>&lt; 360000</code>, toda microempresa seria classificada como médio porte. <strong>Escreva sempre da condição mais restritiva para a mais ampla.</strong></p>
+<p><strong>Regra 2 — sem <code>ELSE</code>, o resultado é <code>NULL</code>.</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> n.situacao,
+       <span class="hljs-keyword">CASE</span> n.situacao <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;VALIDA&#x27;</span> <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> sem_else,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> qtd
+<span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> n.situacao;
+</div></code></pre>
+<p>As linhas <code>CANCELADA</code>, <code>DENEGADA</code> e <code>INUTILIZADA</code> devolvem <code>NULL</code>. Isso pode ser exatamente o que se quer — é a base da contagem condicional da etapa 8 — mas em coluna de relatório costuma ser esquecimento. <strong>Declare o <code>ELSE</code></strong> sempre que a coluna for para o olho humano.</p>
+<p><strong>Regra 3 — todos os ramos precisam devolver o mesmo tipo (ou tipos compatíveis).</strong></p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- ERRO: &quot;Conversion failed when converting the varchar value &#x27;NAO INFORMADO&#x27; to data type int&quot;</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> faturamento_declarado <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;NAO INFORMADO&#x27;</span>
+            <span class="hljs-keyword">ELSE</span> faturamento_declarado
+       <span class="hljs-keyword">END</span>
+<span class="hljs-keyword">FROM</span> dbo.contribuinte;
+
+<span class="hljs-comment">-- CORRETO: converta explicitamente o ramo numérico para texto</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> faturamento_declarado <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;NAO INFORMADO&#x27;</span>
+            <span class="hljs-keyword">ELSE</span> FORMAT(faturamento_declarado, <span class="hljs-string">&#x27;N2&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>)
+       <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> faturamento
+<span class="hljs-keyword">FROM</span> dbo.contribuinte;
+</div></code></pre>
+<p>O SQL Server aplica a <strong>precedência de tipos</strong> e tenta converter todos os ramos para o tipo de maior precedência — e <code>INT</code> tem precedência sobre <code>VARCHAR</code>. O resultado é o erro acima, que confunde quem espera que &quot;texto vence&quot;.</p>
+<p><strong>Regra 4 — <code>CASE</code> protege contra erro de execução, mas com uma ressalva.</strong>
+O idioma abaixo é o padrão para evitar divisão por zero:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> n.valor_total <span class="hljs-operator">=</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">0</span>
+            <span class="hljs-keyword">ELSE</span> n.valor_icms <span class="hljs-operator">/</span> n.valor_total
+       <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> carga
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n;
+</div></code></pre>
+<p>Funciona, mas em consultas complexas o otimizador pode reordenar operações e a proteção falhar. A forma <strong>sempre segura</strong> é o <code>NULLIF</code>, que age no operando e não no fluxo:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> n.valor_icms <span class="hljs-operator">/</span> <span class="hljs-built_in">NULLIF</span>(n.valor_total, <span class="hljs-number">0</span>) <span class="hljs-keyword">AS</span> carga <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n;
+</div></code></pre>
+<h3 id="7.4-coalesce-e-nullif-s%C3%A3o-case-disfar%C3%A7ados" tabindex="-1">7.4 <code>COALESCE</code> e <code>NULLIF</code> são <code>CASE</code> disfarçados</h3>
+<p>Isto explica o comportamento das duas funções e vale memorizar:</p>
+<table>
+<thead>
+<tr>
+<th>Escrita curta</th>
+<th>Equivalente em <code>CASE</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NULLIF(a, b)</code></td>
+<td><code>CASE WHEN a = b THEN NULL ELSE a END</code></td>
+</tr>
+<tr>
+<td><code>COALESCE(a, b, c)</code></td>
+<td><code>CASE WHEN a IS NOT NULL THEN a WHEN b IS NOT NULL THEN b ELSE c END</code></td>
+</tr>
+<tr>
+<td><code>IIF(cond, x, y)</code></td>
+<td><code>CASE WHEN cond THEN x ELSE y END</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>IIF</code> (SQL Server 2012+) é apenas açúcar sintático para o <code>CASE</code> de dois ramos — útil em expressões curtas:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> n.chave_acesso,
+       IIF(n.id_destinatario <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>, <span class="hljs-string">&#x27;CONSUMIDOR&#x27;</span>, <span class="hljs-string">&#x27;IDENTIFICADO&#x27;</span>) <span class="hljs-keyword">AS</span> destinatario,
+       CHOOSE(DATEPART(QUARTER, n.data_emissao), <span class="hljs-string">&#x27;1o TRI&#x27;</span>, <span class="hljs-string">&#x27;2o TRI&#x27;</span>, <span class="hljs-string">&#x27;3o TRI&#x27;</span>, <span class="hljs-string">&#x27;4o TRI&#x27;</span>) <span class="hljs-keyword">AS</span> trimestre
+<span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">WHERE</span>  n.id_nfe <span class="hljs-operator">&lt;=</span> <span class="hljs-number">10</span>;
+</div></code></pre>
+<p><code>CHOOSE(n, a, b, c, ...)</code> devolve o n-ésimo item da lista — atalho elegante para traduzir códigos sequenciais.</p>
+<h3 id="7.5-case-fora-da-lista-de-sele%C3%A7%C3%A3o" tabindex="-1">7.5 <code>CASE</code> fora da lista de seleção</h3>
+<p><strong>No <code>ORDER BY</code></strong> — para ordenação por prioridade que não é alfabética nem numérica:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> a.numero_auto,
+       a.situacao,
+       FORMAT(a.valor_principal <span class="hljs-operator">+</span> a.valor_multa, <span class="hljs-string">&#x27;N2&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>) <span class="hljs-keyword">AS</span> valor
+<span class="hljs-keyword">FROM</span>   dbo.auto_infracao <span class="hljs-keyword">AS</span> a
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">CASE</span> a.situacao
+              <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;INSCRITO DIVIDA ATIVA&#x27;</span>  <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span>
+              <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;IMPUGNADO&#x27;</span>              <span class="hljs-keyword">THEN</span> <span class="hljs-number">2</span>
+              <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;JULGADO PROCEDENTE&#x27;</span>     <span class="hljs-keyword">THEN</span> <span class="hljs-number">3</span>
+              <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;LAVRADO&#x27;</span>                <span class="hljs-keyword">THEN</span> <span class="hljs-number">4</span>
+              <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;PAGO&#x27;</span>                   <span class="hljs-keyword">THEN</span> <span class="hljs-number">5</span>
+              <span class="hljs-keyword">ELSE</span> <span class="hljs-number">6</span>
+         <span class="hljs-keyword">END</span>,
+         a.valor_principal <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p>Sem o <code>CASE</code>, a ordenação alfabética colocaria <code>IMPUGNADO</code> antes de <code>INSCRITO</code>, o que não corresponde à ordem processual.</p>
+<p><strong>No <code>ORDER BY</code>, para controlar a posição dos nulos</strong> (o T-SQL não tem <code>NULLS LAST</code>):</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> razao_social, faturamento_declarado
+<span class="hljs-keyword">FROM</span>   dbo.contribuinte
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> faturamento_declarado <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span> <span class="hljs-keyword">END</span>,
+         faturamento_declarado <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p><strong>No <code>WHERE</code></strong> — filtro que muda conforme uma condição (use com parcimônia; costuma ser mais claro com <code>OR</code>):</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@somente_grandes</span> BIT <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;
+
+<span class="hljs-keyword">SELECT</span> c.razao_social, c.faturamento_declarado
+<span class="hljs-keyword">FROM</span>   dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">WHERE</span>  <span class="hljs-number">1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> <span class="hljs-variable">@somente_grandes</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span> <span class="hljs-keyword">AND</span> c.faturamento_declarado <span class="hljs-operator">&gt;</span> <span class="hljs-number">4800000</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span>
+                <span class="hljs-keyword">WHEN</span> <span class="hljs-variable">@somente_grandes</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span>
+                <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span>
+           <span class="hljs-keyword">END</span>;
+</div></code></pre>
+<p><strong>No <code>GROUP BY</code></strong> — agrupar por faixa em vez de por valor. Note que a expressão precisa ser <strong>repetida</strong> no <code>GROUP BY</code>, porque o alias da lista de seleção ainda não existe naquele passo (ordem lógica de processamento, Módulo 9, seção 7):</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> i.valor_total_item <span class="hljs-operator">&lt;</span>   <span class="hljs-number">1000</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;ATE 1 MIL&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> i.valor_total_item <span class="hljs-operator">&lt;</span>  <span class="hljs-number">10000</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;1 A 10 MIL&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> i.valor_total_item <span class="hljs-operator">&lt;</span> <span class="hljs-number">100000</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;10 A 100 MIL&#x27;</span>
+            <span class="hljs-keyword">ELSE</span>                                  <span class="hljs-string">&#x27;ACIMA DE 100 MIL&#x27;</span>
+       <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> faixa_de_valor,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)                              <span class="hljs-keyword">AS</span> qtd_itens,
+       FORMAT(<span class="hljs-built_in">SUM</span>(i.valor_total_item), <span class="hljs-string">&#x27;N2&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>) <span class="hljs-keyword">AS</span> valor_total
+<span class="hljs-keyword">FROM</span>   dbo.nfe_item <span class="hljs-keyword">AS</span> i
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> i.valor_total_item <span class="hljs-operator">&lt;</span>   <span class="hljs-number">1000</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;ATE 1 MIL&#x27;</span>
+              <span class="hljs-keyword">WHEN</span> i.valor_total_item <span class="hljs-operator">&lt;</span>  <span class="hljs-number">10000</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;1 A 10 MIL&#x27;</span>
+              <span class="hljs-keyword">WHEN</span> i.valor_total_item <span class="hljs-operator">&lt;</span> <span class="hljs-number">100000</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;10 A 100 MIL&#x27;</span>
+              <span class="hljs-keyword">ELSE</span>                                  <span class="hljs-string">&#x27;ACIMA DE 100 MIL&#x27;</span>
+         <span class="hljs-keyword">END</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-built_in">MIN</span>(i.valor_total_item);
+</div></code></pre>
+<blockquote>
+<p>Alternativa mais legível: calcular a faixa em uma CTE e agrupar pelo alias na consulta externa. Prefira essa forma quando a expressão for longa.</p>
+</blockquote>
+<h3 id="7.6-tradu%C3%A7%C3%A3o-de-c%C3%B3digos-fiscais-%E2%80%94-o-uso-mais-frequente" tabindex="-1">7.6 Tradução de códigos fiscais — o uso mais frequente</h3>
+<p>Códigos são compactos para o sistema e ilegíveis para o leitor do relatório. <code>CASE</code> é o tradutor:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">20</span>)
+       i.cst_icms,
+       <span class="hljs-keyword">CASE</span> i.cst_icms
+            <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;000&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;Tributada integralmente&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;020&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;Com reducao de base de calculo&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;040&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;Isenta&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;041&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;Nao tributada&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;060&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;ICMS cobrado anteriormente por substituicao&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;101&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;Simples Nacional com permissao de credito&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;102&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;Simples Nacional sem permissao de credito&#x27;</span>
+            <span class="hljs-keyword">ELSE</span> <span class="hljs-string">&#x27;CST nao mapeado: &#x27;</span> <span class="hljs-operator">+</span> i.cst_icms
+       <span class="hljs-keyword">END</span>                                    <span class="hljs-keyword">AS</span> situacao_tributaria,
+       <span class="hljs-keyword">LEFT</span>(i.cfop, <span class="hljs-number">1</span>) <span class="hljs-keyword">AS</span> grupo_cfop,
+       <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">LEFT</span>(i.cfop, <span class="hljs-number">1</span>)
+            <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;1&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;Entrada estadual&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;2&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;Entrada interestadual&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;3&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;Entrada do exterior&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;5&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;Saida estadual&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;6&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;Saida interestadual&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;7&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;Saida para o exterior&#x27;</span>
+            <span class="hljs-keyword">ELSE</span> <span class="hljs-string">&#x27;CFOP invalido&#x27;</span>
+       <span class="hljs-keyword">END</span>                                    <span class="hljs-keyword">AS</span> natureza_da_operacao,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> i.cst_icms) <span class="hljs-keyword">AS</span> itens_no_mesmo_cst
+<span class="hljs-keyword">FROM</span>   dbo.nfe_item <span class="hljs-keyword">AS</span> i
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> i.id_item;
+</div></code></pre>
+<p><strong>O que observar no <code>ELSE</code>:</strong> em vez de um genérico <code>'OUTROS'</code>, o ramo devolve <code>'CST nao mapeado: ' + i.cst_icms</code>. Assim, um código novo ou inesperado <strong>aparece no relatório</strong> em vez de se esconder atrás de um rótulo genérico. Em trabalho fiscal, o desconhecido precisa ser visível.</p>
+<hr>
+<h2 id="etapa-8-%E2%80%94-sa%C3%ADda-pronta-para-relat%C3%B3rio" tabindex="-1">Etapa 8 — Saída pronta para relatório</h2>
+<h3 id="8.1-agrega%C3%A7%C3%A3o-condicional%3A-o-piv%C3%B4-manual" tabindex="-1">8.1 Agregação condicional: o pivô manual</h3>
+<p><code>CASE</code> dentro de função agregada transforma linhas em colunas — a técnica mais útil de todo este roteiro:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> c.cnpj,
+       <span class="hljs-built_in">UPPER</span>(<span class="hljs-built_in">TRIM</span>(c.razao_social))                                        <span class="hljs-keyword">AS</span> razao_social,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)                                                           <span class="hljs-keyword">AS</span> total_notas,
+       <span class="hljs-built_in">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span> <span class="hljs-keyword">END</span>)             <span class="hljs-keyword">AS</span> saidas,
+       <span class="hljs-built_in">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;0&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span> <span class="hljs-keyword">END</span>)             <span class="hljs-keyword">AS</span> entradas,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CANCELADA&#x27;</span>   <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">END</span>)             <span class="hljs-keyword">AS</span> canceladas,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;DENEGADA&#x27;</span>    <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">END</span>)             <span class="hljs-keyword">AS</span> denegadas,
+       FORMAT(<span class="hljs-built_in">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span> <span class="hljs-keyword">AND</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+                       <span class="hljs-keyword">THEN</span> n.valor_total <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span> <span class="hljs-keyword">END</span>), <span class="hljs-string">&#x27;N2&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>)     <span class="hljs-keyword">AS</span> valor_saidas,
+       FORMAT(<span class="hljs-built_in">CAST</span>(<span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CANCELADA&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">END</span>) <span class="hljs-keyword">AS</span> <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">12</span>,<span class="hljs-number">4</span>))
+              <span class="hljs-operator">/</span> <span class="hljs-built_in">NULLIF</span>(<span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>), <span class="hljs-number">0</span>), <span class="hljs-string">&#x27;P2&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>)                       <span class="hljs-keyword">AS</span> pct_cancelamento
+<span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> c.cnpj, c.razao_social
+<span class="hljs-keyword">HAVING</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-operator">&gt;=</span> <span class="hljs-number">100</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CANCELADA&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">END</span>) <span class="hljs-operator">*</span> <span class="hljs-number">1.0</span> <span class="hljs-operator">/</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p><strong>O que observar — duas formas equivalentes com uma diferença sutil:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Escrita</th>
+<th>Comportamento</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SUM(CASE WHEN cond THEN 1 ELSE 0 END)</code></td>
+<td>soma 1 quando a condição é verdadeira e 0 quando não é</td>
+</tr>
+<tr>
+<td><code>COUNT(CASE WHEN cond THEN 1 END)</code></td>
+<td>conta apenas quando verdadeira; <strong>sem <code>ELSE</code></strong>, o restante vira <code>NULL</code>, e <code>COUNT</code> ignora nulos</td>
+</tr>
+</tbody>
+</table>
+<p>Ambas produzem o mesmo número. <strong>O erro fatal</strong> é escrever <code>COUNT(CASE WHEN cond THEN 1 ELSE 0 END)</code>: com o <code>ELSE 0</code>, todas as linhas passam a ter valor não nulo e <code>COUNT</code> devolve o total de linhas, não o total de ocorrências.</p>
+<h3 id="8.2-string_agg%3A-transformar-linhas-em-uma-lista" tabindex="-1">8.2 <code>STRING_AGG</code>: transformar linhas em uma lista</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> c.cnpj,
+       <span class="hljs-built_in">UPPER</span>(<span class="hljs-built_in">TRIM</span>(c.razao_social))                                       <span class="hljs-keyword">AS</span> razao_social,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> i.cfop)                                            <span class="hljs-keyword">AS</span> qtd_cfop_distintos,
+       STRING_AGG(i.cfop, <span class="hljs-string">&#x27;, &#x27;</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> i.cfop)           <span class="hljs-keyword">AS</span> cfop_utilizados
+<span class="hljs-keyword">FROM</span>   dbo.contribuinte <span class="hljs-keyword">AS</span> c
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.nfe      <span class="hljs-keyword">AS</span> n <span class="hljs-keyword">ON</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.nfe_item <span class="hljs-keyword">AS</span> i <span class="hljs-keyword">ON</span> i.id_nfe      <span class="hljs-operator">=</span> n.id_nfe
+<span class="hljs-keyword">WHERE</span>  n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> c.cnpj, c.razao_social
+<span class="hljs-keyword">HAVING</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> i.cfop) <span class="hljs-operator">&gt;=</span> <span class="hljs-number">4</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> qtd_cfop_distintos <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p><strong>O que observar:</strong> <code>STRING_AGG</code> (SQL Server 2017+) concatena os valores de um grupo com um separador; <code>WITHIN GROUP (ORDER BY ...)</code> define a ordem dentro da lista. Sem ele, a ordem é indefinida — e um relatório em que a mesma consulta produz listas em ordens diferentes a cada execução não é reproduzível.</p>
+<p>Para eliminar repetições dentro da lista, agregue o distinto antes:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">WITH</span> cfop_por_contribuinte <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DISTINCT</span> n.id_emitente, i.cfop
+    <span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.nfe_item <span class="hljs-keyword">AS</span> i <span class="hljs-keyword">ON</span> i.id_nfe <span class="hljs-operator">=</span> n.id_nfe
+    <span class="hljs-keyword">WHERE</span>  n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+)
+<span class="hljs-keyword">SELECT</span> c.cnpj,
+       STRING_AGG(cp.cfop, <span class="hljs-string">&#x27;, &#x27;</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> cp.cfop) <span class="hljs-keyword">AS</span> cfop_distintos
+<span class="hljs-keyword">FROM</span>   cfop_por_contribuinte <span class="hljs-keyword">AS</span> cp
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> cp.id_emitente
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> c.cnpj;
+</div></code></pre>
+<h3 id="8.3-indicadores-com-sem%C3%A1foro" tabindex="-1">8.3 Indicadores com semáforo</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">WITH</span> base <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> n.id_emitente,
+           <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)                                                          <span class="hljs-keyword">AS</span> qtd,
+           <span class="hljs-built_in">SUM</span>(n.valor_total)                                                <span class="hljs-keyword">AS</span> total,
+           <span class="hljs-built_in">SUM</span>(n.valor_icms)                                                 <span class="hljs-keyword">AS</span> icms,
+           <span class="hljs-built_in">SUM</span>(n.valor_icms) <span class="hljs-operator">/</span> <span class="hljs-built_in">NULLIF</span>(<span class="hljs-built_in">SUM</span>(n.valor_total), <span class="hljs-number">0</span>)                 <span class="hljs-keyword">AS</span> carga
+    <span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">WHERE</span>  n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span> <span class="hljs-keyword">AND</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> n.id_emitente
+)
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">SUBSTRING</span>(c.cnpj,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;.&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">SUBSTRING</span>(c.cnpj,<span class="hljs-number">3</span>,<span class="hljs-number">3</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;.&#x27;</span> <span class="hljs-operator">+</span>
+       <span class="hljs-built_in">SUBSTRING</span>(c.cnpj,<span class="hljs-number">6</span>,<span class="hljs-number">3</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;/&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">SUBSTRING</span>(c.cnpj,<span class="hljs-number">9</span>,<span class="hljs-number">4</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;-&#x27;</span> <span class="hljs-operator">+</span>
+       <span class="hljs-built_in">SUBSTRING</span>(c.cnpj,<span class="hljs-number">13</span>,<span class="hljs-number">2</span>)                                    <span class="hljs-keyword">AS</span> [CNPJ],
+       <span class="hljs-built_in">UPPER</span>(<span class="hljs-built_in">TRIM</span>(c.razao_social))                               <span class="hljs-keyword">AS</span> [Contribuinte],
+       c.regime_tributario                                       <span class="hljs-keyword">AS</span> [Regime],
+       FORMAT(b.qtd, <span class="hljs-string">&#x27;N0&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>)                              <span class="hljs-keyword">AS</span> [Notas],
+       FORMAT(b.total, <span class="hljs-string">&#x27;N2&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>)                            <span class="hljs-keyword">AS</span> [Saidas],
+       FORMAT(b.carga, <span class="hljs-string">&#x27;P2&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>)                            <span class="hljs-keyword">AS</span> [Carga],
+       <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> c.regime_tributario <span class="hljs-operator">&lt;&gt;</span> <span class="hljs-string">&#x27;NORMAL&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;NAO SE APLICA&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> b.carga <span class="hljs-operator">&lt;</span> <span class="hljs-number">0.04</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;CRITICO&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> b.carga <span class="hljs-operator">&lt;</span> <span class="hljs-number">0.10</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;ATENCAO&#x27;</span>
+            <span class="hljs-keyword">ELSE</span>                     <span class="hljs-string">&#x27;REGULAR&#x27;</span>
+       <span class="hljs-keyword">END</span>                                                       <span class="hljs-keyword">AS</span> [Situacao],
+       REPLICATE(<span class="hljs-string">&#x27;#&#x27;</span>, <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> c.regime_tributario <span class="hljs-operator">&lt;&gt;</span> <span class="hljs-string">&#x27;NORMAL&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">0</span>
+                           <span class="hljs-keyword">WHEN</span> b.carga <span class="hljs-operator">&lt;</span> <span class="hljs-number">0.04</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">5</span>
+                           <span class="hljs-keyword">WHEN</span> b.carga <span class="hljs-operator">&lt;</span> <span class="hljs-number">0.10</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">3</span>
+                           <span class="hljs-keyword">ELSE</span> <span class="hljs-number">1</span> <span class="hljs-keyword">END</span>)                           <span class="hljs-keyword">AS</span> [Risco]
+<span class="hljs-keyword">FROM</span>   base <span class="hljs-keyword">AS</span> b
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> b.id_emitente
+<span class="hljs-keyword">WHERE</span>  b.total <span class="hljs-operator">&gt;</span> <span class="hljs-number">100000</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> b.carga;
+</div></code></pre>
+<p><strong>O que observar:</strong> <code>REPLICATE</code> desenha uma barra de risco em texto puro, legível em qualquer meio — inclusive em um <code>.txt</code> anexado ao processo. O ramo <code>'NAO SE APLICA'</code> para o Simples Nacional evita o falso positivo mais comum desse indicador: empresas do Simples destacam ICMS reduzido por natureza, e apareceriam todas como &quot;críticas&quot;.</p>
+<h3 id="8.4-o-carimbo-de-extra%C3%A7%C3%A3o" tabindex="-1">8.4 O carimbo de extração</h3>
+<p>Toda listagem que instrui procedimento fiscal deve dizer <strong>quem, quando e de onde</strong> foi extraída:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> FORMAT(GETDATE(), <span class="hljs-string">&#x27;dd/MM/yyyy HH:mm:ss&#x27;</span>)                <span class="hljs-keyword">AS</span> extraido_em,
+       <span class="hljs-built_in">SYSTEM_USER</span>                                             <span class="hljs-keyword">AS</span> usuario,
+       @<span class="hljs-variable">@SERVERNAME</span>                                            <span class="hljs-keyword">AS</span> servidor,
+       DB_NAME()                                               <span class="hljs-keyword">AS</span> banco,
+       @<span class="hljs-variable">@VERSION</span>                                               <span class="hljs-keyword">AS</span> versao_do_sgbd;
+</div></code></pre>
+<p>Cole esse cabeçalho no topo do relatório. É o que permite, meses depois, reproduzir a apuração exatamente como ela foi feita — a exigência de reprodutibilidade discutida no Módulo 10, seção 15.</p>
+<hr>
+<h2 id="etapa-9-%E2%80%94-consulta-integradora" tabindex="-1">Etapa 9 — Consulta integradora</h2>
+<p>O produto final do laboratório: uma listagem de malha fiscal completa, formatada e pronta para anexar à ordem de serviço.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@periodo</span>   <span class="hljs-type">CHAR</span>(<span class="hljs-number">6</span>) <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;202501&#x27;</span>;
+<span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@ini</span>       <span class="hljs-type">DATE</span>    <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;2025-01-01&#x27;</span>;
+<span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@fim</span>       <span class="hljs-type">DATE</span>    <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;2025-02-01&#x27;</span>;
+
+<span class="hljs-keyword">WITH</span> omissoes <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> n.id_emitente,
+           <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)            <span class="hljs-keyword">AS</span> qtd_documentos,
+           <span class="hljs-built_in">SUM</span>(n.valor_total)  <span class="hljs-keyword">AS</span> valor_omitido,
+           <span class="hljs-built_in">SUM</span>(n.valor_icms)   <span class="hljs-keyword">AS</span> icms_potencial,
+           <span class="hljs-built_in">MIN</span>(n.data_emissao) <span class="hljs-keyword">AS</span> primeira,
+           <span class="hljs-built_in">MAX</span>(n.data_emissao) <span class="hljs-keyword">AS</span> ultima
+    <span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n
+           <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+    <span class="hljs-keyword">WHERE</span>  n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+      <span class="hljs-keyword">AND</span>  n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+      <span class="hljs-keyword">AND</span>  n.data_emissao <span class="hljs-operator">&gt;=</span> <span class="hljs-variable">@ini</span> <span class="hljs-keyword">AND</span> n.data_emissao <span class="hljs-operator">&lt;</span> <span class="hljs-variable">@fim</span>
+      <span class="hljs-keyword">AND</span>  c.regime_tributario <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;NORMAL&#x27;</span>
+      <span class="hljs-keyword">AND</span>  <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span> <span class="hljs-keyword">FROM</span> dbo.efd_c100 <span class="hljs-keyword">AS</span> e
+                       <span class="hljs-keyword">WHERE</span> e.chave_acesso    <span class="hljs-operator">=</span> n.chave_acesso
+                         <span class="hljs-keyword">AND</span> e.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+                         <span class="hljs-keyword">AND</span> e.ind_oper        <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+                         <span class="hljs-keyword">AND</span> e.cod_situacao    <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;00&#x27;</span>)
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> n.id_emitente
+),
+socios <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> s.id_contribuinte,
+           STRING_AGG(<span class="hljs-built_in">UPPER</span>(<span class="hljs-built_in">TRIM</span>(s.nome)), <span class="hljs-string">&#x27; | &#x27;</span>)
+                <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-built_in">UPPER</span>(<span class="hljs-built_in">TRIM</span>(s.nome))) <span class="hljs-keyword">AS</span> quadro_societario
+    <span class="hljs-keyword">FROM</span>   dbo.socio_administrador <span class="hljs-keyword">AS</span> s
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> s.id_contribuinte
+)
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">ROW_NUMBER</span>() <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> o.icms_potencial <span class="hljs-keyword">DESC</span>)                  <span class="hljs-keyword">AS</span> [#],
+       <span class="hljs-built_in">SUBSTRING</span>(c.cnpj,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;.&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">SUBSTRING</span>(c.cnpj,<span class="hljs-number">3</span>,<span class="hljs-number">3</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;.&#x27;</span> <span class="hljs-operator">+</span>
+       <span class="hljs-built_in">SUBSTRING</span>(c.cnpj,<span class="hljs-number">6</span>,<span class="hljs-number">3</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;/&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">SUBSTRING</span>(c.cnpj,<span class="hljs-number">9</span>,<span class="hljs-number">4</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;-&#x27;</span> <span class="hljs-operator">+</span>
+       <span class="hljs-built_in">SUBSTRING</span>(c.cnpj,<span class="hljs-number">13</span>,<span class="hljs-number">2</span>)                                              <span class="hljs-keyword">AS</span> [CNPJ],
+       <span class="hljs-built_in">UPPER</span>(<span class="hljs-built_in">TRIM</span>(c.razao_social))                                         <span class="hljs-keyword">AS</span> [Contribuinte],
+       m.nome                                                              <span class="hljs-keyword">AS</span> [Municipio],
+       <span class="hljs-built_in">COALESCE</span>(m.regiao_fiscal, <span class="hljs-string">&#x27;FORA DA PB&#x27;</span>)                             <span class="hljs-keyword">AS</span> [Regiao],
+       FORMAT(o.qtd_documentos, <span class="hljs-string">&#x27;N0&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>)                             <span class="hljs-keyword">AS</span> [Docs],
+       FORMAT(o.valor_omitido,  <span class="hljs-string">&#x27;N2&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>)                             <span class="hljs-keyword">AS</span> [Valor Omitido],
+       FORMAT(o.icms_potencial, <span class="hljs-string">&#x27;N2&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>)                             <span class="hljs-keyword">AS</span> [ICMS Potencial],
+       CONCAT(FORMAT(o.primeira, <span class="hljs-string">&#x27;dd/MM&#x27;</span>), <span class="hljs-string">&#x27; a &#x27;</span>, FORMAT(o.ultima, <span class="hljs-string">&#x27;dd/MM/yyyy&#x27;</span>)) <span class="hljs-keyword">AS</span> [Periodo],
+       <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> o.icms_potencial <span class="hljs-operator">&gt;=</span> <span class="hljs-number">100000</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;ALTA&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> o.icms_potencial <span class="hljs-operator">&gt;=</span>  <span class="hljs-number">20000</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;MEDIA&#x27;</span>
+            <span class="hljs-keyword">ELSE</span>                                 <span class="hljs-string">&#x27;BAIXA&#x27;</span>
+       <span class="hljs-keyword">END</span>                                                                 <span class="hljs-keyword">AS</span> [Prioridade],
+       <span class="hljs-built_in">COALESCE</span>(s.quadro_societario, <span class="hljs-string">&#x27;(sem socio cadastrado)&#x27;</span>)             <span class="hljs-keyword">AS</span> [Quadro Societario],
+       CONCAT(<span class="hljs-string">&#x27;Extraido em &#x27;</span>, FORMAT(GETDATE(), <span class="hljs-string">&#x27;dd/MM/yyyy&#x27;</span>),
+              <span class="hljs-string">&#x27; por &#x27;</span>, <span class="hljs-built_in">SYSTEM_USER</span>, <span class="hljs-string">&#x27; - competencia &#x27;</span>, <span class="hljs-variable">@periodo</span>)           <span class="hljs-keyword">AS</span> [Origem]
+<span class="hljs-keyword">FROM</span>   omissoes <span class="hljs-keyword">AS</span> o
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> o.id_emitente
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.municipio    <span class="hljs-keyword">AS</span> m <span class="hljs-keyword">ON</span> m.id_municipio    <span class="hljs-operator">=</span> c.id_municipio
+       <span class="hljs-keyword">LEFT</span>  <span class="hljs-keyword">JOIN</span> socios           <span class="hljs-keyword">AS</span> s <span class="hljs-keyword">ON</span> s.id_contribuinte <span class="hljs-operator">=</span> c.id_contribuinte
+<span class="hljs-keyword">WHERE</span>  o.icms_potencial <span class="hljs-operator">&gt;</span> <span class="hljs-number">1000</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> o.icms_potencial <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p><strong>O que observar:</strong></p>
+<ol>
+<li>Toda a <strong>seleção</strong> (<code>WHERE</code>, <code>NOT EXISTS</code>, <code>GROUP BY</code>) opera sobre o dado <strong>bruto</strong>; a formatação só aparece na lista de seleção final.</li>
+<li><code>ORDER BY o.icms_potencial DESC</code> usa a coluna numérica, não o texto formatado.</li>
+<li><code>ROW_NUMBER()</code> numera as linhas do relatório — e é calculado depois da ordenação declarada no <code>OVER</code>.</li>
+<li>O <code>COALESCE</code> no quadro societário evita a linha vazia que denunciaria falta de cadastro como se fosse falha do relatório.</li>
+</ol>
+<hr>
+<h2 id="etapa-10-%E2%80%94-desempenho-e-boas-pr%C3%A1ticas" tabindex="-1">Etapa 10 — Desempenho e boas práticas</h2>
+<h3 id="10.1-me%C3%A7a-o-custo-da-formata%C3%A7%C3%A3o" tabindex="-1">10.1 Meça o custo da formatação</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SET</span> STATISTICS <span class="hljs-type">TIME</span> <span class="hljs-keyword">ON</span>;
+
+<span class="hljs-comment">-- (a) sem formatacao</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> (<span class="hljs-keyword">SELECT</span> valor_total <span class="hljs-keyword">FROM</span> dbo.nfe_item x
+                      <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.nfe n <span class="hljs-keyword">ON</span> n.id_nfe <span class="hljs-operator">=</span> x.id_nfe) <span class="hljs-keyword">AS</span> t;
+<span class="hljs-comment">-- (b) com CONVERT</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">CONVERT</span>(<span class="hljs-type">VARCHAR</span>(<span class="hljs-number">30</span>), <span class="hljs-built_in">CAST</span>(valor_total_item <span class="hljs-keyword">AS</span> MONEY), <span class="hljs-number">1</span>) <span class="hljs-keyword">AS</span> v
+                      <span class="hljs-keyword">FROM</span> dbo.nfe_item) <span class="hljs-keyword">AS</span> t;
+<span class="hljs-comment">-- (c) com FORMAT</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> (<span class="hljs-keyword">SELECT</span> FORMAT(valor_total_item, <span class="hljs-string">&#x27;N2&#x27;</span>, <span class="hljs-string">&#x27;pt-BR&#x27;</span>) <span class="hljs-keyword">AS</span> v
+                      <span class="hljs-keyword">FROM</span> dbo.nfe_item) <span class="hljs-keyword">AS</span> t;
+
+<span class="hljs-keyword">SET</span> STATISTICS <span class="hljs-type">TIME</span> OFF;
+</div></code></pre>
+<p>Sobre as ~31 mil linhas de <code>nfe_item</code>, a diferença já é perceptível; sobre milhões, é a diferença entre segundos e minutos.</p>
+<h3 id="10.2-as-sete-regras-do-laborat%C3%B3rio" tabindex="-1">10.2 As sete regras do laboratório</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Regra</th>
+<th>Motivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Formate na <strong>última</strong> consulta, nunca nas intermediárias</td>
+<td>formatação quebra junção, ordenação e agregação posteriores</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Ordene pela coluna bruta</strong>, exiba a formatada</td>
+<td>texto ordena como texto: <code>'9.000,00' &gt; '10.000,00'</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Nunca aplique função à coluna do <code>WHERE</code></td>
+<td>destrói o uso de índice (predicado não <em>sargable</em>)</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>CAST</code> para <code>DECIMAL</code> <strong>antes</strong> de dividir contagens</td>
+<td>divisão inteira trunca e o percentual sai zero</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Use <code>DECIMAL</code>, jamais <code>FLOAT</code>, para dinheiro</td>
+<td><code>FLOAT</code> acumula erro binário indefensável em auto de infração</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Prefira <code>CONVERT</code>+<code>REPLACE</code> a <code>FORMAT</code> em grande volume</td>
+<td><code>FORMAT</code> é CLR e custa uma ordem de grandeza a mais</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Normalize CPF/CNPJ <strong>antes</strong> de cruzar, formate <strong>depois</strong></td>
+<td>máscara heterogênea faz o cruzamento não encontrar nada</td>
+</tr>
+</tbody>
+</table>
+<h3 id="10.3-uma-%C3%BAltima-advert%C3%AAncia-sobre-exporta%C3%A7%C3%A3o" tabindex="-1">10.3 Uma última advertência sobre exportação</h3>
+<p>Ao exportar para CSV que será reimportado por outro sistema, exporte o dado <strong>limpo</strong> (CNPJ com 14 dígitos, data em <code>AAAAMMDD</code>, valor com ponto decimal). A máscara é para o leitor humano; o sistema de destino quase sempre a rejeita — e o Excel, como visto no Módulo 10, transforma <code>27712979000187</code> em notação científica e <code>06.123.456/0001-99</code> em texto truncado. Quando o destino é o Excel, importe pelo Power Query definindo as colunas como texto.</p>
+<hr>
+<h2 id="etapa-11-%E2%80%94-tabelas-resumo" tabindex="-1">Etapa 11 — Tabelas-resumo</h2>
+<h3 id="11.1-num%C3%A9ricas-e-de-arredondamento" tabindex="-1">11.1 Numéricas e de arredondamento</h3>
+<table>
+<thead>
+<tr>
+<th>Função</th>
+<th>Faz</th>
+<th>Exemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ROUND(x, n)</code></td>
+<td>arredonda para n casas</td>
+<td><code>ROUND(13640.16, 1)</code> → <code>13640.20</code></td>
+</tr>
+<tr>
+<td><code>ROUND(x, n, 1)</code></td>
+<td><strong>trunca</strong> em n casas</td>
+<td><code>ROUND(13640.16, 1, 1)</code> → <code>13640.10</code></td>
+</tr>
+<tr>
+<td><code>CEILING(x)</code> / <code>FLOOR(x)</code></td>
+<td>teto / piso</td>
+<td><code>CEILING(13640.16)</code> → <code>13641</code></td>
+</tr>
+<tr>
+<td><code>ABS(x)</code></td>
+<td>valor absoluto</td>
+<td><code>ABS(-25.50)</code> → <code>25.50</code></td>
+</tr>
+<tr>
+<td><code>NULLIF(a, b)</code></td>
+<td><code>NULL</code> se <code>a = b</code></td>
+<td>evita divisão por zero</td>
+</tr>
+<tr>
+<td><code>CAST(x AS DECIMAL(15,2))</code></td>
+<td>converte com precisão</td>
+<td>obrigatório antes de dividir contagens</td>
+</tr>
+</tbody>
+</table>
+<h3 id="11.2-datas" tabindex="-1">11.2 Datas</h3>
+<table>
+<thead>
+<tr>
+<th>Função</th>
+<th>Faz</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CONVERT(VARCHAR, data, 103|112|23)</code></td>
+<td>formata com estilo (<code>dd/mm/aaaa</code>, <code>aaaammdd</code>, ISO)</td>
+</tr>
+<tr>
+<td><code>FORMAT(data, 'dd/MM/yyyy', 'pt-BR')</code></td>
+<td>formata com máscara e cultura</td>
+</tr>
+<tr>
+<td><code>DATEDIFF(unidade, ini, fim)</code></td>
+<td>diferença entre datas</td>
+</tr>
+<tr>
+<td><code>DATEADD(unidade, n, data)</code></td>
+<td>soma período</td>
+</tr>
+<tr>
+<td><code>EOMONTH(data [, n])</code></td>
+<td>último dia do mês (n meses à frente/atrás)</td>
+</tr>
+<tr>
+<td><code>DATEPART</code> / <code>DATENAME</code></td>
+<td>parte numérica / nome (depende do idioma)</td>
+</tr>
+<tr>
+<td><code>GETDATE()</code> / <code>SYSDATETIME()</code></td>
+<td>data e hora do servidor</td>
+</tr>
+</tbody>
+</table>
+<h3 id="11.3-strings-e-m%C3%A1scaras" tabindex="-1">11.3 Strings e máscaras</h3>
+<table>
+<thead>
+<tr>
+<th>Função</th>
+<th>Faz</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LEN</code> / <code>DATALENGTH</code></td>
+<td>comprimento (ignora espaço à direita) / bytes</td>
+</tr>
+<tr>
+<td><code>TRIM</code> / <code>LTRIM</code> / <code>RTRIM</code></td>
+<td>remove espaços</td>
+</tr>
+<tr>
+<td><code>UPPER</code> / <code>LOWER</code></td>
+<td>caixa</td>
+</tr>
+<tr>
+<td><code>LEFT</code> / <code>RIGHT</code> / <code>SUBSTRING</code></td>
+<td>recortes</td>
+</tr>
+<tr>
+<td><code>REPLACE(t, de, para)</code></td>
+<td>substitui todas as ocorrências</td>
+</tr>
+<tr>
+<td><code>STUFF(t, pos, qtd, novo)</code></td>
+<td>insere/substitui em posição (com <code>qtd = 0</code>, só insere)</td>
+</tr>
+<tr>
+<td><code>REPLICATE(t, n)</code></td>
+<td>repete texto — preenchimento e barras</td>
+</tr>
+<tr>
+<td><code>CONCAT</code> / <code>CONCAT_WS</code></td>
+<td>concatena <strong>ignorando nulos</strong></td>
+</tr>
+<tr>
+<td><code>CHARINDEX(busca, t)</code></td>
+<td>posição da primeira ocorrência</td>
+</tr>
+<tr>
+<td><code>STRING_AGG(col, sep) WITHIN GROUP (ORDER BY ...)</code></td>
+<td>agrega linhas em uma lista</td>
+</tr>
+</tbody>
+</table>
+<h3 id="11.4-m%C3%A1scaras-do-dom%C3%ADnio-fiscal" tabindex="-1">11.4 Máscaras do domínio fiscal</h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Expressão</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CNPJ</td>
+<td><code>SUBSTRING(cnpj,1,2)+'.'+SUBSTRING(cnpj,3,3)+'.'+SUBSTRING(cnpj,6,3)+'/'+SUBSTRING(cnpj,9,4)+'-'+SUBSTRING(cnpj,13,2)</code></td>
+</tr>
+<tr>
+<td>CPF</td>
+<td><code>SUBSTRING(cpf,1,3)+'.'+SUBSTRING(cpf,4,3)+'.'+SUBSTRING(cpf,7,3)+'-'+SUBSTRING(cpf,10,2)</code></td>
+</tr>
+<tr>
+<td>Limpar máscara</td>
+<td><code>REPLACE(REPLACE(REPLACE(TRIM(x),'.',''),'-',''),' ','')</code></td>
+</tr>
+<tr>
+<td>Recompor zeros</td>
+<td><code>RIGHT('00000000000' + digitos, 11)</code> (CPF) / <code>RIGHT(REPLICATE('0',14) + digitos, 14)</code> (CNPJ)</td>
+</tr>
+<tr>
+<td>NCM</td>
+<td><code>STUFF(STUFF(ncm, 7, 0, '.'), 5, 0, '.')</code> → <code>2204.21.00</code></td>
+</tr>
+<tr>
+<td>CFOP</td>
+<td><code>STUFF(cfop, 2, 0, '.')</code> → <code>5.405</code></td>
+</tr>
+<tr>
+<td>Período AAAAMM</td>
+<td><code>CONVERT(VARCHAR(6), data, 112)</code></td>
+</tr>
+<tr>
+<td>Competência por extenso</td>
+<td><code>FORMAT(CONVERT(DATE, periodo + '01'), 'MMM/yyyy', 'pt-BR')</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="11.5-case-em-uma-p%C3%A1gina" tabindex="-1">11.5 <code>CASE</code> em uma página</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Forma simples: compara por igualdade</span>
+<span class="hljs-keyword">CASE</span> expressao <span class="hljs-keyword">WHEN</span> v1 <span class="hljs-keyword">THEN</span> r1 <span class="hljs-keyword">WHEN</span> v2 <span class="hljs-keyword">THEN</span> r2 <span class="hljs-keyword">ELSE</span> rn <span class="hljs-keyword">END</span>
+
+<span class="hljs-comment">-- Forma pesquisada: condições booleanas quaisquer</span>
+<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> cond1 <span class="hljs-keyword">THEN</span> r1 <span class="hljs-keyword">WHEN</span> cond2 <span class="hljs-keyword">THEN</span> r2 <span class="hljs-keyword">ELSE</span> rn <span class="hljs-keyword">END</span>
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Regra</th>
+<th>Consequência</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Avaliação sequencial</td>
+<td>ordene da condição mais restritiva para a mais ampla</td>
+</tr>
+<tr>
+<td>Sem <code>ELSE</code> → <code>NULL</code></td>
+<td>proposital em <code>COUNT(CASE ...)</code>, esquecimento em relatório</td>
+</tr>
+<tr>
+<td>Tipo de retorno único</td>
+<td>converta explicitamente os ramos (<code>FORMAT</code>, <code>CAST</code>)</td>
+</tr>
+<tr>
+<td>É expressão, não comando</td>
+<td>cabe em <code>SELECT</code>, <code>WHERE</code>, <code>GROUP BY</code>, <code>HAVING</code>, <code>ORDER BY</code>, agregações</td>
+</tr>
+<tr>
+<td><code>IIF</code>, <code>COALESCE</code>, <code>NULLIF</code></td>
+<td>são <code>CASE</code> abreviados</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="etapa-12-%E2%80%94-exerc%C3%ADcios" tabindex="-1">Etapa 12 — Exercícios</h2>
+<blockquote>
+<p>As respostas comentadas estão em <strong><code>gabarito_roteiro_formatacao_tsql.md</code></strong>. Resolva antes de consultar.
+Todos os exercícios usam o banco <code>curso_integridade_fiscal</code> com os scripts 01 a 09 executados.</p>
+</blockquote>
+<h3 id="bloco-a-%E2%80%94-n%C3%BAmeros-e-arredondamento" tabindex="-1">Bloco A — Números e arredondamento</h3>
+<p><strong>A1.</strong> Para as dez NF-e autorizadas de maior valor, exiba a chave de acesso, o valor total arredondado ao real (sem casas decimais e como número inteiro), o valor truncado ao real e a diferença entre os dois.</p>
+<p><strong>A2.</strong> Calcule, para a tabela <code>nfe_item</code> inteira, três somatórios do ICMS a 18%: (a) somando antes de arredondar; (b) arredondando cada item antes de somar; (c) truncando cada item antes de somar. Apresente as três colunas e as duas diferenças. Em duas linhas de comentário, indique qual das três é a base adequada para conferir escrituração e por quê.</p>
+<p><strong>A3.</strong> Para cada regime tributário, calcule o percentual de notas canceladas sobre o total, com duas casas decimais. Garanta que o resultado não seja zero por divisão inteira.</p>
+<p><strong>A4.</strong> Exiba o valor total das dez maiores notas em três formatos na mesma linha: número simples com duas casas, número no padrão brasileiro (<code>13.640,16</code>) e moeda (<code>R$ 13.640,16</code>).</p>
+<p><strong>A5.</strong> (Desafio) Monte uma coluna de texto com 18 posições, alinhada à direita, contendo o valor total formatado no padrão brasileiro, e outra com a razão social ocupando exatamente 45 posições à esquerda. Verifique o alinhamento com a saída em texto (<code>Ctrl+T</code>).</p>
+<h3 id="bloco-b-%E2%80%94-datas" tabindex="-1">Bloco B — Datas</h3>
+<p><strong>B1.</strong> Para as vinte primeiras ordens de serviço, exiba: número da OS, data de abertura em <code>dd/mm/aaaa</code>, competência de abertura em <code>AAAAMM</code>, mês por extenso em português e dia da semana.</p>
+<p><strong>B2.</strong> Para cada ordem de serviço ainda sem conclusão, calcule os dias corridos desde a abertura e classifique em <code>NO PRAZO</code> (até 90 dias), <code>ATENCAO</code> (91 a 180) e <code>CRITICA</code> (acima de 180).</p>
+<p><strong>B3.</strong> Liste os períodos de apuração distintos existentes em <code>efd_c100</code> e, ao lado de cada um, o primeiro dia do período, o último dia e a competência por extenso (<code>jan/2025</code>).</p>
+<p><strong>B4.</strong> Para cada auto de infração, exiba a data de lavratura por extenso no formato <code>07 de abril de 2025</code>, e o prazo final de impugnação (30 dias corridos após a lavratura) no formato <code>dd/mm/aaaa</code>.</p>
+<p><strong>B5.</strong> Escreva duas versões da consulta que soma o valor das NF-e autorizadas emitidas em março de 2025: uma usando <code>YEAR()</code> e <code>MONTH()</code>, outra usando intervalo de datas. Compare os planos de execução (<code>Ctrl+M</code>) e explique a diferença.</p>
+<h3 id="bloco-c-%E2%80%94-convers%C3%B5es-e-qualidade-do-dado" tabindex="-1">Bloco C — Conversões e qualidade do dado</h3>
+<p><strong>C1.</strong> Conte quantos registros de <code>socio_administrador</code> têm CPF diretamente conversível para número e quantos não têm. Liste cinco exemplos de cada grupo.</p>
+<p><strong>C2.</strong> Liste todos os sócios cujo CPF, depois de removida a máscara, tenha menos de 11 dígitos. Explique, em uma linha, a causa provável desse defeito.</p>
+<p><strong>C3.</strong> Converta o <code>periodo_apuracao</code> de <code>efd_c100</code> em data e apure o total escriturado por trimestre, exibindo o trimestre como <code>1o TRI/2025</code>.</p>
+<p><strong>C4.</strong> Demonstre a diferença entre <code>CAST(valor_total AS INT)</code> e <code>ROUND(valor_total, 0)</code> em cinco notas cujo valor tenha centavos acima de cinquenta.</p>
+<p><strong>C5.</strong> (Desafio) Escreva uma consulta que identifique registros de <code>socio_administrador</code> cujo CPF, após a limpeza, <strong>não</strong> tenha dígito verificador válido. Implemente o cálculo do DV com aritmética T-SQL sobre os dígitos.</p>
+<h3 id="bloco-d-%E2%80%94-case" tabindex="-1">Bloco D — <code>CASE</code></h3>
+<p><strong>D1.</strong> Traduza o campo <code>cod_situacao</code> de <code>efd_c100</code> para texto legível (<code>00</code> = documento regular, <code>02</code> = cancelado, demais = <code>'Codigo nao mapeado: XX'</code>) e conte os registros de cada tipo.</p>
+<p><strong>D2.</strong> Classifique todos os itens de <code>nfe_item</code> por faixa de alíquota: <code>ISENTO/NAO TRIBUTADO</code> (alíquota nula ou zero), <code>REDUZIDA</code> (até 7%), <code>INTERESTADUAL</code> (acima de 7% até 12%), <code>INTERNA</code> (acima de 12%). Apresente a quantidade e o valor total por faixa.</p>
+<p><strong>D3.</strong> Liste os autos de infração ordenados pela fase processual — <code>INSCRITO DIVIDA ATIVA</code>, <code>IMPUGNADO</code>, <code>JULGADO PROCEDENTE</code>, <code>LAVRADO</code>, <code>PAGO</code>, <code>JULGADO IMPROCEDENTE</code> — e, dentro de cada fase, pelo valor decrescente.</p>
+<p><strong>D4.</strong> Reescreva usando <code>IIF</code> e depois usando <code>CASE</code> a coluna que indica se a NF-e foi emitida a consumidor não identificado. Diga qual das duas você usaria em material do curso e por quê.</p>
+<p><strong>D5.</strong> Explique, em suas palavras e com um exemplo próprio sobre a base, por que a consulta abaixo falha e como corrigi-la:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> c.faturamento_declarado <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;NAO INFORMADO&#x27;</span>
+            <span class="hljs-keyword">ELSE</span> c.faturamento_declarado <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> faturamento
+<span class="hljs-keyword">FROM</span>   dbo.contribuinte <span class="hljs-keyword">AS</span> c;
+</div></code></pre>
+<p><strong>D6.</strong> Produza uma tabela cruzada por município com uma coluna para cada situação de NF-e (autorizada, cancelada, denegada, inutilizada), usando agregação condicional. Acrescente o percentual de cancelamento com duas casas.</p>
+<h3 id="bloco-e-%E2%80%94-m%C3%A1scaras-de-cpf-e-cnpj" tabindex="-1">Bloco E — Máscaras de CPF e CNPJ</h3>
+<p><strong>E1.</strong> Exiba os vinte primeiros contribuintes com o CNPJ formatado, obtendo a máscara por dois caminhos diferentes (<code>SUBSTRING</code> e <code>STUFF</code>) e confirme que os resultados coincidem.</p>
+<p><strong>E2.</strong> Normalize o CPF de todos os sócios (remover máscara, remover espaços e recompor zeros à esquerda) e exiba, lado a lado, o valor original e o normalizado, apenas para os registros em que os dois diferem.</p>
+<p><strong>E3.</strong> Identifique as pessoas físicas que constam como sócias de três ou mais contribuintes. Exiba o CPF formatado, o nome normalizado, a quantidade de empresas e a lista das razões sociais separadas por <code>|</code>.</p>
+<p><strong>E4.</strong> Execute a consulta do E3 <strong>sem</strong> normalizar o CPF e compare os resultados. Escreva um parágrafo explicando o que a diferença significa para um trabalho de identificação de grupo econômico.</p>
+<p><strong>E5.</strong> Formate a chave de acesso em grupos de quatro dígitos e, na mesma linha, extraia dela a UF, a competência (<code>AAMM</code>), o CNPJ do emitente <strong>já mascarado</strong> e o número da NF-e sem zeros à esquerda.</p>
+<h3 id="bloco-f-%E2%80%94-relat%C3%B3rio-integrador" tabindex="-1">Bloco F — Relatório integrador</h3>
+<p><strong>F1.</strong> Produza o relatório final de malha fiscal de janeiro de 2025 contendo: número sequencial, CNPJ mascarado, razão social normalizada, município, região fiscal (com <code>FORA DA PB</code> quando nula), quantidade de documentos omitidos, valor e ICMS formatados no padrão brasileiro, período coberto (<code>dd/mm a dd/mm/aaaa</code>), prioridade por faixa de ICMS e o carimbo de extração. Ordene pela prioridade e pelo ICMS.</p>
+<p><strong>F2.</strong> Acrescente ao relatório do F1 uma coluna com o quadro societário (nomes normalizados, separados por <code>|</code>) e outra que sinalize <code>SOCIO EM COMUM COM OUTRO CONTRIBUINTE</code> quando algum sócio do contribuinte também for sócio de outra empresa da base.</p>
+<p><strong>F3.</strong> Elabore uma versão do mesmo relatório destinada à <strong>exportação para outro sistema</strong>: sem máscaras, datas em <code>AAAAMMDD</code>, valores com ponto decimal e sem separador de milhar. Justifique cada escolha em comentários no próprio script.</p>
+<p><strong>F4.</strong> (Desafio) Escreva uma consulta que produza, em uma única coluna de texto, o parágrafo de um ofício de intimação, no formato:</p>
+<blockquote>
+<p><em>&quot;Fica o contribuinte ALFA DISTRIBUIDORA DE BEBIDAS EIRELI, inscrito no CNPJ sob o nº 27.712.979/0001-87, estabelecido no município de ALAGOA GRANDE, intimado a apresentar, no prazo de 30 (trinta) dias contados de 29 de julho de 2026, os arquivos da EFD ICMS/IPI referentes à competência janeiro/2025, tendo em vista a constatação de 12 (doze) documentos fiscais emitidos e não escriturados, no valor total de R$ 145.320,55.&quot;</em></p>
+</blockquote>
+<p>Todos os dados variáveis devem vir da base, com a formatação adequada.</p>
+<hr>
+<h2 id="etapa-13-%E2%80%94-refer%C3%AAncias" tabindex="-1">Etapa 13 — Referências</h2>
+<p>MICROSOFT. <strong>FORMAT (Transact-SQL)</strong>, <strong>CAST and CONVERT (Transact-SQL)</strong>, <strong>STUFF</strong>, <strong>STRING_AGG</strong>, <strong>CASE (Transact-SQL)</strong>, <strong>TRY_CAST</strong>, <strong>TRY_CONVERT</strong>. Microsoft Learn — Transact-SQL Reference.</p>
+<p>PETKOVIC, Dusan. <strong>Microsoft SQL Server 2019: A Beginner's Guide</strong>. 7. ed. McGraw-Hill, 2020. Capítulo 5 (funções de sistema) e Capítulo 6 (a expressão <code>CASE</code>).</p>
+<p>ELMASRI, Ramez; NAVATHE, Shamkant B. <strong>Fundamentals of Database Systems</strong>. 7. ed. Pearson, 2015. Seção 6.3 — expressões e renomeação na lista de seleção.</p>
+<p>BRASIL. <strong>Guia Prático da EFD ICMS/IPI</strong> — leiaute dos registros C100 e C170 e formato dos campos numéricos e de data.</p>
+<p>BRASIL. <strong>Manual de Orientação do Contribuinte — NF-e</strong>, Anexo I: composição da chave de acesso.</p>
+<hr>
+<p><em>Material didático produzido para o Curso de Banco de Dados Relacional aplicado à Fiscalização Tributária — Secretaria de Estado da Fazenda da Paraíba.</em></p>
+
+    </div>
+</body>
+</html>

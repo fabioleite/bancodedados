@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="960" height="600" fill="#ffffff"/>
+  <text x="20" y="28" font-size="14" font-weight="bold" fill="#243b53">Arquitetura em camadas das visões de auditoria — BDFISC</text>
+  <text x="20" y="48" font-size="10.5" fill="#666">A regra de ouro: quanto mais perto do dado bruto, mais estável a visão. Quanto mais perto do auditor, mais legível.</text>
+
+  <!-- CAMADA 0 -->
+  <rect x="20" y="66" width="270" height="290" rx="6" fill="#f4f7f4" stroke="#5aa35a" stroke-width="2"/>
+  <rect x="20" y="66" width="270" height="26" rx="6" fill="#5aa35a"/>
+  <text x="155" y="84" font-size="11.5" text-anchor="middle" font-weight="bold" fill="#ffffff">CAMADA 0 — Dados brutos (dbo)</text>
+  <text x="34" y="108" font-size="9.5" fill="#2d6a2d">Carregados pelo processo de importação.</text>
+  <text x="34" y="122" font-size="9.5" fill="#2d6a2d">NÃO são apagados pelas procedures.</text>
+  <text x="34" y="136" font-size="9.5" font-weight="bold" fill="#2d6a2d">Aqui SCHEMABINDING é seguro.</text>
+
+  <g font-size="10">
+    <rect x="34" y="148" width="242" height="24" rx="3" fill="#ffffff" stroke="#8bc48b"/><text x="44" y="164" fill="#222">dbo.NFE        (sqnfe, tpnfe)</text>
+    <rect x="34" y="178" width="242" height="24" rx="3" fill="#ffffff" stroke="#8bc48b"/><text x="44" y="194" fill="#222">dbo.NFE_HI     (emit=2 / dest=3)</text>
+    <rect x="34" y="208" width="242" height="24" rx="3" fill="#ffffff" stroke="#8bc48b"/><text x="44" y="224" fill="#222">dbo.ITEM_NFE</text>
+    <rect x="34" y="238" width="242" height="24" rx="3" fill="#ffffff" stroke="#8bc48b"/><text x="44" y="254" fill="#222">dbo.EFD_0000 / EFD_0150</text>
+    <rect x="34" y="268" width="242" height="24" rx="3" fill="#ffffff" stroke="#8bc48b"/><text x="44" y="284" fill="#222">dbo.EFD_C100 / C170 / C190</text>
+    <rect x="34" y="298" width="242" height="24" rx="3" fill="#ffffff" stroke="#8bc48b"/><text x="44" y="314" fill="#222">dbo.NFE_EVENTO_DETALHADO</text>
+    <text x="44" y="340" fill="#666" font-size="9.5">…765 tabelas no total</text>
+  </g>
+
+  <!-- CAMADA 1 -->
+  <rect x="20" y="376" width="270" height="204" rx="6" fill="#fffaf0" stroke="#d9a13b" stroke-width="2"/>
+  <rect x="20" y="376" width="270" height="26" rx="6" fill="#d9a13b"/>
+  <text x="155" y="394" font-size="11.5" text-anchor="middle" font-weight="bold" fill="#ffffff">CAMADA 1 — Derivadas (fisc)</text>
+  <text x="34" y="418" font-size="9.5" fill="#7a5c00">Geradas pelas stored procedures nnn_PR_*.</text>
+  <text x="34" y="432" font-size="9.5" font-weight="bold" fill="#a3271b">São recriadas com DROP TABLE a cada</text>
+  <text x="34" y="445" font-size="9.5" font-weight="bold" fill="#a3271b">execução → NUNCA usar SCHEMABINDING.</text>
+  <g font-size="10">
+    <rect x="34" y="456" width="242" height="24" rx="3" fill="#ffffff" stroke="#e0c068"/><text x="44" y="472" fill="#222">fisc.TB_201_..._01   (NF-e do XML)</text>
+    <rect x="34" y="486" width="242" height="24" rx="3" fill="#ffffff" stroke="#e0c068"/><text x="44" y="502" fill="#222">fisc.TB_474_...      (EFD C100)</text>
+    <rect x="34" y="516" width="242" height="24" rx="3" fill="#ffffff" stroke="#e0c068"/><text x="44" y="532" fill="#222">fisc.TB_534_...      (EFD C190)</text>
+    <text x="44" y="556" fill="#666" font-size="9.5">…demais TB_nnn_PR_*</text>
+  </g>
+
+  <!-- setas -->
+  <line x1="292" y1="220" x2="352" y2="220" stroke="#4a7ab0" stroke-width="2"/><polygon points="358,220 346,215 346,225" fill="#4a7ab0"/>
+  <line x1="292" y1="470" x2="352" y2="470" stroke="#4a7ab0" stroke-width="2"/><polygon points="358,470 346,465 346,475" fill="#4a7ab0"/>
+
+  <!-- CAMADA 2 -->
+  <rect x="360" y="66" width="290" height="290" rx="6" fill="#eef4fa" stroke="#4a7ab0" stroke-width="2"/>
+  <rect x="360" y="66" width="290" height="26" rx="6" fill="#4a7ab0"/>
+  <text x="505" y="84" font-size="11.5" text-anchor="middle" font-weight="bold" fill="#ffffff">CAMADA 2 — Visão indexada (dbo)</text>
+  <text x="374" y="110" font-size="9.5" fill="#1b3f60">Agregado materializado no disco, mantido</text>
+  <text x="374" y="124" font-size="9.5" fill="#1b3f60">automaticamente pelo SQL Server.</text>
+  <rect x="374" y="136" width="262" height="86" rx="4" fill="#ffffff" stroke="#8fa8be"/>
+  <text x="384" y="153" font-size="10" font-weight="bold" fill="#173a5e">dbo.VW_NFE_SAIDA_RESUMO_MENSAL</text>
+  <g font-size="9.5" fill="#444">
+    <text x="384" y="170">WITH SCHEMABINDING</text>
+    <text x="384" y="185">GROUP BY ANO, MES, TPNFE, STNFE</text>
+    <text x="384" y="200">COUNT_BIG(*) obrigatório</text>
+    <text x="384" y="215">+ índice CLUSTERED UNIQUE</text>
+  </g>
+  <rect x="374" y="232" width="262" height="112" rx="4" fill="#f7fafd" stroke="#9dbbd8"/>
+  <text x="384" y="250" font-size="10" font-weight="bold" fill="#1b3f60">Restrições que valem lembrar</text>
+  <g font-size="9.5" fill="#33587a">
+    <text x="384" y="268">• só INNER JOIN — sem LEFT/RIGHT</text>
+    <text x="384" y="284">• sem subconsulta, CTE, DISTINCT, TOP</text>
+    <text x="384" y="300">• nomes sempre em duas partes (dbo.X)</text>
+    <text x="384" y="316">• SUM de coluna anulável exige COUNT_BIG</text>
+    <text x="384" y="332">• SET options exigidas na criação</text>
+  </g>
+
+  <!-- CAMADA 3 -->
+  <rect x="360" y="376" width="290" height="204" rx="6" fill="#eef4fa" stroke="#4a7ab0" stroke-width="2"/>
+  <rect x="360" y="376" width="290" height="26" rx="6" fill="#4a7ab0"/>
+  <text x="505" y="394" font-size="11.5" text-anchor="middle" font-weight="bold" fill="#ffffff">CAMADA 3 — Visões de trabalho (fisc)</text>
+  <g font-size="10">
+    <rect x="374" y="412" width="262" height="26" rx="3" fill="#ffffff" stroke="#8fa8be"/><text x="384" y="429" fill="#222">fisc.VW_AUD_SAIDAS_XML</text>
+    <rect x="374" y="444" width="262" height="26" rx="3" fill="#ffffff" stroke="#8fa8be"/><text x="384" y="461" fill="#222">fisc.VW_AUD_C100_SAIDAS</text>
+    <rect x="374" y="476" width="262" height="26" rx="3" fill="#ffffff" stroke="#8fa8be"/><text x="384" y="493" fill="#222">fisc.VW_AUD_C100_DUPLICIDADE</text>
+  </g>
+  <text x="374" y="522" font-size="9.5" fill="#33587a">Filtram e renomeiam. Uma view por conceito</text>
+  <text x="374" y="536" font-size="9.5" fill="#33587a">de negócio: "saída autorizada", "C100 de saída".</text>
+  <text x="374" y="556" font-size="9.5" font-weight="bold" fill="#1b3f60">Sem SCHEMABINDING (dependem de fisc.TB_*).</text>
+
+  <line x1="652" y1="470" x2="708" y2="400" stroke="#4a7ab0" stroke-width="2"/><polygon points="712,394 700,398 708,406" fill="#4a7ab0"/>
+  <line x1="652" y1="220" x2="708" y2="300" stroke="#4a7ab0" stroke-width="2" stroke-dasharray="4,3"/><polygon points="712,306 702,296 700,308" fill="#4a7ab0"/>
+
+  <!-- CAMADA 4 -->
+  <rect x="716" y="66" width="228" height="290" rx="6" fill="#f6f2fa" stroke="#7a5ca8" stroke-width="2"/>
+  <rect x="716" y="66" width="228" height="26" rx="6" fill="#7a5ca8"/>
+  <text x="830" y="84" font-size="11.5" text-anchor="middle" font-weight="bold" fill="#ffffff">CAMADA 4 — Entrega</text>
+  <rect x="730" y="104" width="200" height="60" rx="4" fill="#ffffff" stroke="#a58cc4"/>
+  <text x="740" y="122" font-size="10" font-weight="bold" fill="#4a3568">VW_AUD_DIVERG_SAIDAS</text>
+  <text x="740" y="138" font-size="9.5" fill="#555">LEFT JOIN + CASE classificador</text>
+  <text x="740" y="153" font-size="9.5" fill="#555">1 linha por nota, com o achado</text>
+
+  <rect x="730" y="174" width="200" height="60" rx="4" fill="#ffffff" stroke="#a58cc4"/>
+  <text x="740" y="192" font-size="10" font-weight="bold" fill="#4a3568">VW_AUD_RESUMO_DIVERG</text>
+  <text x="740" y="208" font-size="9.5" fill="#555">GROUP BY período + tipo</text>
+  <text x="740" y="223" font-size="9.5" fill="#555">é o quadro do relatório fiscal</text>
+
+  <rect x="730" y="244" width="200" height="100" rx="4" fill="#faf8fd" stroke="#a58cc4"/>
+  <text x="740" y="262" font-size="10" font-weight="bold" fill="#4a3568">Consumo</text>
+  <g font-size="9.5" fill="#555">
+    <text x="740" y="280">SSMS → Copiar com Cabeçalhos</text>
+    <text x="740" y="296">Excel (ODBC) / Power BI</text>
+    <text x="740" y="312">Papel de trabalho / TAD</text>
+    <text x="740" y="330">Anexo do auto de infração</text>
+  </g>
+
+  <rect x="716" y="376" width="228" height="204" rx="6" fill="#fff8e5" stroke="#e0c068" stroke-width="2"/>
+  <text x="830" y="398" font-size="11" text-anchor="middle" font-weight="bold" fill="#7a5c00">Por que camadas?</text>
+  <g font-size="9.5" fill="#5c4600">
+    <text x="730" y="420">1. A regra fiscal fica escrita em UM</text>
+    <text x="730" y="434">   lugar só (a view de camada 3).</text>
+    <text x="730" y="454">2. Se a procedure mudar o nome de</text>
+    <text x="730" y="468">   uma coluna, corrige-se 1 view,</text>
+    <text x="730" y="482">   não 40 consultas dos auditores.</text>
+    <text x="730" y="502">3. O auditor consulta sempre a</text>
+    <text x="730" y="516">   camada 4, em português fiscal.</text>
+    <text x="730" y="536">4. O DBA otimiza as camadas 0 a 2</text>
+    <text x="730" y="550">   sem quebrar o trabalho de ninguém.</text>
+  </g>
+</svg>

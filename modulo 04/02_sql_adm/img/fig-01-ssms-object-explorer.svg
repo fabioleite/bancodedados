@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="900" height="520" fill="#ffffff"/>
+  <!-- janela -->
+  <rect x="10" y="10" width="880" height="500" fill="#f3f3f3" stroke="#b0b0b0"/>
+  <rect x="10" y="10" width="880" height="26" fill="#3c5a78"/>
+  <text x="22" y="28" fill="#ffffff" font-size="13">Microsoft SQL Server Management Studio (SSMS)</text>
+  <!-- menu -->
+  <rect x="10" y="36" width="880" height="22" fill="#e8e8e8" stroke="#d0d0d0"/>
+  <text x="22" y="51" font-size="11" fill="#333">Arquivo   Editar   Exibir   Consulta   Projeto   Ferramentas   Janela   Ajuda</text>
+  <!-- toolbar -->
+  <rect x="10" y="58" width="880" height="26" fill="#f7f7f7" stroke="#dcdcdc"/>
+  <rect x="20" y="63" width="90" height="17" fill="#ffffff" stroke="#c0c0c0"/>
+  <text x="26" y="76" font-size="10" fill="#333">Nova Consulta</text>
+  <rect x="118" y="63" width="34" height="17" fill="#dff0d8" stroke="#8bbf8b"/>
+  <text x="124" y="76" font-size="10" fill="#2d6a2d">Exec</text>
+  <rect x="160" y="63" width="150" height="17" fill="#ffffff" stroke="#c0c0c0"/>
+  <text x="166" y="76" font-size="10" fill="#333">DB_FISCAL</text>
+  <polygon points="300,70 306,70 303,75" fill="#666"/>
+  <rect x="320" y="63" width="130" height="17" fill="#fff3cd" stroke="#d8b45c"/>
+  <text x="326" y="76" font-size="10" fill="#7a5c00">Incluir Plano Real (Ctrl+M)</text>
+
+  <!-- Object Explorer -->
+  <rect x="18" y="92" width="250" height="408" fill="#ffffff" stroke="#c8c8c8"/>
+  <rect x="18" y="92" width="250" height="22" fill="#e1e8ef" stroke="#c8c8c8"/>
+  <text x="26" y="107" font-size="11" font-weight="bold" fill="#243b53">Pesquisador de Objetos</text>
+  <g font-size="11" fill="#222">
+    <text x="30" y="132">▾ SRV-FISCAL01 (SQL Server 16.0)</text>
+    <text x="46" y="152">▾ Bancos de Dados</text>
+    <text x="62" y="172">▸ Bancos de Dados do Sistema</text>
+    <text x="62" y="192">▾ DB_FISCAL</text>
+    <text x="80" y="212">▸ Diagramas de Banco de Dados</text>
+    <text x="80" y="232">▾ Tabelas</text>
+    <text x="98" y="252">▸ dbo.contribuinte</text>
+    <text x="98" y="272">▾ dbo.nota_fiscal</text>
+    <text x="116" y="292">▾ Colunas</text>
+    <text x="132" y="312">[PK] id_nota (int, não nulo)</text>
+    <text x="132" y="332">cnpj_emitente (char(14))</text>
+    <text x="132" y="352">dt_emissao (date)</text>
+    <text x="132" y="372">vl_total (decimal(15,2))</text>
+    <text x="116" y="392">▾ Índices</text>
+    <text x="132" y="412">[IX] PK_nota_fiscal (Clustered)</text>
+    <text x="132" y="432">[IX] IX_nf_cnpj_data (Nonclustered)</text>
+    <text x="98" y="452">▸ dbo.nota_fiscal_item</text>
+    <text x="80" y="472">▸ Exibições (Views)</text>
+    <text x="62" y="492">▸ Segurança</text>
+  </g>
+
+  <!-- Editor -->
+  <rect x="278" y="92" width="604" height="180" fill="#ffffff" stroke="#c8c8c8"/>
+  <rect x="278" y="92" width="604" height="20" fill="#e1e8ef" stroke="#c8c8c8"/>
+  <text x="286" y="106" font-size="11" fill="#243b53">SQLQuery1.sql - SRV-FISCAL01.DB_FISCAL</text>
+  <g font-family="Consolas, monospace" font-size="12">
+    <text x="288" y="132" fill="#0000ff">SELECT</text><text x="340" y="132" fill="#222"> cnpj_emitente, COUNT(*) AS qtd, SUM(vl_total) AS total</text>
+    <text x="288" y="152" fill="#0000ff">FROM</text><text x="330" y="152" fill="#222"> dbo.nota_fiscal</text>
+    <text x="288" y="172" fill="#0000ff">WHERE</text><text x="340" y="172" fill="#222"> dt_emissao </text><text x="440" y="172" fill="#0000ff">BETWEEN</text><text x="502" y="172" fill="#a31515"> '2025-01-01' </text><text x="600" y="172" fill="#0000ff">AND</text><text x="632" y="172" fill="#a31515"> '2025-12-31'</text>
+    <text x="288" y="192" fill="#0000ff">GROUP BY</text><text x="360" y="192" fill="#222"> cnpj_emitente</text>
+    <text x="288" y="212" fill="#0000ff">HAVING</text><text x="348" y="212" fill="#222"> SUM(vl_total) </text><text x="452" y="212" fill="#222">&gt; 1000000</text>
+    <text x="288" y="232" fill="#0000ff">ORDER BY</text><text x="360" y="232" fill="#222"> total </text><text x="404" y="232" fill="#0000ff">DESC</text><text x="440" y="232" fill="#222">;</text>
+  </g>
+
+  <!-- Resultados -->
+  <rect x="278" y="280" width="604" height="220" fill="#ffffff" stroke="#c8c8c8"/>
+  <rect x="278" y="280" width="604" height="20" fill="#e1e8ef" stroke="#c8c8c8"/>
+  <text x="286" y="294" font-size="11" fill="#243b53">Resultados</text>
+  <rect x="286" y="306" width="588" height="20" fill="#eef1f4" stroke="#cfd6dd"/>
+  <text x="296" y="320" font-size="11" font-weight="bold" fill="#243b53">cnpj_emitente</text>
+  <text x="470" y="320" font-size="11" font-weight="bold" fill="#243b53">qtd</text>
+  <text x="600" y="320" font-size="11" font-weight="bold" fill="#243b53">total</text>
+  <g font-size="11" fill="#222" font-family="Consolas, monospace">
+    <text x="296" y="344">11222333000144</text><text x="470" y="344">12.480</text><text x="600" y="344">48.912.301,55</text>
+    <text x="296" y="366">55666777000108</text><text x="470" y="366">9.117</text><text x="600" y="366">33.740.882,10</text>
+    <text x="296" y="388">99888777000122</text><text x="470" y="388">6.902</text><text x="600" y="388">21.005.447,00</text>
+    <text x="296" y="410">44333222000155</text><text x="470" y="410">4.130</text><text x="600" y="410">12.664.980,73</text>
+    <text x="296" y="432">77111444000190</text><text x="470" y="432">2.845</text><text x="600" y="432">  8.221.354,20</text>
+  </g>
+  <line x1="286" y1="332" x2="874" y2="332" stroke="#e2e6ea"/>
+  <line x1="286" y1="354" x2="874" y2="354" stroke="#e2e6ea"/>
+  <line x1="286" y1="376" x2="874" y2="376" stroke="#e2e6ea"/>
+  <line x1="286" y1="398" x2="874" y2="398" stroke="#e2e6ea"/>
+  <line x1="286" y1="420" x2="874" y2="420" stroke="#e2e6ea"/>
+  <rect x="286" y="466" width="588" height="24" fill="#f0f4f8" stroke="#d5dde5"/>
+  <text x="296" y="482" font-size="11" fill="#456">Consulta executada com êxito.  |  SRV-FISCAL01  |  DB_FISCAL  |  00:00:02  |  5 linhas</text>
+</svg>

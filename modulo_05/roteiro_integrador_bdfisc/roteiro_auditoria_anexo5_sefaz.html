@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>roteiro_auditoria_anexo5_sefaz.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 id="roteiro-de-carga%2C-limpeza-e-auditoria-fiscal-para-tabela-do-anexo-5-da-sefaz" tabindex="-1">Roteiro de carga, limpeza e auditoria fiscal para tabela do Anexo 5 da SEFAZ</h1>
+<h2 id="1.-objetivo" tabindex="-1">1. Objetivo</h2>
+<p>Este arquivo trata de uma tabela fiscal de referencia do Anexo 5, com dados de CEST, NCM/SH, descrição, legislação e parâmetros de MVA/aliquota. Ele é útil para:</p>
+<ul>
+<li>validar o enquadramento tributário de produtos;</li>
+<li>comparar NCM/CEST com legislação vigente;</li>
+<li>identificar inconsistências de MVA e alíquotas;</li>
+<li>integrar a tabela oficial em uma análise fiscal de tributação.</li>
+</ul>
+<p>O arquivo em análise é:</p>
+<ul>
+<li><code>tabela_anexo_5_sefaz.csv</code></li>
+</ul>
+<hr>
+<h2 id="2.-diagn%C3%B3stico-da-estrutura-do-arquivo" tabindex="-1">2. Diagnóstico da estrutura do arquivo</h2>
+<p>A estrutura dos primeiros registros mostra que o arquivo é um CSV de texto em formato de tabela, com separador <code>|</code> e sem evidência de problema grave de encoding.</p>
+<h3 id="primeiros-registros-observados" tabindex="-1">Primeiros registros observados</h3>
+<pre class='hljs'><code><div>Tabela_CEST|ITEM|CEST|NCM/SH|DESCRICAO|Legislacao|Vigencia_inicial|Vigencia_final|Aliq_Interna|MVA_Original|...
+01|1.0|01.001.00|38151210|Catalisadores em colmeia cerâmica ou metálica para conversão catalítica de gases de escape de veículos e outros catalisadores|DECRETO ICMS/PB Nº 39.158|2019-05-07 00:00:00||0.18|0.00|0.7178|...
+01|1.0|01.001.00|38151290|Catalisadores em colmeia cerâmica ou metálica para conversão catalítica de gases de escape de veículos e outros catalisadores|DECRETO ICMS/PB Nº 39.158|2019-05-07 00:00:00||0.18|0.00|0.7178|...
+01|2.0|01.002.00|3917|Tubos e seus acessórios (por exemplo, juntas, cotovelos, flanges, uniões), de plásticos|DECRETO ICMS/PB Nº 39.158|2019-05-07 00:00:00||0.18|0.00|0.7178|...
+</div></code></pre>
+<h3 id="inspe%C3%A7%C3%A3o-r%C3%A1pida-do-csv-no-powershell" tabindex="-1">Inspeção rápida do CSV no PowerShell</h3>
+<p>Antes de carregar o arquivo em massa, vale verificar a estrutura e o tamanho do CSV. No Windows PowerShell, os comandos abaixo ajudam a validar o cabeçalho, a quantidade de registros e a amostra inicial.</p>
+<h4 id="1)-quantos-campos-possui-a-linha-de-cabe%C3%A7alho-do-arquivo" tabindex="-1">1) Quantos campos possui a linha de cabeçalho do arquivo</h4>
+<pre class='hljs'><code><div><span class="hljs-variable">$arquivo</span> = <span class="hljs-string">&#x27;C:\projetos\bancodedados\modulo_05\roteiro_integrador_bdfisc\tabela_anexo_5_sefaz.csv&#x27;</span>
+<span class="hljs-variable">$linhaCabecalho</span> = <span class="hljs-built_in">Get-Content</span> <span class="hljs-variable">$arquivo</span> <span class="hljs-literal">-TotalCount</span> <span class="hljs-number">1</span>
+<span class="hljs-variable">$campos</span> = (<span class="hljs-variable">$linhaCabecalho</span> <span class="hljs-operator">-split</span> <span class="hljs-string">&#x27;\|&#x27;</span>)
+<span class="hljs-variable">$campos</span>.Count
+<span class="hljs-variable">$campos</span>
+</div></code></pre>
+<p><strong>O que observar:</strong> o resultado deve mostrar a quantidade real de colunas do cabeçalho. Como o separador do arquivo é <code>|</code>, o número esperado tende a ser maior do que em arquivos CSV com <code>;</code>.</p>
+<h4 id="2)-quantos-registros-ao-todo-o-arquivo-possui" tabindex="-1">2) Quantos registros ao todo o arquivo possui</h4>
+<pre class='hljs'><code><div><span class="hljs-variable">$arquivo</span> = <span class="hljs-string">&#x27;C:\projetos\bancodedados\modulo_05\roteiro_integrador_bdfisc\tabela_anexo_5_sefaz.csv&#x27;</span>
+<span class="hljs-variable">$registros</span> = (<span class="hljs-built_in">Get-Content</span> <span class="hljs-variable">$arquivo</span>).Count - <span class="hljs-number">1</span>
+<span class="hljs-built_in">Write-Host</span> <span class="hljs-string">&quot;Total de registros em tabela_anexo_5_sefaz.csv: <span class="hljs-variable">$registros</span>&quot;</span>
+</div></code></pre>
+<h4 id="3)-exibir-as-10-primeiras-linhas-no-powershell" tabindex="-1">3) Exibir as 10 primeiras linhas no PowerShell</h4>
+<pre class='hljs'><code><div><span class="hljs-built_in">Get-Content</span> <span class="hljs-string">&#x27;C:\projetos\bancodedados\modulo_05\roteiro_integrador_bdfisc\tabela_anexo_5_sefaz.csv&#x27;</span> <span class="hljs-literal">-TotalCount</span> <span class="hljs-number">11</span>
+</div></code></pre>
+<p><strong>A armadilha:</strong> se o separador estiver incorreto, a contagem de colunas e a carga em massa podem falhar antes mesmo do <code>BULK INSERT</code>.</p>
+<h3 id="observa%C3%A7%C3%B5es-importantes" tabindex="-1">Observações importantes</h3>
+<ul>
+<li>o separador é <code>|</code>;</li>
+<li>existe uma linha de cabeçalho;</li>
+<li>os valores de data vêm em formato com hora, por exemplo <code>2019-05-07 00:00:00</code>;</li>
+<li>campos como <code>MVA_Original</code>, <code>Aliq_Interna</code>, <code>MVA_Original_S/Fid</code> e demais colunas de MVA são numéricos decimais;</li>
+<li>há campos vazios (<code>||</code>) em algumas posições, o que exige tratamento antes da análise;</li>
+<li>o arquivo é um cadastro auxiliar de legislação tributária e não um arquivo de documento fiscal direto.</li>
+</ul>
+<hr>
+<h2 id="3.-caso-de-uso-fiscal-proposto" tabindex="-1">3. Caso de uso fiscal proposto</h2>
+<h3 id="3.1-contexto-da-tabela-do-anexo-5" tabindex="-1">3.1 Contexto da tabela do Anexo 5</h3>
+<p>O Anexo 5 da SEFAZ não é um arquivo de movimentação de comércio, e sim uma tabela normativa de referência. Sua finalidade é materializar as regras tributárias que definem como o ICMS deve ser aplicado sobre determinados produtos, principalmente quando há substituição tributária, operações interestaduais e diferenciação por NCM/CEST.</p>
+<p>Em termos práticos, essa base serve como “mecanismo de validação” para responder as seguintes perguntas:</p>
+<ul>
+<li>o produto está corretamente codificado no CEST/NCM?</li>
+<li>qual alíquota interna deve ser aplicada?</li>
+<li>qual MVA deve incidir sobre a operação?</li>
+<li>a regra é válida para o período da operação?</li>
+<li>o mesmo produto, em diferentes regimes, deve receber tratamento diferente?</li>
+</ul>
+<p>Como o arquivo reúne uma grande quantidade de combinações de produto, porcentagem, faixa de alíquota e vigência, ele se torna uma referência central para auditoria tributária e para validação de impactos sobre crédito, cálculo e cadastro.</p>
+<h3 id="3.2-caso-de-uso%3A-auditoria-de-enquadramento-tribut%C3%A1rio-e-valida%C3%A7%C3%A3o-de-mva-por-cest%2Fncm" tabindex="-1">3.2 Caso de uso: auditoria de enquadramento tributário e validação de MVA por CEST/NCM</h3>
+<p>O objetivo da análise é validar se a mercadoria informada pela empresa, na operação real, está sendo tributada de acordo com a regra oficial vigente no estado. Essa comparação é feita cruzando:</p>
+<ol>
+<li>o produto cadastrado na empresa;</li>
+<li>o CEST e o NCM do item;</li>
+<li>a descrição da mercadoria;</li>
+<li>a alíquota interna e as percentagens de MVA da tabela;</li>
+<li>a data da operação e a vigência da regra.</li>
+</ol>
+<p>Esse tipo de auditoria é especialmente importante quando há risco de:</p>
+<ul>
+<li>cadastro indevido do produto;</li>
+<li>uso de CEST/NCM equivocado;</li>
+<li>tributação com base de cálculo diferente da regra oficial;</li>
+<li>mercadorias sujeitas à substituição tributária sendo tratadas como venda comum;</li>
+<li>divergência entre operação real e base legal do estado.</li>
+</ul>
+<h3 id="3.3-regras-fiscais-com-exemplos-pr%C3%A1ticos" tabindex="-1">3.3 Regras fiscais com exemplos práticos</h3>
+<h4 id="3.3.1-regra-1%3A-cest%2Fncm-corretamente-enquadrado" tabindex="-1">3.3.1 Regra 1: CEST/NCM corretamente enquadrado</h4>
+<p>A primeira regra fiscal é que cada item deve ter o CEST e o NCM compatíveis com a descrição do produto. Se a empresa informa um CEST de uma categoria diferente da mercadoria, haverá risco de cálculo fiscal incorreto.</p>
+<p>Exemplo:</p>
+<ul>
+<li>NCM/SH: 3917</li>
+<li>CEST: 01.002.00</li>
+<li>Descrição: “Tubos e seus acessórios de plásticos”</li>
+</ul>
+<p>Se a empresa estiver vendendo uma mercadoria totalmente diferente, como um componente eletrônico ou catalisador automotivo, mas estiver com o CEST de plástico, o motivo técnico da classificação deve ser revisado. O auditor precisa verificar se o produto do banco da empresa corresponde à descrição da tabela de referência.</p>
+<p>Impacto fiscal:</p>
+<ul>
+<li>Alíquota interna pode ser aplicada de forma errada;</li>
+<li>MVA aplicada pode não refletir o produto real;</li>
+<li>tendência de divergência no ICMS, substituição tributária e crédito.</li>
+</ul>
+<h4 id="3.3.2-regra-2%3A-al%C3%ADquota-interna-v%C3%A1lida-para-o-per%C3%ADodo" tabindex="-1">3.3.2 Regra 2: alíquota interna válida para o período</h4>
+<p>A coluna <code>Aliq_Interna</code> representa a alíquota interna aplicada ao produto. Esse valor precisa ser identificado e comparado com o período da operação. Sempre que a operação ocorrer em um período diferente da vigência da regra, o auditor deve verificar se houve alteração legislativa.</p>
+<p>Exemplo:</p>
+<ul>
+<li><code>Aliq_Interna = 0.18</code></li>
+<li><code>Vigencia_inicial = 2019-05-07 00:00:00</code></li>
+<li><code>Vigencia_final = NULL</code></li>
+</ul>
+<p>Isso indica que, a partir daquela data, o produto passou a ser tributado pela alíquota interna de 18%, desde que a regra continuasse vigente. Se a operação da empresa for de um período posterior, pode haver mudança legislativa que invalidou ou alterou essa regra.</p>
+<p>Impacto fiscal:</p>
+<ul>
+<li>alíquota aplicada em NF-e pode estar acima ou abaixo do correto;</li>
+<li>o auditor deve validar se a empresa usou a alíquota correta no momento da operação.</li>
+</ul>
+<h4 id="3.3.3-regra-3%3A-mva-aplicada-conforme-o-regime-tribut%C3%A1rio" tabindex="-1">3.3.3 Regra 3: MVA aplicada conforme o regime tributário</h4>
+<p>As colunas de MVA representam a margem de valor agregado que será adicionada à base de cálculo em operações sujeitas a substituição tributária ou também em outras regras do ICMS. A MVA altera a base de cálculo, e não apenas o imposto final.</p>
+<p>Exemplo:</p>
+<ul>
+<li><code>MVA_Original = 0.00</code></li>
+<li><code>MVA_Original_S/Fid = 0.7178</code></li>
+<li><code>MVA_S/Fid_Aliq_7% = 0.9482</code></li>
+</ul>
+<p>Aqui o auditor observa que há diferentes formas de estrutura de MVA conforme o regime produto e a situação da mercadoria. O valor 0,7178 significa que a base de cálculo pode ter um incremento de 71,78% sobre o preço do produto, dependendo do regime e da regra aplicável.</p>
+<p>Em termos práticos:</p>
+<ul>
+<li>o mesmo item pode ter MVA diferente conforme o regime específico;</li>
+<li>a MVA incide na base de cálculo, e não somente na operação final;</li>
+<li>a comparação da operação da empresa com o valor administrativo de referência é essencial para detectar divergência.</li>
+</ul>
+<p>Impacto fiscal:</p>
+<ul>
+<li>se a empresa usar MVA diferente da regra vigente, a base de cálculo ficará incorreta;</li>
+<li>o valor do ICMS recolhido ou creditado pode sofrer distorção relevante.</li>
+</ul>
+<h4 id="3.3.4-regra-4%3A-vig%C3%AAncia-de-regras-fiscais-e-dados-temporais" tabindex="-1">3.3.4 Regra 4: vigência de regras fiscais e dados temporais</h4>
+<p>A vigência da regra é um componente crítico. O mesmo NCM ou CEST pode ter uma regra diferente dependendo do período. Quando a regra muda, o arquivo pode ter mais de uma linha para a mesma mercadoria, com períodos distintos.</p>
+<p>Exemplo:</p>
+<ul>
+<li>linha 1: vigência de 2019-05-07 até 2020-12-31;</li>
+<li>linha 2: vigência a partir de 2021-01-01.</li>
+</ul>
+<p>Se a empresa operar em 2020, ela deve usar a linha antiga. Se operar em 2021, precisa usar a nova regra. O auditor precisa sempre filtrar pela data da operação.</p>
+<p>Impacto fiscal:</p>
+<ul>
+<li>comparar um item em um período sem considerar a vigência pode gerar conclusão falsa;</li>
+<li>a correção da base fiscal depende do período correto da regra.</li>
+</ul>
+<h4 id="3.3.5-regra-5%3A-dados-nulos-ou-incompletos" tabindex="-1">3.3.5 Regra 5: dados nulos ou incompletos</h4>
+<p>Em arquivos de legislação, campos vazios podem indicar risco de integridade ou de regra ainda não definida. O arquivo tem campos com sequência vazia (<code>||</code>), o que exige cuidado na carga e na validação.</p>
+<p>Exemplo:</p>
+<ul>
+<li><code>Vigencia_final</code> vazio;</li>
+<li><code>MVA_Original</code> nulo;</li>
+<li><code>Lista</code> ou <code>UF_Signataria</code> vazio;</li>
+<li><code>Legislacao</code> ausente.</li>
+</ul>
+<p>Isso pode querer dizer:</p>
+<ul>
+<li>regra ainda válida até constante revisão;</li>
+<li>dado não informado e que precisa ser conferido;</li>
+<li>base importada incompleta ou com linhas não padronizadas.</li>
+</ul>
+<p>Impacto fiscal:</p>
+<ul>
+<li>a linha pode estar incompleta para decisão automatizada;</li>
+<li>em auditoria, isso exige revisão manual ou tratamento específico para não gerar falso positivo.</li>
+</ul>
+<h4 id="3.3.6-regra-6%3A-cest-repetido-ou-registro-conflitante" tabindex="-1">3.3.6 Regra 6: CEST repetido ou registro conflitante</h4>
+<p>Quando o mesmo CEST aparece com diferentes valores de NCM, MVA ou alíquota no mesmo período, isso pode indicar:</p>
+<ul>
+<li>duplicidade no arquivo;</li>
+<li>atualização parcial do cadastro;</li>
+<li>regra nova no mesmo item sem substituição correta da antiga;</li>
+<li>erro de integração da tabela oficial.</li>
+</ul>
+<p>Exemplo:</p>
+<ul>
+<li><code>CEST 01.001.00</code> aparece em duas linhas;</li>
+<li>a primeira está vinculada ao NCM 38151210;</li>
+<li>a segunda ao NCM 38151290;</li>
+<li>ambas têm diferentes descrições, mas a mesma regra base.</li>
+</ul>
+<p>Se a empresa usar um desses NCMs indevidamente, pode haver enquadramento enganoso. O auditor deve verificar se o registro não é apenas uma duplicidade legítima por variação de produto, mas sim uma regra distinta aplicação da mesma família tributária.</p>
+<p>Impacto fiscal:</p>
+<ul>
+<li>a empresa pode estar tributando o produto de forma inconsistente;</li>
+<li>a base de dados precisa identificar a relação correta entre CEST, NCM e regra aplicada.</li>
+</ul>
+<h4 id="3.3.7-regra-7%3A-origem-e-disponibilidade-da-regra" tabindex="-1">3.3.7 Regra 7: origem e disponibilidade da regra</h4>
+<p>Campos como <code>Origem_Arquivo</code> e <code>Nome_Aba_Planilha</code> servem para rastrear a origem do dado. Em auditoria, isso é importante para provar que a regra foi extraída de uma tabela oficial, de uma planilha do órgão ou de uma revisão específica.</p>
+<p>Exemplo:</p>
+<ul>
+<li><code>Origem_Arquivo = Anexo_5_Autopeças (1).xlsx</code></li>
+<li><code>Nome_Aba_Planilha = AutoPecas</code></li>
+</ul>
+<p>Isso mostra que o dado foi importado de uma planilha específica. Se a empresa usa uma regra diferente da planilha oficial, esse histórico é útil para demonstrar a origem da base e a evidência da regra aplicada.</p>
+<p>Impacto fiscal:</p>
+<ul>
+<li>reforça a rastreabilidade da análise;</li>
+<li>permite ao auditor justificar a decisão técnica em documento de diligência.</li>
+</ul>
+<h3 id="3.4-exemplo-de-caso-realista-de-auditoria" tabindex="-1">3.4 Exemplo de caso realista de auditoria</h3>
+<p>Imagine uma empresa que vende uma peça automotiva com o NCM 3917 e CEST 01.002.00. Quando a operação está sendo fiscalizada, o auditor consulta a tabela do Anexo 5 e verifica:</p>
+<ul>
+<li>o produto está classificado corretamente;</li>
+<li>a alíquota interna é de 18%;</li>
+<li>a MVA está de acordo com a regra vigente;</li>
+<li>a vigência da regra corresponde ao período da operação;</li>
+<li>o regime da mercadoria não exige tratamento especial.</li>
+</ul>
+<p>Se a empresa usou uma alíquota diferente, ou se o NCM foi informado incorretamente, o auditor pode concluir que houve:</p>
+<ul>
+<li>divergência na tributação;</li>
+<li>risco de recolhimento indevido;</li>
+<li>necessidade de ajuste de saldo de ICMS ou de crédito tributário.</li>
+</ul>
+<h3 id="3.5-o-que-a-auditoria-est%C3%A1-validando" tabindex="-1">3.5 O que a auditoria está validando</h3>
+<p>Em resumo, a análise fiscal desta tabela procura responder quatro perguntas principais:</p>
+<ol>
+<li>O produto está classificado no código certo?</li>
+<li>A regra aplicada corresponde ao período correto?</li>
+<li>A alíquota e a MVA estão de acordo com a legislação vigente?</li>
+<li>A operação da empresa reflete essa regra, ou há divergência?</li>
+</ol>
+<p>Essas são as perguntas centrais da auditoria fiscal baseada em tabelas oficiais e em dados de referência.</p>
+<hr>
+<h2 id="4.-estrat%C3%A9gia-de-carga" tabindex="-1">4. Estratégia de carga</h2>
+<p>A melhor prática é separar em camadas:</p>
+<ol>
+<li><code>staging</code> para carga bruta;</li>
+<li>tabela normalizada para conversão de tipos;</li>
+<li>tabela analítica para auditoria fiscal.</li>
+</ol>
+<h3 id="4.1-tabela-de-staging" tabindex="-1">4.1 Tabela de staging</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> SCHEMA staging;
+GO
+
+<span class="hljs-keyword">CREATE TABLE</span> staging.anexo5_sefaz_raw (
+    Tabela_CEST NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    ITEM NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    CEST NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    NCM_SH NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    DESCRICAO NVARCHAR(<span class="hljs-number">2000</span>) <span class="hljs-keyword">NULL</span>,
+    Legislacao NVARCHAR(<span class="hljs-number">2000</span>) <span class="hljs-keyword">NULL</span>,
+    Vigencia_inicial NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    Vigencia_final NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    Aliq_Interna NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Original NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Original_S_Fid NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_S_Fid_Aliq_4 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_S_Fid_Aliq_7 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_S_Fid_Aliq_12 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Original_C_Fid NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_C_Fid_Aliq_4 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_C_Fid_Aliq_7 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_C_Fid_Aliq_12 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    Funcep NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    Pauta_Fiscal NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Aliq_4 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Aliq_7 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Aliq_12 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    Funcep_Bebidas_Gaseificada NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Original_deriv_Petr NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_deriv_Petr_Aliq_4 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_deriv_Petr_Aliq_7 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_deriv_Petr_Aliq_12 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Original_N_deriv_Petr NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_N_deriv_Petr_Aliq_4 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_N_deriv_Petr_Aliq_7 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_N_deriv_Petr_Aliq_12 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Original_Outros_Prod NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Outros_Prod_Aliq_4 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Outros_Prod_Aliq_7 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Outros_Prod_Aliq_12 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    Funcep_Consumo_maior_100Kw_h NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    Lista NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    UF_Signataria NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    Exterior_UF_nao_Signat NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    Ato_Cotepe NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    Origem_Arquivo NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    Nome_Aba_Planilha NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>
+);
+GO
+</div></code></pre>
+<hr>
+<h2 id="5.-bulk-insert" tabindex="-1">5. BULK INSERT</h2>
+<p>Como o separador é <code>|</code>, o comando de carga em massa deve usar esse delimitador e ignorar a primeira linha.</p>
+<pre class='hljs'><code><div>BULK <span class="hljs-keyword">INSERT</span> staging.anexo5_sefaz_raw
+<span class="hljs-keyword">FROM</span> <span class="hljs-string">&#x27;C:\dados\staging\tabela_anexo_5_sefaz.csv&#x27;</span>
+<span class="hljs-keyword">WITH</span> (
+    FIELDTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;|&#x27;</span>,
+    ROWTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;\n&#x27;</span>,
+    FIRSTROW <span class="hljs-operator">=</span> <span class="hljs-number">2</span>,
+    DATAFILETYPE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;char&#x27;</span>,
+    CODEPAGE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;65001&#x27;</span>,
+    TABLOCK,
+    MAXERRORS <span class="hljs-operator">=</span> <span class="hljs-number">100</span>
+);
+</div></code></pre>
+<h3 id="observa%C3%A7%C3%B5es" tabindex="-1">Observações</h3>
+<ul>
+<li>o arquivo parece estar em UTF-8 e em texto puro;</li>
+<li>se houver problema de acesso ao arquivo, copie para um diretório acessível pelo serviço do SQL Server;</li>
+<li>a primeira linha tem o cabeçalho, por isso <code>FIRSTROW = 2</code>.</li>
+</ul>
+<hr>
+<h2 id="6.-normaliza%C3%A7%C3%A3o-dos-dados" tabindex="-1">6. Normalização dos dados</h2>
+<h3 id="tabela-normalizada" tabindex="-1">Tabela normalizada</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE TABLE</span> dbo.anexo5_sefaz_normalizado (
+    Id <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">PRIMARY KEY</span>,
+    Tabela_CEST NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    ITEM <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    CEST NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    NCM_SH NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    DESCRICAO NVARCHAR(<span class="hljs-number">2000</span>) <span class="hljs-keyword">NULL</span>,
+    Legislacao NVARCHAR(<span class="hljs-number">2000</span>) <span class="hljs-keyword">NULL</span>,
+    Vigencia_inicial DATETIME <span class="hljs-keyword">NULL</span>,
+    Vigencia_final DATETIME <span class="hljs-keyword">NULL</span>,
+    Aliq_Interna <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Original <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Original_S_Fid <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_S_Fid_Aliq_4 <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_S_Fid_Aliq_7 <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_S_Fid_Aliq_12 <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Original_C_Fid <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_C_Fid_Aliq_4 <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_C_Fid_Aliq_7 <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_C_Fid_Aliq_12 <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    Funcep <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    Pauta_Fiscal NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Aliq_4 <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Aliq_7 <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Aliq_12 <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    Funcep_Bebidas_Gaseificada NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Original_deriv_Petr <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_deriv_Petr_Aliq_4 <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_deriv_Petr_Aliq_7 <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_deriv_Petr_Aliq_12 <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Original_N_deriv_Petr <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_N_deriv_Petr_Aliq_4 <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_N_deriv_Petr_Aliq_7 <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_N_deriv_Petr_Aliq_12 <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Original_Outros_Prod <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Outros_Prod_Aliq_4 <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Outros_Prod_Aliq_7 <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    MVA_Outros_Prod_Aliq_12 <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    Funcep_Consumo_maior_100Kw_h <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+    Lista NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    UF_Signataria NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    Exterior_UF_nao_Signat NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    Ato_Cotepe NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    Origem_Arquivo NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    Nome_Aba_Planilha NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>
+);
+GO
+</div></code></pre>
+<h3 id="transforma%C3%A7%C3%A3o-dos-campos-principais" tabindex="-1">Transformação dos campos principais</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">INSERT INTO</span> dbo.anexo5_sefaz_normalizado (
+    Tabela_CEST,
+    ITEM,
+    CEST,
+    NCM_SH,
+    DESCRICAO,
+    Legislacao,
+    Vigencia_inicial,
+    Vigencia_final,
+    Aliq_Interna,
+    MVA_Original,
+    MVA_Original_S_Fid,
+    MVA_S_Fid_Aliq_4,
+    MVA_S_Fid_Aliq_7,
+    MVA_S_Fid_Aliq_12,
+    MVA_Original_C_Fid,
+    MVA_C_Fid_Aliq_4,
+    MVA_C_Fid_Aliq_7,
+    MVA_C_Fid_Aliq_12,
+    Funcep,
+    Pauta_Fiscal,
+    MVA_Aliq_4,
+    MVA_Aliq_7,
+    MVA_Aliq_12,
+    Origem_Arquivo,
+    Nome_Aba_Planilha
+)
+<span class="hljs-keyword">SELECT</span>
+    LTRIM(RTRIM(Tabela_CEST)),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), ITEM),
+    LTRIM(RTRIM(CEST)),
+    LTRIM(RTRIM(NCM_SH)),
+    LTRIM(RTRIM(DESCRICAO)),
+    LTRIM(RTRIM(Legislacao)),
+    TRY_CONVERT(DATETIME, Vigencia_inicial),
+    TRY_CONVERT(DATETIME, Vigencia_final),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(Aliq_Interna, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Original, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Original_S_Fid, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_S_Fid_Aliq_4, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_S_Fid_Aliq_7, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_S_Fid_Aliq_12, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Original_C_Fid, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_C_Fid_Aliq_4, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_C_Fid_Aliq_7, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_C_Fid_Aliq_12, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), Funcep),
+    LTRIM(RTRIM(Pauta_Fiscal)),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Aliq_4, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Aliq_7, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Aliq_12, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+    LTRIM(RTRIM(Origem_Arquivo)),
+    LTRIM(RTRIM(Nome_Aba_Planilha))
+<span class="hljs-keyword">FROM</span> staging.anexo5_sefaz_raw;
+</div></code></pre>
+<hr>
+<h2 id="7.-auditoria-fiscal-sugerida" tabindex="-1">7. Auditoria fiscal sugerida</h2>
+<p>A seção 3 definiu as regras fiscais que devem orientar a análise. Agora, esta seção transforma esses princípios em verificações concretas sobre as tabelas geradas no esquema <code>fisc</code> pelo próprio script do BDFISC. As consultas abaixo usam objetos reais do banco, como <code>fisc.anexo5_sefaz_normalizado</code> e as tabelas produzidas pelas procedures, como <code>fisc.TB_138_PR_SAIDAS_ITENS_PARA_ANALISE_REGISTROS</code> e <code>fisc.TB_134_PR_SAIDAS_LANCADAS_C190_COM_DEBITO_A_MENOR_ICMS_02</code>.</p>
+<h3 id="7.1-auditoria-de-produto-com-al%C3%ADquota-ou-mva-nula" tabindex="-1">7.1 Auditoria de produto com alíquota ou MVA nula</h3>
+<p>Conectando com a seção 3.3.2 e 3.3.5:</p>
+<ul>
+<li>a alíquota interna precisa estar correta para a regra vigente;</li>
+<li>a MVA precisa existir quando o produto estiver em substituição tributária ou em regime da tabela;</li>
+<li>campos nulos podem indicar regra incompleta, falha de importação ou classificação ainda não validada.</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    CEST,
+    NCM_SH,
+    DESCRICAO,
+    Aliq_Interna,
+    MVA_Original,
+    Vigencia_inicial,
+    Vigencia_final
+<span class="hljs-keyword">FROM</span> fisc.anexo5_sefaz_normalizado
+<span class="hljs-keyword">WHERE</span> Aliq_Interna <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+   <span class="hljs-keyword">OR</span> MVA_Original <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+   <span class="hljs-keyword">OR</span> CEST <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+   <span class="hljs-keyword">OR</span> NCM_SH <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>;
+</div></code></pre>
+<h4 id="explica%C3%A7%C3%A3o-da-auditoria" tabindex="-1">Explicação da auditoria</h4>
+<p>Essa consulta localiza registros da tabela de referência do Anexo 5 que podem comprometer a legalidade do cálculo tributário. Se um item tiver <code>Aliq_Interna</code> nula, a empresa não terá base para identificar a alíquota aplicável. Se a <code>MVA_Original</code> estiver nula em um caso em que há expectativa de substituição tributária, pode haver regra incompleta, classificação errada ou falha de importação.</p>
+<p>Em termos de risco fiscal, isso pode levar a:</p>
+<ul>
+<li>tributação indevida;</li>
+<li>base de cálculo inconsistente;</li>
+<li>inconsistência entre operação real e regra normativa;</li>
+<li>perda de evidência para defesa do contribuinte ou da fiscalização.</li>
+</ul>
+<hr>
+<h3 id="7.2-auditoria-de-vig%C3%AAncia-inconsistente" tabindex="-1">7.2 Auditoria de vigência inconsistente</h3>
+<p>Conectando com a seção 3.3.4:</p>
+<ul>
+<li>a regra tributária muda com o tempo;</li>
+<li>o mesmo NCM ou CEST pode ter regra diferente em períodos distintos;</li>
+<li>a vigência da regra deve sempre ser validada antes da comparação com a operação.</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    CEST,
+    NCM_SH,
+    DESCRICAO,
+    Vigencia_inicial,
+    Vigencia_final
+<span class="hljs-keyword">FROM</span> fisc.anexo5_sefaz_normalizado
+<span class="hljs-keyword">WHERE</span> Vigencia_inicial <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+   <span class="hljs-keyword">OR</span> (Vigencia_final <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">AND</span> Vigencia_final <span class="hljs-operator">&lt;</span> Vigencia_inicial);
+</div></code></pre>
+<h4 id="explica%C3%A7%C3%A3o-da-auditoria-1" tabindex="-1">Explicação da auditoria</h4>
+<p>Essa auditoria valida se as datas da regra têm consistência temporal. Se a vigência final for anterior à inicial, ou se a data inicial for nula, a regra está problemática. Isso é relevante porque o mesmo item pode ser tributado de maneira diferente em diferentes datas.</p>
+<p>Exemplo prático:</p>
+<ul>
+<li>operação em 2020;</li>
+<li>regra validada no arquivo para 2021;</li>
+<li>sem correção de vigência, o auditor pode comparar o produto com a regra errada.</li>
+</ul>
+<p>Em auditoria fiscal isso é importante porque o cálculo do imposto depende do período em que a regra entrou em vigor e da regra aplicável naquele momento. A comparação sem considerar vigência pode gerar conclusões falsas.</p>
+<hr>
+<h3 id="7.3-auditoria-de-duplicidade-do-cest-para-o-mesmo-ncm-com-valores-conflitantes" tabindex="-1">7.3 Auditoria de duplicidade do CEST para o mesmo NCM com valores conflitantes</h3>
+<p>Conectando com a seção 3.3.6:</p>
+<ul>
+<li>CEST duplicado pode indicar regra conflitante;</li>
+<li>a mesma mercadoria não deve aparecer com MVA ou alíquota simultaneamente divergentes sem justificativa;</li>
+<li>conflitos são sinais de atualização incompleta ou cadastro inconsistentes.</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    CEST,
+    NCM_SH,
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> Qtde_Registros,
+    <span class="hljs-built_in">MIN</span>(Aliq_Interna) <span class="hljs-keyword">AS</span> Aliq_Min,
+    <span class="hljs-built_in">MAX</span>(Aliq_Interna) <span class="hljs-keyword">AS</span> Aliq_Max,
+    <span class="hljs-built_in">MIN</span>(MVA_Original) <span class="hljs-keyword">AS</span> MVA_Min,
+    <span class="hljs-built_in">MAX</span>(MVA_Original) <span class="hljs-keyword">AS</span> MVA_Max
+<span class="hljs-keyword">FROM</span> fisc.anexo5_sefaz_normalizado
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> CEST, NCM_SH
+<span class="hljs-keyword">HAVING</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-operator">&gt;</span> <span class="hljs-number">1</span>;
+</div></code></pre>
+<h4 id="explica%C3%A7%C3%A3o-da-auditoria-2" tabindex="-1">Explicação da auditoria</h4>
+<p>Essa consulta verifica se o mesmo CEST/NCM aparece mais de uma vez com parâmetros diferentes. Quando isso ocorre, pode haver mais de um cenário de tributação para o mesmo produto, o que só pode ser aceitável se houver diferença real de vigência, situação tributária ou regra específica.</p>
+<p>Exemplo:</p>
+<ul>
+<li>um mesmo CEST aparece em dois registros;</li>
+<li>primeiro registro tem MVA 0,7178;</li>
+<li>segundo registro tem MVA 0,5000;</li>
+<li>ambos parecem válidos, mas sem diferença de vigência ou regime explícito.</li>
+</ul>
+<p>Nesse caso, o auditor deve investigar se houve:</p>
+<ul>
+<li>atualização da regra sem exclusão do registro antigo;</li>
+<li>erro de importação;</li>
+<li>classificação da mercadoria em regra diferente sem ajuste do produto;</li>
+<li>falha de rastreabilidade da tabela oficial.</li>
+</ul>
+<p>Esse tipo de problema pode gerar risco de tributação inconsistente e de sua base de cálculo ser aplicada de maneira incorreta.</p>
+<hr>
+<h3 id="7.4-auditoria-de-enquadramento-do-produto-por-cest%2Fncm-e-descri%C3%A7%C3%A3o" tabindex="-1">7.4 Auditoria de enquadramento do produto por CEST/NCM e descrição</h3>
+<p>Conectando com a seção 3.3.1:</p>
+<ul>
+<li>a descrição da mercadoria precisa coincidir com o seu enquadramento tributário;</li>
+<li>o mesmo CEST/NCM deve representar a categoria correta do produto;</li>
+<li>o auditor usa a descrição para validar o código fiscal escolhido pela empresa.</li>
+</ul>
+<p>A regra aqui é qualitativa e normalmente é aplicada em cruzamento entre a tabela do Anexo 5 e a tabela de itens gerada pela procedure fiscal.</p>
+<h4 id="exemplo-de-valida%C3%A7%C3%A3o-com-tabela-gerada-pela-procedure" tabindex="-1">Exemplo de validação com tabela gerada pela procedure</h4>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    a.CEST,
+    a.NCM_SH,
+    a.DESCRICAO,
+    b.ITEMNF_CPROD,
+    b.ITEMNF_XPROD,
+    b.ITEMNF_NCM,
+    b.ITEMNF_CEST
+<span class="hljs-keyword">FROM</span> fisc.anexo5_sefaz_normalizado a
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> fisc.TB_138_PR_SAIDAS_ITENS_PARA_ANALISE_REGISTROS b
+    <span class="hljs-keyword">ON</span> a.NCM_SH <span class="hljs-operator">=</span> b.ITEMNF_NCM
+<span class="hljs-keyword">WHERE</span> a.CEST <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">AND</span> b.ITEMNF_CPROD <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+  <span class="hljs-keyword">AND</span> <span class="hljs-built_in">LOWER</span>(a.DESCRICAO) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">LOWER</span>(b.ITEMNF_XPROD) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;%&#x27;</span>;
+</div></code></pre>
+<h4 id="explica%C3%A7%C3%A3o-da-auditoria-3" tabindex="-1">Explicação da auditoria</h4>
+<p>Essa auditoria busca itens em que o produto da operação não corresponde à descrição tributária do CEST/NCM. Ela se aplica diretamente ao fluxo da procedure de saídas (<code>TB_138 ... REGISTROS</code>), que traz os itens fiscais reais da empresa. Em termos práticos, um produto pode estar sendo classificado por NCM/CEST diferente do que a tabela oficial prevê.</p>
+<p>Risco fiscal:</p>
+<ul>
+<li>tributação por categoria errada;</li>
+<li>crédito indevido ou excesso de carga tributária;</li>
+<li>necessidade de ajuste de estoque e de notas fiscais;</li>
+<li>inconsistência em relação à legislação oficial.</li>
+</ul>
+<hr>
+<h3 id="7.5-auditoria-de-vig%C3%AAncia-e-regra-aplic%C3%A1vel-ao-per%C3%ADodo-da-opera%C3%A7%C3%A3o" tabindex="-1">7.5 Auditoria de vigência e regra aplicável ao período da operação</h3>
+<p>Conectando com a seção 3.3.4 e 3.3.7:</p>
+<ul>
+<li>a regra válida para a operação é aquela que está ativa na data do evento;</li>
+<li>o auditor precisa verificar se o produto foi tributado pela regra correta em cada momento.</li>
+</ul>
+<p>A lógica é simples: comparar a data do documento fiscal com a vigência da regra aplicada.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    n.NF_CHAVE_ACESSO,
+    n.NF_DHEMI,
+    n.ITEMNF_NCM,
+    n.ITEMNF_CEST,
+    a.CEST <span class="hljs-keyword">AS</span> CEST_TABELA,
+    a.Vigencia_inicial,
+    a.Vigencia_final,
+    a.Aliq_Interna,
+    a.MVA_Original
+<span class="hljs-keyword">FROM</span> fisc.TB_138_PR_SAIDAS_ITENS_PARA_ANALISE_REGISTROS n
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> fisc.anexo5_sefaz_normalizado a
+    <span class="hljs-keyword">ON</span> n.ITEMNF_NCM <span class="hljs-operator">=</span> a.NCM_SH
+<span class="hljs-keyword">WHERE</span> n.NF_DHEMI <span class="hljs-operator">&gt;=</span> a.Vigencia_inicial
+  <span class="hljs-keyword">AND</span> (a.Vigencia_final <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">OR</span> n.NF_DHEMI <span class="hljs-operator">&lt;=</span> a.Vigencia_final)
+  <span class="hljs-keyword">AND</span> n.ITEMNF_NCM <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>;
+</div></code></pre>
+<h4 id="explica%C3%A7%C3%A3o-da-auditoria-4" tabindex="-1">Explicação da auditoria</h4>
+<p>Essa análise é a peça central da validação fiscal por tempo. Se a operação foi realizada em um período em que a regra vigente era outra, a empresa pode estar recolhendo ou creditando ICMS de forma inadequada. Ela usa a tabela gerada pela procedure de saídas (<code>TB_138...REGISTROS</code>) e compara a data da nota com as datas da regra do Anexo 5.</p>
+<p>Assim, a regra “vigência correta” se conecta diretamente à regra trazida na seção 3: o imposto depende do momento em que a operação ocorreu.</p>
+<hr>
+<h3 id="7.6-auditoria-de-diverg%C3%AAncia-de-icms-em-sa%C3%ADdas-geradas-pela-procedure-fiscal" tabindex="-1">7.6 Auditoria de divergência de ICMS em saídas geradas pela procedure fiscal</h3>
+<p>Além das verificações sobre o Anexo 5, o próprio script do BDFISC já monta tabelas de resultado para auditoria fiscal. Um exemplo clássico é a tabela gerada pela procedure 134, que identifica saídas com ICMS declarado em valor inferior ao informado no C190.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    IDENTIFICADOR_TABELA,
+    REG0_PERIODO_DECLARACAO,
+    NF_CHAVE_ACESSO,
+    NF_NNF,
+    NF_SERIE,
+    NF_DHEMI,
+    NF_VICMS,
+    C100_VL_ICMS,
+    NF_VICMS_MENOS_C100_VL_ICMS
+<span class="hljs-keyword">FROM</span> fisc.TB_134_PR_SAIDAS_LANCADAS_C190_COM_DEBITO_A_MENOR_ICMS_02
+<span class="hljs-keyword">WHERE</span> NF_VICMS_MENOS_C100_VL_ICMS <span class="hljs-operator">&lt;</span> <span class="hljs-number">0</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> NF_DHEMI <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<h4 id="explica%C3%A7%C3%A3o-da-auditoria-5" tabindex="-1">Explicação da auditoria</h4>
+<p>Essa consulta usa uma tabela de resultado diretamente gerada pela procedure fiscal para detectar oportunidades de ajuste e inconsistências de ICMS na saída. O campo <code>NF_VICMS_MENOS_C100_VL_ICMS</code> mostra o desvio entre o valor do ICMS da nota e o valor contabilizado no registro C100/C190. Quando esse valor fica negativo, a empresa pode estar reconhecendo menos imposto do que a legislação exige.</p>
+<p>Essa é uma boa ilustração do fluxo real do BDFISC: a procedure gera uma tabela de auditoria, e a equipe usa essa tabela como base para análise de risco e revisão contábil/fiscal.</p>
+<hr>
+<h3 id="7.7-resumo-da-liga%C3%A7%C3%A3o-entre-se%C3%A7%C3%A3o-3-e-se%C3%A7%C3%A3o-7" tabindex="-1">7.7 Resumo da ligação entre seção 3 e seção 7</h3>
+<p>A seção 3 definiu os princípios jurídicos e tributários. A seção 7 transforma esses princípios em consultas e indicadores sobre as tabelas resultantes do BDFISC. Em outras palavras:</p>
+<ul>
+<li>regra de alíquota e MVA → auditoria de campos nulos e valores divergentes em <code>fisc.anexo5_sefaz_normalizado</code>;</li>
+<li>regra de vigência → auditoria de datas e conflitos temporais no Anexo 5 e em itens de saída (<code>TB_138...</code>);</li>
+<li>regra de CEST/NCM correto → auditoria de descrições e cruzamento com os itens fiscais reais da operação;</li>
+<li>regra de duplicidade e inconsistência → auditoria de conflito entre registros da mesma categoria;</li>
+<li>regra de apuração e ICMS → uso das tabelas geradas por procedures, como <code>TB_134...</code> e <code>TB_138...</code>, como evidência de auditoria e acompanhamento fiscal.</li>
+</ul>
+<p>Essas auditorias não são apenas técnicas; elas representam a forma pela qual a empresa e o auditor validam se a tributação está alinhada com a legislação oficial.</p>
+<hr>
+<h2 id="8.-stored-procedure-para-automatizar-o-processo" tabindex="-1">8. Stored procedure para automatizar o processo</h2>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">PROCEDURE</span> dbo.usp_carga_anexo5_sefaz
+    <span class="hljs-variable">@ArquivoCSV</span> NVARCHAR(<span class="hljs-number">4000</span>)
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">SET</span> NOCOUNT <span class="hljs-keyword">ON</span>;
+
+    <span class="hljs-keyword">BEGIN</span> TRY
+        <span class="hljs-keyword">TRUNCATE</span> <span class="hljs-keyword">TABLE</span> staging.anexo5_sefaz_raw;
+
+        BULK <span class="hljs-keyword">INSERT</span> staging.anexo5_sefaz_raw
+        <span class="hljs-keyword">FROM</span> <span class="hljs-variable">@ArquivoCSV</span>
+        <span class="hljs-keyword">WITH</span> (
+            FIELDTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;|&#x27;</span>,
+            ROWTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;\n&#x27;</span>,
+            FIRSTROW <span class="hljs-operator">=</span> <span class="hljs-number">2</span>,
+            DATAFILETYPE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;char&#x27;</span>,
+            CODEPAGE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;65001&#x27;</span>,
+            TABLOCK,
+            MAXERRORS <span class="hljs-operator">=</span> <span class="hljs-number">100</span>
+        );
+
+        <span class="hljs-keyword">INSERT INTO</span> dbo.anexo5_sefaz_normalizado (
+            Tabela_CEST,
+            ITEM,
+            CEST,
+            NCM_SH,
+            DESCRICAO,
+            Legislacao,
+            Vigencia_inicial,
+            Vigencia_final,
+            Aliq_Interna,
+            MVA_Original,
+            MVA_Original_S_Fid,
+            MVA_S_Fid_Aliq_4,
+            MVA_S_Fid_Aliq_7,
+            MVA_S_Fid_Aliq_12,
+            MVA_Original_C_Fid,
+            MVA_C_Fid_Aliq_4,
+            MVA_C_Fid_Aliq_7,
+            MVA_C_Fid_Aliq_12,
+            Funcep,
+            Pauta_Fiscal,
+            MVA_Aliq_4,
+            MVA_Aliq_7,
+            MVA_Aliq_12,
+            Origem_Arquivo,
+            Nome_Aba_Planilha
+        )
+        <span class="hljs-keyword">SELECT</span>
+            LTRIM(RTRIM(Tabela_CEST)),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), ITEM),
+            LTRIM(RTRIM(CEST)),
+            LTRIM(RTRIM(NCM_SH)),
+            LTRIM(RTRIM(DESCRICAO)),
+            LTRIM(RTRIM(Legislacao)),
+            TRY_CONVERT(DATETIME, Vigencia_inicial),
+            TRY_CONVERT(DATETIME, Vigencia_final),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(Aliq_Interna, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Original, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Original_S_Fid, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_S_Fid_Aliq_4, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_S_Fid_Aliq_7, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_S_Fid_Aliq_12, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Original_C_Fid, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_C_Fid_Aliq_4, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_C_Fid_Aliq_7, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_C_Fid_Aliq_12, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), Funcep),
+            LTRIM(RTRIM(Pauta_Fiscal)),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Aliq_4, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Aliq_7, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Aliq_12, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+            LTRIM(RTRIM(Origem_Arquivo)),
+            LTRIM(RTRIM(Nome_Aba_Planilha))
+        <span class="hljs-keyword">FROM</span> staging.anexo5_sefaz_raw;
+
+        <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;Carga do Anexo 5 concluída com sucesso.&#x27;</span> <span class="hljs-keyword">AS</span> Resultado;
+
+    <span class="hljs-keyword">END</span> TRY
+    <span class="hljs-keyword">BEGIN</span> CATCH
+        <span class="hljs-keyword">SELECT</span>
+            ERROR_NUMBER() <span class="hljs-keyword">AS</span> NumeroErro,
+            ERROR_MESSAGE() <span class="hljs-keyword">AS</span> MensagemErro;
+        THROW;
+    <span class="hljs-keyword">END</span> CATCH
+<span class="hljs-keyword">END</span>;
+GO
+</div></code></pre>
+<h3 id="execu%C3%A7%C3%A3o-da-procedure" tabindex="-1">Execução da procedure</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> dbo.usp_carga_anexo5_sefaz
+    <span class="hljs-variable">@ArquivoCSV</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;C:\dados\staging\tabela_anexo_5_sefaz.csv&#x27;</span>;
+</div></code></pre>
+<hr>
+<h2 id="9.-conclus%C3%A3o" tabindex="-1">9. Conclusão</h2>
+<p>O arquivo do Anexo 5 é um excelente material para análise fiscal de enquadramento tributário porque reúne:</p>
+<ul>
+<li>CEST;</li>
+<li>NCM/SH;</li>
+<li>descrição da mercadoria;</li>
+<li>legislação de referência;</li>
+<li>vigência;</li>
+<li>MVA e alíquotas;</li>
+<li>origem do arquivo e aba da planilha.</li>
+</ul>
+<p>Esse cenário é ideal para:</p>
+<ul>
+<li>carga em staging;</li>
+<li><code>BULK INSERT</code> em SQL Server;</li>
+<li>normalização de campos numéricos e datas;</li>
+<li>auditoria fiscal de tributos indiretos;</li>
+<li>automação por stored procedure.</li>
+</ul>
+<p>Se quiser, o próximo passo pode ser criar um script SQL completo, já pronto para executar no banco, com todas as tabelas e as queries de auditoria montadas em um único bloco.</p>
+
+    </div>
+</body>
+</html>

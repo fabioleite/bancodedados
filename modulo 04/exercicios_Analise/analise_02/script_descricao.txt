@@ -1,0 +1,27 @@
+CONSULTA 02: Relacionar os CTE emitidos por transportadoras de outras unidades da federação, cujo tomador/remetente trata-se do contribuinte auditado. Esse procedimento visa verificar se o ICMS sobre o frete foi devidamente recolhido ao estado da Paraíba, quando o inicio da prestação do serviço se deu neste estado.
+
+1.	TABELAS DO BDFISC A SEREM UTILIZADAS:
+a.	TB_201_PR_XML_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01 (TB_01);
+b.	TB_217_PR_XML_CTE_PROPRIOS_E_TERCEIROS_VINCULADO_A_NFE_02 (TB_02);
+
+2.	TABELA A SER IMPORTADA DO ATF (TB_03)
+1.	Iremos precisar de uma tabela a  ser exportada do ATF onde conste pagamentos ( DAR ou GNRE) das transportadoras que efetuaram a prestação de serviço ao contribuinte auditado.
+2.	Nesta tabela deve conter, no mínimo, as seguintes colunas:
+a.	Numero do cnpj do transportador;
+b.	Numero do DAR/GNRE;
+c.	Numero das chaves dos CTE relacionados a GNRE;
+d.	Valor principal do ICMS recolhido.
+
+3.	CONSTRUÇÃO DA NOVA CONSULTA (EXIBIÇÃO) PARA EXIBIR OS TRANSPORTADORES DE OUTRAS UF QUE DEIXARAM DE PAGAR O FRETE
+a.	Na TB_01 constam os documentos fiscais modelo 55 (nfe) de emissão própria visto que queremos saber o valor do frete, neles destacado, nas operações de saída de mercadorias com os seguintes filtros:
+i.	NF_SITUACAO (autorizados);
+ii.	NF_CPF_CNPJ_DESTINATARIO (diferente do emitente).
+b.	Na TB_02 constam os documentos fiscais modelo 57 (cte) emitidos por terceiros relacionados aos documentos fiscais de saídas de mercadorias com frete na modalidade CIF com os seguintes filtros:
+i.	CTE_CPF_CNPJ_TOMADOR (igual ao cnpj do emitente da NFE);
+ii.	CTE_SITUACAO (eliminar os cancelados ou denegados)
+iii.	CTE_UF_EMIT (diferente de “PB”)
+c.	Na TB_03 constam os pagamentos efetuados para os CTE das operações contratadas pelo contribuinte em auditoria (tomador/remetente) para exibir o numero da GNRE e o valor pago;
+d.	Devemos utilizar as tabelas acima relacionando os campos em comum entre elas na seguinte sequencia:
+i.	Relacionar a TB_01 com a TB_02
+ii.	Relacionar a TB_02 com a TB_03
+e.	Escolher outros campos que achar necessários para a consulta.

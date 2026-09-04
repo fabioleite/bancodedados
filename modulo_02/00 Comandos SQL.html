@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>00 Comandos SQL.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 id="m%C3%B3dulo%3A-comandos-sql-%E2%80%94-classifica%C3%A7%C3%A3o-e-fundamentos-em-t-sql-(sql-server)" tabindex="-1">Módulo: Comandos SQL — Classificação e Fundamentos em T-SQL (SQL Server)</h1>
+<p><strong>Curso:</strong> Banco de Dados Relacionais aplicado à Administração Tributária
+<strong>Público-alvo:</strong> Profissionais da Secretaria de Estado da Fazenda da Paraíba (SEFAZ-PB)
+<strong>SGBD utilizado:</strong> Microsoft SQL Server (T-SQL) — ferramenta: SQL Server Management Studio (SSMS)
+<strong>Carga horária sugerida:</strong> 4 horas (2h teoria + 2h prática)</p>
+<hr>
+<h2 id="sum%C3%A1rio" tabindex="-1">Sumário</h2>
+<ol>
+<li><a href="#1-objetivos-do-m%C3%B3dulo">Objetivos do Módulo</a></li>
+<li><a href="#2-o-que-%C3%A9-sql-e-o-padr%C3%A3o-ansiiso">O que é SQL e o Padrão ANSI/ISO</a></li>
+<li><a href="#3-classifica%C3%A7%C3%A3o-das-subdivis%C3%B5es-da-linguagem-sql">Classificação das Subdivisões da Linguagem SQL</a></li>
+<li><a href="#4-ddl--data-definition-language">DDL — Data Definition Language</a></li>
+<li><a href="#5-dml--data-manipulation-language">DML — Data Manipulation Language</a></li>
+<li><a href="#6-dql--data-query-language">DQL — Data Query Language</a></li>
+<li><a href="#7-dcl--data-control-language">DCL — Data Control Language</a></li>
+<li><a href="#8-tcl--transaction-control-language">TCL — Transaction Control Language</a></li>
+<li><a href="#9-tabela-resumo-comparativa">Tabela-Resumo Comparativa</a></li>
+<li><a href="#10-cen%C3%A1rio-integrado-um-fluxo-fiscal-completo">Cenário Integrado: Um Fluxo Fiscal Completo</a></li>
+<li><a href="#11-boas-pr%C3%A1ticas-em-ambiente-de-produ%C3%A7%C3%A3o-fiscal">Boas Práticas em Ambiente de Produção Fiscal</a></li>
+<li><a href="#12-gloss%C3%A1rio">Glossário</a></li>
+<li><a href="#13-refer%C3%AAncias">Referências</a></li>
+</ol>
+<hr>
+<h2 id="1.-objetivos-do-m%C3%B3dulo" tabindex="-1">1. Objetivos do Módulo</h2>
+<p>Ao final deste módulo, o participante será capaz de:</p>
+<ul>
+<li>Reconhecer as cinco subdivisões clássicas da linguagem SQL (DDL, DML, DQL, DCL, TCL) e identificar a qual grupo pertence cada comando.</li>
+<li>Explicar, com exemplos do domínio fiscal, a finalidade de cada comando dentro do T-SQL do SQL Server.</li>
+<li>Diferenciar comandos que alteram a <strong>estrutura</strong> do banco (DDL) dos que alteram os <strong>dados</strong> (DML), dos que apenas <strong>consultam</strong> (DQL), dos que controlam <strong>acesso</strong> (DCL) e dos que controlam <strong>transações</strong> (TCL).</li>
+<li>Compreender particularidades do T-SQL que vão além do padrão ANSI ilustrado na figura de referência (ex.: <code>DENY</code>, <code>SAVE TRANSACTION</code>, <code>TRUNCATE TABLE</code>, <code>MERGE</code>).</li>
+<li>Usar essa classificação como mapa mental para navegar o restante do curso.</li>
+</ul>
+<hr>
+<h2 id="2.-o-que-%C3%A9-sql-e-o-padr%C3%A3o-ansi%2Fiso" tabindex="-1">2. O que é SQL e o Padrão ANSI/ISO</h2>
+<p><strong>SQL (Structured Query Language)</strong> é a linguagem declarativa padronizada (ANSI X3.135 e ISO/IEC 9075) para definir, manipular, consultar e controlar dados em bancos de dados relacionais. &quot;Declarativa&quot; significa que o usuário descreve <strong>o que</strong> deseja obter ou alterar, e o <em>otimizador de consultas</em> do SGBD decide <strong>como</strong> executar essa operação da forma mais eficiente.</p>
+<p>O <strong>T-SQL (Transact-SQL)</strong> é o dialeto de SQL implementado pela Microsoft no SQL Server (e no Azure SQL Database). Ele segue o núcleo do padrão ANSI, mas adiciona:</p>
+<ul>
+<li>Extensões procedurais (<code>IF</code>, <code>WHILE</code>, <code>BEGIN...END</code>, variáveis <code>@variavel</code>, cursores).</li>
+<li>Objetos programáveis (procedures, functions, triggers) com sintaxe própria.</li>
+<li>Comandos e cláusulas específicas (<code>TOP</code>, <code>OUTPUT</code>, <code>MERGE</code>, <code>TRY...CATCH</code>, <code>THROW</code>, <code>sp_rename</code>, <code>sp_help</code>).</li>
+<li>Metadados acessíveis via <em>system views</em> (<code>sys.tables</code>, <code>sys.columns</code>) e <em>Dynamic Management Views</em> (DMVs).</li>
+</ul>
+<p>Este módulo usa a figura abaixo — que resume a classificação padrão da linguagem SQL — como ponto de partida, sempre trazendo a leitura específica do T-SQL para cada grupo.</p>
+<hr>
+<h2 id="3.-classifica%C3%A7%C3%A3o-das-subdivis%C3%B5es-da-linguagem-sql" tabindex="-1">3. Classificação das Subdivisões da Linguagem SQL</h2>
+<p><img src="sql_comandos.png" alt="Classificação das subdivisões da linguagem SQL: DDL, DML, DCL, TCL e DQL"></p>
+<p>A figura organiza os comandos SQL em cinco grupos funcionais, todos derivados da mesma linguagem-mãe (<code>SQL</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Sigla</th>
+<th>Nome completo</th>
+<th>Função central</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DDL</strong></td>
+<td>Data Definition Language</td>
+<td>Define e altera a <strong>estrutura</strong> do banco de dados (tabelas, índices, views, schemas)</td>
+</tr>
+<tr>
+<td><strong>DML</strong></td>
+<td>Data Manipulation Language</td>
+<td>Manipula os <strong>dados</strong> armazenados nas tabelas (inserir, atualizar, excluir e — em muitas classificações — consultar)</td>
+</tr>
+<tr>
+<td><strong>DQL</strong></td>
+<td>Data Query Language</td>
+<td>Subconjunto do DML dedicado <strong>exclusivamente</strong> à consulta de dados (<code>SELECT</code>), sem alterar nada</td>
+</tr>
+<tr>
+<td><strong>DCL</strong></td>
+<td>Data Control Language</td>
+<td>Controla <strong>permissões e acesso</strong> aos objetos do banco</td>
+</tr>
+<tr>
+<td><strong>TCL</strong></td>
+<td>Transaction Control Language</td>
+<td>Controla o <strong>agrupamento e a integridade</strong> de operações em transações</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Nota sobre o <code>SELECT</code> aparecer em dois grupos:</strong> a figura mostra <code>SELECT</code> tanto em DML quanto em DQL. Isso não é um erro — reflete uma divergência de nomenclatura entre autores. O padrão ANSI original trata <code>SELECT</code> como parte do DML, por histórico da linguagem; didaticamente, porém, muitos materiais (como o desta figura) separam o <code>SELECT</code> em um grupo próprio (DQL) porque ele <strong>não modifica dado nenhum</strong>, ao contrário de <code>INSERT</code>/<code>UPDATE</code>/<code>DELETE</code>. Na documentação oficial da Microsoft para T-SQL, <code>SELECT</code> é listado junto aos demais comandos de &quot;Data Manipulation Language (DML)&quot; — por isso, ao longo deste módulo, tratamos DQL como uma <strong>especialização conceitual</strong> do DML, útil para o raciocínio didático, mas não como uma categoria separada na referência oficial do produto.</p>
+</blockquote>
+<hr>
+<h2 id="4.-ddl-%E2%80%94-data-definition-language" tabindex="-1">4. DDL — Data Definition Language</h2>
+<p><strong>Função:</strong> definir, alterar e remover a <strong>estrutura</strong> dos objetos do banco de dados — tabelas, colunas, índices, views, schemas, constraints. Comandos DDL não manipulam linhas de dados diretamente; eles manipulam o <em>metadado</em> (o &quot;esqueleto&quot;) do banco.</p>
+<p><strong>Característica importante em SQL Server:</strong> a maioria dos comandos DDL é <strong>transacional</strong> (diferente de outros SGBDs, como o MySQL/InnoDB em certas configurações) — ou seja, um <code>CREATE TABLE</code> ou <code>ALTER TABLE</code> dentro de uma transação pode ser desfeito com <code>ROLLBACK</code>, exceto operações que envolvem arquivos físicos (ex.: <code>CREATE DATABASE</code>) ou que exigem <code>GO</code> (fim de lote) para serem finalizadas antes da próxima instrução usar o objeto criado.</p>
+<h3 id="4.1-create-%E2%80%94-criar-objetos" tabindex="-1">4.1 <code>CREATE</code> — criar objetos</h3>
+<p>Cria tabelas, views, índices, schemas, procedures, functions, triggers, entre outros.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> SCHEMA fiscal;
+GO
+
+<span class="hljs-keyword">CREATE TABLE</span> fiscal.contribuinte (
+    id_contribuinte     <span class="hljs-type">INT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">PRIMARY KEY</span>,
+    cnpj                <span class="hljs-type">CHAR</span>(<span class="hljs-number">14</span>) <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">UNIQUE</span>,
+    razao_social         <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">150</span>) <span class="hljs-keyword">NOT NULL</span>,
+    regime_tributario   <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">30</span>) <span class="hljs-keyword">NOT NULL</span>,
+    data_cadastro       DATETIME2 <span class="hljs-keyword">DEFAULT</span> SYSUTCDATETIME()
+);
+</div></code></pre>
+<p><strong>Notas T-SQL:</strong></p>
+<ul>
+<li><code>IDENTITY(seed, increment)</code> é a forma nativa do SQL Server de gerar chaves substitutas autoincrementais (equivalente ao <code>AUTO_INCREMENT</code> do MySQL ou <code>SERIAL</code> do PostgreSQL).</li>
+<li><code>GO</code> não é um comando T-SQL propriamente dito — é um separador de lote (<em>batch</em>) interpretado pelo SSMS/<code>sqlcmd</code>; ele garante que o <code>CREATE SCHEMA</code> seja concluído antes de o próximo lote referenciá-lo.</li>
+<li>Sempre qualificar objetos pelo schema (<code>fiscal.contribuinte</code>, não apenas <code>contribuinte</code>) evita ambiguidade e é boa prática em bases fiscais com múltiplos domínios (<code>fiscal</code>, <code>staging</code>, <code>auditoria</code>).</li>
+</ul>
+<h3 id="4.2-alter-%E2%80%94-alterar-estrutura-existente" tabindex="-1">4.2 <code>ALTER</code> — alterar estrutura existente</h3>
+<p>Modifica um objeto já criado sem precisar recriá-lo do zero.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">ALTER TABLE</span> fiscal.contribuinte
+<span class="hljs-keyword">ADD</span> telefone_contato <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>;
+
+<span class="hljs-keyword">ALTER TABLE</span> fiscal.contribuinte
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">COLUMN</span> razao_social <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">200</span>) <span class="hljs-keyword">NOT NULL</span>;
+</div></code></pre>
+<p><strong>Notas T-SQL:</strong> cada subcomando (<code>ADD</code>, <code>DROP COLUMN</code>, <code>ALTER COLUMN</code>, <code>ADD CONSTRAINT</code>) tem regras próprias de bloqueio e reescrita de página de dados — relevante em tabelas fiscais de grande volume (ver módulo específico de <code>ALTER TABLE</code>, <a href="02%20Alter_table_sqlserver.md">02 Alter_table_sqlserver.md</a>).</p>
+<h3 id="4.3-drop-%E2%80%94-remover-objetos-definitivamente" tabindex="-1">4.3 <code>DROP</code> — remover objetos definitivamente</h3>
+<p>Remove a estrutura <strong>e todos os dados</strong> do objeto, de forma irreversível fora de uma transação explícita.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> fiscal.contribuinte_temp;
+<span class="hljs-keyword">DROP</span> INDEX ix_contribuinte_cnpj <span class="hljs-keyword">ON</span> fiscal.contribuinte;
+</div></code></pre>
+<p><strong>Cuidado:</strong> <code>DROP TABLE</code> remove a definição inteira (colunas, constraints, índices, triggers associados). Em produção fiscal, deve ser precedido de backup ou de confirmação em ambiente de homologação.</p>
+<h3 id="4.4-truncate-%E2%80%94-esvaziar-uma-tabela-rapidamente" tabindex="-1">4.4 <code>TRUNCATE</code> — esvaziar uma tabela rapidamente</h3>
+<p>Remove <strong>todas as linhas</strong> de uma tabela, mas preserva a estrutura (colunas, índices, constraints).</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">TRUNCATE</span> <span class="hljs-keyword">TABLE</span> staging.stg_nfe_bulk;
+</div></code></pre>
+<p><strong>Notas T-SQL:</strong></p>
+<ul>
+<li><code>TRUNCATE TABLE</code> é minimamente registrado no log de transações (ao contrário de <code>DELETE</code>), sendo muito mais rápido para esvaziar tabelas de staging entre cargas.</li>
+<li>Reinicia o contador <code>IDENTITY</code> para o valor de semente original.</li>
+<li>Não pode ser usado se a tabela for referenciada por uma <code>FOREIGN KEY</code> ativa de outra tabela, nem dispara <code>DELETE TRIGGER</code>.</li>
+<li>Embora a figura classifique <code>TRUNCATE</code> como DDL (por afetar a tabela como um todo, sem filtro <code>WHERE</code>), ele é funcionalmente um comando de remoção de dados — outra evidência de que os limites entre DDL/DML nem sempre são absolutos.</li>
+</ul>
+<h3 id="4.5-rename-%E2%80%94-renomear-objetos" tabindex="-1">4.5 <code>RENAME</code> — renomear objetos</h3>
+<p>O padrão ANSI prevê <code>RENAME</code>, mas o <strong>T-SQL não tem esse comando na sua forma pura</strong>. Em SQL Server, renomear é feito pela <em>stored procedure</em> de sistema <code>sp_rename</code>:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> sp_rename <span class="hljs-string">&#x27;fiscal.contribuinte.razao_social&#x27;</span>, <span class="hljs-string">&#x27;nome_empresarial&#x27;</span>, <span class="hljs-string">&#x27;COLUMN&#x27;</span>;
+<span class="hljs-keyword">EXEC</span> sp_rename <span class="hljs-string">&#x27;fiscal.contribuinte_temp&#x27;</span>, <span class="hljs-string">&#x27;contribuinte_backup&#x27;</span>;
+</div></code></pre>
+<p><strong>Cuidado T-SQL:</strong> <code>sp_rename</code> não atualiza automaticamente referências em procedures, views ou textos de definição que citam o nome antigo — é preciso revisar dependências (<code>sys.sql_expression_dependencies</code>) após o rename.</p>
+<hr>
+<h2 id="5.-dml-%E2%80%94-data-manipulation-language" tabindex="-1">5. DML — Data Manipulation Language</h2>
+<p><strong>Função:</strong> manipular os <strong>dados</strong> armazenados nas tabelas — inserir, atualizar e excluir linhas. Diferente do DDL, o DML opera sobre o <strong>conteúdo</strong>, não sobre a estrutura, e cada instrução pode ser desfeita com <code>ROLLBACK</code> enquanto a transação não for confirmada (<code>COMMIT</code>).</p>
+<h3 id="5.1-insert-%E2%80%94-inserir-novos-registros" tabindex="-1">5.1 <code>INSERT</code> — inserir novos registros</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">INSERT INTO</span> fiscal.contribuinte (cnpj, razao_social, regime_tributario)
+<span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;12345678000190&#x27;</span>, <span class="hljs-string">&#x27;Comercial Fiscal LTDA&#x27;</span>, <span class="hljs-string">&#x27;Simples Nacional&#x27;</span>);
+</div></code></pre>
+<p><strong>Variações relevantes em T-SQL:</strong> <code>INSERT ... SELECT</code> (inserir a partir de uma consulta), <code>INSERT ... VALUES</code> com múltiplas linhas, <code>SELECT INTO</code> (cria a tabela e insere em um só comando), <code>BULK INSERT</code> (carga em massa a partir de arquivo), <code>INSERT ... OUTPUT</code> (retorna as linhas inseridas). Esses variantes são detalhados no módulo de inserção de dados (<a href="02%20insercao%20de%20dados/">02 insercao de dados</a>).</p>
+<h3 id="5.2-update-%E2%80%94-atualizar-registros-existentes" tabindex="-1">5.2 <code>UPDATE</code> — atualizar registros existentes</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">UPDATE</span> fiscal.contribuinte
+<span class="hljs-keyword">SET</span> regime_tributario <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;Lucro Presumido&#x27;</span>
+<span class="hljs-keyword">WHERE</span> id_contribuinte <span class="hljs-operator">=</span> <span class="hljs-number">42</span>;
+</div></code></pre>
+<p><strong>Cuidado crítico:</strong> um <code>UPDATE</code> sem cláusula <code>WHERE</code> atualiza <strong>todas as linhas</strong> da tabela. Em bases fiscais, é boa prática testar o filtro antes com um <code>SELECT</code> equivalente, e envolver a operação em uma transação explícita para permitir <code>ROLLBACK</code> em caso de erro.</p>
+<h3 id="5.3-delete-%E2%80%94-excluir-registros" tabindex="-1">5.3 <code>DELETE</code> — excluir registros</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> fiscal.contribuinte
+<span class="hljs-keyword">WHERE</span> id_contribuinte <span class="hljs-operator">=</span> <span class="hljs-number">42</span>;
+</div></code></pre>
+<p><strong>Notas T-SQL:</strong></p>
+<ul>
+<li><code>DELETE</code> é totalmente registrado no log de transações (linha a linha) e dispara <code>DELETE TRIGGER</code>s, ao contrário do <code>TRUNCATE</code>.</li>
+<li>Suporta <code>OUTPUT</code> para capturar as linhas excluídas (útil para auditoria fiscal antes da exclusão definitiva).</li>
+<li>Assim como o <code>UPDATE</code>, exige atenção redobrada ao <code>WHERE</code> — a ausência do filtro apaga a tabela inteira, linha a linha.</li>
+</ul>
+<h3 id="5.4-merge-%E2%80%94-combinar-inser%C3%A7%C3%A3o%2C-atualiza%C3%A7%C3%A3o-e-exclus%C3%A3o-(extens%C3%A3o-t-sql)" tabindex="-1">5.4 <code>MERGE</code> — combinar inserção, atualização e exclusão (extensão T-SQL)</h3>
+<p>Não presente na figura (que segue o núcleo ANSI clássico), mas um comando central no T-SQL moderno para cargas de <em>upsert</em>:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">MERGE</span> fiscal.contribuinte <span class="hljs-keyword">AS</span> destino
+<span class="hljs-keyword">USING</span> staging.stg_contribuinte <span class="hljs-keyword">AS</span> origem
+    <span class="hljs-keyword">ON</span> destino.cnpj <span class="hljs-operator">=</span> origem.cnpj
+<span class="hljs-keyword">WHEN</span> MATCHED <span class="hljs-keyword">THEN</span>
+    <span class="hljs-keyword">UPDATE</span> <span class="hljs-keyword">SET</span> destino.razao_social <span class="hljs-operator">=</span> origem.razao_social
+<span class="hljs-keyword">WHEN</span> <span class="hljs-keyword">NOT</span> MATCHED <span class="hljs-keyword">THEN</span>
+    <span class="hljs-keyword">INSERT</span> (cnpj, razao_social, regime_tributario)
+    <span class="hljs-keyword">VALUES</span> (origem.cnpj, origem.razao_social, origem.regime_tributario);
+</div></code></pre>
+<p>Muito usado em rotinas de consolidação de tabelas de staging para tabelas fiscais definitivas.</p>
+<hr>
+<h2 id="6.-dql-%E2%80%94-data-query-language" tabindex="-1">6. DQL — Data Query Language</h2>
+<p><strong>Função:</strong> consultar e recuperar dados <strong>sem alterar</strong> o estado do banco. Na figura, é representada por um único comando:</p>
+<h3 id="6.1-select-%E2%80%94-consultar-dados" tabindex="-1">6.1 <code>SELECT</code> — consultar dados</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    c.razao_social,
+    c.regime_tributario,
+    <span class="hljs-built_in">COUNT</span>(n.id_nfe) <span class="hljs-keyword">AS</span> total_notas_emitidas
+<span class="hljs-keyword">FROM</span> fiscal.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> fiscal.nota_fiscal <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">ON</span> n.id_contribuinte_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> c.razao_social, c.regime_tributario
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> total_notas_emitidas <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p><strong>Por que o <code>SELECT</code> merece destaque próprio:</strong> é o comando mais usado no dia a dia de qualquer analista fiscal — é através dele que se cruzam notas fiscais, contribuintes, itens e apurações. Em T-SQL, o <code>SELECT</code> ganha cláusulas e recursos extensos além do padrão ANSI:</p>
+<ul>
+<li><code>TOP (n)</code> — limita o número de linhas retornadas (equivalente ao <code>LIMIT</code> de outros SGBDs).</li>
+<li>Funções de janela (<code>OVER</code>, <code>PARTITION BY</code>, <code>ROW_NUMBER()</code>, <code>RANK()</code>) — essenciais para análises fiscais comparativas (ex.: ranking de contribuintes por valor emitido).</li>
+<li><code>STRING_AGG</code>, <code>FOR JSON</code>, <code>FOR XML</code> — formatação de saída.</li>
+<li>CTEs (<code>WITH nome AS (...)</code>) — organização de consultas complexas em blocos nomeados.</li>
+<li><code>APPLY</code> (<code>CROSS APPLY</code> / <code>OUTER APPLY</code>) — junção com subconsultas correlacionadas por linha.</li>
+</ul>
+<p><strong>Por que separar DQL do DML, na prática:</strong> o <code>SELECT</code> <strong>não precisa</strong> de <code>COMMIT</code>/<code>ROLLBACK</code> porque não modifica dados — ele apenas lê. Isso justifica, do ponto de vista didático, tratá-lo em um grupo à parte, mesmo que a documentação oficial do T-SQL o liste dentro do DML.</p>
+<hr>
+<h2 id="7.-dcl-%E2%80%94-data-control-language" tabindex="-1">7. DCL — Data Control Language</h2>
+<p><strong>Função:</strong> controlar <strong>quem pode fazer o quê</strong> dentro do banco de dados — conceder, revogar ou negar permissões sobre objetos (tabelas, views, schemas, procedures) para usuários, logins ou roles. Crítico em ambientes fiscais, onde o princípio do menor privilégio é obrigatório por política de segurança da informação.</p>
+<h3 id="7.1-grant-%E2%80%94-conceder-permiss%C3%A3o" tabindex="-1">7.1 <code>GRANT</code> — conceder permissão</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> fiscal.contribuinte <span class="hljs-keyword">TO</span> auditor_fiscal;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">INSERT</span>, <span class="hljs-keyword">UPDATE</span> <span class="hljs-keyword">ON</span> staging.stg_nfe_bulk <span class="hljs-keyword">TO</span> carga_dados;
+</div></code></pre>
+<h3 id="7.2-revoke-%E2%80%94-remover-uma-permiss%C3%A3o-previamente-concedida" tabindex="-1">7.2 <code>REVOKE</code> — remover uma permissão previamente concedida</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">REVOKE</span> <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">ON</span> staging.stg_nfe_bulk <span class="hljs-keyword">FROM</span> carga_dados;
+</div></code></pre>
+<p><code>REVOKE</code> apenas <strong>remove</strong> uma permissão concedida (ou uma negação explícita) — não impede que o usuário obtenha o mesmo privilégio por outro caminho (ex.: por pertencer a uma role que tem <code>GRANT</code>).</p>
+<h3 id="7.3-deny-%E2%80%94-negar-permiss%C3%A3o-explicitamente-(extens%C3%A3o-t-sql)" tabindex="-1">7.3 <code>DENY</code> — negar permissão explicitamente (extensão T-SQL)</h3>
+<p>Não aparece na figura (o ANSI clássico só prevê <code>GRANT</code>/<code>REVOKE</code>), mas é um comando central do modelo de segurança do SQL Server:</p>
+<pre class='hljs'><code><div>DENY <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">ON</span> fiscal.contribuinte <span class="hljs-keyword">TO</span> auditor_fiscal;
+</div></code></pre>
+<p><strong>Diferença crucial:</strong> <code>DENY</code> tem <strong>precedência absoluta</strong> sobre qualquer <code>GRANT</code>, inclusive os herdados de roles. Se um usuário recebe <code>GRANT DELETE</code> via uma role e <code>DENY DELETE</code> diretamente (ou por outra role), a negação sempre prevalece. É a ferramenta correta para bloquear uma ação de forma inequívoca — por exemplo, impedir que qualquer analista, mesmo com papéis amplos, exclua registros de notas fiscais já apuradas.</p>
+<table>
+<thead>
+<tr>
+<th>Comando</th>
+<th>Efeito</th>
+<th>Precedência</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GRANT</code></td>
+<td>Concede a permissão</td>
+<td>Normal</td>
+</tr>
+<tr>
+<td><code>DENY</code></td>
+<td>Nega a permissão explicitamente</td>
+<td><strong>Sempre vence</strong> sobre <code>GRANT</code></td>
+</tr>
+<tr>
+<td><code>REVOKE</code></td>
+<td>Remove um <code>GRANT</code> ou <code>DENY</code> anterior (volta ao estado &quot;não definido&quot;)</td>
+<td>Neutro</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="8.-tcl-%E2%80%94-transaction-control-language" tabindex="-1">8. TCL — Transaction Control Language</h2>
+<p><strong>Função:</strong> controlar o agrupamento de instruções DML/DDL em <strong>transações</strong> — unidades atômicas de trabalho que seguem as propriedades <strong>ACID</strong> (Atomicidade, Consistência, Isolamento, Durabilidade). Fundamental em rotinas fiscais que envolvem múltiplas tabelas (ex.: gravar uma nota fiscal e seus itens só deve &quot;valer&quot; se ambas as gravações forem bem-sucedidas).</p>
+<h3 id="8.1-begin-transaction-%E2%80%94-iniciar-uma-transa%C3%A7%C3%A3o-expl%C3%ADcita" tabindex="-1">8.1 <code>BEGIN TRANSACTION</code> — iniciar uma transação explícita</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">BEGIN</span> TRANSACTION;
+</div></code></pre>
+<p>Em T-SQL, toda instrução já roda dentro de uma transação implícita autocommit por padrão; <code>BEGIN TRANSACTION</code> abre uma transação <strong>explícita</strong>, que só se confirma com <code>COMMIT</code>.</p>
+<h3 id="8.2-commit-%E2%80%94-confirmar-a-transa%C3%A7%C3%A3o" tabindex="-1">8.2 <code>COMMIT</code> — confirmar a transação</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">COMMIT</span> TRANSACTION;
+</div></code></pre>
+<p>Torna permanentes todas as alterações feitas desde o último <code>BEGIN TRANSACTION</code>.</p>
+<h3 id="8.3-rollback-%E2%80%94-desfazer-a-transa%C3%A7%C3%A3o" tabindex="-1">8.3 <code>ROLLBACK</code> — desfazer a transação</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">ROLLBACK</span> TRANSACTION;
+</div></code></pre>
+<p>Desfaz todas as alterações desde o início da transação (ou até um <code>SAVEPOINT</code>, ver abaixo). Essencial em blocos <code>TRY...CATCH</code> para reverter uma carga fiscal parcialmente executada quando ocorre erro.</p>
+<h3 id="8.4-savepoint-%2F-save-transaction-%E2%80%94-ponto-de-salvamento-intermedi%C3%A1rio" tabindex="-1">8.4 <code>SAVEPOINT</code> / <code>SAVE TRANSACTION</code> — ponto de salvamento intermediário</h3>
+<p>Na figura aparece como <code>SAVEPOINT</code> (nome ANSI); em T-SQL, a sintaxe correspondente é <code>SAVE TRANSACTION</code>:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">BEGIN</span> TRANSACTION;
+
+<span class="hljs-keyword">INSERT INTO</span> fiscal.nota_fiscal (...) <span class="hljs-keyword">VALUES</span> (...);
+SAVE TRANSACTION antes_dos_itens;
+
+<span class="hljs-keyword">INSERT INTO</span> fiscal.item_nota_fiscal (...) <span class="hljs-keyword">VALUES</span> (...);
+<span class="hljs-comment">-- se falhar, desfaz só os itens, mantendo a nota fiscal já gravada:</span>
+<span class="hljs-keyword">ROLLBACK</span> TRANSACTION antes_dos_itens;
+
+<span class="hljs-keyword">COMMIT</span> TRANSACTION;
+</div></code></pre>
+<h3 id="8.5-set-transaction-%E2%80%94-configurar-o-n%C3%ADvel-de-isolamento" tabindex="-1">8.5 <code>SET TRANSACTION</code> — configurar o nível de isolamento</h3>
+<p>Controla como a transação enxerga alterações concorrentes de outras sessões:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SET</span> TRANSACTION ISOLATION LEVEL READ COMMITTED;
+<span class="hljs-comment">-- outras opções em T-SQL: READ UNCOMMITTED, REPEATABLE READ,</span>
+<span class="hljs-comment">-- SERIALIZABLE, SNAPSHOT</span>
+</div></code></pre>
+<p><strong>Nota T-SQL:</strong> em SQL Server, a forma mais comum no dia a dia é <code>SET TRANSACTION ISOLATION LEVEL &lt;nível&gt;</code> no início da sessão/rotina, e não como parte de cada <code>BEGIN TRANSACTION</code>. O nível <code>SNAPSHOT</code> (baseado em versionamento de linhas) é uma extensão que reduz bloqueios em relatórios fiscais concorrentes com cargas de dados.</p>
+<h3 id="8.6-xact_abort-%E2%80%94-comportamento-de-erro-em-lote-(extens%C3%A3o-t-sql)" tabindex="-1">8.6 <code>XACT_ABORT</code> — comportamento de erro em lote (extensão T-SQL)</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SET</span> XACT_ABORT <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">BEGIN</span> TRANSACTION;
+    <span class="hljs-comment">-- qualquer erro de execução aqui cancela e desfaz automaticamente</span>
+    <span class="hljs-comment">-- toda a transação, sem exigir ROLLBACK manual no CATCH</span>
+<span class="hljs-keyword">COMMIT</span> TRANSACTION;
+</div></code></pre>
+<p>Recomendado em rotinas fiscais críticas para garantir que um erro não deixe a transação &quot;pendurada&quot; aberta.</p>
+<hr>
+<h2 id="9.-tabela-resumo-comparativa" tabindex="-1">9. Tabela-Resumo Comparativa</h2>
+<table>
+<thead>
+<tr>
+<th>Grupo</th>
+<th>Altera estrutura?</th>
+<th>Altera dados?</th>
+<th>Precisa de <code>COMMIT</code>?</th>
+<th>Comandos principais (T-SQL)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DDL</strong></td>
+<td>Sim</td>
+<td>Não (exceto efeitos colaterais como <code>TRUNCATE</code>)</td>
+<td>Em geral sim (transacional)</td>
+<td><code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>, <code>TRUNCATE</code>, <code>sp_rename</code></td>
+</tr>
+<tr>
+<td><strong>DML</strong></td>
+<td>Não</td>
+<td>Sim</td>
+<td>Sim</td>
+<td><code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>, <code>MERGE</code></td>
+</tr>
+<tr>
+<td><strong>DQL</strong></td>
+<td>Não</td>
+<td>Não</td>
+<td>Não se aplica</td>
+<td><code>SELECT</code></td>
+</tr>
+<tr>
+<td><strong>DCL</strong></td>
+<td>Não (metadado de segurança)</td>
+<td>Não</td>
+<td>Não se aplica</td>
+<td><code>GRANT</code>, <code>REVOKE</code>, <code>DENY</code></td>
+</tr>
+<tr>
+<td><strong>TCL</strong></td>
+<td>—</td>
+<td>Controla o efeito de DML/DDL</td>
+<td>É a própria finalidade</td>
+<td><code>BEGIN TRANSACTION</code>, <code>COMMIT</code>, <code>ROLLBACK</code>, <code>SAVE TRANSACTION</code>, <code>SET TRANSACTION</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="10.-cen%C3%A1rio-integrado%3A-um-fluxo-fiscal-completo" tabindex="-1">10. Cenário Integrado: Um Fluxo Fiscal Completo</h2>
+<p>O exemplo a seguir combina os cinco grupos em uma única rotina — típica de um processo de cadastro e emissão fiscal:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- DDL: garante que a tabela de destino existe</span>
+<span class="hljs-keyword">CREATE TABLE</span> IF <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> fiscal.nota_fiscal (
+    id_nfe              <span class="hljs-type">INT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">PRIMARY KEY</span>,
+    chave_acesso        NVARCHAR(<span class="hljs-number">44</span>) <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">UNIQUE</span>,
+    id_contribuinte_emitente <span class="hljs-type">INT</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">REFERENCES</span> fiscal.contribuinte(id_contribuinte),
+    valor_total         <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">15</span>,<span class="hljs-number">2</span>) <span class="hljs-keyword">NOT NULL</span>,
+    situacao            <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-string">&#x27;ATIVA&#x27;</span>
+);
+
+<span class="hljs-comment">-- DCL: só quem tem esse papel pode inserir notas fiscais</span>
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">ON</span> fiscal.nota_fiscal <span class="hljs-keyword">TO</span> role_emissao_fiscal;
+DENY <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">ON</span> fiscal.nota_fiscal <span class="hljs-keyword">TO</span> role_emissao_fiscal;
+
+<span class="hljs-comment">-- TCL + DML: gravação atômica da nota fiscal</span>
+<span class="hljs-keyword">SET</span> XACT_ABORT <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">BEGIN</span> TRANSACTION;
+
+    <span class="hljs-keyword">INSERT INTO</span> fiscal.nota_fiscal (chave_acesso, id_contribuinte_emitente, valor_total)
+    <span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;35200714200166000187550010000000015123456789&#x27;</span>, <span class="hljs-number">42</span>, <span class="hljs-number">1580.90</span>);
+
+<span class="hljs-keyword">COMMIT</span> TRANSACTION;
+
+<span class="hljs-comment">-- DQL: conferência do que foi gravado</span>
+<span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">10</span>) <span class="hljs-operator">*</span>
+<span class="hljs-keyword">FROM</span> fiscal.nota_fiscal
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> id_nfe <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<hr>
+<h2 id="11.-boas-pr%C3%A1ticas-em-ambiente-de-produ%C3%A7%C3%A3o-fiscal" tabindex="-1">11. Boas Práticas em Ambiente de Produção Fiscal</h2>
+<ul>
+<li><strong>DDL:</strong> planejar <code>ALTER TABLE</code>/<code>DROP</code> em janelas de manutenção; testar em homologação antes de aplicar em bases com histórico fiscal real.</li>
+<li><strong>DML:</strong> sempre escrever e validar o <code>WHERE</code> de um <code>UPDATE</code>/<code>DELETE</code> primeiro como um <code>SELECT</code>, antes de executar a alteração.</li>
+<li><strong>DQL:</strong> evitar <code>SELECT *</code> em relatórios fiscais — listar colunas explicitamente melhora performance e legibilidade.</li>
+<li><strong>DCL:</strong> seguir o princípio do menor privilégio; usar <code>DENY</code> para bloqueios que não podem ser sobrescritos por roles amplas.</li>
+<li><strong>TCL:</strong> usar <code>TRY...CATCH</code> combinado com <code>SET XACT_ABORT ON</code> e <code>ROLLBACK</code> em toda rotina que grave em mais de uma tabela relacionada (ex.: nota fiscal + itens).</li>
+</ul>
+<hr>
+<h2 id="12.-gloss%C3%A1rio" tabindex="-1">12. Glossário</h2>
+<table>
+<thead>
+<tr>
+<th>Termo</th>
+<th>Definição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ACID</strong></td>
+<td>Atomicidade, Consistência, Isolamento, Durabilidade — propriedades que garantem a confiabilidade de uma transação</td>
+</tr>
+<tr>
+<td><strong>Batch (lote)</strong></td>
+<td>Conjunto de instruções T-SQL enviadas juntas ao servidor, delimitado por <code>GO</code> no SSMS</td>
+</tr>
+<tr>
+<td><strong>DMV</strong></td>
+<td><em>Dynamic Management View</em> — view de sistema que expõe metadados e estado interno do SQL Server</td>
+</tr>
+<tr>
+<td><strong>Metadado</strong></td>
+<td>Dado que descreve a estrutura do banco (nomes de tabelas, colunas, tipos), e não o conteúdo das linhas</td>
+</tr>
+<tr>
+<td><strong>Role</strong></td>
+<td>Papel de segurança que agrupa permissões e pode ser atribuído a múltiplos usuários/logins</td>
+</tr>
+<tr>
+<td><strong>Transação implícita/explícita</strong></td>
+<td>Implícita: cada instrução isolada é autocommit; explícita: iniciada com <code>BEGIN TRANSACTION</code> e finalizada manualmente</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="13.-refer%C3%AAncias" tabindex="-1">13. Referências</h2>
+<ul>
+<li><strong>Microsoft Learn — Transact-SQL Reference (Database Engine)</strong>: referência oficial e completa de todos os comandos T-SQL, organizados por categoria (<code>docs.microsoft.com/sql/t-sql</code>).</li>
+<li><strong>Microsoft Learn — Data Definition Language (DDL) Statements</strong>: página oficial que lista os comandos DDL suportados pelo SQL Server.</li>
+<li><strong>Microsoft Learn — Data Manipulation Language (DML) Statements</strong>: página oficial que lista <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>, <code>MERGE</code> e também <code>SELECT</code>.</li>
+<li><strong>Microsoft Learn — GRANT, DENY, REVOKE (Transact-SQL)</strong>: documentação do modelo de permissões e precedência entre os três comandos de DCL.</li>
+<li><strong>Microsoft Learn — Transactions (Database Engine)</strong>: conceitos de <code>BEGIN/COMMIT/ROLLBACK TRANSACTION</code>, <code>SAVE TRANSACTION</code> e níveis de isolamento.</li>
+<li><strong>ISO/IEC 9075 (SQL Standard)</strong>: norma internacional que define o núcleo da linguagem SQL sobre o qual o T-SQL se apoia.</li>
+<li><strong>Itzik Ben-Gan — &quot;T-SQL Fundamentals&quot;</strong> (Microsoft Press): referência aprofundada sobre a lógica de processamento de consultas em T-SQL.</li>
+<li>Consulte também o resumo de referências gerais do curso em <a href="01_DDL_CREATE_ALTER/01.16-Resumo-Referencias.md">01.16-Resumo-Referencias.md</a>.</li>
+</ul>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,1935 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>roteiro_visoes.MD</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 id="m%C3%B3dulo-3-%E2%80%94-constru%C3%A7%C3%A3o-de-vis%C3%B5es-para-auditoria-fiscal" tabindex="-1">Módulo 3 — Construção de Visões para Auditoria Fiscal</h1>
+<h2 id="roteiro-guiado-de-2-horas-no-sql-server-management-studio" tabindex="-1">Roteiro guiado de 2 horas no SQL Server Management Studio</h2>
+<h3 id="base-de-trabalho%3A-bdfisc-%E2%80%94-auditoria-de-sa%C3%ADdas-(nf-e-%C3%97-efd-registro-c100)" tabindex="-1">Base de trabalho: BDFISC — auditoria de saídas (NF-e × EFD registro C100)</h3>
+<hr>
+<h2 id="1.-objetivo-e-produto-final-da-oficina" tabindex="-1">1. Objetivo e produto final da oficina</h2>
+<p>Ao final de duas horas o auditor terá construído, com as próprias mãos, um <strong>conjunto de visões (views) reutilizáveis</strong> que responde a uma pergunta concreta de fiscalização:</p>
+<blockquote>
+<p><em>&quot;Todas as notas fiscais de saída (emissão própria) que o contribuinte emitiu e teve autorizadas foram escrituradas na EFD, pelo valor correto, e sem terem sido indevidamente marcadas como canceladas?&quot;</em></p>
+</blockquote>
+<p>O produto final é uma consulta única, <code>fisc.VW_AUD_DIVERG_SAIDAS</code>, que devolve <strong>uma linha por nota fiscal com o achado já classificado</strong>, e um resumo por período pronto para virar quadro do relatório de auditoria.</p>
+<p>O que se aprende no caminho:</p>
+<table>
+<thead>
+<tr>
+<th>Competência</th>
+<th>Onde é exercitada</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reconhecer a estrutura do BDFISC (dados brutos × tabelas derivadas)</td>
+<td>Etapa 0</td>
+</tr>
+<tr>
+<td>Construir views no<strong>Designer de Consultas</strong> do SSMS</td>
+<td>Etapas 1 e 2</td>
+</tr>
+<tr>
+<td>Traduzir uma regra fiscal em<code>LEFT JOIN</code> + <code>CASE</code></td>
+<td>Etapa 3</td>
+</tr>
+<tr>
+<td>Consolidar achados em quadro gerencial</td>
+<td>Etapa 4</td>
+</tr>
+<tr>
+<td>Proteger views com<code>WITH SCHEMABINDING</code></td>
+<td>Etapa 5</td>
+</tr>
+<tr>
+<td>Materializar agregados com<strong>view indexada</strong></td>
+<td>Etapa 6</td>
+</tr>
+<tr>
+<td>Criar índices de apoio e<strong>medir</strong> o ganho</td>
+<td>Etapa 7</td>
+</tr>
+<tr>
+<td>Exportar o papel de trabalho</td>
+<td>Etapa 8</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cronograma-sugerido" tabindex="-1">Cronograma sugerido</h3>
+<table>
+<thead>
+<tr>
+<th>Horário</th>
+<th>Etapa</th>
+<th>Duração</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00:00 – 00:15</td>
+<td><strong>Etapa 0</strong> — Reconhecimento da base</td>
+<td>15 min</td>
+</tr>
+<tr>
+<td>00:15 – 00:35</td>
+<td><strong>Etapa 1</strong> — Primeira view no Designer de Consultas (saídas do XML)</td>
+<td>20 min</td>
+</tr>
+<tr>
+<td>00:35 – 00:50</td>
+<td><strong>Etapa 2</strong> — View da escrituração (C100)</td>
+<td>15 min</td>
+</tr>
+<tr>
+<td>00:50 – 01:15</td>
+<td><strong>Etapa 3</strong> — View de divergência (o coração da auditoria)</td>
+<td>25 min</td>
+</tr>
+<tr>
+<td>01:15 – 01:25</td>
+<td><strong>Etapa 4</strong> — View de resumo por período</td>
+<td>10 min</td>
+</tr>
+<tr>
+<td>01:25 – 01:35</td>
+<td><strong>Etapa 5</strong> — <code>WITH SCHEMABINDING</code>: o que protege e onde <strong>não</strong> usar</td>
+<td>10 min</td>
+</tr>
+<tr>
+<td>01:35 – 01:50</td>
+<td><strong>Etapa 6</strong> — View indexada de controle</td>
+<td>15 min</td>
+</tr>
+<tr>
+<td>01:50 – 02:00</td>
+<td><strong>Etapa 7 e 8</strong> — Índices de apoio, medição e exportação</td>
+<td>10 min</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pr%C3%A9-requisitos" tabindex="-1">Pré-requisitos</h3>
+<ul>
+<li>SSMS 20 ou superior conectado à instância que hospeda o banco da auditoria;</li>
+<li>o banco da auditoria <strong>já restaurado e com as procedures <code>nnn_PR_*</code> executadas</strong> (as tabelas <code>fisc.TB_*</code> precisam existir e estar populadas);</li>
+<li>permissão para criar objetos no schema <code>fisc</code> (<code>CREATE VIEW</code>, <code>ALTER SCHEMA::fisc</code>). Se você só tiver leitura, peça ao DBA a criação de um schema próprio (ex.: <code>aud</code>) e substitua <code>fisc.</code> por <code>aud.</code> em todos os scripts.</li>
+</ul>
+<blockquote>
+<p><strong>Convenção desta apostila:</strong> cada banco corresponde a <strong>um contribuinte auditado</strong> (o nome do banco carrega a inscrição estadual e as datas da carga). Por isso nenhuma view filtra por CNPJ — o recorte por contribuinte já está dado pela escolha do banco.</p>
+</blockquote>
+<hr>
+<h2 id="2.-etapa-0-%E2%80%94-reconhecimento-da-base-(15-min)" tabindex="-1">2. Etapa 0 — Reconhecimento da base (15 min)</h2>
+<h3 id="2.1-as-duas-naturezas-de-tabela-no-bdfisc" tabindex="-1">2.1 As duas naturezas de tabela no BDFISC</h3>
+<p>O BDFISC tem cerca de <strong>765 tabelas</strong> e <strong>199 stored procedures</strong>, distribuídas em dois schemas com papéis completamente diferentes. Entender essa divisão é o que separa um auditor que sabe usar a base de um que fica perdido nela.</p>
+<p><img src="img/fig-11-arquitetura-visoes.svg" alt="Arquitetura em camadas das visões"></p>
+<p><em>Figura 1 — As camadas do BDFISC e onde cada tipo de view se encaixa.</em></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Schema<code>dbo</code> — <strong>dados brutos</strong></th>
+<th>Schema<code>fisc</code> — <strong>tabelas derivadas</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Origem</td>
+<td>Importação dos XML de NF-e/CT-e e dos arquivos da EFD</td>
+<td>Geradas pelas procedures<code>dbo.nnn_PR_*</code></td>
+</tr>
+<tr>
+<td>Nomes</td>
+<td><code>NFE</code>, <code>ITEM_NFE</code>, <code>EFD_C100</code>, <code>EFD_C170</code>, <code>EFD_E110</code>…</td>
+<td><code>TB_201_PR_...</code>, <code>TB_474_PR_...</code>, <code>TB_137_PR_...</code></td>
+</tr>
+<tr>
+<td>Formato</td>
+<td>Normalizado, colunas técnicas (<code>sqnfe</code>, <code>stnfe</code>, <code>tpoperacao</code>)</td>
+<td>Achatado, colunas em &quot;português fiscal&quot; (<code>NF_CHAVE_ACESSO</code>, <code>C100_COD_SIT</code>)</td>
+</tr>
+<tr>
+<td>Estabilidade</td>
+<td>Permanentes</td>
+<td><strong>Apagadas e recriadas (<code>DROP TABLE</code>) a cada execução da procedure</strong></td>
+</tr>
+<tr>
+<td>Uso na oficina</td>
+<td>Base da view indexada (Etapa 6)</td>
+<td>Base das views de trabalho (Etapas 1 a 4)</td>
+</tr>
+</tbody>
+</table>
+<p>Essa última linha é a mais importante e vai reaparecer na Etapa 5.</p>
+<h3 id="2.2-passo-a-passo" tabindex="-1">2.2 Passo a passo</h3>
+<p><strong>Passo 0.1 — Localizar as tabelas do tema.</strong> Abra uma nova consulta (Ctrl+N) e execute:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Quais tabelas derivadas existem, e quantas linhas cada uma tem?</span>
+<span class="hljs-keyword">SELECT</span>
+    s.name                                       <span class="hljs-keyword">AS</span> esquema,
+    t.name                                       <span class="hljs-keyword">AS</span> tabela,
+    p.rows                                       <span class="hljs-keyword">AS</span> linhas,
+    <span class="hljs-built_in">CAST</span>(<span class="hljs-built_in">SUM</span>(a.total_pages) <span class="hljs-operator">*</span> <span class="hljs-number">8</span> <span class="hljs-operator">/</span> <span class="hljs-number">1024.0</span> <span class="hljs-keyword">AS</span> <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">12</span>,<span class="hljs-number">2</span>)) <span class="hljs-keyword">AS</span> tamanho_mb
+<span class="hljs-keyword">FROM</span> sys.tables            <span class="hljs-keyword">AS</span> t
+<span class="hljs-keyword">JOIN</span> sys.schemas           <span class="hljs-keyword">AS</span> s  <span class="hljs-keyword">ON</span> s.schema_id  <span class="hljs-operator">=</span> t.schema_id
+<span class="hljs-keyword">JOIN</span> sys.indexes           <span class="hljs-keyword">AS</span> ix <span class="hljs-keyword">ON</span> ix.object_id <span class="hljs-operator">=</span> t.object_id
+<span class="hljs-keyword">JOIN</span> sys.partitions        <span class="hljs-keyword">AS</span> p  <span class="hljs-keyword">ON</span> p.object_id  <span class="hljs-operator">=</span> t.object_id <span class="hljs-keyword">AND</span> p.index_id <span class="hljs-operator">=</span> ix.index_id
+<span class="hljs-keyword">JOIN</span> sys.allocation_units  <span class="hljs-keyword">AS</span> a  <span class="hljs-keyword">ON</span> a.container_id <span class="hljs-operator">=</span> p.partition_id
+<span class="hljs-keyword">WHERE</span> ix.index_id <span class="hljs-operator">&lt;=</span> <span class="hljs-number">1</span>
+  <span class="hljs-keyword">AND</span> (t.name <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;TB_201%&#x27;</span> <span class="hljs-keyword">OR</span> t.name <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;TB_474%&#x27;</span> <span class="hljs-keyword">OR</span> t.name <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;NFE&#x27;</span>,<span class="hljs-string">&#x27;EFD_C100&#x27;</span>,<span class="hljs-string">&#x27;NFE_HI&#x27;</span>,<span class="hljs-string">&#x27;EFD_0000&#x27;</span>))
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> s.name, t.name, p.rows
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> linhas <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p><strong>Passo 0.2 — Confirmar o período e o contribuinte auditados.</strong></p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Quem é o contribuinte e quais períodos foram entregues?</span>
+<span class="hljs-keyword">SELECT</span>
+    z.nrinscrestadual  <span class="hljs-keyword">AS</span> inscricao_estadual,
+    z.nrcnpj           <span class="hljs-keyword">AS</span> cnpj,
+    z.nocontribuinte   <span class="hljs-keyword">AS</span> razao_social,
+    z.dtinicial,
+    z.dtfinal,
+    CONCAT(<span class="hljs-keyword">MONTH</span>(z.dtinicial), <span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-keyword">YEAR</span>(z.dtinicial)) <span class="hljs-keyword">AS</span> periodo_declaracao
+<span class="hljs-keyword">FROM</span> dbo.EFD_0000 <span class="hljs-keyword">AS</span> z
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> z.dtinicial;
+</div></code></pre>
+<blockquote>
+<p><strong>Anote o formato do período.</strong> A coluna <code>REG0_PERIODO_DECLARACAO</code>, que aparece em quase todas as tabelas <code>fisc.TB_*</code>, é montada exatamente assim: <code>CONCAT(MONTH(dtinicial),'/',YEAR(dtinicial))</code>. Isso produz <strong><code>3/2025</code>, e não <code>03/2025</code></strong> — ou seja, é um texto <strong>sem zero à esquerda</strong>. Ordenar por essa coluna coloca outubro (<code>10/2025</code>) antes de março (<code>3/2025</code>). Guarde essa armadilha: ela será resolvida na Etapa 4.</p>
+</blockquote>
+<p><strong>Passo 0.3 — Espiar as duas tabelas que serão usadas.</strong></p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Notas fiscais próprias extraídas do XML (a tabela _01 é a de emissão própria;</span>
+<span class="hljs-comment">-- a _02 traz as de terceiros)</span>
+<span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">20</span>)
+       REG0_PERIODO_DECLARACAO, NF_CHAVE_ACESSO, NF_MOD, NF_SERIE, NF_NNF,
+       NF_DHEMI, NF_SITUACAO, NF_TPNF, TIPO_EMISSAO,
+       NF_CPF_CNPJ_DESTINATARIO, NF_UF_DESTINATARIO, NF_VNF, ALERTA_EFD
+<span class="hljs-keyword">FROM</span> fisc.TB_201_PR_XML_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01;
+
+<span class="hljs-comment">-- Registro C100 da EFD (identificação do documento fiscal escriturado)</span>
+<span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">20</span>)
+       REG0_PERIODO_DECLARACAO, C100_IND_OPER, C100_IND_EMIT, C100_COD_MOD,
+       C100_COD_SIT, C100_SER, C100_NUM_DOC, C100_CHV_NFE,
+       C100_DT_DOC, C100_VL_DOC, C100_VL_BC_ICMS, C100_VL_ICMS
+<span class="hljs-keyword">FROM</span> fisc.TB_474_PR_EFD_REGISTRO_C100_IDENTIFICACAO_DOC_FISCAL;
+</div></code></pre>
+<p><strong>Passo 0.4 — Aprender os domínios.</strong> Os valores abaixo estão codificados nas procedures do BDFISC e serão usados como filtro em todas as views. Vale copiá-los para o caderno:</p>
+<table>
+<thead>
+<tr>
+<th>Coluna</th>
+<th>Valores possíveis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NF_SITUACAO</code> (de <code>dbo.NFE.stnfe</code>)</td>
+<td><code>A - AUTORIZADA DENTRO DO PRAZO</code> · <code>O - AUTORIZADA FORA DO PRAZO</code> · <code>C - CANCELADA</code> · <code>D - DENEGADA POR IRREGULARIDADE DO EMITENTE</code> · <code>I - DENEGADA POR IRREGULARIDADE DO DESTINATARIO</code> · <code>U - DENEGACAO POR DESTINATARIO NAO HABILITADO A OPERAR NA UF</code></td>
+</tr>
+<tr>
+<td><code>NF_TPNF</code> (de <code>tpoperacao</code>)</td>
+<td><code>0 - ENTRADA</code> · <code>1 - SAIDA</code></td>
+</tr>
+<tr>
+<td><code>NF_MOD</code> (de <code>tpnfe</code>)</td>
+<td><code>55 - NFE</code> (tpnfe = 1) · <code>65 - NFCE</code> (tpnfe = 2) · <code>55 - NFAE</code> (tpnfe = 3)</td>
+</tr>
+<tr>
+<td><code>TIPO_EMISSAO</code></td>
+<td><code>PROPRIA</code> (tabela <code>_01</code>) · <code>TERCEIROS</code> (tabela <code>_02</code>)</td>
+</tr>
+<tr>
+<td><code>C100_IND_EMIT</code></td>
+<td><code>0 - EMISSAO PROPRIA</code> · <code>1 - TERCEIROS</code></td>
+</tr>
+<tr>
+<td><code>C100_IND_OPER</code></td>
+<td><code>0 - ENTRADA</code> · <code>1 - SAIDA</code></td>
+</tr>
+<tr>
+<td><code>C100_COD_SIT</code></td>
+<td><code>0 - DOCUMENTO REGULAR</code> · <code>1 - ESCRITURACAO EXTEMPORANEA DE DOCUMENTO REGULAR</code> · <code>2 - DOCUMENTO CANCELADO</code> · <code>3 - ESCRITURACAO EXTEMPORANEA DE DOCUMENTO CANCELADO</code> · <code>4 - NF-E, NFC-E OU CT-E - DENEGADO</code> · <code>5 - NUMERACAO INUTILIZADA</code> · <code>6 - DOCUMENTO FISCAL COMPLEMENTAR</code> · <code>7 - ESCRITURACAO EXTEMPORANEA DE DOCUMENTO COMPLEMENTAR</code> · <code>8 - REGIME ESPECIAL OU NORMA ESPECIFICA</code></td>
+</tr>
+<tr>
+<td><code>ALERTA_EFD</code></td>
+<td><code>-</code> · <code>NOTA FISCAL LANCADA MAIS DE UMA VEZ NA EFD</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Passo 0.5 — Fechar o total de controle.</strong> Antes de cruzar qualquer coisa, saiba o tamanho do universo:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    (<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> fisc.TB_201_PR_XML_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01
+      <span class="hljs-keyword">WHERE</span> NF_TPNF <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1 - SAIDA&#x27;</span>)                                  <span class="hljs-keyword">AS</span> saidas_no_xml,
+    (<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> fisc.TB_474_PR_EFD_REGISTRO_C100_IDENTIFICACAO_DOC_FISCAL
+      <span class="hljs-keyword">WHERE</span> C100_IND_OPER <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1 - SAIDA&#x27;</span> <span class="hljs-keyword">AND</span> C100_IND_EMIT <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;0 - EMISSAO PROPRIA&#x27;</span> 
+  	<span class="hljs-keyword">AND</span> REG0_PERIODO_DECLARACAO <span class="hljs-keyword">not</span> <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;%2025%&#x27;</span>)
+                                                                    <span class="hljs-keyword">AS</span> saidas_escrituradas_c100;
+</div></code></pre>
+<p>Se os dois números já forem muito diferentes, a auditoria começa com uma hipótese forte antes mesmo da primeira view.</p>
+<hr>
+<h2 id="3.-etapa-1-%E2%80%94-primeira-view-no-designer-de-consultas-(20-min)" tabindex="-1">3. Etapa 1 — Primeira view no Designer de Consultas (20 min)</h2>
+<p><strong>Objetivo:</strong> criar <code>fisc.VW_AUD_SAIDAS_XML</code> — o universo de notas de saída próprias efetivamente autorizadas.</p>
+<h3 id="3.1-o-designer-de-consultas" tabindex="-1">3.1 O Designer de Consultas</h3>
+<p><img src="img/fig-10-query-designer.svg" alt="Painéis do Designer de Consultas"></p>
+<p><em>Figura 2 — Os quatro painéis do Designer de Consultas do SSMS e como cada um corresponde a uma parte do comando SQL.</em></p>
+<p><strong>Como abrir (dois caminhos):</strong></p>
+<ol>
+<li><strong>Pelo Pesquisador de Objetos</strong> (é o caminho desta etapa): expanda o banco → botão direito em <strong>Exibições</strong> (Views) → <strong>Nova Exibição…</strong>. Abre-se a janela &quot;Adicionar Tabela&quot;.</li>
+<li><strong>Pelo editor de consultas</strong>: escreva ou selecione um <code>SELECT</code>, clique com o botão direito e escolha <strong>Criar Consulta no Editor</strong> (<code>Ctrl+Shift+Q</code>). Útil para &quot;abrir no diagrama&quot; uma consulta que você já tem.</li>
+</ol>
+<p>Os quatro painéis são ligados/desligados pelos botões da barra e se sincronizam entre si:</p>
+<table>
+<thead>
+<tr>
+<th>Painel</th>
+<th>Equivale a</th>
+<th>Para que serve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Diagrama</strong></td>
+<td><code>FROM</code> e <code>JOIN</code></td>
+<td>Arrastar tabelas, desenhar junções, marcar colunas</td>
+</tr>
+<tr>
+<td><strong>Critérios</strong></td>
+<td><code>SELECT</code>, <code>WHERE</code>, <code>GROUP BY</code>, <code>ORDER BY</code></td>
+<td>Grade de colunas, apelidos, filtros e ordenação</td>
+</tr>
+<tr>
+<td><strong>SQL</strong></td>
+<td>O comando inteiro</td>
+<td>Ver e editar o texto gerado</td>
+</tr>
+<tr>
+<td><strong>Resultados</strong></td>
+<td>—</td>
+<td>Amostra dos dados (Ctrl+R)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Limite conhecido do Designer:</strong> ele não entende CTEs (<code>WITH</code>), <code>UNION</code> complexos, <code>PIVOT</code>, funções de janela nem <code>OUTER APPLY</code>. Ao encontrá-los, exibe <em>&quot;A consulta não pode ser representada graficamente&quot;</em>. Isso <strong>não é erro</strong> — é apenas o diagrama desistindo. O painel SQL continua funcionando. A estratégia desta oficina é usar o Designer para montar o esqueleto e finalizar as partes sofisticadas no editor.</p>
+</blockquote>
+<h3 id="3.2-constru%C3%A7%C3%A3o-passo-a-passo" tabindex="-1">3.2 Construção passo a passo</h3>
+<p><strong>Passo 1.1</strong> — Pesquisador de Objetos → <strong>Exibições</strong> → botão direito → <strong>Nova Exibição…</strong></p>
+<p><strong>Passo 1.2</strong> — Na janela &quot;Adicionar Tabela&quot;, vá à aba <strong>Tabelas</strong>, localize <code>TB_201_PR_XML_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01</code>, clique em <strong>Adicionar</strong> e depois em <strong>Fechar</strong>.</p>
+<p><strong>Passo 1.3</strong> — No <strong>painel Diagrama</strong>, marque a caixinha das colunas abaixo (elas vão aparecendo na grade de Critérios na ordem em que você clica — clique nesta ordem):</p>
+<pre class='hljs'><code><div>REG0_PERIODO_DECLARACAO   NF_ANO      NF_MES
+NF_CHAVE_ACESSO           NF_MOD      NF_SERIE      NF_NNF
+NF_DHEMI                  NF_SITUACAO NF_TPNF       TIPO_EMISSAO
+NF_CPF_CNPJ_DESTINATARIO  NF_XNOME_DESTINATARIO     NF_UF_DESTINATARIO
+NF_NATOP                  NF_VNF      NF_VBC        NF_VICMS
+ALERTA_EFD
+</div></code></pre>
+<p><strong>Passo 1.4</strong> — No <strong>painel Critérios</strong>, preencha a coluna <strong>Filtro</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Coluna</th>
+<th>Filtro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NF_TPNF</code></td>
+<td><code>= '1 - SAIDA'</code></td>
+</tr>
+<tr>
+<td><code>TIPO_EMISSAO</code></td>
+<td><code>= 'PROPRIA'</code></td>
+</tr>
+<tr>
+<td><code>NF_SITUACAO</code></td>
+<td><code>IN ('A - AUTORIZADA DENTRO DO PRAZO', 'O - AUTORIZADA FORA DO PRAZO')</code></td>
+</tr>
+<tr>
+<td><code>NF_CHAVE_ACESSO</code></td>
+<td><code>IS NOT NULL</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Passo 1.5</strong> — Ainda em Critérios, preencha a coluna <strong>Alias</strong> para dar nomes curtos e estáveis: <code>PERIODO</code>, <code>ANO</code>, <code>MES</code>, <code>CHAVE_ACESSO</code>, <code>MODELO</code>, <code>SERIE</code>, <code>NUMERO</code>, <code>DT_EMISSAO</code>, <code>SITUACAO_XML</code>, <code>TIPO_OPERACAO</code>, <code>EMISSAO</code>, <code>CNPJ_CPF_DEST</code>, <code>NOME_DEST</code>, <code>UF_DEST</code>, <code>NATUREZA_OPERACAO</code>, <code>VL_NOTA</code>, <code>VL_BC_ICMS</code>, <code>VL_ICMS</code>, <code>ALERTA_EFD</code>.</p>
+<p><strong>Passo 1.6</strong> — Pressione <strong>Ctrl+R</strong> para ver a amostra no painel Resultados. Confira se aparecem apenas saídas autorizadas.</p>
+<p><strong>Passo 1.7</strong> — Confira o painel SQL. Deve estar equivalente ao script abaixo. Salve a view com <strong>Ctrl+S</strong>, dando o nome <code>VW_AUD_SAIDAS_XML</code> (o SSMS a criará no schema padrão — se for <code>dbo</code>, ajuste depois com <code>ALTER SCHEMA fisc TRANSFER dbo.VW_AUD_SAIDAS_XML;</code>).</p>
+<p><strong>Script equivalente</strong> (use este se preferir não passar pelo Designer, ou para versionar a view):</p>
+<pre class='hljs'><code><div>USE [<span class="hljs-operator">&lt;</span>coloque_aqui_o_nome_do_banco_da_auditoria<span class="hljs-operator">&gt;</span>];
+GO
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> fisc.VW_AUD_SAIDAS_XML
+<span class="hljs-keyword">AS</span>
+<span class="hljs-comment">/*  Universo de notas fiscais de SAÍDA, de emissão PRÓPRIA, efetivamente
+    AUTORIZADAS pela SEFAZ (dentro ou fora do prazo).
+    Fonte: fisc.TB_201_..._01 (tabela derivada da procedure 201_PR_XML_...).
+    Autor: &lt;turma&gt;   Data: &lt;data&gt;                                            */</span>
+<span class="hljs-keyword">SELECT</span>
+    T.REG0_PERIODO_DECLARACAO           <span class="hljs-keyword">AS</span> PERIODO,
+    T.NF_ANO                            <span class="hljs-keyword">AS</span> ANO,
+    T.NF_MES                            <span class="hljs-keyword">AS</span> MES,
+    T.NF_CHAVE_ACESSO                   <span class="hljs-keyword">AS</span> CHAVE_ACESSO,
+    T.NF_MOD                            <span class="hljs-keyword">AS</span> MODELO,
+    T.NF_SERIE                          <span class="hljs-keyword">AS</span> SERIE,
+    T.NF_NNF                            <span class="hljs-keyword">AS</span> NUMERO,
+    T.NF_DHEMI                          <span class="hljs-keyword">AS</span> DT_EMISSAO,
+    T.NF_SITUACAO                       <span class="hljs-keyword">AS</span> SITUACAO_XML,
+    T.NF_TPNF                           <span class="hljs-keyword">AS</span> TIPO_OPERACAO,
+    T.TIPO_EMISSAO                      <span class="hljs-keyword">AS</span> EMISSAO,
+    T.NF_CPF_CNPJ_DESTINATARIO          <span class="hljs-keyword">AS</span> CNPJ_CPF_DEST,
+    T.NF_XNOME_DESTINATARIO             <span class="hljs-keyword">AS</span> NOME_DEST,
+    T.NF_UF_DESTINATARIO                <span class="hljs-keyword">AS</span> UF_DEST,
+    T.NF_NATOP                          <span class="hljs-keyword">AS</span> NATUREZA_OPERACAO,
+    T.NF_VNF                            <span class="hljs-keyword">AS</span> VL_NOTA,
+    T.NF_VBC                            <span class="hljs-keyword">AS</span> VL_BC_ICMS,
+    T.NF_VICMS                          <span class="hljs-keyword">AS</span> VL_ICMS,
+    T.ALERTA_EFD                        <span class="hljs-keyword">AS</span> ALERTA_EFD
+<span class="hljs-keyword">FROM</span> fisc.TB_201_PR_XML_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01 <span class="hljs-keyword">AS</span> T
+<span class="hljs-keyword">WHERE</span> T.NF_TPNF        <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1 - SAIDA&#x27;</span>
+  <span class="hljs-keyword">AND</span> T.TIPO_EMISSAO   <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;PROPRIA&#x27;</span>
+  <span class="hljs-keyword">AND</span> T.NF_SITUACAO   <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;A - AUTORIZADA DENTRO DO PRAZO&#x27;</span>,
+                          <span class="hljs-string">&#x27;O - AUTORIZADA FORA DO PRAZO&#x27;</span>)
+  <span class="hljs-keyword">AND</span> T.NF_CHAVE_ACESSO <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>;
+GO
+</div></code></pre>
+<p><strong>Passo 1.8 — Validar:</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> qt_saidas_autorizadas, <span class="hljs-built_in">SUM</span>(VL_NOTA) <span class="hljs-keyword">AS</span> vl_total
+<span class="hljs-keyword">FROM</span> fisc.VW_AUD_SAIDAS_XML;
+
+<span class="hljs-keyword">SELECT</span> PERIODO, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> qt, <span class="hljs-built_in">SUM</span>(VL_NOTA) <span class="hljs-keyword">AS</span> vl
+<span class="hljs-keyword">FROM</span> fisc.VW_AUD_SAIDAS_XML
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> PERIODO
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-built_in">MIN</span>(ANO), <span class="hljs-built_in">MIN</span>(MES);
+</div></code></pre>
+<blockquote>
+<p><strong>Por que criar uma view em vez de repetir o <code>SELECT</code>?</strong> Porque a definição de &quot;saída autorizada própria&quot; passa a existir em <strong>um único lugar</strong>. Se amanhã a equipe decidir que <code>O - AUTORIZADA FORA DO PRAZO</code> deve ser tratada à parte, muda-se uma view — não as vinte consultas que cada auditor guardou na própria pasta.</p>
+</blockquote>
+<hr>
+<h2 id="4.-etapa-2-%E2%80%94-view-da-escritura%C3%A7%C3%A3o%3A-registro-c100-(15-min)" tabindex="-1">4. Etapa 2 — View da escrituração: registro C100 (15 min)</h2>
+<p><strong>Objetivo:</strong> criar <code>fisc.VW_AUD_C100_SAIDAS</code> — o que o contribuinte declarou ter emitido.</p>
+<p>Repita o procedimento da Etapa 1 no Designer, agora sobre <code>TB_474_PR_EFD_REGISTRO_C100_IDENTIFICACAO_DOC_FISCAL</code>, ou aplique o script:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> fisc.VW_AUD_C100_SAIDAS
+<span class="hljs-keyword">AS</span>
+<span class="hljs-comment">/*  Documentos fiscais de SAÍDA, de emissão PRÓPRIA, escriturados no
+    registro C100 da EFD ICMS/IPI. Modelos 55 (NF-e) e 65 (NFC-e).       */</span>
+<span class="hljs-keyword">SELECT</span>
+    C.REG0_PERIODO_DECLARACAO    <span class="hljs-keyword">AS</span> PERIODO,
+    C.REG0_IE                    <span class="hljs-keyword">AS</span> IE_CONTRIBUINTE,
+    C.C100_CHV_NFE               <span class="hljs-keyword">AS</span> CHAVE_ACESSO,
+    C.C100_COD_MOD               <span class="hljs-keyword">AS</span> MODELO,
+    C.C100_SER                   <span class="hljs-keyword">AS</span> SERIE,
+    C.C100_NUM_DOC               <span class="hljs-keyword">AS</span> NUMERO,
+    C.C100_DT_DOC                <span class="hljs-keyword">AS</span> DT_DOCUMENTO,
+    C.C100_DT_E_S                <span class="hljs-keyword">AS</span> DT_ENTRADA_SAIDA,
+    C.C100_COD_SIT               <span class="hljs-keyword">AS</span> SITUACAO_EFD,
+    C.C100_IND_OPER              <span class="hljs-keyword">AS</span> TIPO_OPERACAO,
+    C.C100_IND_EMIT              <span class="hljs-keyword">AS</span> EMISSAO,
+    C.REG0150_CNPJ_PART          <span class="hljs-keyword">AS</span> CNPJ_PARTICIPANTE,
+    C.REG0150_NOME_PART          <span class="hljs-keyword">AS</span> NOME_PARTICIPANTE,
+    C.C100_VL_DOC                <span class="hljs-keyword">AS</span> VL_DOCUMENTO,
+    C.C100_VL_MERC               <span class="hljs-keyword">AS</span> VL_MERCADORIA,
+    C.C100_VL_BC_ICMS            <span class="hljs-keyword">AS</span> VL_BC_ICMS,
+    C.C100_VL_ICMS               <span class="hljs-keyword">AS</span> VL_ICMS,
+    C.C100_VL_BC_ICMS_ST         <span class="hljs-keyword">AS</span> VL_BC_ICMS_ST,
+    C.C100_VL_ICMS_ST            <span class="hljs-keyword">AS</span> VL_ICMS_ST
+<span class="hljs-keyword">FROM</span> fisc.TB_474_PR_EFD_REGISTRO_C100_IDENTIFICACAO_DOC_FISCAL <span class="hljs-keyword">AS</span> C
+<span class="hljs-keyword">WHERE</span> C.C100_IND_OPER <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1 - SAIDA&#x27;</span>
+  <span class="hljs-keyword">AND</span> C.C100_IND_EMIT <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;0 - EMISSAO PROPRIA&#x27;</span>
+  <span class="hljs-keyword">AND</span> C.C100_COD_MOD <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;55&#x27;</span>, <span class="hljs-string">&#x27;65&#x27;</span>)
+  <span class="hljs-keyword">AND</span> C.REG0_PERIODO_DECLARACAO <span class="hljs-keyword">not</span> <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;%2025%&#x27;</span>
+  <span class="hljs-keyword">AND</span> C.C100_COD_SIT <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;0 - DOCUMENTO REGULAR&#x27;</span>;
+GO
+</div></code></pre>
+<h3 id="4.1-view-auxiliar%3A-duplicidade-de-escritura%C3%A7%C3%A3o" tabindex="-1">4.1 View auxiliar: duplicidade de escrituração</h3>
+<p>A mesma nota lançada duas vezes infla o valor contábil declarado. Esta view isola o problema — e é o primeiro <code>GROUP BY … HAVING</code> da oficina:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> fisc.VW_AUD_C100_DUPLICIDADE_Tab
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">select</span> 
+    C100_CHV_NFE,
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)              <span class="hljs-keyword">AS</span> QT_LANCAMENTOS,
+    <span class="hljs-built_in">SUM</span>(C100_VL_DOC)   <span class="hljs-keyword">AS</span> VL_SOMADO,
+    <span class="hljs-built_in">MIN</span>(REG0_PERIODO_DECLARACAO)        <span class="hljs-keyword">AS</span> PRIMEIRO_PERIODO,
+    <span class="hljs-built_in">MAX</span>(REG0_PERIODO_DECLARACAO)        <span class="hljs-keyword">AS</span> ULTIMO_PERIODO
+<span class="hljs-keyword">from</span> fisc.TB_474_PR_EFD_REGISTRO_C100_IDENTIFICACAO_DOC_FISCAL
+<span class="hljs-keyword">where</span> REG0_PERIODO_DECLARACAO <span class="hljs-keyword">not</span> <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;%2025%&#x27;</span> <span class="hljs-keyword">and</span> C100_CHV_NFE <span class="hljs-keyword">is</span> <span class="hljs-keyword">not null</span>
+<span class="hljs-keyword">and</span> C100_CHV_NFE <span class="hljs-keyword">not</span> <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;%-%&#x27;</span> <span class="hljs-keyword">and</span> C100_COD_SIT <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;0 - DOCUMENTO REGULAR&#x27;</span>
+<span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> C100_CHV_NFE
+<span class="hljs-keyword">having</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-operator">&gt;</span><span class="hljs-number">1</span>;
+</div></code></pre>
+<p><strong>Validação da etapa:</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> qt_c100_saidas, <span class="hljs-built_in">SUM</span>(VL_DOCUMENTO) <span class="hljs-keyword">AS</span> vl_total
+<span class="hljs-keyword">FROM</span> fisc.VW_AUD_C100_SAIDAS;
+
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> chaves_duplicadas
+<span class="hljs-keyword">FROM</span> fisc.VW_AUD_C100_DUPLICIDADE;
+</div></code></pre>
+<blockquote>
+<p><strong>Cuidado ao montar <code>GROUP BY</code> no Designer:</strong> ao clicar no botão <strong>Agrupar por</strong> (ícone Σ da barra), o painel Critérios ganha a coluna &quot;Agrupar por&quot;. Colunas marcadas como <code>Agrupar por</code> entram no <code>GROUP BY</code>; as marcadas com uma função (<code>Contagem</code>, <code>Soma</code>) entram como agregação. Filtros lançados na linha de uma coluna agregada viram <code>HAVING</code>, não <code>WHERE</code> — exatamente a distinção que a maioria das pessoas erra escrevendo à mão.</p>
+</blockquote>
+<hr>
+<h2 id="5.-etapa-3-%E2%80%94-a-view-de-diverg%C3%AAncia-(25-min)" tabindex="-1">5. Etapa 3 — A view de divergência (25 min)</h2>
+<p>Esta é a etapa central. Aqui a regra fiscal vira código.</p>
+<h3 id="5.1-a-matriz-de-decis%C3%A3o" tabindex="-1">5.1 A matriz de decisão</h3>
+<p><img src="img/fig-12-matriz-divergencias.svg" alt="Matriz de divergências"></p>
+<p><em>Figura 3 — Cruzamento entre a situação da nota no XML e a situação declarada no C100. Cada célula vermelha é um achado de auditoria.</em></p>
+<h3 id="5.2-montando-no-designer" tabindex="-1">5.2 Montando no Designer</h3>
+<p><strong>Passo 3.1</strong> — Nova Exibição → adicione <strong>as duas views</strong> já criadas: <code>VW_AUD_SAIDAS_XML</code> e <code>VW_AUD_C100_SAIDAS</code> (elas aparecem na aba <strong>Exibições</strong> da janela &quot;Adicionar Tabela&quot;).</p>
+<p><strong>Passo 3.2</strong> — No painel Diagrama, <strong>arraste</strong> a coluna <code>CHAVE_ACESSO</code> da primeira view sobre a coluna <code>CHAVE_ACESSO</code> da segunda. Surge a linha de junção.</p>
+<p><strong>Passo 3.3</strong> — <strong>Este é o clique decisivo da oficina.</strong> Clique com o botão direito sobre a linha de junção → <strong>Selecionar Todas as Linhas de VW_AUD_SAIDAS_XML</strong>. O losango da junção muda de forma e o SQL passa de <code>INNER JOIN</code> para <code>LEFT OUTER JOIN</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Tipo de junção</th>
+<th>Diagrama</th>
+<th>O que responde</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>INNER JOIN</code></td>
+<td>losango vazio dos dois lados</td>
+<td>&quot;notas que estão nos dois lugares&quot; — esconde justamente a falta de lançamento</td>
+</tr>
+<tr>
+<td><code>LEFT JOIN</code> (todas de X)</td>
+<td>losango cheio à esquerda</td>
+<td><strong>&quot;todas as notas autorizadas, escrituradas ou não&quot;</strong> ← é o que queremos</td>
+</tr>
+<tr>
+<td><code>RIGHT JOIN</code> (todas de C)</td>
+<td>losango cheio à direita</td>
+<td>&quot;tudo que foi escriturado, inclusive sem nota autorizada correspondente&quot;</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Regra prática de auditoria:</strong> <em>a divergência mora sempre no <code>NULL</code> do <code>LEFT JOIN</code>.</em> Se você usar <code>INNER JOIN</code>, a consulta fica mais rápida e perde exatamente as notas omitidas — o achado de maior valor.</p>
+</blockquote>
+<p><strong>Passo 3.4</strong> — Marque as colunas de interesse dos dois lados e execute (Ctrl+R) para conferir que aparecem linhas com <code>SITUACAO_EFD</code> nulo.</p>
+<p><strong>Passo 3.5</strong> — O <code>CASE</code> classificador o Designer não monta. Copie o texto do painel SQL, feche o Designer e finalize no editor de consultas com o script abaixo.</p>
+<h3 id="5.3-a-view-completa" tabindex="-1">5.3 A view completa</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> fisc.VW_AUD_DIVERG_SAIDAS
+<span class="hljs-keyword">AS</span>
+<span class="hljs-comment">/*  ============================================================================
+    AUDITORIA DE SAÍDAS — confronto NF-e autorizada (XML) × escrituração C100.
+    Uma linha por nota fiscal de saída autorizada, com a divergência já
+    classificada e o valor do reflexo apurado.
+    Fontes: fisc.VW_AUD_SAIDAS_XML, fisc.VW_AUD_C100_SAIDAS
+    ============================================================================ */</span>
+<span class="hljs-keyword">SELECT</span>
+    X.PERIODO,
+    X.ANO,
+    X.MES,
+    X.CHAVE_ACESSO,
+    X.MODELO,
+    X.SERIE,
+    X.NUMERO,
+    X.DT_EMISSAO,
+    X.CNPJ_CPF_DEST,
+    X.NOME_DEST,
+    X.UF_DEST,
+    X.NATUREZA_OPERACAO,
+
+    <span class="hljs-comment">-- lado XML (o que a SEFAZ autorizou)</span>
+    X.SITUACAO_XML,
+    X.VL_NOTA          <span class="hljs-keyword">AS</span> VL_XML,
+    X.VL_ICMS          <span class="hljs-keyword">AS</span> VL_ICMS_XML,
+
+    <span class="hljs-comment">-- lado EFD (o que o contribuinte declarou)</span>
+    C.SITUACAO_EFD,
+    C.PERIODO          <span class="hljs-keyword">AS</span> PERIODO_ESCRITURACAO,
+    C.VL_DOCUMENTO     <span class="hljs-keyword">AS</span> VL_EFD,
+    C.VL_ICMS          <span class="hljs-keyword">AS</span> VL_ICMS_EFD,
+
+    <span class="hljs-comment">-- classificação do achado</span>
+    <span class="hljs-keyword">CASE</span>
+        <span class="hljs-keyword">WHEN</span> C.CHAVE_ACESSO <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+             <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;1 - FALTA DE LANCAMENTO NA EFD&#x27;</span>
+        <span class="hljs-keyword">WHEN</span> C.SITUACAO_EFD <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;2 -%&#x27;</span> <span class="hljs-keyword">OR</span> C.SITUACAO_EFD <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;3 -%&#x27;</span>
+             <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;2 - ESCRITURADA COMO CANCELADA&#x27;</span>
+        <span class="hljs-keyword">WHEN</span> C.SITUACAO_EFD <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;5 -%&#x27;</span>
+             <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;5 - ESCRITURADA COMO NUMERACAO INUTILIZADA&#x27;</span>
+        <span class="hljs-keyword">WHEN</span> C.VL_DOCUMENTO <span class="hljs-operator">&lt;</span> X.VL_NOTA <span class="hljs-operator">-</span> <span class="hljs-number">0.01</span>
+             <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;3 - VALOR CONTABIL A MENOR&#x27;</span>
+        <span class="hljs-keyword">WHEN</span> C.VL_DOCUMENTO <span class="hljs-operator">&gt;</span> X.VL_NOTA <span class="hljs-operator">+</span> <span class="hljs-number">0.01</span>
+             <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;4 - VALOR CONTABIL A MAIOR&#x27;</span>
+        <span class="hljs-keyword">WHEN</span> X.ALERTA_EFD <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;NOTA FISCAL LANCADA MAIS DE UMA VEZ NA EFD&#x27;</span>
+             <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;6 - LANCADA EM DUPLICIDADE&#x27;</span>
+        <span class="hljs-keyword">ELSE</span> <span class="hljs-string">&#x27;0 - CONFORME&#x27;</span>
+    <span class="hljs-keyword">END</span>                <span class="hljs-keyword">AS</span> TIPO_DIVERGENCIA,
+
+    <span class="hljs-comment">-- reflexo financeiro: quanto de valor contábil deixou de ser declarado</span>
+    <span class="hljs-keyword">CASE</span>
+        <span class="hljs-keyword">WHEN</span> C.CHAVE_ACESSO <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>                                 <span class="hljs-keyword">THEN</span> X.VL_NOTA
+        <span class="hljs-keyword">WHEN</span> C.SITUACAO_EFD <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;2 -%&#x27;</span> <span class="hljs-keyword">OR</span> C.SITUACAO_EFD <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;3 -%&#x27;</span> <span class="hljs-keyword">THEN</span> X.VL_NOTA
+        <span class="hljs-keyword">WHEN</span> C.SITUACAO_EFD <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;5 -%&#x27;</span>                             <span class="hljs-keyword">THEN</span> X.VL_NOTA
+        <span class="hljs-keyword">WHEN</span> C.VL_DOCUMENTO <span class="hljs-operator">&lt;</span> X.VL_NOTA <span class="hljs-operator">-</span> <span class="hljs-number">0.01</span> <span class="hljs-keyword">THEN</span> X.VL_NOTA <span class="hljs-operator">-</span> C.VL_DOCUMENTO
+        <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0.00</span>
+    <span class="hljs-keyword">END</span>                <span class="hljs-keyword">AS</span> VL_DIFERENCA_APURADA,
+
+    <span class="hljs-comment">-- reflexo em ICMS destacado</span>
+    <span class="hljs-keyword">CASE</span>
+        <span class="hljs-keyword">WHEN</span> C.CHAVE_ACESSO <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>                                 <span class="hljs-keyword">THEN</span> X.VL_ICMS
+        <span class="hljs-keyword">WHEN</span> C.SITUACAO_EFD <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;2 -%&#x27;</span> <span class="hljs-keyword">OR</span> C.SITUACAO_EFD <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;3 -%&#x27;</span> <span class="hljs-keyword">THEN</span> X.VL_ICMS
+        <span class="hljs-keyword">WHEN</span> X.VL_ICMS <span class="hljs-operator">&gt;</span> ISNULL(C.VL_ICMS, <span class="hljs-number">0</span>) <span class="hljs-operator">+</span> <span class="hljs-number">0.01</span>
+             <span class="hljs-keyword">THEN</span> X.VL_ICMS <span class="hljs-operator">-</span> ISNULL(C.VL_ICMS, <span class="hljs-number">0</span>)
+        <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0.00</span>
+    <span class="hljs-keyword">END</span>                <span class="hljs-keyword">AS</span> VL_ICMS_DIFERENCA,
+
+    X.ALERTA_EFD
+<span class="hljs-keyword">FROM</span> fisc.VW_AUD_SAIDAS_XML <span class="hljs-keyword">AS</span> X
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">OUTER</span> <span class="hljs-keyword">JOIN</span> fisc.VW_AUD_C100_SAIDAS <span class="hljs-keyword">AS</span> C
+     <span class="hljs-keyword">ON</span> C.CHAVE_ACESSO <span class="hljs-operator">=</span> X.CHAVE_ACESSO;
+GO
+</div></code></pre>
+<blockquote>
+<p><strong>⚠ Efeito da duplicidade sobre a contagem.</strong> Se a mesma chave foi escriturada duas vezes no C100, o <code>LEFT JOIN</code> devolve <strong>duas linhas para a mesma nota</strong> — e um <code>COUNT(*)</code> sobre a view passa a contar notas a mais. Isso é tecnicamente correto (há de fato dois lançamentos), mas precisa ser dito no relatório. Para conferir o impacto:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)                        <span class="hljs-keyword">AS</span> linhas_na_view,
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> CHAVE_ACESSO)    <span class="hljs-keyword">AS</span> notas_distintas,
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-operator">-</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> CHAVE_ACESSO) <span class="hljs-keyword">AS</span> linhas_extras_por_duplicidade
+<span class="hljs-keyword">FROM</span> fisc.VW_AUD_DIVERG_SAIDAS;
+</div></code></pre>
+<p>Se a diferença for relevante, trate os dois fenômenos separadamente: a view de divergência para os achados de valor, e <code>fisc.VW_AUD_C100_DUPLICIDADE</code> para o achado de duplicidade.</p>
+</blockquote>
+<h3 id="5.4-uso-imediato" tabindex="-1">5.4 Uso imediato</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Panorama dos achados</span>
+<span class="hljs-keyword">SELECT</span>
+    TIPO_DIVERGENCIA,
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)                     <span class="hljs-keyword">AS</span> QT_NOTAS,
+    <span class="hljs-built_in">SUM</span>(VL_DIFERENCA_APURADA)    <span class="hljs-keyword">AS</span> VL_REFLEXO,
+    <span class="hljs-built_in">SUM</span>(VL_ICMS_DIFERENCA)       <span class="hljs-keyword">AS</span> VL_ICMS_REFLEXO
+<span class="hljs-keyword">FROM</span> fisc.VW_AUD_DIVERG_SAIDAS
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> TIPO_DIVERGENCIA
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> TIPO_DIVERGENCIA;
+
+<span class="hljs-comment">-- As 50 notas de maior reflexo — é por onde a fiscalização começa</span>
+<span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">50</span>)
+    TIPO_DIVERGENCIA, PERIODO, NUMERO, SERIE, DT_EMISSAO,
+    NOME_DEST, UF_DEST, VL_XML, VL_EFD, VL_DIFERENCA_APURADA
+<span class="hljs-keyword">FROM</span> fisc.VW_AUD_DIVERG_SAIDAS
+<span class="hljs-keyword">WHERE</span> TIPO_DIVERGENCIA <span class="hljs-operator">&lt;&gt;</span> <span class="hljs-string">&#x27;0 - CONFORME&#x27;</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> VL_DIFERENCA_APURADA <span class="hljs-keyword">DESC</span>;
+
+<span class="hljs-comment">-- Concentração por destinatário: uma omissão sistemática costuma ter dono</span>
+<span class="hljs-keyword">SELECT</span>
+    CNPJ_CPF_DEST, NOME_DEST, UF_DEST,
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)                  <span class="hljs-keyword">AS</span> QT_NOTAS_COM_ACHADO,
+    <span class="hljs-built_in">SUM</span>(VL_DIFERENCA_APURADA) <span class="hljs-keyword">AS</span> VL_REFLEXO
+<span class="hljs-keyword">FROM</span> fisc.VW_AUD_DIVERG_SAIDAS
+<span class="hljs-keyword">WHERE</span> TIPO_DIVERGENCIA <span class="hljs-operator">&lt;&gt;</span> <span class="hljs-string">&#x27;0 - CONFORME&#x27;</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> CNPJ_CPF_DEST, NOME_DEST, UF_DEST
+<span class="hljs-keyword">HAVING</span> <span class="hljs-built_in">SUM</span>(VL_DIFERENCA_APURADA) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> VL_REFLEXO <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<h3 id="5.5-tr%C3%AAs-armadilhas-desta-etapa" tabindex="-1">5.5 Três armadilhas desta etapa</h3>
+<p><strong>1. <code>NULL</code> em comparação nunca é verdadeiro.</strong> Escrever <code>WHERE C.SITUACAO_EFD &lt;&gt; '2 - DOCUMENTO CANCELADO'</code> <strong>elimina silenciosamente</strong> as notas não escrituradas, porque <code>NULL &lt;&gt; '...'</code> não é verdadeiro — é desconhecido. Foi para evitar isso que a classificação está toda dentro de um <code>CASE</code> ordenado, com <code>IS NULL</code> em primeiro lugar.</p>
+<p><strong>2. Centavos.</strong> Comparar <code>decimal</code> com <code>=</code> funciona, mas divergências de um centavo por arredondamento poluem o relatório. Daí a tolerância <code>± 0.01</code>. Ajuste conforme a orientação da sua coordenação.</p>
+<p><strong>3. Nunca envolva a coluna de junção em função.</strong> <code>ON LTRIM(RTRIM(C.CHAVE_ACESSO)) = X.CHAVE_ACESSO</code> funciona, mas <strong>impede o uso de índice</strong> e transforma a consulta em varredura completa. Se houver espaços ou zeros à esquerda no dado, a solução correta é normalizar <strong>na origem</strong> (na view de camada 3, ou com uma coluna computada persistida) — não dentro do <code>ON</code>.</p>
+<hr>
+<h2 id="6.-etapa-4-%E2%80%94-view-de-resumo-por-per%C3%ADodo-(10-min)" tabindex="-1">6. Etapa 4 — View de resumo por período (10 min)</h2>
+<p>O quadro que vai para o relatório precisa estar em ordem cronológica correta — e aqui a armadilha do <code>3/2025</code> cobra o preço.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> fisc.VW_AUD_RESUMO_DIVERG_SAIDAS
+<span class="hljs-keyword">AS</span>
+<span class="hljs-comment">/*  Quadro-resumo por período e tipo de divergência.
+    Note a coluna ORDEM_PERIODO: a coluna PERIODO é texto sem zero à esquerda
+    (&#x27;3/2025&#x27;), o que produz ordenação alfabética errada. ANO*100+MES resolve. */</span>
+<span class="hljs-keyword">SELECT</span>
+    D.ANO,
+    D.MES,
+    (D.ANO <span class="hljs-operator">*</span> <span class="hljs-number">100</span>) <span class="hljs-operator">+</span> D.MES              <span class="hljs-keyword">AS</span> ORDEM_PERIODO,
+    D.PERIODO,
+    D.TIPO_DIVERGENCIA,
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)                           <span class="hljs-keyword">AS</span> QT_NOTAS,
+    <span class="hljs-built_in">SUM</span>(D.VL_XML)                      <span class="hljs-keyword">AS</span> VL_TOTAL_XML,
+    <span class="hljs-built_in">SUM</span>(ISNULL(D.VL_EFD, <span class="hljs-number">0</span>))           <span class="hljs-keyword">AS</span> VL_TOTAL_EFD,
+    <span class="hljs-built_in">SUM</span>(D.VL_DIFERENCA_APURADA)        <span class="hljs-keyword">AS</span> VL_REFLEXO,
+    <span class="hljs-built_in">SUM</span>(D.VL_ICMS_DIFERENCA)           <span class="hljs-keyword">AS</span> VL_ICMS_REFLEXO,
+    <span class="hljs-built_in">CAST</span>(<span class="hljs-number">100.0</span> <span class="hljs-operator">*</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)
+         <span class="hljs-operator">/</span> <span class="hljs-built_in">NULLIF</span>(<span class="hljs-built_in">SUM</span>(<span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)) <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> D.ANO, D.MES), <span class="hljs-number">0</span>)
+         <span class="hljs-keyword">AS</span> <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">6</span>,<span class="hljs-number">2</span>))              <span class="hljs-keyword">AS</span> PCT_DO_PERIODO
+<span class="hljs-keyword">FROM</span> fisc.VW_AUD_DIVERG_SAIDAS <span class="hljs-keyword">AS</span> D
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> D.ANO, D.MES, D.PERIODO, D.TIPO_DIVERGENCIA;
+GO
+</div></code></pre>
+<pre class='hljs'><code><div><span class="hljs-comment">-- O quadro pronto para o relatório</span>
+<span class="hljs-keyword">SELECT</span> PERIODO, TIPO_DIVERGENCIA, QT_NOTAS, VL_REFLEXO, VL_ICMS_REFLEXO, PCT_DO_PERIODO
+<span class="hljs-keyword">FROM</span> fisc.VW_AUD_RESUMO_DIVERG_SAIDAS
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> ORDEM_PERIODO, TIPO_DIVERGENCIA;
+</div></code></pre>
+<blockquote>
+<p><strong>Observação sobre o Designer:</strong> a função de janela <code>SUM(...) OVER (PARTITION BY ...)</code> <strong>não é representável no diagrama</strong>. Ao abrir esta view no Designer você verá a mensagem de &quot;não pode ser representada graficamente&quot; — e tudo bem. Views a partir deste nível de complexidade vivem no editor de texto.</p>
+</blockquote>
+<hr>
+<h2 id="7.-etapa-5-%E2%80%94-with-schemabinding%3A-o-que-protege-e-onde-n%C3%A3o-usar-(10-min)" tabindex="-1">7. Etapa 5 — <code>WITH SCHEMABINDING</code>: o que protege e onde <strong>não</strong> usar (10 min)</h2>
+<h3 id="7.1-o-problema-que-ele-resolve" tabindex="-1">7.1 O problema que ele resolve</h3>
+<p>Uma view comum guarda apenas o <strong>texto</strong> da consulta. Se alguém apagar ou renomear uma coluna que ela usa, a view continua existindo e só quebra quando alguém tentar executá-la — provavelmente no meio de uma auditoria.</p>
+<p><code>WITH SCHEMABINDING</code> <strong>amarra</strong> a view às tabelas de origem: o SQL Server passa a impedir qualquer alteração que quebre a view.</p>
+<p><strong>Demonstração (2 minutos, alto impacto didático):</strong></p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- 1) Uma view amarrada sobre uma tabela de dados brutos</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> dbo.VW_NFE_SAIDA_BASE
+<span class="hljs-keyword">WITH</span> SCHEMABINDING
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    N.sqnfe,
+    N.tpnfe,
+    N.nrchaveacesso,
+    N.dhemissao,
+    N.vltotalnota
+<span class="hljs-keyword">FROM</span> dbo.NFE <span class="hljs-keyword">AS</span> N              <span class="hljs-comment">-- nome em DUAS PARTES: obrigatório</span>
+<span class="hljs-keyword">WHERE</span> N.tpoperacao <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;
+GO
+
+<span class="hljs-comment">-- 2) Tente derrubar a coluna. O SQL Server recusa.</span>
+<span class="hljs-comment">--    ⚠ Execute apenas para ver a mensagem de erro; não confirme nada.</span>
+<span class="hljs-keyword">ALTER TABLE</span> dbo.NFE <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">COLUMN</span> vltotalnota;
+<span class="hljs-comment">/*  Msg 5074 — O objeto &#x27;VW_NFE_SAIDA_BASE&#x27; depende da coluna &#x27;vltotalnota&#x27;.
+    Msg 4922 — ALTER TABLE DROP COLUMN vltotalnota falhou porque um ou mais
+    objetos acessam essa coluna.                                            */</span>
+</div></code></pre>
+<h3 id="7.2-as-quatro-exig%C3%AAncias-do-schemabinding" tabindex="-1">7.2 As quatro exigências do <code>SCHEMABINDING</code></h3>
+<ol>
+<li><strong>Nomes em duas partes</strong>: <code>dbo.NFE</code>, nunca <code>NFE</code> nem <code>banco.dbo.NFE</code>;</li>
+<li><strong>Sem <code>SELECT *</code></strong> — todas as colunas explícitas;</li>
+<li><strong>Objetos no mesmo banco de dados</strong>;</li>
+<li>Funções escalares referenciadas também precisam ser <code>SCHEMABINDING</code>.</li>
+</ol>
+<h3 id="7.3-%E2%9A%A0-onde-n%C3%A3o-usar-no-bdfisc" tabindex="-1">7.3 ⚠ Onde <strong>não</strong> usar no BDFISC</h3>
+<blockquote>
+<p>Esta é a regra específica desta base — e ela não está em nenhum manual de SQL Server.</p>
+</blockquote>
+<p>As tabelas <code>fisc.TB_*</code> são <strong>recriadas do zero</strong> pelas procedures <code>nnn_PR_*</code>, que começam com um <code>DROP TABLE IF EXISTS fisc.TB_...</code>. Se você criar uma view <code>WITH SCHEMABINDING</code> sobre uma delas, o <code>DROP TABLE</code> passará a <strong>falhar</strong>, e a procedure de geração de tabelas derivadas quebrará para toda a equipe:</p>
+<pre class='hljs'><code><div>Msg 3729 — Não é possível DROP TABLE 'fisc.TB_474_...' porque está sendo
+referenciada pelo objeto 'VW_AUD_C100_SAIDAS'.
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Camada</th>
+<th>Objeto</th>
+<th><code>SCHEMABINDING</code>?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dados brutos</td>
+<td>views sobre<code>dbo.NFE</code>, <code>dbo.EFD_C100</code>, <code>dbo.NFE_HI</code></td>
+<td><strong>Sim</strong> — as tabelas são permanentes</td>
+</tr>
+<tr>
+<td>Derivadas</td>
+<td>views sobre<code>fisc.TB_*</code></td>
+<td><strong>Não</strong> — as tabelas são apagadas e recriadas</td>
+</tr>
+</tbody>
+</table>
+<p>Se, mesmo assim, for preciso remover uma tabela amarrada, o caminho é desamarrar antes:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> fisc.VW_EXEMPLO <span class="hljs-keyword">AS</span> <span class="hljs-keyword">SELECT</span> ... ;   <span class="hljs-comment">-- recria sem SCHEMABINDING</span>
+<span class="hljs-comment">-- ou</span>
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">VIEW</span> fisc.VW_EXEMPLO;
+</div></code></pre>
+<hr>
+<h2 id="8.-etapa-6-%E2%80%94-view-indexada-de-controle-(15-min)" tabindex="-1">8. Etapa 6 — View indexada de controle (15 min)</h2>
+<p><strong>Objetivo:</strong> materializar em disco o total de notas de saída por mês e situação — o &quot;controle de fechamento&quot; que o auditor consulta dezenas de vezes por dia.</p>
+<p><img src="img/fig-13-view-indexada.svg" alt="Visão comum × visão indexada"></p>
+<p><em>Figura 4 — Diferença no plano de execução e o papel das opções de sessão e da dica <code>NOEXPAND</code>.</em></p>
+<h3 id="8.1-o-que-%C3%A9-uma-view-indexada" tabindex="-1">8.1 O que é uma view indexada</h3>
+<p>Uma view comum é apenas um apelido: a cada consulta o SQL Server reexecuta a agregação inteira. Ao criar um <strong>índice clusterizado único</strong> sobre uma view <code>SCHEMABINDING</code>, o resultado passa a ser <strong>gravado fisicamente em disco</strong> e mantido automaticamente pelo motor a cada <code>INSERT</code>/<code>UPDATE</code>/<code>DELETE</code> nas tabelas de origem.</p>
+<p>Como no BDFISC as tabelas <code>dbo.*</code> são carregadas uma vez e depois apenas consultadas, o custo de manutenção é praticamente zero e o benefício de leitura é enorme — é o cenário ideal para essa técnica.</p>
+<h3 id="8.2-passo-6.1-%E2%80%94-ajustar-as-op%C3%A7%C3%B5es-de-sess%C3%A3o" tabindex="-1">8.2 Passo 6.1 — Ajustar as opções de sessão</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SET</span> ANSI_NULLS <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">SET</span> ANSI_PADDING <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">SET</span> ANSI_WARNINGS <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">SET</span> ARITHABORT <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">SET</span> CONCAT_NULL_YIELDS_NULL <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">SET</span> QUOTED_IDENTIFIER <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">SET</span> NUMERIC_ROUNDABORT OFF;     <span class="hljs-comment">-- a única que fica OFF</span>
+GO
+</div></code></pre>
+<blockquote>
+<p>Esquecer qualquer uma delas produz o <strong>erro 1934</strong> na hora de criar o índice. E elas valem também para quem <strong>consulta</strong> a view depois: uma sessão com <code>ARITHABORT OFF</code> (padrão de alguns drivers ODBC antigos e do Excel) simplesmente não usa o índice.</p>
+</blockquote>
+<h3 id="8.3-passo-6.2-%E2%80%94-criar-a-view-com-schemabinding" tabindex="-1">8.3 Passo 6.2 — Criar a view com <code>SCHEMABINDING</code></h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> dbo.VW_NFE_SAIDA_RESUMO_MENSAL
+<span class="hljs-keyword">WITH</span> SCHEMABINDING
+<span class="hljs-keyword">AS</span>
+<span class="hljs-comment">/*  Controle de fechamento: quantidade e valor de notas de SAÍDA por
+    mês de emissão, modelo e situação. Base: dbo.NFE (dados brutos).      */</span>
+<span class="hljs-keyword">SELECT</span>
+    <span class="hljs-keyword">YEAR</span>(N.dhemissao)                  <span class="hljs-keyword">AS</span> ANO,
+    <span class="hljs-keyword">MONTH</span>(N.dhemissao)                 <span class="hljs-keyword">AS</span> MES,
+    N.tpnfe                            <span class="hljs-keyword">AS</span> TP_NFE,      <span class="hljs-comment">-- 1=NF-e 2=NFC-e 3=NFA-e</span>
+    N.stnfe                            <span class="hljs-keyword">AS</span> ST_NFE,      <span class="hljs-comment">-- A/O/C/D/I/U</span>
+    COUNT_BIG(<span class="hljs-operator">*</span>)                       <span class="hljs-keyword">AS</span> QT_NOTAS,
+    COUNT_BIG(N.vltotalnota)           <span class="hljs-keyword">AS</span> QT_COM_VALOR,
+    <span class="hljs-built_in">SUM</span>(ISNULL(N.vltotalnota, <span class="hljs-number">0</span>))      <span class="hljs-keyword">AS</span> VL_TOTAL,
+    <span class="hljs-built_in">SUM</span>(ISNULL(N.vlicms, <span class="hljs-number">0</span>))           <span class="hljs-keyword">AS</span> VL_ICMS
+<span class="hljs-keyword">FROM</span> dbo.NFE <span class="hljs-keyword">AS</span> N
+<span class="hljs-keyword">WHERE</span> N.tpoperacao <span class="hljs-operator">=</span> <span class="hljs-number">1</span>                 <span class="hljs-comment">-- saídas</span>
+  <span class="hljs-keyword">AND</span> N.dhemissao <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span>
+    <span class="hljs-keyword">YEAR</span>(N.dhemissao),
+    <span class="hljs-keyword">MONTH</span>(N.dhemissao),
+    N.tpnfe,
+    N.stnfe;
+GO
+</div></code></pre>
+<p><strong>Por que cada detalhe está aí:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Detalhe</th>
+<th>Motivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>COUNT_BIG(*)</code></td>
+<td><strong>Obrigatório</strong> em qualquer view indexada com <code>GROUP BY</code>. <code>COUNT(*)</code> não serve.</td>
+</tr>
+<tr>
+<td><code>COUNT_BIG(N.vltotalnota)</code></td>
+<td>Exigido quando se usa<code>SUM</code> sobre coluna que aceita <code>NULL</code></td>
+</tr>
+<tr>
+<td><code>ISNULL(..., 0)</code></td>
+<td>Torna a expressão não anulável e evita o aviso &quot;valor nulo eliminado&quot;</td>
+</tr>
+<tr>
+<td><code>dbo.NFE</code> (duas partes)</td>
+<td>Exigência do<code>SCHEMABINDING</code></td>
+</tr>
+<tr>
+<td>Sem<code>ORDER BY</code>, <code>TOP</code>, <code>DISTINCT</code>, subconsulta ou <code>LEFT JOIN</code></td>
+<td>Todos proibidos em view indexada</td>
+</tr>
+</tbody>
+</table>
+<h3 id="8.4-passo-6.3-%E2%80%94-criar-o-%C3%ADndice-clusterizado-%C3%BAnico" tabindex="-1">8.4 Passo 6.3 — Criar o índice clusterizado único</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">UNIQUE</span> CLUSTERED INDEX IXC_VW_NFE_SAIDA_RESUMO
+    <span class="hljs-keyword">ON</span> dbo.VW_NFE_SAIDA_RESUMO_MENSAL (ANO, MES, TP_NFE, ST_NFE);
+GO
+</div></code></pre>
+<p>A chave precisa ser <strong>exatamente o conjunto de colunas do <code>GROUP BY</code></strong> — é isso que garante a unicidade exigida.</p>
+<p>Índice não clusterizado adicional, opcional, para consultas que filtram só por situação:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> NONCLUSTERED INDEX IX_VW_NFE_SAIDA_RESUMO_SIT
+    <span class="hljs-keyword">ON</span> dbo.VW_NFE_SAIDA_RESUMO_MENSAL (ST_NFE, ANO, MES)
+    INCLUDE (QT_NOTAS, VL_TOTAL);
+GO
+</div></code></pre>
+<h3 id="8.5-passo-6.4-%E2%80%94-comprovar-o-ganho" tabindex="-1">8.5 Passo 6.4 — Comprovar o ganho</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SET</span> STATISTICS IO <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">SET</span> STATISTICS <span class="hljs-type">TIME</span> <span class="hljs-keyword">ON</span>;
+GO
+
+<span class="hljs-comment">-- (A) direto na tabela base — como era antes</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">YEAR</span>(dhemissao) <span class="hljs-keyword">AS</span> ANO, <span class="hljs-keyword">MONTH</span>(dhemissao) <span class="hljs-keyword">AS</span> MES,
+       COUNT_BIG(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> QT, <span class="hljs-built_in">SUM</span>(ISNULL(vltotalnota,<span class="hljs-number">0</span>)) <span class="hljs-keyword">AS</span> VL
+<span class="hljs-keyword">FROM</span> dbo.NFE
+<span class="hljs-keyword">WHERE</span> tpoperacao <span class="hljs-operator">=</span> <span class="hljs-number">1</span> <span class="hljs-keyword">AND</span> stnfe <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;A&#x27;</span>,<span class="hljs-string">&#x27;O&#x27;</span>)
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">YEAR</span>(dhemissao), <span class="hljs-keyword">MONTH</span>(dhemissao);
+
+<span class="hljs-comment">-- (B) na view materializada, forçando o uso do índice</span>
+<span class="hljs-keyword">SELECT</span> ANO, MES, <span class="hljs-built_in">SUM</span>(QT_NOTAS) <span class="hljs-keyword">AS</span> QT, <span class="hljs-built_in">SUM</span>(VL_TOTAL) <span class="hljs-keyword">AS</span> VL
+<span class="hljs-keyword">FROM</span> dbo.VW_NFE_SAIDA_RESUMO_MENSAL <span class="hljs-keyword">WITH</span> (NOEXPAND)
+<span class="hljs-keyword">WHERE</span> ST_NFE <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;A&#x27;</span>,<span class="hljs-string">&#x27;O&#x27;</span>)
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> ANO, MES;
+GO
+
+<span class="hljs-keyword">SET</span> STATISTICS IO OFF;
+<span class="hljs-keyword">SET</span> STATISTICS <span class="hljs-type">TIME</span> OFF;
+GO
+</div></code></pre>
+<p>Preencha o quadro comparativo com o que aparecer na aba <strong>Mensagens</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th>(A) tabela base</th>
+<th>(B) view indexada</th>
+<th>Redução</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Leituras lógicas</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Tempo decorrido (ms)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Operador dominante</td>
+<td>Clustered Index Scan em<code>NFE</code></td>
+<td>Clustered Index Seek/Scan na view</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="8.6-sobre-o-noexpand" tabindex="-1">8.6 Sobre o <code>NOEXPAND</code></h3>
+<p>Criar o índice <strong>não garante</strong> que ele seja usado: o casamento automático (o otimizador perceber sozinho que pode trocar a consulta pela view materializada) depende de edição e versão do SQL Server. A dica <code>WITH (NOEXPAND)</code> obriga o uso e é a forma segura de escrever consultas que dependem da view indexada.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> dbo.VW_NFE_SAIDA_RESUMO_MENSAL <span class="hljs-keyword">WITH</span> (NOEXPAND) <span class="hljs-keyword">WHERE</span> ANO <span class="hljs-operator">=</span> <span class="hljs-number">2025</span>;
+</div></code></pre>
+<h3 id="8.7-conferir-o-que-foi-criado" tabindex="-1">8.7 Conferir o que foi criado</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    OBJECT_SCHEMA_NAME(v.object_id) <span class="hljs-keyword">AS</span> esquema,
+    v.name                          <span class="hljs-keyword">AS</span> view_name,
+    v.is_schema_bound               <span class="hljs-keyword">AS</span> tem_schemabinding,
+    i.name                          <span class="hljs-keyword">AS</span> indice,
+    i.type_desc                     <span class="hljs-keyword">AS</span> tipo_indice,
+    p.rows                          <span class="hljs-keyword">AS</span> linhas_materializadas
+<span class="hljs-keyword">FROM</span> sys.views       <span class="hljs-keyword">AS</span> v
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> sys.indexes    <span class="hljs-keyword">AS</span> i <span class="hljs-keyword">ON</span> i.object_id <span class="hljs-operator">=</span> v.object_id
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> sys.partitions <span class="hljs-keyword">AS</span> p <span class="hljs-keyword">ON</span> p.object_id <span class="hljs-operator">=</span> v.object_id <span class="hljs-keyword">AND</span> p.index_id <span class="hljs-operator">=</span> i.index_id
+<span class="hljs-keyword">WHERE</span> v.name <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;VW_%&#x27;</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> esquema, view_name, i.index_id;
+</div></code></pre>
+<hr>
+<h2 id="9.-etapa-7-%E2%80%94-%C3%ADndices-de-apoio-e-medi%C3%A7%C3%A3o-(7-min)" tabindex="-1">9. Etapa 7 — Índices de apoio e medição (7 min)</h2>
+<h3 id="9.1-%C3%ADndices-nas-tabelas-de-dados-brutos-(dbo)-%E2%80%94-permanentes" tabindex="-1">9.1 Índices nas tabelas de dados brutos (<code>dbo</code>) — permanentes</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Junção por chave de acesso: é o índice que sustenta todo o confronto</span>
+<span class="hljs-keyword">CREATE</span> NONCLUSTERED INDEX IX_NFE_chaveacesso
+    <span class="hljs-keyword">ON</span> dbo.NFE (nrchaveacesso)
+    INCLUDE (sqnfe, tpnfe, stnfe, tpoperacao, dhemissao, vltotalnota, vlicms)
+    <span class="hljs-keyword">WITH</span> (DATA_COMPRESSION <span class="hljs-operator">=</span> PAGE);
+
+<span class="hljs-comment">-- Recorte &quot;saídas autorizadas por período&quot;: igualdade primeiro, faixa depois</span>
+<span class="hljs-keyword">CREATE</span> NONCLUSTERED INDEX IX_NFE_saida_situacao_emissao
+    <span class="hljs-keyword">ON</span> dbo.NFE (tpoperacao, stnfe, dhemissao)
+    INCLUDE (nrchaveacesso, nrnfeletronica, nrserienfe, tpnfe, vltotalnota, vlicms)
+    <span class="hljs-keyword">WITH</span> (DATA_COMPRESSION <span class="hljs-operator">=</span> PAGE);
+
+<span class="hljs-comment">-- Lado da escrituração</span>
+<span class="hljs-keyword">CREATE</span> NONCLUSTERED INDEX IX_EFD_C100_chavenfe
+    <span class="hljs-keyword">ON</span> dbo.EFD_C100 (nrchavenfe)
+    INCLUDE (sqnfoutra, sqcontrib, cdsitdocfisc, idoperacao, idemitente,
+             cdmoddocfisc, dtemissao, vltotalnf, vlicms)
+    <span class="hljs-keyword">WITH</span> (DATA_COMPRESSION <span class="hljs-operator">=</span> PAGE);
+
+<span class="hljs-keyword">CREATE</span> NONCLUSTERED INDEX IX_EFD_C100_oper_emit_sit
+    <span class="hljs-keyword">ON</span> dbo.EFD_C100 (idoperacao, idemitente, cdsitdocfisc)
+    INCLUDE (nrchavenfe, dtemissao, vltotalnf)
+    <span class="hljs-keyword">WITH</span> (DATA_COMPRESSION <span class="hljs-operator">=</span> PAGE);
+
+<span class="hljs-comment">-- Emitente e destinatário de cada nota (tphinfe: 2 = emitente, 3 = destinatário)</span>
+<span class="hljs-keyword">CREATE</span> NONCLUSTERED INDEX IX_NFE_HI_nota_tipo
+    <span class="hljs-keyword">ON</span> dbo.NFE_HI (sqnfe, tpnfe, tphinfe)
+    INCLUDE (nrcnpj, nrcpf, norazaosocial, sguf, nrinscricao, nomunic)
+    <span class="hljs-keyword">WITH</span> (DATA_COMPRESSION <span class="hljs-operator">=</span> PAGE);
+</div></code></pre>
+<p><strong>A lógica da ordem das colunas</strong> — vale memorizar, porque se aplica a qualquer índice:</p>
+<ol>
+<li>colunas usadas com <strong>igualdade</strong> (<code>=</code>, <code>IN</code>) vêm primeiro, da mais seletiva para a menos;</li>
+<li>colunas usadas em <strong>faixa</strong> (<code>BETWEEN</code>, <code>&gt;=</code>, <code>&lt;</code>) vêm depois;</li>
+<li>colunas apenas <strong>retornadas</strong> (nunca filtradas) vão no <code>INCLUDE</code> — assim o índice &quot;cobre&quot; a consulta e o SQL Server não precisa voltar à tabela.</li>
+</ol>
+<h3 id="9.2-%C3%ADndices-nas-tabelas-derivadas-(fisc.tb_*)-%E2%80%94-precisam-ser-recriados" tabindex="-1">9.2 Índices nas tabelas derivadas (<code>fisc.TB_*</code>) — precisam ser recriados</h3>
+<blockquote>
+<p><strong>Atenção:</strong> como as procedures <code>nnn_PR_*</code> executam <code>DROP TABLE</code>, <strong>os índices criados nessas tabelas desaparecem a cada geração</strong>. Guarde o script abaixo e execute-o logo após rodar as procedures. É exatamente o que o próprio BDFISC já faz internamente para algumas tabelas (ex.: <code>CREATE INDEX I_132_01 ON fisc.TB_132_...</code>).</p>
+</blockquote>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Execute SEMPRE após rodar as procedures 201_PR_... e 474_PR_...</span>
+IF OBJECT_ID(<span class="hljs-string">&#x27;fisc.TB_201_PR_XML_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01&#x27;</span>) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+   <span class="hljs-keyword">AND</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span> <span class="hljs-keyword">FROM</span> sys.indexes
+                   <span class="hljs-keyword">WHERE</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;IX_TB201_01_chave&#x27;</span>
+                     <span class="hljs-keyword">AND</span> object_id <span class="hljs-operator">=</span> OBJECT_ID(<span class="hljs-string">&#x27;fisc.TB_201_PR_XML_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01&#x27;</span>))
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">CREATE</span> NONCLUSTERED INDEX IX_TB201_01_chave
+        <span class="hljs-keyword">ON</span> fisc.TB_201_PR_XML_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01 (NF_CHAVE_ACESSO)
+        INCLUDE (NF_TPNF, TIPO_EMISSAO, NF_SITUACAO, NF_ANO, NF_MES,
+                 NF_VNF, NF_VICMS, ALERTA_EFD);
+
+    <span class="hljs-keyword">CREATE</span> NONCLUSTERED INDEX IX_TB201_01_recorte
+        <span class="hljs-keyword">ON</span> fisc.TB_201_PR_XML_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01
+           (NF_TPNF, TIPO_EMISSAO, NF_SITUACAO)
+        INCLUDE (NF_CHAVE_ACESSO, NF_ANO, NF_MES, NF_NNF, NF_SERIE, NF_VNF);
+<span class="hljs-keyword">END</span>
+GO
+
+IF OBJECT_ID(<span class="hljs-string">&#x27;fisc.TB_474_PR_EFD_REGISTRO_C100_IDENTIFICACAO_DOC_FISCAL&#x27;</span>) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+   <span class="hljs-keyword">AND</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span> <span class="hljs-keyword">FROM</span> sys.indexes
+                   <span class="hljs-keyword">WHERE</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;IX_TB474_chave&#x27;</span>
+                     <span class="hljs-keyword">AND</span> object_id <span class="hljs-operator">=</span> OBJECT_ID(<span class="hljs-string">&#x27;fisc.TB_474_PR_EFD_REGISTRO_C100_IDENTIFICACAO_DOC_FISCAL&#x27;</span>))
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">CREATE</span> NONCLUSTERED INDEX IX_TB474_chave
+        <span class="hljs-keyword">ON</span> fisc.TB_474_PR_EFD_REGISTRO_C100_IDENTIFICACAO_DOC_FISCAL (C100_CHV_NFE)
+        INCLUDE (C100_IND_OPER, C100_IND_EMIT, C100_COD_MOD, C100_COD_SIT,
+                 REG0_PERIODO_DECLARACAO, C100_DT_DOC, C100_VL_DOC, C100_VL_ICMS);
+
+    <span class="hljs-keyword">CREATE</span> NONCLUSTERED INDEX IX_TB474_recorte
+        <span class="hljs-keyword">ON</span> fisc.TB_474_PR_EFD_REGISTRO_C100_IDENTIFICACAO_DOC_FISCAL
+           (C100_IND_OPER, C100_IND_EMIT, C100_COD_MOD)
+        INCLUDE (C100_CHV_NFE, C100_COD_SIT, C100_VL_DOC, C100_VL_ICMS);
+<span class="hljs-keyword">END</span>
+GO
+
+<span class="hljs-comment">-- Estatísticas atualizadas: sem isso o otimizador escolhe planos ruins</span>
+<span class="hljs-keyword">UPDATE</span> STATISTICS fisc.TB_201_PR_XML_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01 <span class="hljs-keyword">WITH</span> FULLSCAN;
+<span class="hljs-keyword">UPDATE</span> STATISTICS fisc.TB_474_PR_EFD_REGISTRO_C100_IDENTIFICACAO_DOC_FISCAL <span class="hljs-keyword">WITH</span> FULLSCAN;
+GO
+</div></code></pre>
+<h3 id="9.3-medir-antes-e-depois" tabindex="-1">9.3 Medir antes e depois</h3>
+<pre class='hljs'><code><div>DBCC FREEPROCCACHE;            <span class="hljs-comment">-- ⚠ só em ambiente de treinamento</span>
+DBCC DROPCLEANBUFFERS;
+GO
+<span class="hljs-keyword">SET</span> STATISTICS IO <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">SET</span> STATISTICS <span class="hljs-type">TIME</span> <span class="hljs-keyword">ON</span>;
+GO
+
+<span class="hljs-keyword">SELECT</span> TIPO_DIVERGENCIA, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> QT, <span class="hljs-built_in">SUM</span>(VL_DIFERENCA_APURADA) <span class="hljs-keyword">AS</span> VL
+<span class="hljs-keyword">FROM</span> fisc.VW_AUD_DIVERG_SAIDAS
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> TIPO_DIVERGENCIA;
+GO
+</div></code></pre>
+<p>Com <strong>Ctrl+M</strong> ligado, observe no plano de execução:</p>
+<ul>
+<li>o operador de junção escolhido (<code>Hash Match</code>, <code>Merge Join</code> ou <code>Nested Loops</code>);</li>
+<li>se as tabelas <code>TB_*</code> aparecem com <strong>Seek</strong> (bom) ou <strong>Scan</strong> (falta índice);</li>
+<li>setas grossas indicando grande volume de linhas trafegando.</li>
+</ul>
+<p>Depois rode a seção 9.2 e repita a medição.</p>
+<p><strong>Pergunte ao próprio SQL Server o que falta:</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">10</span>)
+    OBJECT_NAME(mid.object_id, mid.database_id)  <span class="hljs-keyword">AS</span> tabela,
+    migs.user_seeks <span class="hljs-operator">+</span> migs.user_scans            <span class="hljs-keyword">AS</span> vezes_que_ajudaria,
+    <span class="hljs-built_in">CAST</span>(migs.avg_user_impact <span class="hljs-keyword">AS</span> <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">5</span>,<span class="hljs-number">2</span>))   <span class="hljs-keyword">AS</span> ganho_estimado_pct,
+    mid.equality_columns                         <span class="hljs-keyword">AS</span> colunas_igualdade,
+    mid.inequality_columns                       <span class="hljs-keyword">AS</span> colunas_faixa,
+    mid.included_columns                         <span class="hljs-keyword">AS</span> colunas_incluidas
+<span class="hljs-keyword">FROM</span> sys.dm_db_missing_index_group_stats <span class="hljs-keyword">AS</span> migs
+<span class="hljs-keyword">JOIN</span> sys.dm_db_missing_index_groups      <span class="hljs-keyword">AS</span> mig <span class="hljs-keyword">ON</span> mig.index_group_handle <span class="hljs-operator">=</span> migs.group_handle
+<span class="hljs-keyword">JOIN</span> sys.dm_db_missing_index_details     <span class="hljs-keyword">AS</span> mid <span class="hljs-keyword">ON</span> mid.index_handle <span class="hljs-operator">=</span> mig.index_handle
+<span class="hljs-keyword">WHERE</span> mid.database_id <span class="hljs-operator">=</span> DB_ID()
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> migs.avg_user_impact <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<blockquote>
+<p>A DMV <strong>sugere</strong>, não decide. Ela ignora índices já existentes e o custo de manutenção. A criação em ambiente compartilhado é sempre decisão do DBA.</p>
+</blockquote>
+<hr>
+<h2 id="10.-etapa-8-%E2%80%94-papel-de-trabalho-e-exporta%C3%A7%C3%A3o-(3-min)" tabindex="-1">10. Etapa 8 — Papel de trabalho e exportação (3 min)</h2>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Consulta final do papel de trabalho: um achado por linha, pronto para o Excel</span>
+<span class="hljs-keyword">SELECT</span>
+    D.PERIODO,
+    D.TIPO_DIVERGENCIA,
+    D.MODELO,
+    D.SERIE,
+    D.NUMERO,
+    D.CHAVE_ACESSO,
+    <span class="hljs-keyword">CONVERT</span>(<span class="hljs-type">VARCHAR</span>(<span class="hljs-number">10</span>), D.DT_EMISSAO, <span class="hljs-number">103</span>)  <span class="hljs-keyword">AS</span> DT_EMISSAO,
+    D.CNPJ_CPF_DEST,
+    D.NOME_DEST,
+    D.UF_DEST,
+    D.SITUACAO_XML,
+    ISNULL(D.SITUACAO_EFD, <span class="hljs-string">&#x27;NAO ESCRITURADA&#x27;</span>) <span class="hljs-keyword">AS</span> SITUACAO_EFD,
+    D.VL_XML,
+    ISNULL(D.VL_EFD, <span class="hljs-number">0</span>)                      <span class="hljs-keyword">AS</span> VL_EFD,
+    D.VL_DIFERENCA_APURADA,
+    D.VL_ICMS_DIFERENCA
+<span class="hljs-keyword">FROM</span> fisc.VW_AUD_DIVERG_SAIDAS <span class="hljs-keyword">AS</span> D
+<span class="hljs-keyword">WHERE</span> D.TIPO_DIVERGENCIA <span class="hljs-operator">&lt;&gt;</span> <span class="hljs-string">&#x27;0 - CONFORME&#x27;</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> D.ANO, D.MES, D.TIPO_DIVERGENCIA, D.VL_DIFERENCA_APURADA <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p><strong>Como exportar:</strong></p>
+<ul>
+<li><strong>Amostra até alguns milhares de linhas:</strong> clique no canto superior esquerdo da grade → botão direito → <strong>Copiar com Cabeçalhos</strong> → colar no Excel.</li>
+<li><strong>Volume maior:</strong> botão direito no banco → <strong>Tarefas → Exportar Dados…</strong> → origem <code>SQL Server Native Client</code>, destino <code>Microsoft Excel</code> ou <code>Arquivo Simples</code>, e cole a consulta acima como origem.</li>
+<li><strong>Reaproveitamento diário:</strong> conecte o Excel diretamente (Dados → Obter Dados → De Banco de Dados → SQL Server) apontando para a view <code>fisc.VW_AUD_DIVERG_SAIDAS</code>. A planilha passa a atualizar sozinha.</li>
+</ul>
+<h3 id="checklist-de-encerramento" tabindex="-1">Checklist de encerramento</h3>
+<ul>
+<li><input type="checkbox" id="checkbox0"><label for="checkbox0"> As cinco views foram criadas: </label><code>VW_AUD_SAIDAS_XML</code>, <code>VW_AUD_C100_SAIDAS</code>, <code>VW_AUD_C100_DUPLICIDADE</code>, <code>VW_AUD_DIVERG_SAIDAS</code>, <code>VW_AUD_RESUMO_DIVERG_SAIDAS</code></li>
+<li><input type="checkbox" id="checkbox1"><label for="checkbox1"> A view indexada </label><code>dbo.VW_NFE_SAIDA_RESUMO_MENSAL</code> existe e tem índice clusterizado único</li>
+<li><input type="checkbox" id="checkbox2"><label for="checkbox2"> O total de saídas autorizadas da Etapa 0 bate com </label><code>SUM(QT_NOTAS)</code> da view de resumo</li>
+<li><input type="checkbox" id="checkbox3"><label for="checkbox3"> Os índices de apoio foram criados e as estatísticas atualizadas</label></li>
+<li><input type="checkbox" id="checkbox4"><label for="checkbox4"> O script de recriação de índices das tabelas </label><code>fisc.TB_*</code> foi salvo em arquivo <code>.sql</code> versionado</li>
+<li><input type="checkbox" id="checkbox5"><label for="checkbox5"> Os achados de maior valor foram exportados para o papel de trabalho</label></li>
+<li><input type="checkbox" id="checkbox6"><label for="checkbox6"> Nenhuma view sobre </label><code>fisc.TB_*</code> ficou com <code>WITH SCHEMABINDING</code></li>
+</ul>
+<p><strong>Verificação final desta última linha</strong> — rode antes de sair:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    OBJECT_SCHEMA_NAME(v.object_id) <span class="hljs-keyword">AS</span> esquema,
+    v.name                          <span class="hljs-keyword">AS</span> view_name,
+    v.is_schema_bound               <span class="hljs-keyword">AS</span> tem_schemabinding
+<span class="hljs-keyword">FROM</span> sys.views <span class="hljs-keyword">AS</span> v
+<span class="hljs-keyword">WHERE</span> v.is_schema_bound <span class="hljs-operator">=</span> <span class="hljs-number">1</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> esquema, view_name;
+<span class="hljs-comment">-- Só devem aparecer views do schema dbo. Nenhuma do schema fisc.</span>
+</div></code></pre>
+<hr>
+<h2 id="11.-exerc%C3%ADcios-de-continuidade" tabindex="-1">11. Exercícios de continuidade</h2>
+<p>Cada um reaproveita a estrutura montada e rende uma nova oficina de 2 horas:</p>
+<ol>
+<li><strong>Entradas.</strong> Espelhe as Etapas 1 a 4 usando <code>fisc.TB_201_..._02</code> (notas de terceiros) e o C100 de entrada (<code>C100_IND_OPER = '0 - ENTRADA'</code>, <code>C100_IND_EMIT = '1 - TERCEIROS'</code>). Encontra crédito escriturado sobre nota cancelada pelo emitente.</li>
+<li><strong>Itens.</strong> Desça um nível: confronte <code>fisc.TB_202_...</code> (itens do XML) com <code>fisc.TB_506_...</code> (registro C170) para achar divergência de quantidade, CFOP ou CST no nível do produto.</li>
+<li><strong>Analítico por CFOP/CST.</strong> Some <code>fisc.TB_534_...</code> (registro C190) por período e confronte com a apuração <code>fisc.TB_736_...</code> (E110). Divergência aqui é erro de transporte para a apuração.</li>
+<li><strong>Cancelamento tardio.</strong> Use <code>dbo.NFE_EVENTO_DETALHADO</code> (<code>tpEvento = '110111'</code>) para medir o intervalo entre <code>dhEmi</code> e <code>dhEvento</code> e listar cancelamentos fora do prazo regulamentar.</li>
+<li><strong>Sequência numérica.</strong> Reproduza a lógica de <code>fisc.TB_103_PR_AUSENCIA_SEQUENCIAL_...</code> em views próprias, com funções de janela (<code>LAG</code>) para achar buracos na numeração por série.</li>
+</ol>
+<hr>
+<h2 id="12.-refer%C3%AAncia-r%C3%A1pida" tabindex="-1">12. Referência rápida</h2>
+<h3 id="regras-de-view-indexada-(as-que-mais-derrubam-a-cria%C3%A7%C3%A3o)" tabindex="-1">Regras de view indexada (as que mais derrubam a criação)</h3>
+<table>
+<thead>
+<tr>
+<th>Regra</th>
+<th>Consequência de violar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WITH SCHEMABINDING</code> obrigatório</td>
+<td>Erro 1939</td>
+</tr>
+<tr>
+<td><code>COUNT_BIG(*)</code> presente quando há <code>GROUP BY</code></td>
+<td>Erro 10138</td>
+</tr>
+<tr>
+<td>Nomes em duas partes</td>
+<td>Erro 4512</td>
+</tr>
+<tr>
+<td>Sem<code>LEFT</code>/<code>RIGHT</code>/<code>FULL JOIN</code>, subconsulta, CTE, <code>DISTINCT</code>, <code>TOP</code>, <code>UNION</code>, <code>ORDER BY</code></td>
+<td>Erro 10109 e variantes</td>
+</tr>
+<tr>
+<td><code>SUM</code> sobre coluna anulável exige <code>COUNT_BIG(coluna)</code></td>
+<td>Erro 10127</td>
+</tr>
+<tr>
+<td>Sete opções<code>SET</code> corretas na criação</td>
+<td>Erro 1934</td>
+</tr>
+<tr>
+<td>Índice precisa ser<code>UNIQUE CLUSTERED</code> e ser o primeiro</td>
+<td>Erro 1940</td>
+</tr>
+<tr>
+<td>Sem funções não determinísticas (<code>GETDATE()</code>, <code>NEWID()</code>)</td>
+<td>Erro 10133</td>
+</tr>
+</tbody>
+</table>
+<h3 id="comandos-%C3%BAteis-do-dia-a-dia" tabindex="-1">Comandos úteis do dia a dia</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Ver o texto de qualquer view</span>
+<span class="hljs-keyword">EXEC</span> sp_helptext <span class="hljs-string">&#x27;fisc.VW_AUD_DIVERG_SAIDAS&#x27;</span>;
+
+<span class="hljs-comment">-- Estrutura de colunas de uma view ou tabela</span>
+<span class="hljs-keyword">EXEC</span> sp_help <span class="hljs-string">&#x27;fisc.VW_AUD_DIVERG_SAIDAS&#x27;</span>;
+
+<span class="hljs-comment">-- O que depende do quê (antes de alterar qualquer coisa)</span>
+<span class="hljs-keyword">SELECT</span>
+    OBJECT_SCHEMA_NAME(d.referencing_id) <span class="hljs-keyword">AS</span> esquema_dependente,
+    OBJECT_NAME(d.referencing_id)        <span class="hljs-keyword">AS</span> objeto_dependente,
+    d.referenced_schema_name             <span class="hljs-keyword">AS</span> esquema_referenciado,
+    d.referenced_entity_name             <span class="hljs-keyword">AS</span> objeto_referenciado
+<span class="hljs-keyword">FROM</span> sys.sql_expression_dependencies <span class="hljs-keyword">AS</span> d
+<span class="hljs-keyword">WHERE</span> d.referenced_entity_name <span class="hljs-keyword">IN</span>
+      (<span class="hljs-string">&#x27;TB_201_PR_XML_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01&#x27;</span>,
+       <span class="hljs-string">&#x27;TB_474_PR_EFD_REGISTRO_C100_IDENTIFICACAO_DOC_FISCAL&#x27;</span>,
+       <span class="hljs-string">&#x27;NFE&#x27;</span>, <span class="hljs-string">&#x27;EFD_C100&#x27;</span>);
+
+<span class="hljs-comment">-- Remover tudo o que foi criado nesta oficina</span>
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">VIEW</span> IF <span class="hljs-keyword">EXISTS</span> fisc.VW_AUD_RESUMO_DIVERG_SAIDAS;
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">VIEW</span> IF <span class="hljs-keyword">EXISTS</span> fisc.VW_AUD_DIVERG_SAIDAS;
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">VIEW</span> IF <span class="hljs-keyword">EXISTS</span> fisc.VW_AUD_C100_DUPLICIDADE;
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">VIEW</span> IF <span class="hljs-keyword">EXISTS</span> fisc.VW_AUD_C100_SAIDAS;
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">VIEW</span> IF <span class="hljs-keyword">EXISTS</span> fisc.VW_AUD_SAIDAS_XML;
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">VIEW</span> IF <span class="hljs-keyword">EXISTS</span> dbo.VW_NFE_SAIDA_RESUMO_MENSAL;   <span class="hljs-comment">-- o índice cai junto</span>
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">VIEW</span> IF <span class="hljs-keyword">EXISTS</span> dbo.VW_NFE_SAIDA_BASE;
+</div></code></pre>
+<h3 id="mapa-das-tabelas-usadas" tabindex="-1">Mapa das tabelas usadas</h3>
+<table>
+<thead>
+<tr>
+<th>Objeto</th>
+<th>Papel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dbo.NFE</code></td>
+<td>NF-e/NFC-e próprias, dados do XML. PK<code>(sqnfe, tpnfe)</code></td>
+</tr>
+<tr>
+<td><code>dbo.NFE_HI</code></td>
+<td>Participantes da nota.<code>tphinfe = 2</code> emitente, <code>= 3</code> destinatário</td>
+</tr>
+<tr>
+<td><code>dbo.EFD_C100</code></td>
+<td>Registro C100 bruto da EFD. Liga-se a<code>EFD_0000</code> por <code>sqcontrib</code></td>
+</tr>
+<tr>
+<td><code>dbo.EFD_0000</code></td>
+<td>Cabeçalho da EFD: contribuinte, IE, CNPJ e período (<code>dtinicial</code>/<code>dtfinal</code>)</td>
+</tr>
+<tr>
+<td><code>dbo.EFD_0150</code></td>
+<td>Cadastro de participantes da EFD</td>
+</tr>
+<tr>
+<td><code>dbo.NFE_EVENTO_DETALHADO</code></td>
+<td>Eventos da NF-e (cancelamento, CC-e, manifestação)</td>
+</tr>
+<tr>
+<td><code>fisc.TB_201_..._01</code></td>
+<td>NF-e<strong>próprias</strong> achatadas do XML (gerada pela proc. <code>201_PR_...</code>)</td>
+</tr>
+<tr>
+<td><code>fisc.TB_201_..._02</code></td>
+<td>NF-e de<strong>terceiros</strong> achatadas do XML</td>
+</tr>
+<tr>
+<td><code>fisc.TB_474_...</code></td>
+<td>Registro C100 achatado (gerada pela proc.<code>474_PR_...</code>)</td>
+</tr>
+<tr>
+<td><code>fisc.TB_506_...</code></td>
+<td>Registro C170 — itens do documento fiscal</td>
+</tr>
+<tr>
+<td><code>fisc.TB_534_...</code></td>
+<td>Registro C190 — analítico por CST/CFOP/alíquota</td>
+</tr>
+<tr>
+<td><code>fisc.TB_736_...</code></td>
+<td>Registro E110 — apuração do ICMS</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="13.-refer%C3%AAncias" tabindex="-1">13. Referências</h2>
+<p>PETKOVIC, Dusan. <strong>Microsoft SQL Server 2019: A Beginner's Guide</strong>. 7. ed. New York: McGraw-Hill Education, 2020. (cap. sobre <em>Views</em> e <em>Indexed Views</em>)</p>
+<p>BRUSINO, Rudi. <strong>Microsoft SQL Server 2019: A Beginner's Guide</strong>. 6. ed. [S.l.]: McGraw-Hill Education, 2020.</p>
+<p>MICROSOFT. <strong>Create Indexed Views</strong>. Microsoft Learn. Disponível em: https://learn.microsoft.com/pt-br/sql/relational-databases/views/create-indexed-views.</p>
+<p>MICROSOFT. <strong>CREATE VIEW (Transact-SQL)</strong> e <strong>Query and Text Designer Tools</strong>. Microsoft Learn. Disponível em: https://learn.microsoft.com/pt-br/sql/.</p>
+<p>BRASIL. <strong>Guia Prático da Escrituração Fiscal Digital — EFD ICMS/IPI</strong>. Ato COTEPE/ICMS. (definição dos registros 0000, 0150, C100, C170, C190 e dos códigos <code>COD_SIT</code>, <code>IND_OPER</code>, <code>IND_EMIT</code>)</p>
+
+    </div>
+</body>
+</html>
