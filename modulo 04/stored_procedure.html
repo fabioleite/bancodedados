@@ -1,0 +1,1835 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>stored_procedure.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 id="apostila-completa---stored-procedures-sql-server" tabindex="-1">Apostila Completa - Stored Procedures SQL Server</h1>
+<h2 id="curso-de-banco-de-dados-relacional" tabindex="-1">Curso de Banco de Dados Relacional</h2>
+<p><strong>Modulo:</strong> Programacao no Banco (Stored Procedures)
+<strong>SGBD abordado:</strong> SQL Server (T-SQL)
+<strong>Base pratica usada nesta apostila:</strong> banco <code>933000081200000173202662_20260127_104141</code>, schemas <code>dbo</code> e <code>fisc</code> (206 stored procedures reais)</p>
+<hr>
+<h2 id="sumario" tabindex="-1">Sumario</h2>
+<ol>
+<li>O que e uma stored procedure</li>
+<li>Stored Procedure x Function x Trigger</li>
+<li>Sintaxe basica de criacao (CREATE PROCEDURE)</li>
+<li>Elementos de uma procedure
+4.1 Inspecionando procedures existentes — consultas de metadados</li>
+<li>Parametros de entrada e valores padrao</li>
+<li>Formas de passar parametros na chamada</li>
+<li>Saidas de uma procedure: OUTPUT, RETURN e result sets</li>
+<li>Tabelas temporarias com <code>#</code></li>
+<li>Tabela temporaria x variavel de tabela (<code>@</code>) x tabela permanente</li>
+<li>Estudo de caso 1: <code>PR_CADASTRO_CFOP</code> (procedure simples)</li>
+<li>Estudo de caso 2: <code>100_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS</code> (parametro com default e controle de fluxo)</li>
+<li>Estudo de caso 3: <code>126_PR_ENTRADAS_CREDITO_C190_CFOP_SUBST_TRIBUT_MERCADORIAS_REVENDA</code> (multiplos parametros e cadeia de tabelas temporarias)</li>
+<li>Boas praticas observadas no banco</li>
+<li>Erros comuns</li>
+<li>Roteiro de laboratorio</li>
+<li>Exercicios propostos</li>
+</ol>
+<hr>
+<h2 id="1.-o-que-e-uma-stored-procedure" tabindex="-1">1. O que e uma stored procedure</h2>
+<p>Stored procedure e um objeto de banco que agrupa um ou mais comandos T-SQL sob um nome, compilado e armazenado no banco, para ser executado por chamada explicita (<code>EXEC</code>).</p>
+<p>Diferente de uma function, uma procedure:</p>
+<ol>
+<li>Nao pode ser chamada dentro de uma expressao de <code>SELECT</code> (nao se usa <code>SELECT minha_procedure(x)</code>).</li>
+<li>Pode executar <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>, <code>CREATE TABLE</code>, controle transacional (<code>BEGIN TRAN</code>/<code>COMMIT</code>).</li>
+<li>Pode devolver zero, um ou varios result sets ao mesmo tempo.</li>
+<li>Pode receber parametros de entrada e devolver parametros de saida (<code>OUTPUT</code>).</li>
+</ol>
+<p>No banco fiscal usado nesta apostila, procedure e a unidade basica de trabalho: cada consulta de auditoria do schema <code>fisc</code> (100, 126, 133, 224 ...) e implementada como uma procedure em <code>dbo</code> que materializa o resultado em tabela e/ou devolve result sets.</p>
+<hr>
+<h2 id="2.-stored-procedure-x-function-x-trigger" tabindex="-1">2. Stored Procedure x Function x Trigger</h2>
+<p>Na prática fiscal, as três construções resolvem problemas diferentes. O critério mais importante não é “qual é mais poderosa”, e sim: “qual resposta a rotina precisa dar?”</p>
+<ul>
+<li>A <code>stored procedure</code> executa um processo: gera relatório, recalcula painel, atualiza tabela, materializa resultado.</li>
+<li>A <code>function</code> responde uma pergunta: “qual é o valor do imposto?”, “o documento está inconsistente?”, “qual foi a última nota do contribuinte?”.</li>
+<li>O <code>trigger</code> reage automaticamente ao evento: “um registro foi inserido, alterado ou excluído; vou validar, bloquear ou registrar isso”.</li>
+</ul>
+<h3 id="2.1-compara%C3%A7%C3%A3o-r%C3%A1pida-no-contexto-fiscal" tabindex="-1">2.1 Comparação rápida no contexto fiscal</h3>
+<table>
+<thead>
+<tr>
+<th>Recurso</th>
+<th>Retorno</th>
+<th>Como é chamada</th>
+<th>Melhor uso em auditoria tributária</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Stored Procedure</code></td>
+<td><code>SELECT</code>, <code>OUTPUT</code>, <code>RETURN</code>, múltiplos result sets</td>
+<td><code>EXEC nome_procedure</code></td>
+<td>Reprocessar painel fiscal, gerar relatório, materializar tabelas intermediárias, ETL de auditoria</td>
+</tr>
+<tr>
+<td><code>Function</code></td>
+<td>Escalar ou tabela</td>
+<td>Dentro de<code>SELECT</code>, <code>WHERE</code>, <code>JOIN</code> ou expressão</td>
+<td>Calcular imposto, validar regra, transformar código em descrição, reutilizar lógica de consulta</td>
+</tr>
+<tr>
+<td><code>Trigger</code></td>
+<td>Sem retorno direto</td>
+<td>Disparada automaticamente em<code>INSERT/UPDATE/DELETE</code></td>
+<td>Validar consistência, registrar log, impedir gravação indevida, manter integridade de processo fiscal</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2.2-exemplo-fiscal%3A-stored-procedure" tabindex="-1">2.2 Exemplo fiscal: <code>stored procedure</code></h3>
+<p>Uma <code>stored procedure</code> é a escolha correta quando o objetivo é executar uma rotina de negócio completa, como “recalcular todas as divergências da EFD e materializar o resultado para análise”.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> dbo.PR_GERAR_DIVERGENCIA_NFE_EFD
+    <span class="hljs-variable">@ANO</span> <span class="hljs-type">INT</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">SET</span> NOCOUNT <span class="hljs-keyword">ON</span>;
+
+    <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> IF <span class="hljs-keyword">EXISTS</span> #divergencias;
+
+    <span class="hljs-keyword">SELECT</span>
+        n.id_nfe,
+        n.chave_acesso,
+        n.valor_total,
+        e.valor_documento,
+        n.valor_total <span class="hljs-operator">-</span> e.valor_documento <span class="hljs-keyword">AS</span> diferenca_valor
+    <span class="hljs-keyword">INTO</span> #divergencias
+    <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.efd_c100 <span class="hljs-keyword">AS</span> e
+        <span class="hljs-keyword">ON</span> e.chave_acesso <span class="hljs-operator">=</span> n.chave_acesso
+    <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">YEAR</span>(n.data_emissao) <span class="hljs-operator">=</span> <span class="hljs-variable">@ANO</span>;
+
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span>
+    <span class="hljs-keyword">FROM</span> #divergencias
+    <span class="hljs-keyword">WHERE</span> <span class="hljs-built_in">ABS</span>(diferenca_valor) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span>;
+<span class="hljs-keyword">END</span>;
+GO
+</div></code></pre>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>gerar painel de auditoria;</li>
+<li>recalcular indicadores fiscais;</li>
+<li>montar tabela intermediária para consulta posterior;</li>
+<li>atualizar dados em lote.</li>
+</ul>
+<p><strong>Melhor uso:</strong> processo completo, com passos, filtros, temporárias e saída final organizada.</p>
+<h3 id="2.3-exemplo-fiscal%3A-function" tabindex="-1">2.3 Exemplo fiscal: <code>function</code></h3>
+<p>Uma <code>function</code> serve para responder uma pergunta dentro de outra consulta. Em auditoria fiscal, ela costuma encapsular uma regra sempre repetida.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">FUNCTION</span> fisc.fn_status_documento(<span class="hljs-variable">@chave_acesso</span> <span class="hljs-type">CHAR</span>(<span class="hljs-number">44</span>))
+<span class="hljs-keyword">RETURNS</span> <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">30</span>)
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@status</span> <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">30</span>);
+
+    IF <span class="hljs-keyword">EXISTS</span> (
+        <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span>
+        <span class="hljs-keyword">FROM</span> dbo.nfe
+        <span class="hljs-keyword">WHERE</span> chave_acesso <span class="hljs-operator">=</span> <span class="hljs-variable">@chave_acesso</span>
+          <span class="hljs-keyword">AND</span> situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CANCELADA&#x27;</span>
+    )
+        <span class="hljs-keyword">SET</span> <span class="hljs-variable">@status</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CANCELADA&#x27;</span>;
+    <span class="hljs-keyword">ELSE</span> IF <span class="hljs-keyword">EXISTS</span> (
+        <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span>
+        <span class="hljs-keyword">FROM</span> dbo.nfe
+        <span class="hljs-keyword">WHERE</span> chave_acesso <span class="hljs-operator">=</span> <span class="hljs-variable">@chave_acesso</span>
+    )
+        <span class="hljs-keyword">SET</span> <span class="hljs-variable">@status</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>;
+    <span class="hljs-keyword">ELSE</span>
+        <span class="hljs-keyword">SET</span> <span class="hljs-variable">@status</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;NAO_ENCONTRADA&#x27;</span>;
+
+    <span class="hljs-keyword">RETURN</span> <span class="hljs-variable">@status</span>;
+<span class="hljs-keyword">END</span>;
+GO
+</div></code></pre>
+<p>Uso na consulta:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    e.id_c100,
+    e.chave_acesso,
+    fisc.fn_status_documento(e.chave_acesso) <span class="hljs-keyword">AS</span> status_nfe
+<span class="hljs-keyword">FROM</span> dbo.efd_c100 <span class="hljs-keyword">AS</span> e
+<span class="hljs-keyword">WHERE</span> e.periodo_apuracao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;202501&#x27;</span>;
+</div></code></pre>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>transformar um código em texto legível;</li>
+<li>validar regra de negócio em uma consulta;</li>
+<li>reaproveitar lógica sem depender de procedimento procedural.</li>
+</ul>
+<p><strong>Melhor uso:</strong> resposta calculada dentro de <code>SELECT</code>, <code>WHERE</code>, <code>JOIN</code> ou expressão.</p>
+<blockquote>
+<p>Atenção: em T-SQL, <code>function</code> não faz <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> e não é a melhor ferramenta para processar grande volume de dados em lote. Ela existe para cálculo e reutilização logicamente embutida na consulta.</p>
+</blockquote>
+<h3 id="2.4-exemplo-fiscal%3A-trigger" tabindex="-1">2.4 Exemplo fiscal: <code>trigger</code></h3>
+<p>O <code>trigger</code> é para reagir automaticamente quando um dado muda. Em ambiente fiscal, esse tipo de comportamento é útil para evitar inconsistência no cadastro ou registrar evento de auditoria.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> dbo.trg_validar_nota_duplicada
+<span class="hljs-keyword">ON</span> dbo.nfe
+AFTER <span class="hljs-keyword">INSERT</span>, <span class="hljs-keyword">UPDATE</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">SET</span> NOCOUNT <span class="hljs-keyword">ON</span>;
+
+    IF <span class="hljs-keyword">EXISTS</span> (
+        <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span>
+        <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+        <span class="hljs-keyword">JOIN</span> inserted <span class="hljs-keyword">AS</span> i
+            <span class="hljs-keyword">ON</span> i.chave_acesso <span class="hljs-operator">=</span> n.chave_acesso
+        <span class="hljs-keyword">WHERE</span> n.id_nfe <span class="hljs-operator">&lt;&gt;</span> i.id_nfe
+    )
+    <span class="hljs-keyword">BEGIN</span>
+        RAISERROR(<span class="hljs-string">&#x27;Chave de acesso duplicada. Documento fiscal rejeitado.&#x27;</span>, <span class="hljs-number">16</span>, <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">ROLLBACK</span> TRANSACTION;
+    <span class="hljs-keyword">END</span>;
+<span class="hljs-keyword">END</span>;
+GO
+</div></code></pre>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>bloquear cadastro duplicado de NF-e;</li>
+<li>impedir gravação de CNPJ com formato inválido;</li>
+<li>gravar log de auditoria ao inserir ou alterar registros críticos;</li>
+<li>disparar validações automatizadas quando o dado entra no sistema.</li>
+</ul>
+<p><strong>Melhor uso:</strong> resposta automática a um evento DML, sem chamada explícita do usuário.</p>
+<h3 id="2.5-resumo-pr%C3%A1tico-para-explicar-em-aula" tabindex="-1">2.5 Resumo prático para explicar em aula</h3>
+<ol>
+<li>
+<p><code>Stored Procedure</code> = executa um processo de auditoria ou ETL.</p>
+<ul>
+<li>Exemplo: recalcular divergências de EFD/NF-e, criar relatório de inconsistências, gerar painel de fiscalização.</li>
+</ul>
+</li>
+<li>
+<p><code>Function</code> = responde uma pergunta em contexto de consulta.</p>
+<ul>
+<li>Exemplo: “qual é o status da nota?”, “qual é o valor total do imposto?”, “a operação é regular ou cancelada?”.</li>
+</ul>
+</li>
+<li>
+<p><code>Trigger</code> = reage automaticamente a alterações no dado.</p>
+<ul>
+<li>Exemplo: impedir duplicidade de chave de acesso, registrar auditoria, rejeitar gravação inconsistente.</li>
+</ul>
+</li>
+</ol>
+<h3 id="2.6-regra-pr%C3%A1tica-da-equipe" tabindex="-1">2.6 Regra prática da equipe</h3>
+<ul>
+<li>Use <code>stored procedure</code> quando tiver um fluxo de trabalho ou rotina operacional.</li>
+<li>Use <code>function</code> quando a lógica é uma expressão/consulta reutilizável.</li>
+<li>Use <code>trigger</code> apenas para garantir integridade/reação automática a eventos de dados.</li>
+</ul>
+<blockquote>
+<p>Em auditoria fiscal, a regra mais importante é esta: o processo de análise pertence à <code>stored procedure</code>; a regra de cálculo ou classificação pertence à <code>function</code>; e a garantia de integridade automática pertence ao <code>trigger</code>.</p>
+</blockquote>
+<hr>
+<h2 id="3.-sintaxe-basica-de-criacao-(create-procedure)" tabindex="-1">3. Sintaxe basica de criacao (CREATE PROCEDURE)</h2>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> [schema].[nome_da_procedure]
+    <span class="hljs-variable">@parametro1</span> TIPO,
+    <span class="hljs-variable">@parametro2</span> TIPO <span class="hljs-operator">=</span> valor_padrao
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SET</span> NOCOUNT <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-comment">-- corpo da procedure</span>
+<span class="hljs-keyword">END</span>
+GO
+</div></code></pre>
+<p>Pontos de sintaxe:</p>
+<ul>
+<li><code>CREATE PROCEDURE</code> pode ser abreviado para <code>CREATE PROC</code>.</li>
+<li><code>CREATE OR ALTER PROCEDURE</code> cria se nao existir e substitui se ja existir (evita ter que fazer <code>DROP</code> manual antes de recriar).</li>
+<li>O <code>GO</code> nao e um comando T-SQL, e um separador de lote reconhecido pelo <code>sqlcmd</code>/SSMS; ele fecha o <code>CREATE PROCEDURE</code>, que precisa ser o unico comando do lote.</li>
+<li><code>SET NOCOUNT ON</code> evita que o SQL Server devolva a mensagem <code>(n rows affected)</code> apos cada comando -- reduz trafego de rede e evita que ferramentas clientes interpretem essa mensagem como um result set extra. E convencao em praticamente toda procedure de producao.</li>
+</ul>
+<p>Exemplo minimo, no padrao deste banco:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> [DBO].[PR_CADASTRO_CFOP]
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SET</span> NOCOUNT <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">SELECT</span> CDCFOP, NATUREZA, DESCRICAO, COMPLEMENTO
+    <span class="hljs-keyword">FROM</span> BI_DW_CORPORATIVO_FISC.DBO.TBCAD_CFOP
+    <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> CDCFOP;
+<span class="hljs-keyword">END</span>
+</div></code></pre>
+<hr>
+<h2 id="4.-elementos-de-uma-procedure" tabindex="-1">4. Elementos de uma procedure</h2>
+<table>
+<thead>
+<tr>
+<th>Elemento</th>
+<th>Funcao</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CREATE PROCEDURE [schema].[nome]</code></td>
+<td>Cabecalho: onde a procedure fica e como se chama</td>
+</tr>
+<tr>
+<td>Lista de parametros</td>
+<td>Entradas (e, opcionalmente, saidas) da procedure</td>
+</tr>
+<tr>
+<td><code>AS</code></td>
+<td>Separa o cabecalho do corpo</td>
+</tr>
+<tr>
+<td><code>SET NOCOUNT ON</code></td>
+<td>Configuracao de sessao, primeira linha do corpo por convencao</td>
+</tr>
+<tr>
+<td><code>BEGIN ... END</code></td>
+<td>Delimita o bloco principal (opcional para um unico comando, mas usado por convencao em todas as procedures deste banco)</td>
+</tr>
+<tr>
+<td>Corpo (DML, DDL, controle de fluxo)</td>
+<td>A logica em si:<code>SELECT</code>, <code>INSERT</code>, <code>IF</code>, <code>WHILE</code>, tabelas temporarias etc.</td>
+</tr>
+<tr>
+<td><code>RETURN</code> (opcional)</td>
+<td>Encerra a execucao e pode devolver um inteiro de status</td>
+</tr>
+<tr>
+<td><code>GO</code></td>
+<td>Fecha o lote de criacao (nao faz parte da procedure)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="4.1-inspecionando-procedures-existentes-%E2%80%94-consultas-de-metadados" tabindex="-1">4.1 Inspecionando procedures existentes — consultas de metadados</h2>
+<p>Antes de criar ou alterar uma procedure, e essencial saber o que ja existe no banco — quais procedures estao no schema, quando foram modificadas e quais parametros cada uma aceita. O SQL Server expoe essas informacoes em visoes de catalogo (<code>sys.*</code>) e na visao padrao ANSI <code>INFORMATION_SCHEMA.ROUTINES</code>.</p>
+<h3 id="listar-todas-as-procedures-de-um-banco-ou-schema" tabindex="-1">Listar todas as procedures de um banco ou schema</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Via sys.procedures: mais completo, inclui data de criacao/alteracao e flag de schemabinding</span>
+<span class="hljs-keyword">SELECT</span>
+    SCHEMA_NAME(schema_id)  <span class="hljs-keyword">AS</span> schema_nome,
+    name                    <span class="hljs-keyword">AS</span> procedure_nome,
+    create_date,
+    modify_date
+<span class="hljs-keyword">FROM</span> sys.procedures
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> schema_nome, procedure_nome;
+</div></code></pre>
+<p>Filtrado por schema especifico (ex.: listar apenas as procedures do schema <code>dbo</code> neste banco):</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    SCHEMA_NAME(schema_id)  <span class="hljs-keyword">AS</span> schema_nome,
+    name                    <span class="hljs-keyword">AS</span> procedure_nome,
+    create_date,
+    modify_date
+<span class="hljs-keyword">FROM</span> sys.procedures
+<span class="hljs-keyword">WHERE</span> SCHEMA_NAME(schema_id) <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;dbo&#x27;</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> name;
+</div></code></pre>
+<p>Buscar pelo padrao de nomenclatura usado neste banco (<code>_PR_</code>):</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> name <span class="hljs-keyword">AS</span> procedure_nome, create_date, modify_date
+<span class="hljs-keyword">FROM</span> sys.procedures
+<span class="hljs-keyword">WHERE</span> name <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%PR%&#x27;</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> name;
+</div></code></pre>
+<h3 id="via-information_schema.routines-(padrao-ansi)" tabindex="-1">Via <code>INFORMATION_SCHEMA.ROUTINES</code> (padrao ANSI)</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    ROUTINE_SCHEMA  <span class="hljs-keyword">AS</span> schema_nome,
+    ROUTINE_NAME    <span class="hljs-keyword">AS</span> procedure_nome,
+    CREATED,
+    LAST_ALTERED
+<span class="hljs-keyword">FROM</span> INFORMATION_SCHEMA.ROUTINES
+<span class="hljs-keyword">WHERE</span> ROUTINE_TYPE   <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;PROCEDURE&#x27;</span>
+  <span class="hljs-keyword">AND</span> ROUTINE_SCHEMA <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;dbo&#x27;</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> ROUTINE_NAME;
+</div></code></pre>
+<blockquote>
+<p><code>INFORMATION_SCHEMA.ROUTINES</code> e portavel entre SGBDs, mas no SQL Server nao exibe procedures de sistema nem as do schema <code>sys</code>. Para inspecao completa dentro do SQL Server, prefira <code>sys.procedures</code>.</p>
+</blockquote>
+<h3 id="ver-os-parametros-de-uma-procedure-especifica" tabindex="-1">Ver os parametros de uma procedure especifica</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Lista todos os parametros de uma procedure com nome, tipo e se e OUTPUT</span>
+<span class="hljs-keyword">SELECT</span>
+    p.name                              <span class="hljs-keyword">AS</span> parametro,
+    TYPE_NAME(p.user_type_id)           <span class="hljs-keyword">AS</span> tipo,
+    p.max_length,
+    p.is_output,
+    p.has_default_value,
+    p.default_value
+<span class="hljs-keyword">FROM</span> sys.parameters <span class="hljs-keyword">AS</span> p
+<span class="hljs-keyword">WHERE</span> OBJECT_NAME(p.object_id) <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;126_PR_ENTRADAS_CREDITO_C190_CFOP_SUBST_TRIBUT_MERCADORIAS_REVENDA&#x27;</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> p.parameter_id;
+</div></code></pre>
+<p>Para confirmar (como visto no roteiro de laboratorio da secao 15) que <strong>nenhuma procedure deste banco usa parametro <code>OUTPUT</code></strong>:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    OBJECT_NAME(object_id)  <span class="hljs-keyword">AS</span> procedure_nome,
+    name                    <span class="hljs-keyword">AS</span> parametro
+<span class="hljs-keyword">FROM</span> sys.parameters
+<span class="hljs-keyword">WHERE</span> is_output <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;
+<span class="hljs-comment">-- resultado vazio neste banco: nenhuma procedure usa OUTPUT</span>
+</div></code></pre>
+<h3 id="ver-o-codigo-fonte-de-uma-procedure" tabindex="-1">Ver o codigo-fonte de uma procedure</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Opcao 1: retorna o codigo como uma unica string</span>
+<span class="hljs-keyword">SELECT</span> OBJECT_DEFINITION(OBJECT_ID(<span class="hljs-string">&#x27;dbo.PR_CADASTRO_CFOP&#x27;</span>));
+
+<span class="hljs-comment">-- Opcao 2: retorna o codigo linha a linha (mais legivel no SSMS)</span>
+<span class="hljs-keyword">EXEC</span> sp_helptext <span class="hljs-string">&#x27;dbo.PR_CADASTRO_CFOP&#x27;</span>;
+</div></code></pre>
+<h3 id="buscar-o-codigo-fonte-de-todas-as-procedures-que-referenciam-uma-tabela-ou-coluna" tabindex="-1">Buscar o codigo-fonte de todas as procedures que referenciam uma tabela ou coluna</h3>
+<p>Util para entender impacto antes de alterar uma tabela usada por procedures de auditoria:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    SCHEMA_NAME(p.schema_id)    <span class="hljs-keyword">AS</span> schema_nome,
+    p.name                      <span class="hljs-keyword">AS</span> procedure_nome,
+    m.definition                <span class="hljs-keyword">AS</span> codigo_sql
+<span class="hljs-keyword">FROM</span> sys.procedures <span class="hljs-keyword">AS</span> p
+<span class="hljs-keyword">JOIN</span> sys.sql_modules <span class="hljs-keyword">AS</span> m <span class="hljs-keyword">ON</span> m.object_id <span class="hljs-operator">=</span> p.object_id
+<span class="hljs-keyword">WHERE</span> m.definition <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%EFD_C190%&#x27;</span>   <span class="hljs-comment">-- substitua pelo nome da tabela/coluna buscada</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> p.name;
+</div></code></pre>
+<h3 id="identificar-dependencias%3A-quais-objetos-uma-procedure-referencia" tabindex="-1">Identificar dependencias: quais objetos uma procedure referencia</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    referenced_schema_name  <span class="hljs-keyword">AS</span> dep_schema,
+    referenced_entity_name  <span class="hljs-keyword">AS</span> dep_objeto,
+    referenced_minor_name   <span class="hljs-keyword">AS</span> dep_coluna
+<span class="hljs-keyword">FROM</span> sys.dm_sql_referenced_entities(
+    <span class="hljs-string">&#x27;dbo.126_PR_ENTRADAS_CREDITO_C190_CFOP_SUBST_TRIBUT_MERCADORIAS_REVENDA&#x27;</span>,
+    <span class="hljs-string">&#x27;OBJECT&#x27;</span>
+)
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> referenced_entity_name;
+</div></code></pre>
+<h3 id="tabela-resumo%3A-quando-usar-cada-consulta-de-metadados" tabindex="-1">Tabela-resumo: quando usar cada consulta de metadados</h3>
+<table>
+<thead>
+<tr>
+<th>Objetivo</th>
+<th>Consulta recomendada</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Listar todas as procedures do banco</td>
+<td><code>SELECT ... FROM sys.procedures</code></td>
+</tr>
+<tr>
+<td>Filtrar procedures por schema ou nome</td>
+<td><code>sys.procedures WHERE SCHEMA_NAME(...) = 'dbo'</code> e/ou <code>name LIKE '%PR%'</code></td>
+</tr>
+<tr>
+<td>Ver parametros e tipos de uma procedure</td>
+<td><code>sys.parameters WHERE OBJECT_NAME(object_id) = '...'</code></td>
+</tr>
+<tr>
+<td>Confirmar ausencia de parametros OUTPUT</td>
+<td><code>sys.parameters WHERE is_output = 1</code></td>
+</tr>
+<tr>
+<td>Ver o codigo-fonte de uma procedure</td>
+<td><code>OBJECT_DEFINITION(OBJECT_ID(...))</code> ou <code>sp_helptext</code></td>
+</tr>
+<tr>
+<td>Encontrar procedures que usam uma tabela</td>
+<td><code>sys.sql_modules WHERE definition LIKE '%nome_tabela%'</code></td>
+</tr>
+<tr>
+<td>Analisar dependencias de objetos</td>
+<td><code>sys.dm_sql_referenced_entities(...)</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="5.-parametros-de-entrada-e-valores-padrao" tabindex="-1">5. Parametros de entrada e valores padrao</h2>
+<p>Parametros sao declarados logo apos o nome da procedure, com <code>@nome TIPO</code>. Podem ter valor padrao com <code>= valor</code>, o que os torna opcionais na chamada.</p>
+<p>Exemplo real (<code>126_PR_ENTRADAS_CREDITO_C190_CFOP_SUBST_TRIBUT_MERCADORIAS_REVENDA</code>):</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> [DBO].[<span class="hljs-number">126</span>_PR_ENTRADAS_CREDITO_C190_CFOP_SUBST_TRIBUT_MERCADORIAS_REVENDA]
+    <span class="hljs-variable">@ANO</span> <span class="hljs-type">INTEGER</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">NULL</span>,
+    <span class="hljs-variable">@PERIODO_DECLARACAO</span> <span class="hljs-type">CHAR</span>(<span class="hljs-number">7</span>) <span class="hljs-operator">=</span> <span class="hljs-keyword">NULL</span>,
+    <span class="hljs-variable">@RELATORIO</span> <span class="hljs-type">INTEGER</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">NULL</span>
+<span class="hljs-keyword">AS</span>
+</div></code></pre>
+<p>Os tres parametros tem <code>= NULL</code> como padrao -- ou seja, todos sao opcionais. Isso permite dois modos de uso da mesma procedure:</p>
+<ul>
+<li><code>EXEC ...126_PR_... @RELATORIO = 99999;</code> -- gera (recalcula) o resultado.</li>
+<li><code>EXEC ...126_PR_... @ANO = 2021;</code> -- apenas le o resultado ja gerado, filtrado por ano.</li>
+</ul>
+<p>Esse padrao -- um parametro &quot;modo de operacao&quot; (<code>@RELATORIO</code>) que decide se a procedure recalcula do zero ou so consulta o que ja foi calculado -- se repete em varias procedures do schema <code>fisc</code> deste banco (<code>100_PR_...</code>, <code>126_PR_...</code> e outras da familia <code>_PR_</code>).</p>
+<hr>
+<h2 id="6.-formas-de-passar-parametros-na-chamada" tabindex="-1">6. Formas de passar parametros na chamada</h2>
+<p>SQL Server aceita duas formas, que podem ate ser misturadas (com restricao de ordem):</p>
+<h3 id="6.1-passagem-posicional" tabindex="-1">6.1 Passagem posicional</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> dbo.[<span class="hljs-number">126</span>_PR_ENTRADAS_CREDITO_C190_CFOP_SUBST_TRIBUT_MERCADORIAS_REVENDA] <span class="hljs-number">2021</span>, <span class="hljs-string">&#x27;05/2021&#x27;</span>, <span class="hljs-keyword">NULL</span>;
+</div></code></pre>
+<p>Os valores sao atribuidos na ordem exata da declaracao (<code>@ANO</code>, depois <code>@PERIODO_DECLARACAO</code>, depois <code>@RELATORIO</code>). Funciona, mas e fragil: se a ordem dos parametros mudar na procedure, a chamada quebra silenciosamente (ou pior, passa o valor para o parametro errado sem erro).</p>
+<h3 id="6.2-passagem-nomeada-(recomendada)" tabindex="-1">6.2 Passagem nomeada (recomendada)</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> dbo.[<span class="hljs-number">126</span>_PR_ENTRADAS_CREDITO_C190_CFOP_SUBST_TRIBUT_MERCADORIAS_REVENDA]
+     <span class="hljs-variable">@PERIODO_DECLARACAO</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;05/2021&#x27;</span>,
+     <span class="hljs-variable">@ANO</span> <span class="hljs-operator">=</span> <span class="hljs-number">2021</span>;
+</div></code></pre>
+<p>Com <code>@nome = valor</code>, a ordem deixa de importar e parametros com valor padrao podem ser omitidos livremente. E a forma usada em todos os exemplos desta apostila.</p>
+<h3 id="6.3-omitindo-parametros-opcionais" tabindex="-1">6.3 Omitindo parametros opcionais</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> dbo.[<span class="hljs-number">100</span>_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS];              <span class="hljs-comment">-- usa @RELATORIO = NULL (padrao)</span>
+<span class="hljs-keyword">EXEC</span> dbo.[<span class="hljs-number">100</span>_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS] <span class="hljs-variable">@RELATORIO</span> <span class="hljs-operator">=</span> <span class="hljs-number">99999</span>; <span class="hljs-comment">-- forca recalculo</span>
+</div></code></pre>
+<hr>
+<h2 id="7.-saidas-de-uma-procedure%3A-output%2C-return-e-result-sets" tabindex="-1">7. Saidas de uma procedure: OUTPUT, RETURN e result sets</h2>
+<p>SQL Server oferece tres mecanismos de saida, e vale entender os tres mesmo quando o banco em analise so usa um deles.</p>
+<h3 id="7.1-parametro-output-(nao-usado-neste-banco)" tabindex="-1">7.1 Parametro OUTPUT (nao usado neste banco)</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> dbo.exemplo_output
+    <span class="hljs-variable">@id_contribuinte</span> <span class="hljs-type">INT</span>,
+    <span class="hljs-variable">@total_notas</span> <span class="hljs-type">INT</span> OUTPUT
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-variable">@total_notas</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)
+    <span class="hljs-keyword">FROM</span> dbo.NFE
+    <span class="hljs-keyword">WHERE</span> sqnfe <span class="hljs-operator">=</span> <span class="hljs-variable">@id_contribuinte</span>;
+<span class="hljs-keyword">END</span>
+</div></code></pre>
+<p>Chamada:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@qtd</span> <span class="hljs-type">INT</span>;
+<span class="hljs-keyword">EXEC</span> dbo.exemplo_output <span class="hljs-variable">@id_contribuinte</span> <span class="hljs-operator">=</span> <span class="hljs-number">10</span>, <span class="hljs-variable">@total_notas</span> <span class="hljs-operator">=</span> <span class="hljs-variable">@qtd</span> OUTPUT;
+<span class="hljs-keyword">SELECT</span> <span class="hljs-variable">@qtd</span>;
+</div></code></pre>
+<p>O parametro precisa ser declarado com <code>OUTPUT</code> tanto na criacao da procedure quanto na chamada. E o mecanismo indicado quando se quer devolver um unico valor para ser usado em outro trecho de codigo (outra procedure, uma variavel, um IF).</p>
+<p><strong>Levantamento real neste banco:</strong> consultando <code>sys.parameters</code> nas 206 procedures existentes, nenhuma usa parametro <code>OUTPUT</code>. Todas devolvem dado por result set (<code>SELECT</code>) ou por tabela materializada -- o item 7.3 explica por que essa e a escolha certa para o caso de uso delas.</p>
+<h3 id="7.2-return-(codigo-de-status)" tabindex="-1">7.2 RETURN (codigo de status)</h3>
+<pre class='hljs'><code><div>IF <span class="hljs-variable">@PERIODO_DECLARACAO</span> <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">RETURN</span> <span class="hljs-number">-1</span>; <span class="hljs-comment">-- codigo de erro</span>
+<span class="hljs-keyword">END</span>
+</div></code></pre>
+<p><code>RETURN</code> encerra a procedure imediatamente e pode devolver um inteiro (nao serve para devolver texto, decimal ou result set). Uso tipico: codigo de sucesso/erro que quem chamou testa com <code>EXEC @status = dbo.procedure ...</code>.</p>
+<h3 id="7.3-result-sets----a-saida-usada-neste-banco" tabindex="-1">7.3 Result sets -- a saida usada neste banco</h3>
+<p>A forma mais simples de &quot;saida&quot; de uma procedure e simplesmente executar um <code>SELECT</code> sem redirecionar o resultado para variavel nenhuma -- ele e devolvido como um result set para quem chamou (SSMS, aplicacao, <code>sqlcmd</code>). E possivel devolver <strong>varios</strong> result sets numa mesma execucao, um por <code>SELECT</code> solto no corpo.</p>
+<p>Exemplo real (<code>100_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS</code>, trecho final):</p>
+<pre class='hljs'><code><div>IF <span class="hljs-variable">@RELATORIO</span> <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+<span class="hljs-keyword">BEGIN</span>
+    IF <span class="hljs-keyword">EXISTS</span> (<span class="hljs-keyword">SELECT</span> NAME <span class="hljs-keyword">FROM</span> SYS.OBJECTS <span class="hljs-keyword">WHERE</span> OBJECT_ID <span class="hljs-operator">=</span> OBJECT_ID(N<span class="hljs-string">&#x27;FISC.TB_100_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS_01&#x27;</span>) <span class="hljs-keyword">AND</span> TYPE <span class="hljs-keyword">IN</span> (N<span class="hljs-string">&#x27;U&#x27;</span>))
+
+    <span class="hljs-keyword">SELECT</span> NUMERO_CONSULTA, DESCRICAO_CONSULTA, INFOR_DADOS
+    <span class="hljs-keyword">FROM</span> FISC.TB_100_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS_01
+    <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> NUMERO_CONSULTA
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<p>A procedure <code>126_PR_...</code> leva essa ideia adiante: quando <code>@RELATORIO IS NULL</code>, ela devolve <strong>ate quatro result sets em sequencia</strong> (um por tabela <code>TB_126_..._01</code> a <code>_04</code>), cada um filtrado pelos parametros <code>@ANO</code>/<code>@PERIODO_DECLARACAO</code>.</p>
+<p>Por que esse projeto faz sentido aqui: as procedures deste banco alimentam paineis e planilhas de auditoria consumidos por ferramentas de BI e por analistas via SSMS -- essas ferramentas leem result sets nativamente, enquanto consumir um parametro <code>OUTPUT</code> exigiria escrever codigo cliente especifico. Result set tambem permite devolver <strong>multiplas linhas e colunas</strong>, algo que <code>OUTPUT</code> (um valor por parametro) nao faz.</p>
+<hr>
+<h2 id="8.-tabelas-temporarias-com-%23" tabindex="-1">8. Tabelas temporarias com <code>#</code></h2>
+<p>Tabela temporaria e uma tabela criada durante a execucao, armazenada fisicamente em <code>tempdb</code>, mas referenciada pelo nome comum como se fosse uma tabela do banco atual.</p>
+<h3 id="8.1-tabela-temporaria-local-(%23nome)" tabindex="-1">8.1 Tabela temporaria local (<code>#nome</code>)</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> IF <span class="hljs-keyword">EXISTS</span> #<span class="hljs-number">126</span>_C190_ST;
+
+<span class="hljs-keyword">SELECT</span> N.SQNFOUTRA, NRCFOP,
+       <span class="hljs-built_in">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> VLICMS <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">0</span> <span class="hljs-keyword">ELSE</span> VLICMS <span class="hljs-keyword">END</span>) <span class="hljs-keyword">AS</span> VLICMS
+<span class="hljs-keyword">INTO</span> #<span class="hljs-number">126</span>_C190_ST
+<span class="hljs-keyword">FROM</span> DBO.EFD_C190 N
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> BI_DW_CORPORATIVO_FISC.DBO.TBLEG_CFOP O
+    <span class="hljs-keyword">ON</span> N.SQCFOP <span class="hljs-operator">=</span> O.SQCFOP <span class="hljs-keyword">AND</span> NRCFOP <span class="hljs-keyword">IN</span> (<span class="hljs-number">1403</span>,<span class="hljs-number">1407</span>,<span class="hljs-number">1409</span>,<span class="hljs-number">1411</span>,<span class="hljs-number">1415</span>,<span class="hljs-number">2403</span>,<span class="hljs-number">2407</span>,<span class="hljs-number">2409</span>,<span class="hljs-number">2411</span>,<span class="hljs-number">2415</span>)
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> N.SQNFOUTRA, NRCFOP
+<span class="hljs-keyword">HAVING</span> <span class="hljs-built_in">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> VLICMS <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">0</span> <span class="hljs-keyword">ELSE</span> VLICMS <span class="hljs-keyword">END</span>) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span>;
+</div></code></pre>
+<p>Caracteristicas de uma tabela <code>#</code>:</p>
+<ul>
+<li>Visivel apenas na <strong>sessao</strong> que a criou (e em procedures chamadas por essa sessao).</li>
+<li>E automaticamente descartada quando a sessao termina, ou quando a procedure que a criou termina (se foi criada dentro de uma procedure e nao existia antes dela).</li>
+<li>Pode ter indice, constraint, estatisticas -- e uma tabela de verdade, so que de vida curta.</li>
+<li><code>SELECT ... INTO #tabela</code> e a forma mais comum de cria-la: cria a tabela com as colunas e tipos do resultado da consulta e ja insere as linhas, em um unico comando.</li>
+</ul>
+<h3 id="8.2-tabela-temporaria-global-(%23%23nome)" tabindex="-1">8.2 Tabela temporaria global (<code>##nome</code>)</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">INTO</span> ##temp_global <span class="hljs-keyword">FROM</span> dbo.NFE;
+</div></code></pre>
+<p>Visivel para <strong>todas as sessoes</strong> conectadas ao servidor, e so e descartada quando a sessao que a criou termina <strong>e</strong> nenhuma outra sessao esta mais referenciando ela. Uso raro em codigo de producao (risco de colisao de nome entre sessoes concorrentes); nenhuma procedure deste banco usa <code>##</code>.</p>
+<h3 id="8.3-o-padrao-drop-table-if-exists-%23tabela-antes-de-cada-select-into" tabindex="-1">8.3 O padrao <code>DROP TABLE IF EXISTS #tabela</code> antes de cada <code>SELECT INTO</code></h3>
+<p>Esse padrao aparece dezenas de vezes na procedure <code>126_PR_...</code>. Ele existe porque <code>SELECT ... INTO #tabela</code> falha com erro se a tabela <code>#tabela</code> ja existir -- e, como o SSMS costuma reaproveitar a mesma conexao/sessao entre execucoes, uma tabela <code>#</code> criada numa execucao anterior (que travou no meio, por exemplo) pode sobrar na sessao. O <code>DROP TABLE IF EXISTS</code> antes de cada <code>SELECT INTO</code> torna a procedure segura para ser executada varias vezes seguidas na mesma sessao sem erro.</p>
+<hr>
+<h2 id="9.-tabela-temporaria-x-variavel-de-tabela-(%40)-x-tabela-permanente" tabindex="-1">9. Tabela temporaria x variavel de tabela (<code>@</code>) x tabela permanente</h2>
+<table>
+<thead>
+<tr>
+<th>Caracteristica</th>
+<th>Tabela<code>#temp</code></th>
+<th>Variavel<code>@tabela</code></th>
+<th>Tabela permanente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Escopo</td>
+<td>Sessao (ou procedure)</td>
+<td>Batch/procedure atual</td>
+<td>Banco de dados</td>
+</tr>
+<tr>
+<td>Onde fica</td>
+<td><code>tempdb</code></td>
+<td><code>tempdb</code> (internamente)</td>
+<td>Arquivo de dados do banco</td>
+</tr>
+<tr>
+<td>Aceita indice apos criacao</td>
+<td>Sim</td>
+<td>Limitado</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td>Estatisticas de otimizacao</td>
+<td>Sim</td>
+<td>Nao (pre-SQL Server 2019 sem<code>OPTION(RECOMPILE)</code>)</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td>Pode ser usada em<code>SELECT INTO</code></td>
+<td>Sim</td>
+<td>Nao (precisa<code>DECLARE ... TABLE</code>)</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td>Uso neste banco</td>
+<td>Extensivo em<code>126_PR_...</code> (calculo intermediario, multi-etapas)</td>
+<td>Nao encontrado nas procedures examinadas</td>
+<td><code>100_PR_...</code> grava direto em <code>FISC.TB_100_..._01</code>, uma tabela permanente, em vez de usar <code>#temp</code></td>
+</tr>
+</tbody>
+</table>
+<p>O ponto mais importante para quem esta aprendendo: <strong>a escolha entre <code>#temp</code> e tabela permanente e uma decisao de projeto</strong>, nao uma obrigacao da linguagem. A procedure <code>100_PR_...</code> grava o resultado final numa tabela permanente (<code>FISC.TB_100_..._01</code>) porque esse resultado precisa <strong>persistir</strong> entre chamadas (o modo <code>@RELATORIO IS NULL</code> so funciona porque a tabela continua existindo depois que a procedure termina). Ja a procedure <code>126_PR_...</code> usa <code>#temp</code> para as <strong>etapas intermediarias</strong> de calculo (que nao precisam sobreviver ao fim da execucao) e so materializa em tabela permanente (<code>FISC.TB_126_..._01</code> a <code>_04</code>) o resultado final.</p>
+<hr>
+<h2 id="10.-estudo-de-caso-1%3A-pr_cadastro_cfop-(procedure-simples)" tabindex="-1">10. Estudo de caso 1: <code>PR_CADASTRO_CFOP</code> (procedure simples)</h2>
+<p><strong>O que ela faz:</strong> devolve a tabela de referencia de CFOP (codigo, natureza, descricao, complemento) usada por outras procedures de auditoria fiscal para &quot;traduzir&quot; o codigo numerico do CFOP em texto legivel.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> [DBO].[PR_CADASTRO_CFOP]
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SET</span> NOCOUNT <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">BEGIN</span>
+
+PRINT <span class="hljs-string">&#x27;O TUTORIAL DESTA CONSULTA ENCONTRA-SE NO ROTEIRO OPERACIONAL DO BDFISC. FAVOR, CONSULTA-LO.&#x27;</span>;
+
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> IF <span class="hljs-keyword">EXISTS</span> #CADCFOP;
+
+<span class="hljs-keyword">SELECT</span> CDCFOP,NATUREZA,DESCRICAO,COMPLEMENTO
+<span class="hljs-keyword">INTO</span> #CADCFOP
+<span class="hljs-keyword">FROM</span> BI_DW_CORPORATIVO_FISC.DBO.TBCAD_CFOP;
+
+IF <span class="hljs-keyword">EXISTS</span> (<span class="hljs-keyword">SELECT</span> CDCFOP <span class="hljs-keyword">FROM</span> #CADCFOP)
+
+<span class="hljs-keyword">SELECT</span>
+<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CDCFOP <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;-&#x27;</span> <span class="hljs-keyword">ELSE</span> CDCFOP <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> CFOP,
+<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> NATUREZA <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;-&#x27;</span> <span class="hljs-keyword">ELSE</span> NATUREZA <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> NATUREZA,
+<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> DESCRICAO <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;-&#x27;</span> <span class="hljs-keyword">ELSE</span> DESCRICAO <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> DESCRICAO,
+<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> COMPLEMENTO <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;-&#x27;</span> <span class="hljs-keyword">ELSE</span> COMPLEMENTO <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> COMPLEMENTO
+<span class="hljs-keyword">FROM</span> #CADCFOP
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> CDCFOP;
+
+<span class="hljs-keyword">ELSE</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;SEM DADOS PARA EXIBICAO&#x27;</span> <span class="hljs-keyword">AS</span> ALERTA;
+
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> IF <span class="hljs-keyword">EXISTS</span> #CADCFOP;
+
+<span class="hljs-keyword">END</span>
+</div></code></pre>
+<p>Visao geral, elemento por elemento:</p>
+<ol>
+<li><strong>Sem parametros</strong> -- e a procedure mais simples do estudo de caso: nao recebe entrada nenhuma, sempre devolve a tabela inteira.</li>
+<li><strong><code>PRINT</code></strong> manda uma mensagem informativa para a aba de mensagens do SSMS (nao e um result set, so texto de log).</li>
+<li><strong>Uma unica tabela temporaria</strong> (<code>#CADCFOP</code>), criada com <code>SELECT ... INTO</code> a partir de uma tabela de outro banco (<code>BI_DW_CORPORATIVO_FISC</code>, catalogo corporativo da SEFAZ).</li>
+<li><strong><code>IF EXISTS (...) SELECT ... ELSE SELECT ...</code></strong> -- padrao de &quot;saida com fallback&quot;: se a tabela temporaria tiver linhas, devolve o cadastro formatado; se nao tiver (por exemplo, se o banco corporativo estiver indisponivel), devolve uma unica linha de alerta em vez de um result set vazio silencioso. Esse padrao aparece em praticamente todas as procedures <code>_PR_</code> deste schema.</li>
+<li><strong><code>DROP TABLE IF EXISTS #CADCFOP</code></strong> no fim -- limpeza explicita, embora a tabela <code>#</code> ja fosse descartada automaticamente ao fim da procedure; e uma pratica defensiva comum quando a mesma sessao pode chamar a procedure de novo em seguida.</li>
+</ol>
+<p>Neste ambiente de laboratorio, <code>PR_CADASTRO_CFOP</code> falha ao executar porque <code>BI_DW_CORPORATIVO_FISC</code> (o banco corporativo vinculado) nao existe localmente -- o mesmo motivo que impede a <code>126_PR_...</code> de recalcular seu resultado aqui (ver <a href="../modulo_02/01_DDL_CREATE_ALTER/roteiro-auditores-fisc-cfop-indevido-substituicao-tributaria.md">roteiro-auditores-fisc-cfop-indevido-substituicao-tributaria.md</a>).</p>
+<h3 id="execucao-de-exemplo" tabindex="-1">Execucao de exemplo</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> dbo.[PR_CADASTRO_CFOP];
+</div></code></pre>
+<p>Como a procedure nao recebe parametros, a chamada e direta: ela gera a tabela <code>#CADCFOP</code> e devolve o cadastro de CFOP formatado. Em uma sessao do SSMS, o resultado aparece como um result set final. A estrutura e simples, mas vale como estudo de caso para mostrar o padrao de <code>SELECT ... INTO #tabela</code> + <code>IF EXISTS</code> + <code>SELECT final</code>.</p>
+<h3 id="sugestao-de-reescrita-usando-visao" tabindex="-1">Sugestao de reescrita usando visao</h3>
+<p>Se a ideia for apenas consultar o cadastro sem materializar o resultado em tabela temporaria, a versao mais simples pode ser uma view:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> dbo.vw_cadastro_cfop <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CDCFOP <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;-&#x27;</span> <span class="hljs-keyword">ELSE</span> <span class="hljs-built_in">CAST</span>(CDCFOP <span class="hljs-keyword">AS</span> <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">10</span>)) <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> CFOP,
+    <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> NATUREZA <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;-&#x27;</span> <span class="hljs-keyword">ELSE</span> NATUREZA <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> NATUREZA,
+    <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> DESCRICAO <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;-&#x27;</span> <span class="hljs-keyword">ELSE</span> DESCRICAO <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> DESCRICAO,
+    <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> COMPLEMENTO <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;-&#x27;</span> <span class="hljs-keyword">ELSE</span> COMPLEMENTO <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> COMPLEMENTO
+<span class="hljs-keyword">FROM</span> BI_DW_CORPORATIVO_FISC.DBO.TBCAD_CFOP;
+GO
+
+<span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span>
+<span class="hljs-keyword">FROM</span> dbo.vw_cadastro_cfop
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> CFOP;
+</div></code></pre>
+<p>A vantagem da view e a simplicidade de consumo. A desvantagem e que ela nao substitui a procedure quando o processo exige validacao de parametro, materializacao intermediaria ou <code>IF</code> de fluxo operacional.</p>
+<hr>
+<h2 id="11.-estudo-de-caso-2%3A-100_pr_sumario_dados_consultas_inconsistencias-(parametro-com-default-e-controle-de-fluxo)" tabindex="-1">11. Estudo de caso 2: <code>100_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS</code> (parametro com default e controle de fluxo)</h2>
+<p><strong>O que ela faz:</strong> varre cerca de 34 tabelas de resultado de outras procedures de auditoria (<code>FISC.TB_101_...</code>, <code>FISC.TB_111_...</code> etc.) e monta um painel de uma linha por consulta, indicando se aquela consulta encontrou ou nao dado para analise. E o &quot;painel de triagem&quot; do auditor -- ja documentado em <a href="../modulo_02/01_DDL_CREATE_ALTER/roteiro-auditores-fisc-sumario-inconsistencias.md">roteiro-auditores-fisc-sumario-inconsistencias.md</a>.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> [dbo].[<span class="hljs-number">100</span>_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS]
+<span class="hljs-variable">@RELATORIO</span> <span class="hljs-type">INTEGER</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">NULL</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SET</span> NOCOUNT <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">BEGIN</span>
+
+IF <span class="hljs-variable">@RELATORIO</span> <span class="hljs-operator">=</span> <span class="hljs-number">99999</span>
+<span class="hljs-keyword">BEGIN</span>
+
+<span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@QTDE_REG_TB1</span> <span class="hljs-type">INTEGER</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>
+<span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@QTDE_REG_TB2</span> <span class="hljs-type">INTEGER</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>
+
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> IF <span class="hljs-keyword">EXISTS</span> FISC.TB_100_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS_01;
+
+<span class="hljs-keyword">CREATE TABLE</span> FISC.TB_100_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS_01 (
+NUMERO_CONSULTA <span class="hljs-type">INTEGER</span> <span class="hljs-keyword">NOT NULL</span>,
+DESCRICAO_CONSULTA <span class="hljs-type">VARCHAR</span> (<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT NULL</span>,
+INFOR_DADOS NVARCHAR(<span class="hljs-number">40</span>) <span class="hljs-keyword">NOT NULL</span>
+);
+
+IF <span class="hljs-keyword">EXISTS</span> (<span class="hljs-keyword">SELECT</span> NAME <span class="hljs-keyword">FROM</span> SYS.OBJECTS <span class="hljs-keyword">WHERE</span> OBJECT_ID <span class="hljs-operator">=</span> OBJECT_ID(N<span class="hljs-string">&#x27;FISC.TB_116_PR_ENTRADAS_CREDITOS_SAIDAS_NAO_TRIBUTADAS_ITENS_PARA_ANALISE&#x27;</span>) <span class="hljs-keyword">AND</span>
+TYPE <span class="hljs-keyword">IN</span> (N<span class="hljs-string">&#x27;U&#x27;</span>))
+<span class="hljs-keyword">BEGIN</span>
+<span class="hljs-keyword">SET</span> <span class="hljs-variable">@QTDE_REG_TB1</span> <span class="hljs-operator">=</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> FISC.TB_116_PR_ENTRADAS_CREDITOS_SAIDAS_NAO_TRIBUTADAS_ITENS_PARA_ANALISE)
+IF <span class="hljs-variable">@QTDE_REG_TB1</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>
+<span class="hljs-keyword">INSERT INTO</span> FISC.TB_100_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS_01
+<span class="hljs-keyword">SELECT</span> <span class="hljs-number">116</span>, <span class="hljs-string">&#x27;116_PR_ENTRADAS_CREDITOS_SAIDAS_NAO_TRIBUTADAS_ITENS_PARA_ANALISE&#x27;</span>,<span class="hljs-string">&#x27;CONSULTA NAO CONTEM DADOS PARA ANALISE&#x27;</span>;
+<span class="hljs-keyword">ELSE</span>
+<span class="hljs-keyword">INSERT INTO</span> FISC.TB_100_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS_01
+<span class="hljs-keyword">SELECT</span> <span class="hljs-number">116</span>, <span class="hljs-string">&#x27;116_PR_ENTRADAS_CREDITOS_SAIDAS_NAO_TRIBUTADAS_ITENS_PARA_ANALISE&#x27;</span>,<span class="hljs-string">&#x27;CONSULTA CONTEM DADOS PARA ANALISE&#x27;</span>;
+<span class="hljs-keyword">END</span>
+<span class="hljs-comment">-- (mesmo padrao se repete para cada uma das ~34 tabelas PR_1xx)</span>
+<span class="hljs-keyword">END</span>
+
+IF <span class="hljs-variable">@RELATORIO</span> <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+<span class="hljs-keyword">BEGIN</span>
+IF <span class="hljs-keyword">EXISTS</span> (<span class="hljs-keyword">SELECT</span> NAME <span class="hljs-keyword">FROM</span> SYS.OBJECTS <span class="hljs-keyword">WHERE</span> OBJECT_ID <span class="hljs-operator">=</span> OBJECT_ID(N<span class="hljs-string">&#x27;FISC.TB_100_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS_01&#x27;</span>) <span class="hljs-keyword">AND</span> TYPE <span class="hljs-keyword">IN</span> (N<span class="hljs-string">&#x27;U&#x27;</span>))
+<span class="hljs-keyword">SELECT</span> NUMERO_CONSULTA,DESCRICAO_CONSULTA,INFOR_DADOS
+<span class="hljs-keyword">FROM</span> FISC.TB_100_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS_01
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> NUMERO_CONSULTA
+<span class="hljs-keyword">END</span>;
+
+<span class="hljs-keyword">END</span>
+GO
+</div></code></pre>
+<p>Visao geral, elemento por elemento:</p>
+<ol>
+<li><strong>Um parametro, <code>@RELATORIO INTEGER = NULL</code></strong> -- controla o &quot;modo&quot; da procedure. <code>= 99999</code> recalcula o painel do zero; deixar de fora (usa o <code>NULL</code> padrao) so le o painel ja calculado.</li>
+<li><strong>Variaveis locais (<code>DECLARE @QTDE_REG_TB1 INTEGER = 0</code>)</strong> -- diferente de parametro, uma variavel <code>DECLARE</code>d existe so dentro da execucao atual e nao pode ser passada na chamada; serve para guardar resultados intermediarios (aqui, a contagem de linhas de cada tabela <code>PR_1xx</code>) e reaproveitar em <code>IF</code>s seguintes.</li>
+<li><strong>Tabela permanente, nao temporaria</strong> -- repare que a procedure usa <code>DROP TABLE IF EXISTS FISC.TB_100_..._01</code> seguido de <code>CREATE TABLE</code> (sem <code>#</code>). E proposital: o resultado precisa sobreviver ao fim da procedure, porque o modo <code>@RELATORIO IS NULL</code> depende de essa tabela ainda existir na proxima chamada.</li>
+<li><strong>Cadeia de <code>IF EXISTS (...) ... SET ... IF ... INSERT ... ELSE INSERT ...</code></strong> -- o mesmo bloco de 6 linhas se repete ~34 vezes, uma por consulta de auditoria monitorada; cada bloco testa se a tabela de resultado daquela consulta existe, conta as linhas, e grava no painel se &quot;CONTEM DADOS&quot; ou &quot;NAO CONTEM DADOS&quot;.</li>
+<li><strong>Saida por result set condicional</strong> -- so devolve o <code>SELECT</code> final quando <code>@RELATORIO IS NULL</code> (modo leitura); no modo recalculo (<code>@RELATORIO = 99999</code>) a procedure so grava a tabela, sem devolver result set.</li>
+</ol>
+<h3 id="exemplos-de-execucao-com-parametros" tabindex="-1">Exemplos de execucao com parametros</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Modo leitura: apenas consulta o painel ja materializado</span>
+<span class="hljs-keyword">EXEC</span> dbo.[<span class="hljs-number">100</span>_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS];
+
+<span class="hljs-comment">-- Modo recalculo: gera ou atualiza a tabela FISC.TB_100_..._01</span>
+<span class="hljs-keyword">EXEC</span> dbo.[<span class="hljs-number">100</span>_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS]
+    <span class="hljs-variable">@RELATORIO</span> <span class="hljs-operator">=</span> <span class="hljs-number">99999</span>;
+</div></code></pre>
+<p>A primeira chamada instala a ideia de consumo simples: a procedure atua como um “painel” de auditoria. A segunda chamada e o modo operacional: ela recalcula todo o conjunto de indicadores e grava na tabela permanente, pronta para ser consultada depois.</p>
+<h3 id="sugestao-de-reescrita-usando-visao-1" tabindex="-1">Sugestao de reescrita usando visao</h3>
+<p>Para evitar a tabela materializada, a logica final pode ser convertida em uma view que devolve o mesmo painel sem o passo de persistencia:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> fisc.vw_sumario_consultas_inconsistencias <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    NUMERO_CONSULTA,
+    DESCRICAO_CONSULTA,
+    INFOR_DADOS
+<span class="hljs-keyword">FROM</span> FISC.TB_100_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS_01;
+GO
+
+<span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span>
+<span class="hljs-keyword">FROM</span> fisc.vw_sumario_consultas_inconsistencias
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> NUMERO_CONSULTA;
+</div></code></pre>
+<p>A vantagem e a facilidade de consulta direta. A limitacao e clara: view nao substitui a rotina de recalculo; ela so expoe o resultado final ja gerado. Em outras palavras, para “processar e persistir” a procedure continua sendo a melhor escolha.</p>
+<hr>
+<h2 id="12.-estudo-de-caso-3%3A-126_pr_entradas_credito_c190_cfop_subst_tribut_mercadorias_revenda-(multiplos-parametros-e-cadeia-de-tabelas-temporarias)" tabindex="-1">12. Estudo de caso 3: <code>126_PR_ENTRADAS_CREDITO_C190_CFOP_SUBST_TRIBUT_MERCADORIAS_REVENDA</code> (multiplos parametros e cadeia de tabelas temporarias)</h2>
+<p><strong>O que ela faz:</strong> identifica entradas em que a empresa tomou credito proprio de ICMS sob um CFOP que deveria estar coberto por Substituicao Tributaria (mercadoria de revenda) -- documentada em detalhe em <a href="../modulo_02/01_DDL_CREATE_ALTER/roteiro-auditores-fisc-cfop-indevido-substituicao-tributaria.md">roteiro-auditores-fisc-cfop-indevido-substituicao-tributaria.md</a>. E a procedure mais complexa das tres (mais de 600 linhas), e serve de estudo de caso para tabelas temporarias em cadeia.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> [DBO].[<span class="hljs-number">126</span>_PR_ENTRADAS_CREDITO_C190_CFOP_SUBST_TRIBUT_MERCADORIAS_REVENDA]
+<span class="hljs-variable">@ANO</span> <span class="hljs-type">INTEGER</span>  <span class="hljs-operator">=</span> <span class="hljs-keyword">NULL</span>,
+<span class="hljs-variable">@PERIODO_DECLARACAO</span> <span class="hljs-type">CHAR</span>(<span class="hljs-number">7</span>) <span class="hljs-operator">=</span> <span class="hljs-keyword">NULL</span>,
+<span class="hljs-variable">@RELATORIO</span> <span class="hljs-type">INTEGER</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">NULL</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SET</span> NOCOUNT <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">BEGIN</span>
+
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> IF <span class="hljs-keyword">EXISTS</span> #<span class="hljs-number">126</span>_C190_ST_ITEM;
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> IF <span class="hljs-keyword">EXISTS</span> #<span class="hljs-number">126</span>_PRIM_PLANCAMENTO;
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> IF <span class="hljs-keyword">EXISTS</span> #<span class="hljs-number">126</span>_C190_ST;
+<span class="hljs-comment">-- ... (mais 12 DROP TABLE IF EXISTS, um por tabela temporaria usada na procedure)</span>
+
+<span class="hljs-comment">-- 1) validacao dos parametros de periodo/ano (normaliza formato &quot;5/2021&quot; para &quot;05/2021&quot; etc.)</span>
+<span class="hljs-keyword">SET</span> <span class="hljs-variable">@PERIODO_DECLARACAO</span> <span class="hljs-operator">=</span>
+<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> LEN(<span class="hljs-variable">@PERIODO_DECLARACAO</span>) <span class="hljs-operator">=</span> <span class="hljs-number">7</span> <span class="hljs-keyword">AND</span> <span class="hljs-keyword">CONVERT</span>(<span class="hljs-type">INTEGER</span>,<span class="hljs-built_in">SUBSTRING</span>(<span class="hljs-variable">@PERIODO_DECLARACAO</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>)) <span class="hljs-keyword">BETWEEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">AND</span> <span class="hljs-number">9</span>
+<span class="hljs-keyword">THEN</span> <span class="hljs-built_in">SUBSTRING</span>(<span class="hljs-variable">@PERIODO_DECLARACAO</span>,<span class="hljs-number">2</span>,<span class="hljs-number">6</span>) <span class="hljs-keyword">ELSE</span> <span class="hljs-variable">@PERIODO_DECLARACAO</span> <span class="hljs-keyword">END</span>;
+
+IF ((<span class="hljs-built_in">SUBSTRING</span>(<span class="hljs-variable">@PERIODO_DECLARACAO</span>, <span class="hljs-number">2</span>,<span class="hljs-number">1</span>) <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;/&#x27;</span> <span class="hljs-keyword">AND</span> <span class="hljs-variable">@ANO</span> <span class="hljs-operator">&lt;&gt;</span> <span class="hljs-built_in">SUBSTRING</span>(<span class="hljs-variable">@PERIODO_DECLARACAO</span>, <span class="hljs-number">3</span>,<span class="hljs-number">4</span>)) <span class="hljs-keyword">OR</span> ...)
+<span class="hljs-keyword">AND</span> <span class="hljs-variable">@PERIODO_DECLARACAO</span> <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">AND</span> <span class="hljs-variable">@ANO</span> <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;ERRO: ANO E PERIODO DIVERGENTES. O PERIODO DEVE ESTAR CONTIDO NO ANO&#x27;</span> <span class="hljs-keyword">AS</span> ALERTA;
+<span class="hljs-keyword">ELSE</span>
+<span class="hljs-keyword">BEGIN</span>
+
+IF <span class="hljs-variable">@RELATORIO</span> <span class="hljs-operator">=</span> <span class="hljs-number">99999</span>
+<span class="hljs-keyword">BEGIN</span>
+
+<span class="hljs-comment">-- 2) primeira tabela temporaria: total de ICMS por CFOP de ST, agregado por nota</span>
+<span class="hljs-keyword">SELECT</span> N.SQNFOUTRA, NRCFOP,
+       <span class="hljs-built_in">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> VLICMS <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">0</span> <span class="hljs-keyword">ELSE</span> VLICMS <span class="hljs-keyword">END</span>) <span class="hljs-keyword">AS</span> VLICMS,
+       <span class="hljs-built_in">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> VLICMSST <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">0</span> <span class="hljs-keyword">ELSE</span> VLICMSST <span class="hljs-keyword">END</span>) <span class="hljs-keyword">AS</span> VLICMSST
+<span class="hljs-keyword">INTO</span> #<span class="hljs-number">126</span>_C190_ST
+<span class="hljs-keyword">FROM</span> DBO.EFD_C190 N
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> BI_DW_CORPORATIVO_FISC.DBO.TBLEG_CFOP O
+    <span class="hljs-keyword">ON</span> N.SQCFOP <span class="hljs-operator">=</span> O.SQCFOP <span class="hljs-keyword">AND</span> NRCFOP <span class="hljs-keyword">IN</span> (<span class="hljs-number">1403</span>,<span class="hljs-number">1407</span>,<span class="hljs-number">1409</span>,<span class="hljs-number">1411</span>,<span class="hljs-number">1415</span>,<span class="hljs-number">2403</span>,<span class="hljs-number">2407</span>,<span class="hljs-number">2409</span>,<span class="hljs-number">2411</span>,<span class="hljs-number">2415</span>)
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> N.SQNFOUTRA, NRCFOP
+<span class="hljs-keyword">HAVING</span> <span class="hljs-built_in">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> VLICMS <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">0</span> <span class="hljs-keyword">ELSE</span> VLICMS <span class="hljs-keyword">END</span>) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span>;
+
+<span class="hljs-comment">-- ... a procedure encadeia mais de dez tabelas #, cada uma consumindo o resultado da anterior:</span>
+<span class="hljs-comment">--     #126_PROP_ENTRADA  -&gt; casa NF-e propria com o registro C100 da EFD</span>
+<span class="hljs-comment">--     #126_POCORRENCIA   -&gt; detecta lancamento duplicado</span>
+<span class="hljs-comment">--     #126_ITEMP_ST      -&gt; junta o item da NF-e ao CFOP de ST</span>
+<span class="hljs-comment">--     #126_ITEMP_ST_REF  -&gt; busca a nota original referenciada (caso de devolucao)</span>
+<span class="hljs-comment">--     #126_ITEMP_ST_EMIT -&gt; junta dados do emitente</span>
+<span class="hljs-comment">--     #126_ITEMP_ST_DEST -&gt; junta dados do destinatario</span>
+<span class="hljs-comment">--     (o mesmo fluxo se repete em paralelo para notas de terceiros: #126_TERC_ENTRADA, #126_ITEMT_ST ...)</span>
+
+<span class="hljs-comment">-- 3) materializacao final: da ultima tabela temporaria para tabela permanente</span>
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> IF <span class="hljs-keyword">EXISTS</span> FISC.TB_126_PR_ENTRADAS_CREDITO_C190_CFOP_SUBST_TRIBUT_MERCADORIAS_REVENDA_01;
+
+<span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;TABELA 01&#x27;</span> <span class="hljs-keyword">AS</span> IDENTIFICADOR_TABELA,
+CONCAT(<span class="hljs-keyword">CONVERT</span>(<span class="hljs-type">INTEGER</span>,<span class="hljs-keyword">MONTH</span>(DTINICIAL)) ,<span class="hljs-string">&#x27;/&#x27;</span>,<span class="hljs-keyword">YEAR</span>(DTINICIAL)) <span class="hljs-keyword">AS</span> REG0_PERIODO_DECLARACAO,
+<span class="hljs-built_in">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> ET.VLICMSC190_CFOP <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">0</span> <span class="hljs-keyword">ELSE</span> ET.VLICMSC190_CFOP <span class="hljs-keyword">END</span>) <span class="hljs-keyword">AS</span> TOTAL_C190_VL_ICMS
+<span class="hljs-keyword">INTO</span> FISC.TB_126_PR_ENTRADAS_CREDITO_C190_CFOP_SUBST_TRIBUT_MERCADORIAS_REVENDA_01
+<span class="hljs-keyword">FROM</span> #<span class="hljs-number">126</span>_C190_ST_ITEM ET
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">YEAR</span>(DTINICIAL), <span class="hljs-keyword">CONVERT</span>(<span class="hljs-type">INTEGER</span>,<span class="hljs-keyword">MONTH</span>(DTINICIAL));
+
+<span class="hljs-comment">-- (o mesmo padrao SELECT INTO se repete para as tabelas _02, _03 e _04, em granularidade crescente)</span>
+
+<span class="hljs-keyword">END</span>
+
+IF <span class="hljs-variable">@RELATORIO</span> <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+<span class="hljs-keyword">BEGIN</span>
+    PRINT <span class="hljs-string">&#x27;O TUTORIAL DESTA CONSULTA ENCONTRA-SE NO ROTEIRO OPERACIONAL DO BDFISC. FAVOR, CONSULTA-LO.&#x27;</span>;
+    <span class="hljs-comment">-- devolve ate 4 result sets em sequencia, um por tabela _01 a _04,</span>
+    <span class="hljs-comment">-- cada um filtrado por @ANO / @PERIODO_DECLARACAO</span>
+<span class="hljs-keyword">END</span>;
+
+<span class="hljs-keyword">END</span>
+GO
+</div></code></pre>
+<p>Visao geral, elemento por elemento:</p>
+<ol>
+<li><strong>Tres parametros, todos opcionais (<code>= NULL</code>)</strong> -- <code>@ANO</code> e <code>@PERIODO_DECLARACAO</code> filtram o periodo de apuracao; <code>@RELATORIO</code> continua sendo o &quot;modo&quot; (recalcular x so ler), igual ao estudo de caso 2.</li>
+<li><strong>Validacao de parametro antes de executar a logica principal</strong> -- se <code>@ANO</code> e <code>@PERIODO_DECLARACAO</code> foram informados e sao incompativeis entre si, a procedure devolve um <code>SELECT</code> de erro e nem chega a montar as tabelas temporarias. E um padrao de &quot;guarda de entrada&quot; (<code>input guard</code>) que vale a pena copiar em qualquer procedure parametrizada.</li>
+<li><strong>Catorze <code>DROP TABLE IF EXISTS #...</code>, um por tabela temporaria</strong> -- feitos todos no comeco da procedure, antes de qualquer logica. Garante que, se a sessao ja tiver essas tabelas de uma execucao anterior (por exemplo, interrompida por erro), a nova execucao comeca limpa.</li>
+<li><strong>Cadeia de tabelas temporarias</strong> -- cada <code>#tabela</code> novo consome o resultado da anterior (via <code>INNER JOIN</code>), num estilo parecido com um pipeline de ETL: agrega -&gt; casa com outra origem -&gt; filtra duplicidade -&gt; enriquece com mais colunas -&gt; materializa. Quebrar um calculo grande em varias tabelas <code>#</code> pequenas (em vez de uma unica consulta gigante) deixa cada etapa testavel isoladamente (basta rodar so ate aquele <code>SELECT INTO</code> e inspecionar a tabela <code>#</code>) e mais facil de dar manutencao.</li>
+<li><strong>Materializacao final em tabela permanente</strong> -- assim como no estudo de caso 2, o resultado que precisa sobreviver ao fim da procedure (para o modo <code>@RELATORIO IS NULL</code> funcionar depois) vai para <code>FISC.TB_126_..._01..04</code>, tabelas sem <code>#</code>.</li>
+<li><strong>Ate 4 result sets numa unica chamada</strong> -- quando <code>@RELATORIO IS NULL</code>, a procedure pode devolver quatro <code>SELECT</code>s em sequencia (um por tabela de granularidade). No SSMS, cada um aparece como uma aba de resultado separada.</li>
+</ol>
+<h3 id="exemplos-de-execucao-com-parametros-1" tabindex="-1">Exemplos de execucao com parametros</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Consulta do resultado final (modo leitura)</span>
+<span class="hljs-keyword">EXEC</span> dbo.[<span class="hljs-number">126</span>_PR_ENTRADAS_CREDITO_C190_CFOP_SUBST_TRIBUT_MERCADORIAS_REVENDA]
+    <span class="hljs-variable">@ANO</span> <span class="hljs-operator">=</span> <span class="hljs-number">2025</span>,
+    <span class="hljs-variable">@PERIODO_DECLARACAO</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;05/2025&#x27;</span>;
+
+<span class="hljs-comment">-- Recalculo do conjunto e materializacao das tabelas finais</span>
+<span class="hljs-keyword">EXEC</span> dbo.[<span class="hljs-number">126</span>_PR_ENTRADAS_CREDITO_C190_CFOP_SUBST_TRIBUT_MERCADORIAS_REVENDA]
+    <span class="hljs-variable">@ANO</span> <span class="hljs-operator">=</span> <span class="hljs-number">2025</span>,
+    <span class="hljs-variable">@PERIODO_DECLARACAO</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;05/2025&#x27;</span>,
+    <span class="hljs-variable">@RELATORIO</span> <span class="hljs-operator">=</span> <span class="hljs-number">99999</span>;
+</div></code></pre>
+<p>A primeira execucao e a que o analista usa para visualizar o resultado. A segunda e a operacao pesada: valida parametros, monta cadeias de <code>#temp</code>, gera as tabelas finais em <code>FISC.TB_126_..._01</code> a <code>_04</code> e depois encerra. Esse padrao mostra bem o papel da procedure como motor do processo.</p>
+<h3 id="sugestao-de-reescrita-usando-visao-2" tabindex="-1">Sugestao de reescrita usando visao</h3>
+<p>A versao em view pode ser feita como uma visao de “resultado ja pronto” e a filtragem por ano/periodo fica no <code>SELECT</code> da consulta, fora da definicao da view:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> fisc.vw_entradas_credito_c190_cfop_st <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    IDENTIFICADOR_TABELA,
+    REG0_PERIODO_DECLARACAO,
+    TOTAL_C190_VL_ICMS,
+    <span class="hljs-keyword">YEAR</span>(DTINICIAL) <span class="hljs-keyword">AS</span> ANO,
+    <span class="hljs-keyword">MONTH</span>(DTINICIAL) <span class="hljs-keyword">AS</span> MES
+<span class="hljs-keyword">FROM</span> FISC.TB_126_PR_ENTRADAS_CREDITO_C190_CFOP_SUBST_TRIBUT_MERCADORIAS_REVENDA_01;
+GO
+
+<span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span>
+<span class="hljs-keyword">FROM</span> fisc.vw_entradas_credito_c190_cfop_st
+<span class="hljs-keyword">WHERE</span> ANO <span class="hljs-operator">=</span> <span class="hljs-number">2025</span>
+  <span class="hljs-keyword">AND</span> MES <span class="hljs-operator">=</span> <span class="hljs-number">5</span>;
+</div></code></pre>
+<p>Nesta reformulacao, a view substitui a tabela materializada somente na etapa final de consulta. Ela nao elimina a necessidade da procedure no processo de calculo, porque a procedure continua sendo responsavel por montar o resultado e por controlar a validacao do periodo.</p>
+<hr>
+<h2 id="13.-boas-praticas-observadas-no-banco" tabindex="-1">13. Boas praticas observadas no banco</h2>
+<ol>
+<li>Sempre <code>SET NOCOUNT ON</code> logo no inicio do corpo.</li>
+<li>Usar <code>DROP TABLE IF EXISTS</code> antes de recriar qualquer tabela (<code>#</code> ou permanente) para tornar a procedure segura para reexecucao.</li>
+<li>Ter um parametro &quot;modo de operacao&quot; (<code>@RELATORIO</code>) quando a procedure tanto recalcula quanto so consulta um resultado ja gerado -- evita duas procedures quase identicas.</li>
+<li>Validar combinacoes de parametros incompativeis no comeco da procedure, antes de qualquer processamento pesado.</li>
+<li>Preferir <code>#temp</code> para calculo intermediario e tabela permanente so para o resultado que precisa persistir.</li>
+<li>Tratar <code>NULL</code> explicitamente com <code>CASE WHEN ... IS NULL THEN 0/'-'</code> antes de gravar o resultado final -- evita que um <code>NULL</code> de origem vire ambiguidade no relatorio.</li>
+</ol>
+<hr>
+<h2 id="14.-erros-comuns" tabindex="-1">14. Erros comuns</h2>
+<ol>
+<li><strong>Esquecer <code>SET NOCOUNT ON</code></strong> -- nao quebra a procedure, mas polui a saida com mensagens de contagem de linha, o que atrapalha ferramentas que leem result set por posicao.</li>
+<li><strong>Reexecutar <code>SELECT ... INTO #tabela</code> sem <code>DROP TABLE IF EXISTS</code> antes</strong> -- gera <code>Msg 2714: There is already an object named '#tabela' in the database</code> na segunda execucao da mesma sessao.</li>
+<li><strong>Confundir parametro com variavel <code>DECLARE</code>d</strong> -- parametro e definido no cabecalho e recebe valor na chamada (<code>EXEC ... @p = valor</code>); variavel <code>DECLARE</code>d so existe dentro do corpo e nao pode ser passada de fora.</li>
+<li><strong>Esperar que uma tabela <code>#temp</code> sobreviva a outra sessao</strong> -- tabela <code>#</code> e visivel so na sessao que a criou; abrir uma nova janela de query no SSMS e nao encontrar a tabela <code>#</code> que &quot;existia&quot; na janela anterior e comportamento esperado, nao bug.</li>
+<li><strong>Depender de tabela/banco vinculado sem tratar a ausencia dele</strong> -- as tres procedures deste estudo de caso dependem de <code>BI_DW_CORPORATIVO_FISC</code> (banco corporativo); rodar sem esse link falha com <code>Msg 208: Nome de objeto ... invalido</code>. Em ambiente de treino, isso e esperado (ver os roteiros de auditoria linkados nesta apostila para consultas alternativas autocontidas).</li>
+</ol>
+<hr>
+<h2 id="15.-roteiro-de-laboratorio-guiado" tabindex="-1">15. Roteiro de laboratorio guiado</h2>
+<p>Este roteiro foi pensado para ser executado em sequência, no SSMS, como um laboratório prático. A ideia e que o aluno veja a teoria funcionando em passos pequenos, com observacao de resultado e reflexao sobre o comportamento de cada objeto.</p>
+<h3 id="objetivo-do-laborat%C3%B3rio" tabindex="-1">Objetivo do laboratório</h3>
+<ul>
+<li>reconhecer a diferença entre rotina operacional, regra reutilizavel e reação automática;</li>
+<li>identificar quando a procedure gera resultado final, quando a function entra em consulta e quando o trigger reage ao dado;</li>
+<li>praticar a passagem de parametros e a escolha entre tabela temporaria, tabela permanente e view;</li>
+<li>entender o papel de <code>SET NOCOUNT ON</code>, <code>DROP TABLE IF EXISTS</code> e <code>@RELATORIO</code> em procedures reais do banco fiscal.</li>
+</ul>
+<h3 id="passo-1-%E2%80%94-prepara%C3%A7%C3%A3o-e-inspe%C3%A7%C3%A3o-do-ambiente" tabindex="-1">Passo 1 — Preparação e inspeção do ambiente</h3>
+<p><strong>O que fazer</strong></p>
+<pre class='hljs'><code><div>USE <span class="hljs-number">933000081200000173202662</span>_20260127_104141;
+GO
+
+<span class="hljs-keyword">SELECT</span> name <span class="hljs-keyword">AS</span> procedure_nome
+<span class="hljs-keyword">FROM</span> sys.procedures
+<span class="hljs-keyword">WHERE</span> name <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%PR%&#x27;</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> name;
+</div></code></pre>
+<p><strong>O que observar</strong></p>
+<ul>
+<li>A lista mostra as procedures do banco e ajuda a localizar o padrão de nomes (<code>PR_</code>, <code>100_PR_...</code>, <code>126_PR_...</code>).</li>
+<li>Isso confirma que o ambiente é orientado a rotina operacional e a relatórios de auditoria.</li>
+</ul>
+<p><strong>Pergunta de reflexão</strong></p>
+<ul>
+<li>Por que o padrão de nomenclatura <code>_PR_</code> é importante para identificar procedimentos de processo e não de regra de cálculo?</li>
+</ul>
+<hr>
+<h3 id="passo-2-%E2%80%94-verificar-a-estrutura-dos-par%C3%A2metros-de-uma-procedure-real" tabindex="-1">Passo 2 — Verificar a estrutura dos parâmetros de uma procedure real</h3>
+<p><strong>O que fazer</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    p.name <span class="hljs-keyword">AS</span> parametro,
+    TYPE_NAME(p.user_type_id) <span class="hljs-keyword">AS</span> tipo,
+    p.is_output,
+    p.has_default_value,
+    p.default_value
+<span class="hljs-keyword">FROM</span> sys.parameters <span class="hljs-keyword">AS</span> p
+<span class="hljs-keyword">WHERE</span> OBJECT_NAME(p.object_id) <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;126_PR_ENTRADAS_CREDITO_C190_CFOP_SUBST_TRIBUT_MERCADORIAS_REVENDA&#x27;</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> p.parameter_id;
+</div></code></pre>
+<p><strong>O que observar</strong></p>
+<ul>
+<li>Os parâmetros têm valores padrão <code>NULL</code>.</li>
+<li>A procedure é parametrizada e aceita diferentes modos de execução.</li>
+<li>Não há parâmetro <code>OUTPUT</code> no cenário real observado.</li>
+</ul>
+<p><strong>Pergunta de reflexão</strong></p>
+<ul>
+<li>Qual a diferença entre receber um parâmetro para filtrar dados e receber um parâmetro para controlar o modo da rotina (<code>@RELATORIO</code>)?</li>
+</ul>
+<hr>
+<h3 id="passo-3-%E2%80%94-executar-a-procedure-em-modo-de-leitura" tabindex="-1">Passo 3 — Executar a procedure em modo de leitura</h3>
+<p><strong>O que fazer</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> dbo.[<span class="hljs-number">100</span>_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS];
+</div></code></pre>
+<p><strong>O que observar</strong></p>
+<ul>
+<li>A procedure devolve o painel de consulta final, sem recalcular a estrutura.</li>
+<li>Ela atua como uma visualização do estado já materializado.</li>
+</ul>
+<p><strong>Pergunta de reflexão</strong></p>
+<ul>
+<li>O que acontece se as tabelas de apoio ainda não existirem? O que o padrão <code>IF EXISTS (...)</code> está tentando proteger?</li>
+</ul>
+<hr>
+<h3 id="passo-4-%E2%80%94-executar-a-procedure-em-modo-de-recalculo" tabindex="-1">Passo 4 — Executar a procedure em modo de recalculo</h3>
+<p><strong>O que fazer</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> dbo.[<span class="hljs-number">100</span>_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS]
+    <span class="hljs-variable">@RELATORIO</span> <span class="hljs-operator">=</span> <span class="hljs-number">99999</span>;
+</div></code></pre>
+<p><strong>O que observar</strong></p>
+<ul>
+<li>O corpo da procedure monta a tabela permanente de resumo.</li>
+<li>O resultado não é exibido imediatamente, mas a tabela é atualizada.</li>
+</ul>
+<p><strong>Pergunta de reflexão</strong></p>
+<ul>
+<li>Por que esse código precisa primeiro gerar a tabela e só depois ler o resultado? O que isso diz sobre a natureza da rotina?</li>
+</ul>
+<hr>
+<h3 id="passo-5-%E2%80%94-comparar-o-comportamento-das-duas-execu%C3%A7%C3%B5es" tabindex="-1">Passo 5 — Comparar o comportamento das duas execuções</h3>
+<p><strong>O que fazer</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> NUMERO_CONSULTA,
+       DESCRICAO_CONSULTA,
+       INFOR_DADOS
+<span class="hljs-keyword">FROM</span> FISC.TB_100_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS_01
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> NUMERO_CONSULTA;
+</div></code></pre>
+<p><strong>O que observar</strong></p>
+<ul>
+<li>Depois do recalculo, a tabela de painel possui dados consolidados.</li>
+<li>A chamada sem parâmetro apenas lê esse estado já materializado.</li>
+</ul>
+<p><strong>Conclusão</strong></p>
+<ul>
+<li>A procedure possui duas faces: modo operacional e modo consulta.</li>
+<li>Isso é um padrão muito comum em painéis fiscais e relatórios de auditoria.</li>
+</ul>
+<hr>
+<h3 id="passo-6-%E2%80%94-testar-a-procedure-com-filtros-de-per%C3%ADodo" tabindex="-1">Passo 6 — Testar a procedure com filtros de período</h3>
+<p><strong>O que fazer</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> dbo.[<span class="hljs-number">126</span>_PR_ENTRADAS_CREDITO_C190_CFOP_SUBST_TRIBUT_MERCADORIAS_REVENDA]
+    <span class="hljs-variable">@ANO</span> <span class="hljs-operator">=</span> <span class="hljs-number">2025</span>,
+    <span class="hljs-variable">@PERIODO_DECLARACAO</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;05/2025&#x27;</span>;
+</div></code></pre>
+<p><strong>O que observar</strong></p>
+<ul>
+<li>O resultado final é devolvido em um ou mais <code>result sets</code>.</li>
+<li>A procedure toma o período e monta a análise fiscal correspondente.</li>
+</ul>
+<p><strong>Pergunta de reflexão</strong></p>
+<ul>
+<li>O que a procedure está fazendo antes de devolver o resultado? O que a cadeia de tabelas temporárias representa?</li>
+</ul>
+<hr>
+<h3 id="passo-7-%E2%80%94-recalcular-a-rotina-complexa-com-par%C3%A2metros" tabindex="-1">Passo 7 — Recalcular a rotina complexa com parâmetros</h3>
+<p><strong>O que fazer</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> dbo.[<span class="hljs-number">126</span>_PR_ENTRADAS_CREDITO_C190_CFOP_SUBST_TRIBUT_MERCADORIAS_REVENDA]
+    <span class="hljs-variable">@ANO</span> <span class="hljs-operator">=</span> <span class="hljs-number">2025</span>,
+    <span class="hljs-variable">@PERIODO_DECLARACAO</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;05/2025&#x27;</span>,
+    <span class="hljs-variable">@RELATORIO</span> <span class="hljs-operator">=</span> <span class="hljs-number">99999</span>;
+</div></code></pre>
+<p><strong>O que observar</strong></p>
+<ul>
+<li>O SQL Server executa várias etapas intermediárias antes de materializar tabelas finais.</li>
+<li>Há uso de <code>#temp</code> para etapas de cálculo e tabelas permanentes apenas para o resultado final.</li>
+</ul>
+<p><strong>Pergunta de reflexão</strong></p>
+<ul>
+<li>Por que não gravar tudo de uma vez em tabela permanente desde o início? Qual é a vantagem de quebrar a rotina em etapas?</li>
+</ul>
+<hr>
+<h3 id="passo-8-%E2%80%94-validar-o-uso-de-drop-table-if-exists" tabindex="-1">Passo 8 — Validar o uso de <code>DROP TABLE IF EXISTS</code></h3>
+<p><strong>O que fazer</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> IF <span class="hljs-keyword">EXISTS</span> #temp_teste;
+
+<span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span> <span class="hljs-keyword">AS</span> id, <span class="hljs-string">&#x27;teste&#x27;</span> <span class="hljs-keyword">AS</span> valor
+<span class="hljs-keyword">INTO</span> #temp_teste;
+
+<span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> #temp_teste;
+</div></code></pre>
+<p><strong>O que observar</strong></p>
+<ul>
+<li>A segunda execução do mesmo bloco, sem o <code>DROP TABLE IF EXISTS</code>, falha.</li>
+<li>Isso mostra por que as procedures colocam <code>DROP TABLE IF EXISTS</code> antes de recriar tabelas temporárias.</li>
+</ul>
+<p><strong>Pergunta de reflexão</strong></p>
+<ul>
+<li>Em uma rotina fiscal executada várias vezes na mesma sessão do SSMS, qual é a vantagem de tornar a procedure reexecutável?</li>
+</ul>
+<hr>
+<h3 id="passo-9-%E2%80%94-reconhecer-a-diferen%C3%A7a-entre-rotina-e-consulta" tabindex="-1">Passo 9 — Reconhecer a diferença entre rotina e consulta</h3>
+<p><strong>O que fazer</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    p.name <span class="hljs-keyword">AS</span> procedure_nome,
+    p.object_id,
+    TYPE_NAME(p.user_type_id) <span class="hljs-keyword">AS</span> tipo_parametro,
+    p.is_output
+<span class="hljs-keyword">FROM</span> sys.parameters <span class="hljs-keyword">AS</span> p
+<span class="hljs-keyword">WHERE</span> OBJECT_NAME(p.object_id) <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;100_PR_SUMARIO_DADOS_CONSULTAS_INCONSISTENCIAS&#x27;</span>;
+</div></code></pre>
+<p><strong>O que observar</strong></p>
+<ul>
+<li>A procedure usa parâmetros simples e não usa <code>OUTPUT</code>.</li>
+<li>O que a rotina entrega é um conjunto de resultados, não uma variável de negócio única.</li>
+</ul>
+<p><strong>Conclusão</strong></p>
+<ul>
+<li>O SQL Server trata procedimento e consulta de modo diferente: a procedure faz fluxo e a consulta lê o dado final.</li>
+</ul>
+<hr>
+<h3 id="passo-10-%E2%80%94-exerc%C3%ADcio-pr%C3%A1tico-de-cria%C3%A7%C3%A3o" tabindex="-1">Passo 10 — Exercício prático de criação</h3>
+<p><strong>O que fazer</strong></p>
+<p>Crie uma procedure simples para contar notas por UF, com o seguinte comportamento:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">PROCEDURE</span> dbo.pr_treino_total_nfe
+    <span class="hljs-variable">@sguf</span> <span class="hljs-type">CHAR</span>(<span class="hljs-number">2</span>) <span class="hljs-operator">=</span> <span class="hljs-keyword">NULL</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">SET</span> NOCOUNT <span class="hljs-keyword">ON</span>;
+
+    <span class="hljs-keyword">SELECT</span>
+        n.id_emitente,
+        c.uf,
+        <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> total_notas
+    <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+        <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+    <span class="hljs-keyword">WHERE</span> (<span class="hljs-variable">@sguf</span> <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">OR</span> c.uf <span class="hljs-operator">=</span> <span class="hljs-variable">@sguf</span>)
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> n.id_emitente, c.uf
+    <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> c.uf, n.id_emitente;
+<span class="hljs-keyword">END</span>;
+GO
+</div></code></pre>
+<p><strong>Execuções sugeridas</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> dbo.pr_treino_total_nfe;
+<span class="hljs-keyword">EXEC</span> dbo.pr_treino_total_nfe <span class="hljs-variable">@sguf</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;PB&#x27;</span>;
+</div></code></pre>
+<p><strong>O que observar</strong></p>
+<ul>
+<li>Quando <code>@sguf</code> é <code>NULL</code>, a rotina mostra todas as UFs.</li>
+<li>Quando <code>@sguf</code> é informado, a rotina filtra pela UF.</li>
+</ul>
+<p><strong>Pergunta de reflexão</strong></p>
+<ul>
+<li>Esse é um caso típico de procedure como rotina de consulta ou de processamento? Qual é o padrão de saída?</li>
+</ul>
+<hr>
+<h3 id="passo-11-%E2%80%94-transformar-a-rotina-em-view-para-compara%C3%A7%C3%A3o" tabindex="-1">Passo 11 — Transformar a rotina em view para comparação</h3>
+<p><strong>O que fazer</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> dbo.vw_treino_total_nfe <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    n.id_emitente,
+    c.uf,
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> total_notas
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+    <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> n.id_emitente, c.uf;
+GO
+
+<span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span>
+<span class="hljs-keyword">FROM</span> dbo.vw_treino_total_nfe
+<span class="hljs-keyword">WHERE</span> uf <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;PB&#x27;</span>;
+</div></code></pre>
+<p><strong>O que observar</strong></p>
+<ul>
+<li>A view permite consulta direta e simples.</li>
+<li>Mas ela não substitui a procedure quando o objetivo é processar, filtrar por parâmetro, gerar financeiro de auditoria ou materializar um processamento em etapas.</li>
+</ul>
+<p><strong>Conclusão final do laboratório</strong></p>
+<ul>
+<li>Procedure: executa fluxo, manipula dados e gera resultado;</li>
+<li>Function: responde lógica dentro de consulta;</li>
+<li>Trigger: reage automaticamente a evento de DML;</li>
+<li>View: expõe resultado já pronto, sem lógica operacional.</li>
+</ul>
+<hr>
+<hr>
+<h2 id="16.-exercicios-propostos" tabindex="-1">16. Exercicios propostos</h2>
+<ol>
+<li>Reescreva <code>PR_CADASTRO_CFOP</code> trocando a tabela temporaria <code>#CADCFOP</code> por uma variavel de tabela <code>@CADCFOP</code>. Aponte por escrito uma limitacao real dessa troca (dica: <code>SELECT ... INTO</code> nao funciona com <code>@tabela</code>).</li>
+<li>A procedure <code>100_PR_SUMARIO_...</code> usa duas variaveis <code>DECLARE</code>d (<code>@QTDE_REG_TB1</code>, <code>@QTDE_REG_TB2</code>) para os casos em que uma consulta de auditoria tem duas tabelas de apoio (<code>_01</code> e <code>_02</code>, como no codigo 115). Explique por que usar <code>SUM</code> das duas variaveis, em vez de comparar cada uma isoladamente, muda o resultado logico do teste <code>= 0</code>.</li>
+<li>Crie uma versao simplificada de <code>126_PR_ENTRADAS_CREDITO_C190_CFOP_SUBST_TRIBUT_MERCADORIAS_REVENDA</code> que funcione <strong>sem</strong> depender de <code>BI_DW_CORPORATIVO_FISC</code>, usando so <code>dbo.NFE</code> e <code>dbo.ITEM_NFE</code> (o codigo CFOP ja vem literal em <code>ITEM_NFE.cdcfop</code>, sem precisar de tabela de legislacao). Adicione um parametro <code>@RELATORIO OUTPUT</code> do tipo <code>INT</code> que devolva a quantidade de itens suspeitos encontrados, sem usar result set para esse numero.</li>
+<li>Adicione, na sua procedure do exercicio 3, o padrao <code>DROP TABLE IF EXISTS</code> antes de cada tabela temporaria criada, e justifique em uma frase por que isso importa mesmo numa procedure de uso didatico.</li>
+</ol>
+
+    </div>
+</body>
+</html>

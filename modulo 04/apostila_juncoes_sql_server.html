@@ -1,0 +1,2480 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>apostila_juncoes_sql_server.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 id="jun%C3%A7%C3%B5es-(joins)-em-sql-server" tabindex="-1">Junções (JOINs) em SQL Server</h1>
+<h3 id="curso-de-banco-de-dados-relacional-aplicado-%C3%A0-fiscaliza%C3%A7%C3%A3o-tribut%C3%A1ria-%E2%80%94-sefaz-pb" tabindex="-1">Curso de Banco de Dados Relacional aplicado à Fiscalização Tributária — SEFAZ-PB</h3>
+<p><strong>Banco de trabalho:</strong> <code>curso_integridade_fiscal</code>
+<strong>SGBD:</strong> Microsoft SQL Server 2016 ou superior (T-SQL)
+<strong>Ambiente:</strong> SQL Server Management Studio (SSMS) ou VS Code + extensão MSSQL</p>
+<hr>
+<h2 id="sum%C3%A1rio" tabindex="-1">Sumário</h2>
+<ol>
+<li><a href="#1-objetivos-de-aprendizagem">Objetivos de aprendizagem</a></li>
+<li><a href="#2-por-que-jun%C3%A7%C3%B5es-existem">Por que junções existem</a></li>
+<li><a href="#3-o-mapa-de-relacionamentos-da-base">O mapa de relacionamentos da base</a></li>
+<li><a href="#4-sintaxe-da-jun%C3%A7%C3%A3o-em-t-sql">Sintaxe da junção em T-SQL</a></li>
+<li><a href="#5-produto-cartesiano-e-cross-join">Produto cartesiano e CROSS JOIN</a></li>
+<li><a href="#6-inner-join--a-jun%C3%A7%C3%A3o-interna">INNER JOIN — a junção interna</a></li>
+<li><a href="#7-left-outer-join--preservando-o-lado-esquerdo">LEFT OUTER JOIN — preservando o lado esquerdo</a></li>
+<li><a href="#8-right-outer-join--preservando-o-lado-direito">RIGHT OUTER JOIN — preservando o lado direito</a></li>
+<li><a href="#9-full-outer-join--a-concilia%C3%A7%C3%A3o-bidirecional">FULL OUTER JOIN — a conciliação bidirecional</a></li>
+<li><a href="#10-on-ou-where-o-erro-que-anula-a-jun%C3%A7%C3%A3o-externa">ON ou WHERE? O erro que anula a junção externa</a></li>
+<li><a href="#11-antijun%C3%A7%C3%A3o-e-semijun%C3%A7%C3%A3o">Antijunção e semijunção</a></li>
+<li><a href="#12-self-join--a-tabela-consigo-mesma">SELF JOIN — a tabela consigo mesma</a></li>
+<li><a href="#13-jun%C3%A7%C3%A3o-theta-n%C3%A3o-equijun%C3%A7%C3%A3o">Junção theta (não equijunção)</a></li>
+<li><a href="#14-cross-apply-e-outer-apply">CROSS APPLY e OUTER APPLY</a></li>
+<li><a href="#15-jun%C3%A7%C3%A3o-e-agrega%C3%A7%C3%A3o-o-problema-do-fan-out">Junção e agregação: o problema do fan-out</a></li>
+<li><a href="#16-null-nas-colunas-de-jun%C3%A7%C3%A3o">NULL nas colunas de junção</a></li>
+<li><a href="#17-jun%C3%A7%C3%B5es-e-desempenho">Junções e desempenho</a></li>
+<li><a href="#18-erros-comuns--quadro-de-diagn%C3%B3stico">Erros comuns — quadro de diagnóstico</a></li>
+<li><a href="#19-quadro-resumo-dos-tipos-de-jun%C3%A7%C3%A3o">Quadro resumo dos tipos de junção</a></li>
+<li><a href="#20-roteiro-pr%C3%A1tico-de-laborat%C3%B3rio">Roteiro prático de laboratório</a></li>
+<li><a href="#21-refer%C3%AAncias">Referências</a></li>
+</ol>
+<hr>
+<h2 id="1.-objetivos-de-aprendizagem" tabindex="-1">1. Objetivos de aprendizagem</h2>
+<p>Ao final deste módulo, o participante deverá ser capaz de:</p>
+<ul>
+<li>Explicar a junção como operação da álgebra relacional e relacioná-la ao produto cartesiano seguido de seleção;</li>
+<li>Escrever junções internas e externas em sintaxe ANSI, com aliases e critérios compostos;</li>
+<li>Escolher conscientemente entre <code>INNER</code>, <code>LEFT</code>, <code>RIGHT</code> e <code>FULL</code> conforme o lado da relação que precisa ser preservado na investigação fiscal;</li>
+<li>Distinguir o efeito de um predicado escrito na cláusula <code>ON</code> do mesmo predicado escrito na cláusula <code>WHERE</code>;</li>
+<li>Construir antijunções para localizar omissões (NF-e sem escrituração, contribuinte sem ordem de serviço);</li>
+<li>Aplicar autojunções para percorrer hierarquias e detectar operações circulares entre contribuintes;</li>
+<li>Usar junções theta contra a pauta de referência de preços;</li>
+<li>Reconhecer e corrigir a duplicação de linhas (<em>fan-out</em>) que inflaciona somatórios em cruzamentos de múltiplos níveis.</li>
+</ul>
+<p><strong>Pré-requisitos:</strong> módulos de Modelagem Relacional, Mapeamento MER→Relacional, Modelo Relacional (álgebra) e Restrições de Integridade. A junção é a materialização, em SQL, do operador de junção estudado na álgebra relacional.</p>
+<hr>
+<h2 id="2.-por-que-jun%C3%A7%C3%B5es-existem" tabindex="-1">2. Por que junções existem</h2>
+<p>O modelo relacional não guarda os dados de uma nota fiscal em um único lugar. A normalização distribui a informação: o emitente fica em <code>contribuinte</code>, o município do emitente fica em <code>municipio</code>, o cabeçalho do documento fica em <code>nfe</code>, os produtos ficam em <code>nfe_item</code>, e a declaração do próprio contribuinte sobre aquele documento fica em <code>efd_c100</code> e <code>efd_c170</code>.</p>
+<p>Essa distribuição é uma virtude — evita redundância, evita anomalias de atualização e permite que cada fato seja registrado uma única vez. Mas cobra um preço na hora da consulta: <strong>a informação precisa ser recomposta</strong>. A junção é a operação que faz essa recomposição.</p>
+<p>Na álgebra relacional, a junção é definida como um produto cartesiano seguido de uma seleção:</p>
+<pre class='hljs'><code><div>nfe ⋈(nfe.id_emitente = contribuinte.id_contribuinte) contribuinte
+   ≡   σ(nfe.id_emitente = contribuinte.id_contribuinte) (nfe × contribuinte)
+</div></code></pre>
+<p>Essa equivalência é conceitual, não operacional. O otimizador do SQL Server nunca constrói os 10.636 × 60 = 638.160 pares para depois descartar quase todos: ele usa índices e algoritmos físicos de junção. Mas a definição importa, porque explica o comportamento que mais assusta o iniciante — <strong>quando o critério de junção está errado ou ausente, o que sobra é o produto cartesiano</strong>.</p>
+<blockquote>
+<p><strong>Nota fiscal do conceito.</strong> Na auditoria, quase nenhuma pergunta relevante se responde com uma tabela só. &quot;Quais contribuintes de Campina Grande emitiram notas acima da pauta e não escrituraram na EFD?&quot; envolve <code>municipio</code>, <code>contribuinte</code>, <code>nfe</code>, <code>nfe_item</code>, <code>referencia_preco</code> e <code>efd_c100</code>. Dominar junções é, na prática, dominar o cruzamento fiscal.</p>
+</blockquote>
+<hr>
+<h2 id="3.-o-mapa-de-relacionamentos-da-base" tabindex="-1">3. O mapa de relacionamentos da base</h2>
+<p>Antes de escrever qualquer junção, é preciso saber por onde as tabelas se ligam. O quadro abaixo é o mapa de chaves estrangeiras de <code>curso_integridade_fiscal</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Tabela filha</th>
+<th>Coluna(s)</th>
+<th>Tabela pai</th>
+<th>Coluna(s)</th>
+<th>Cardinalidade</th>
+<th>Obrigatória?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>contribuinte</code></td>
+<td><code>id_municipio</code></td>
+<td><code>municipio</code></td>
+<td><code>id_municipio</code></td>
+<td>N:1</td>
+<td>Sim (<code>NOT NULL</code>)</td>
+</tr>
+<tr>
+<td><code>auditor_fiscal</code></td>
+<td><code>matricula_supervisor</code></td>
+<td><code>auditor_fiscal</code></td>
+<td><code>matricula</code></td>
+<td>N:1 (autorrelacionamento)</td>
+<td>Não (<code>NULL</code> no topo)</td>
+</tr>
+<tr>
+<td><code>nfe</code></td>
+<td><code>id_emitente</code></td>
+<td><code>contribuinte</code></td>
+<td><code>id_contribuinte</code></td>
+<td>N:1</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><code>nfe</code></td>
+<td><code>id_destinatario</code></td>
+<td><code>contribuinte</code></td>
+<td><code>id_contribuinte</code></td>
+<td>N:1</td>
+<td><strong>Não</strong> (<code>NULL</code> = consumidor não identificado)</td>
+</tr>
+<tr>
+<td><code>nfe_item</code></td>
+<td><code>id_nfe</code></td>
+<td><code>nfe</code></td>
+<td><code>id_nfe</code></td>
+<td>N:1</td>
+<td>Sim (<code>ON DELETE CASCADE</code>)</td>
+</tr>
+<tr>
+<td><code>efd_c100</code></td>
+<td><code>id_contribuinte</code></td>
+<td><code>contribuinte</code></td>
+<td><code>id_contribuinte</code></td>
+<td>N:1</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><code>efd_c170</code></td>
+<td><code>id_c100</code></td>
+<td><code>efd_c100</code></td>
+<td><code>id_c100</code></td>
+<td>N:1</td>
+<td>Sim (<code>ON DELETE CASCADE</code>)</td>
+</tr>
+<tr>
+<td><code>ordem_servico</code></td>
+<td><code>id_contribuinte</code></td>
+<td><code>contribuinte</code></td>
+<td><code>id_contribuinte</code></td>
+<td>N:1</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><code>ordem_servico</code></td>
+<td><code>matricula_auditor</code></td>
+<td><code>auditor_fiscal</code></td>
+<td><code>matricula</code></td>
+<td>N:1</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><code>auto_infracao</code></td>
+<td><code>id_os</code></td>
+<td><code>ordem_servico</code></td>
+<td><code>id_os</code></td>
+<td>N:1</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><code>auto_infracao</code></td>
+<td><code>id_contribuinte</code></td>
+<td><code>contribuinte</code></td>
+<td><code>id_contribuinte</code></td>
+<td>N:1</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td><code>socio_administrador</code></td>
+<td><code>id_contribuinte</code></td>
+<td><code>contribuinte</code></td>
+<td><code>id_contribuinte</code></td>
+<td>N:1</td>
+<td>Sim (script 09, opcional)</td>
+</tr>
+</tbody>
+</table>
+<p>E há <strong>uma ligação que não é chave estrangeira e que é o coração deste módulo</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Coluna</th>
+<th>Coluna</th>
+<th>Situação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nfe.chave_acesso</code></td>
+<td><code>efd_c100.chave_acesso</code></td>
+<td><strong>Não existe FK entre elas — propositalmente</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Como o script <code>01_criar_banco.sql</code> documenta, a EFD pode escriturar documentos emitidos em outras UFs, ausentes da base local. Se houvesse chave estrangeira, o banco recusaria a escrituração legítima de um documento de fora e, pior, tornaria <strong>impossível</strong> a existência das inconsistências que a malha fiscal procura. É exatamente nessa fronteira sem restrição que as junções externas fazem seu trabalho.</p>
+<p><strong>Volumes da base carregada</strong> (conferidos pelo script <code>07_verificacao.sql</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Tabela</th>
+<th style="text-align:right">Linhas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>municipio</code></td>
+<td style="text-align:right">35</td>
+</tr>
+<tr>
+<td><code>contribuinte</code></td>
+<td style="text-align:right">60</td>
+</tr>
+<tr>
+<td><code>auditor_fiscal</code></td>
+<td style="text-align:right">20</td>
+</tr>
+<tr>
+<td><code>referencia_preco</code></td>
+<td style="text-align:right">28</td>
+</tr>
+<tr>
+<td><code>nfe</code></td>
+<td style="text-align:right">10.636</td>
+</tr>
+<tr>
+<td><code>nfe_item</code></td>
+<td style="text-align:right">30.794</td>
+</tr>
+<tr>
+<td><code>efd_c100</code></td>
+<td style="text-align:right">8.059</td>
+</tr>
+<tr>
+<td><code>efd_c170</code></td>
+<td style="text-align:right">23.158</td>
+</tr>
+<tr>
+<td><code>ordem_servico</code></td>
+<td style="text-align:right">150</td>
+</tr>
+<tr>
+<td><code>auto_infracao</code></td>
+<td style="text-align:right">72</td>
+</tr>
+<tr>
+<td><code>socio_administrador</code></td>
+<td style="text-align:right">138 (script 09)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="4.-sintaxe-da-jun%C3%A7%C3%A3o-em-t-sql" tabindex="-1">4. Sintaxe da junção em T-SQL</h2>
+<h3 id="4.1-a-forma-ansi-(a-%C3%BAnica-que-se-deve-usar)" tabindex="-1">4.1 A forma ANSI (a única que se deve usar)</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>  <span class="hljs-operator">&lt;</span>colunas<span class="hljs-operator">&gt;</span>
+<span class="hljs-keyword">FROM</span>        tabela_a <span class="hljs-keyword">AS</span> a
+<span class="hljs-operator">&lt;</span>tipo<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">JOIN</span> tabela_b <span class="hljs-keyword">AS</span> b  <span class="hljs-keyword">ON</span>  <span class="hljs-operator">&lt;</span>predicado de junção<span class="hljs-operator">&gt;</span>
+<span class="hljs-keyword">WHERE</span>   <span class="hljs-operator">&lt;</span>filtros de linha<span class="hljs-operator">&gt;</span>;
+</div></code></pre>
+<p>Os tipos disponíveis:</p>
+<pre class='hljs'><code><div>[<span class="hljs-keyword">INNER</span>] <span class="hljs-keyword">JOIN</span>            <span class="hljs-comment">-- interna (INNER é opcional; escreva-o mesmo assim)</span>
+<span class="hljs-keyword">LEFT</span>  [<span class="hljs-keyword">OUTER</span>] <span class="hljs-keyword">JOIN</span>      <span class="hljs-comment">-- externa à esquerda</span>
+<span class="hljs-keyword">RIGHT</span> [<span class="hljs-keyword">OUTER</span>] <span class="hljs-keyword">JOIN</span>      <span class="hljs-comment">-- externa à direita</span>
+<span class="hljs-keyword">FULL</span>  [<span class="hljs-keyword">OUTER</span>] <span class="hljs-keyword">JOIN</span>      <span class="hljs-comment">-- externa completa</span>
+<span class="hljs-keyword">CROSS</span> <span class="hljs-keyword">JOIN</span>              <span class="hljs-comment">-- produto cartesiano</span>
+<span class="hljs-keyword">CROSS</span> APPLY <span class="hljs-operator">/</span> <span class="hljs-keyword">OUTER</span> APPLY  <span class="hljs-comment">-- junção com subconsulta correlacionada</span>
+</div></code></pre>
+<p>A palavra <code>OUTER</code> é opcional e não muda nada: <code>LEFT JOIN</code> e <code>LEFT OUTER JOIN</code> são idênticos. A palavra <code>INNER</code> também é opcional, mas <strong>escrevê-la é boa prática</strong>: deixa explícito para quem lê o script — inclusive para o auditor que vai revisar o trabalho meses depois — que a omissão de linhas sem par foi uma decisão, não um esquecimento.</p>
+<h3 id="4.2-a-forma-antiga-(a-que-se-deve-reconhecer%2C-mas-n%C3%A3o-escrever)" tabindex="-1">4.2 A forma antiga (a que se deve reconhecer, mas não escrever)</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Junção interna na sintaxe implícita (ainda funciona, mas evite)</span>
+<span class="hljs-keyword">SELECT</span> n.numero, c.razao_social
+<span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n, dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">WHERE</span>  n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte;
+</div></code></pre>
+<p>Funciona, produz o mesmo resultado, e ainda aparece em scripts legados da própria repartição. O problema é que <strong>o critério de junção e o filtro de negócio se misturam na mesma cláusula <code>WHERE</code></strong>. Numa consulta com seis tabelas e doze predicados, esquecer um critério de junção passa despercebido — e o resultado é um produto cartesiano parcial que ninguém nota até os valores somados ficarem absurdos.</p>
+<p>Já a sintaxe antiga de junção <strong>externa</strong>, com <code>*=</code> e <code>=*</code>, foi <strong>descontinuada</strong> e não funciona mais em níveis de compatibilidade modernos:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- NÃO FUNCIONA em SQL Server moderno. Está aqui apenas para reconhecimento.</span>
+<span class="hljs-keyword">SELECT</span> ... <span class="hljs-keyword">FROM</span> nfe n, efd_c100 e <span class="hljs-keyword">WHERE</span> n.chave_acesso <span class="hljs-operator">*</span><span class="hljs-operator">=</span> e.chave_acesso;
+</div></code></pre>
+<p>Se você encontrar isso num script herdado, a tarefa é reescrever em <code>LEFT JOIN</code>.</p>
+<h3 id="4.3-aliases%3A-uma-regra-de-higiene" tabindex="-1">4.3 Aliases: uma regra de higiene</h3>
+<p>Sempre dê alias às tabelas e <strong>sempre qualifique as colunas</strong>:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Ruim: de qual tabela vem &#x27;ncm&#x27;? E &#x27;valor_icms&#x27;?</span>
+<span class="hljs-keyword">SELECT</span> ncm, valor_icms <span class="hljs-keyword">FROM</span> nfe_item <span class="hljs-keyword">JOIN</span> efd_c170 <span class="hljs-keyword">ON</span> ...
+
+<span class="hljs-comment">-- Bom</span>
+<span class="hljs-keyword">SELECT</span> i.ncm, i.valor_icms_item, c170.ncm, c170.valor_icms_item
+<span class="hljs-keyword">FROM</span>   dbo.nfe_item <span class="hljs-keyword">AS</span> i
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.efd_c170 <span class="hljs-keyword">AS</span> c170 <span class="hljs-keyword">ON</span> ...
+</div></code></pre>
+<p>Neste curso o padrão é: <code>n</code> = <code>nfe</code>, <code>i</code> = <code>nfe_item</code>, <code>e</code> = <code>efd_c100</code>, <code>c170</code> = <code>efd_c170</code>, <code>c</code> = <code>contribuinte</code>, <code>m</code> = <code>municipio</code>, <code>a</code> = <code>auditor_fiscal</code> ou <code>auto_infracao</code> (conforme o contexto), <code>o</code> = <code>ordem_servico</code>, <code>r</code> = <code>referencia_preco</code>.</p>
+<hr>
+<h2 id="5.-produto-cartesiano-e-cross-join" tabindex="-1">5. Produto cartesiano e CROSS JOIN</h2>
+<p>O <code>CROSS JOIN</code> combina cada linha da esquerda com cada linha da direita. Não tem cláusula <code>ON</code>.</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- 35 municípios x 4 regimes = 140 linhas</span>
+<span class="hljs-keyword">SELECT</span> m.nome, r.regime
+<span class="hljs-keyword">FROM</span>   dbo.municipio <span class="hljs-keyword">AS</span> m
+       <span class="hljs-keyword">CROSS</span> <span class="hljs-keyword">JOIN</span> (<span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;NORMAL&#x27;</span>),(<span class="hljs-string">&#x27;SIMPLES&#x27;</span>),(<span class="hljs-string">&#x27;MEI&#x27;</span>),(<span class="hljs-string">&#x27;ISENTO&#x27;</span>)) <span class="hljs-keyword">AS</span> r(regime);
+</div></code></pre>
+<p>Parece inútil, e na maior parte do tempo é — quando aparece sem querer, é um bug. Mas tem um uso legítimo e recorrente na fiscalização: <strong>gerar a grade completa de combinações que <em>deveriam</em> existir</strong>, para depois confrontá-la com o que existe de fato.</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Grade de referência: todo contribuinte ATIVO do regime NORMAL</span>
+<span class="hljs-comment">-- x todos os 12 períodos de apuração de 2025.</span>
+<span class="hljs-comment">-- Esta é a &quot;lista de chamada&quot; da obrigação acessória.</span>
+<span class="hljs-keyword">SELECT</span> c.id_contribuinte, c.razao_social, p.periodo_apuracao
+<span class="hljs-keyword">FROM</span>   dbo.contribuinte <span class="hljs-keyword">AS</span> c
+       <span class="hljs-keyword">CROSS</span> <span class="hljs-keyword">JOIN</span> (<span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;202501&#x27;</span>),(<span class="hljs-string">&#x27;202502&#x27;</span>),(<span class="hljs-string">&#x27;202503&#x27;</span>),(<span class="hljs-string">&#x27;202504&#x27;</span>),
+                          (<span class="hljs-string">&#x27;202505&#x27;</span>),(<span class="hljs-string">&#x27;202506&#x27;</span>),(<span class="hljs-string">&#x27;202507&#x27;</span>),(<span class="hljs-string">&#x27;202508&#x27;</span>),
+                          (<span class="hljs-string">&#x27;202509&#x27;</span>),(<span class="hljs-string">&#x27;202510&#x27;</span>),(<span class="hljs-string">&#x27;202511&#x27;</span>),(<span class="hljs-string">&#x27;202512&#x27;</span>)
+                  ) <span class="hljs-keyword">AS</span> p(periodo_apuracao)
+<span class="hljs-keyword">WHERE</span>  c.situacao_cadastral <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;ATIVO&#x27;</span>
+  <span class="hljs-keyword">AND</span>  c.regime_tributario  <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;NORMAL&#x27;</span>;
+</div></code></pre>
+<p>Guardada essa grade, basta uma junção externa contra <code>efd_c100</code> para descobrir <strong>qual contribuinte deixou de entregar qual período</strong> — o clássico levantamento de omissos. Voltaremos a isso na seção 11 e no laboratório.</p>
+<p>⚠️ <strong>Cuidado com a escala.</strong> <code>nfe CROSS JOIN nfe_item</code> produziria 10.636 × 30.794 ≈ 327 milhões de linhas. Nunca execute um produto cartesiano sobre as tabelas de documentos desta base.</p>
+<hr>
+<h2 id="6.-inner-join-%E2%80%94-a-jun%C3%A7%C3%A3o-interna" tabindex="-1">6. INNER JOIN — a junção interna</h2>
+<h3 id="6.1-sem%C3%A2ntica" tabindex="-1">6.1 Semântica</h3>
+<p>O <code>INNER JOIN</code> retorna <strong>somente as linhas em que o predicado <code>ON</code> é verdadeiro em ambos os lados</strong>. Linha sem par de um lado ou do outro simplesmente desaparece do resultado.</p>
+<pre class='hljs'><code><div>Esquerda: A B C D          INNER JOIN em X:
+Direita:  B C E                resultado = B C
+</div></code></pre>
+<p>Essa é a junção mais usada — e é justamente por isso que ela é perigosa numa auditoria. <strong>Toda linha que some numa junção interna é uma informação perdida em silêncio.</strong> Se você quer saber quem <em>não</em> declarou, o <code>INNER JOIN</code> nunca vai lhe dizer, porque quem não declarou não tem par do outro lado.</p>
+<h3 id="6.2-exemplo-m%C3%ADnimo%3A-nota-fiscal-com-o-nome-do-emitente" tabindex="-1">6.2 Exemplo mínimo: nota fiscal com o nome do emitente</h3>
+<pre class='hljs'><code><div>USE curso_integridade_fiscal;
+GO
+
+<span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">10</span>)
+       n.numero,
+       n.data_emissao,
+       n.valor_total,
+       c.cnpj,
+       c.razao_social
+<span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+              <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+<span class="hljs-keyword">WHERE</span>  n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> n.data_emissao <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p>Leitura da consulta: para cada linha de <code>nfe</code>, procure em <code>contribuinte</code> a linha cujo <code>id_contribuinte</code> seja igual ao <code>id_emitente</code>; junte as duas lado a lado.</p>
+<p>Como <code>nfe.id_emitente</code> é <code>NOT NULL</code> <strong>e</strong> tem chave estrangeira para <code>contribuinte</code>, o banco garante que <strong>todas</strong> as 10.636 notas encontram emitente. Nesse caso específico, <code>INNER JOIN</code> e <code>LEFT JOIN</code> produzem exatamente o mesmo resultado — a integridade referencial já eliminou a possibilidade de órfãos. Essa é a primeira regra prática:</p>
+<blockquote>
+<p><strong>Onde existe FK obrigatória, <code>INNER</code> e <code>LEFT</code> coincidem. Onde a coluna é anulável ou não há FK, a escolha entre os dois muda o resultado.</strong></p>
+</blockquote>
+<h3 id="6.3-cadeia-de-jun%C3%A7%C3%B5es%3A-subindo-at%C3%A9-o-munic%C3%ADpio" tabindex="-1">6.3 Cadeia de junções: subindo até o município</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">20</span>)
+       c.cnpj,
+       c.razao_social,
+       m.nome        <span class="hljs-keyword">AS</span> municipio,
+       m.uf,
+       m.regiao_fiscal,
+       <span class="hljs-built_in">SUM</span>(n.valor_total) <span class="hljs-keyword">AS</span> total_emitido
+<span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.municipio    <span class="hljs-keyword">AS</span> m <span class="hljs-keyword">ON</span> m.id_municipio    <span class="hljs-operator">=</span> c.id_municipio
+<span class="hljs-keyword">WHERE</span>  n.situacao      <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+  <span class="hljs-keyword">AND</span>  n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>          <span class="hljs-comment">-- saída</span>
+  <span class="hljs-keyword">AND</span>  m.uf            <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;PB&#x27;</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> c.cnpj, c.razao_social, m.nome, m.uf, m.regiao_fiscal
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> total_emitido <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p>As junções são avaliadas conceitualmente da esquerda para a direita: primeiro <code>nfe</code> com <code>contribuinte</code>, depois o resultado disso com <code>municipio</code>. Nada impede o otimizador de escolher outra ordem física — o resultado é o mesmo.</p>
+<h3 id="6.4-descendo-ao-item-e-chegando-%C3%A0-efd%3A-o-cruzamento-de-quatro-n%C3%ADveis" tabindex="-1">6.4 Descendo ao item e chegando à EFD: o cruzamento de quatro níveis</h3>
+<p>Este é o cruzamento central da malha fiscal desta base: comparar, item a item, o que a NF-e diz com o que o contribuinte escriturou.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>  n.chave_acesso,
+        i.num_item,
+        i.descricao,
+        i.ncm            <span class="hljs-keyword">AS</span> ncm_nfe,
+        c170.ncm         <span class="hljs-keyword">AS</span> ncm_efd,
+        i.cfop           <span class="hljs-keyword">AS</span> cfop_nfe,
+        c170.cfop        <span class="hljs-keyword">AS</span> cfop_efd,
+        i.valor_total_item <span class="hljs-keyword">AS</span> valor_nfe,
+        c170.valor_item    <span class="hljs-keyword">AS</span> valor_efd,
+        i.valor_total_item <span class="hljs-operator">-</span> c170.valor_item <span class="hljs-keyword">AS</span> diferenca
+<span class="hljs-keyword">FROM</span>    dbo.nfe       <span class="hljs-keyword">AS</span> n
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.nfe_item <span class="hljs-keyword">AS</span> i    <span class="hljs-keyword">ON</span> i.id_nfe       <span class="hljs-operator">=</span> n.id_nfe
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.efd_c100 <span class="hljs-keyword">AS</span> e    <span class="hljs-keyword">ON</span> e.chave_acesso <span class="hljs-operator">=</span> n.chave_acesso
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.efd_c170 <span class="hljs-keyword">AS</span> c170 <span class="hljs-keyword">ON</span> c170.id_c100   <span class="hljs-operator">=</span> e.id_c100
+                                       <span class="hljs-keyword">AND</span> c170.num_item  <span class="hljs-operator">=</span> i.num_item
+<span class="hljs-keyword">WHERE</span>   n.situacao     <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+  <span class="hljs-keyword">AND</span>   e.cod_situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;00&#x27;</span>
+  <span class="hljs-keyword">AND</span>   e.ind_oper     <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+  <span class="hljs-keyword">AND</span>  (i.ncm  <span class="hljs-operator">&lt;&gt;</span> c170.ncm
+     <span class="hljs-keyword">OR</span> i.cfop <span class="hljs-operator">&lt;&gt;</span> c170.cfop
+     <span class="hljs-keyword">OR</span> <span class="hljs-built_in">ABS</span>(i.valor_total_item <span class="hljs-operator">-</span> c170.valor_item) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0.01</span>);
+</div></code></pre>
+<p>Dois detalhes merecem atenção:</p>
+<ol>
+<li><strong>A junção <code>efd_c170</code> tem predicado composto</strong> (<code>id_c100</code> <strong>e</strong> <code>num_item</code>). Sem o <code>num_item</code>, cada item da nota se cruzaria com <em>todos</em> os itens do documento escriturado — um produto cartesiano local que multiplicaria as linhas e destruiria qualquer somatório.</li>
+<li><strong>A junção com <code>efd_c100</code> é por <code>chave_acesso</code>, não por FK.</strong> É uma junção &quot;de negócio&quot;, não uma junção estrutural. Só faz sentido porque a chave de acesso é o identificador nacional único do documento — e é por isso que o próprio script 07 verifica se existem chaves internamente inconsistentes (13 casos plantados na base).</li>
+</ol>
+<p>O script <code>07_verificacao.sql</code> informa o resultado esperado desse cruzamento: <strong>354 itens divergentes</strong>.</p>
+<h3 id="6.5-a-jun%C3%A7%C3%A3o-interna-com-condi%C3%A7%C3%A3o-composta-e-desigualdade" tabindex="-1">6.5 A junção interna com condição composta e desigualdade</h3>
+<p>O <code>ON</code> aceita qualquer expressão booleana, não apenas igualdades:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Autos lavrados em ordens de serviço ainda não concluídas na data da lavratura</span>
+<span class="hljs-keyword">SELECT</span> o.numero_os, a.numero_auto, o.data_abertura,
+       a.data_lavratura, o.data_conclusao
+<span class="hljs-keyword">FROM</span>   dbo.ordem_servico <span class="hljs-keyword">AS</span> o
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.auto_infracao <span class="hljs-keyword">AS</span> a
+              <span class="hljs-keyword">ON</span>  a.id_os          <span class="hljs-operator">=</span> o.id_os
+              <span class="hljs-keyword">AND</span> a.data_lavratura <span class="hljs-operator">&gt;=</span> o.data_abertura
+              <span class="hljs-keyword">AND</span> (o.data_conclusao <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">OR</span> a.data_lavratura <span class="hljs-operator">&lt;=</span> o.data_conclusao);
+</div></code></pre>
+<hr>
+<h2 id="7.-left-outer-join-%E2%80%94-preservando-o-lado-esquerdo" tabindex="-1">7. LEFT OUTER JOIN — preservando o lado esquerdo</h2>
+<h3 id="7.1-sem%C3%A2ntica" tabindex="-1">7.1 Semântica</h3>
+<p>O <code>LEFT OUTER JOIN</code> retorna <strong>todas as linhas da tabela à esquerda</strong>, tenham par ou não. Onde não há par, as colunas da tabela da direita vêm preenchidas com <code>NULL</code>.</p>
+<pre class='hljs'><code><div>Esquerda: A B C D          LEFT JOIN em X:
+Direita:  B C E                resultado = A(NULL) B C D(NULL)
+</div></code></pre>
+<p>Na fiscalização, esta é <strong>a junção da omissão</strong>. Toda pergunta que começa com &quot;quem <em>não</em>...&quot; é uma junção externa à esquerda:</p>
+<ul>
+<li>Quem <strong>não</strong> escriturou a nota que emitiu?</li>
+<li>Qual contribuinte <strong>nunca</strong> foi alvo de ordem de serviço?</li>
+<li>Qual ordem de serviço concluída <strong>não</strong> gerou auto de infração?</li>
+<li>Qual auditor <strong>não</strong> tem processo em andamento?</li>
+</ul>
+<h3 id="7.2-exemplo%3A-ordens-de-servi%C3%A7o-com-e-sem-auto-de-infra%C3%A7%C3%A3o" tabindex="-1">7.2 Exemplo: ordens de serviço com e sem auto de infração</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>  o.numero_os,
+        o.tipo_fiscalizacao,
+        o.situacao,
+        a.numero_auto,                       <span class="hljs-comment">-- NULL quando não houve auto</span>
+        a.valor_principal,
+        a.valor_multa
+<span class="hljs-keyword">FROM</span>    dbo.ordem_servico <span class="hljs-keyword">AS</span> o
+        <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">OUTER</span> <span class="hljs-keyword">JOIN</span> dbo.auto_infracao <span class="hljs-keyword">AS</span> a
+                <span class="hljs-keyword">ON</span> a.id_os <span class="hljs-operator">=</span> o.id_os
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> o.numero_os;
+</div></code></pre>
+<p>As 150 ordens de serviço aparecem todas. As que produziram auto trazem os dados do auto; as demais trazem <code>NULL</code> nas colunas de <code>a</code>. Trocando <code>LEFT</code> por <code>INNER</code>, o resultado encolhe para apenas as ordens com auto — e a pergunta &quot;quantas fiscalizações terminaram sem autuação?&quot; fica sem resposta.</p>
+<h3 id="7.3-exemplo%3A-consumidor-n%C3%A3o-identificado" tabindex="-1">7.3 Exemplo: consumidor não identificado</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>  n.chave_acesso,
+        n.data_emissao,
+        n.valor_total,
+        d.cnpj         <span class="hljs-keyword">AS</span> cnpj_destinatario,
+        d.razao_social <span class="hljs-keyword">AS</span> destinatario,
+        <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> n.id_destinatario <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+             <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;CONSUMIDOR NAO IDENTIFICADO&#x27;</span>
+             <span class="hljs-keyword">ELSE</span> <span class="hljs-string">&#x27;IDENTIFICADO&#x27;</span> <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> tipo_destinatario
+<span class="hljs-keyword">FROM</span>    dbo.nfe <span class="hljs-keyword">AS</span> n
+        <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">OUTER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> d
+                <span class="hljs-keyword">ON</span> d.id_contribuinte <span class="hljs-operator">=</span> n.id_destinatario
+<span class="hljs-keyword">WHERE</span>   n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>;
+</div></code></pre>
+<p>Aqui o <code>LEFT JOIN</code> é <strong>obrigatório</strong>, não opcional. A coluna <code>id_destinatario</code> é anulável — 1.041 notas da base são para consumidor não identificado. Um <code>INNER JOIN</code> descartaria essas 1.041 notas silenciosamente, e todo somatório de faturamento sairia subestimado. Este é o erro de auditoria mais comum e mais caro que uma junção mal escolhida produz.</p>
+<h3 id="7.4-a-antijun%C3%A7%C3%A3o%3A-o-left-join-...-is-null" tabindex="-1">7.4 A antijunção: o <code>LEFT JOIN ... IS NULL</code></h3>
+<p>Se o <code>LEFT JOIN</code> mantém as linhas sem par com <code>NULL</code> do lado direito, então <strong>filtrar por esse <code>NULL</code> isola exatamente as linhas sem par</strong>:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- NF-e de saída AUTORIZADA que o emitente não escriturou na EFD</span>
+<span class="hljs-comment">-- Resultado esperado: 2.023 documentos</span>
+<span class="hljs-keyword">SELECT</span>  n.chave_acesso, n.numero, n.data_emissao,
+        n.id_emitente, n.valor_total, n.valor_icms
+<span class="hljs-keyword">FROM</span>    dbo.nfe <span class="hljs-keyword">AS</span> n
+        <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">OUTER</span> <span class="hljs-keyword">JOIN</span> dbo.efd_c100 <span class="hljs-keyword">AS</span> e
+                <span class="hljs-keyword">ON</span>  e.chave_acesso    <span class="hljs-operator">=</span> n.chave_acesso
+                <span class="hljs-keyword">AND</span> e.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+                <span class="hljs-keyword">AND</span> e.ind_oper        <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+                <span class="hljs-keyword">AND</span> e.cod_situacao    <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;00&#x27;</span>
+<span class="hljs-keyword">WHERE</span>   n.situacao      <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+  <span class="hljs-keyword">AND</span>   n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+  <span class="hljs-keyword">AND</span>   e.id_c100 <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>;              <span class="hljs-comment">-- &lt;&lt;&lt; a antijunção</span>
+</div></code></pre>
+<p>Três pontos de método, todos importantes:</p>
+<ol>
+<li><strong>Todas as condições da correspondência ficam no <code>ON</code>.</strong> Se <code>e.ind_oper = '1'</code> fosse para o <code>WHERE</code>, a consulta deixaria de ser externa (ver seção 10).</li>
+<li><strong>O <code>IS NULL</code> deve ser testado numa coluna <code>NOT NULL</code> da tabela da direita</strong> — aqui, a chave primária <code>e.id_c100</code>. Testar <code>e.chave_acesso IS NULL</code> seria ambíguo, porque essa coluna é anulável por natureza: um <code>NULL</code> ali pode significar &quot;não houve par&quot; ou &quot;houve par, e o par tem chave nula&quot;.</li>
+<li><strong>Filtre o regime tributário antes de acusar.</strong> Contribuintes do Simples Nacional e MEI não entregam EFD ICMS/IPI. Sem esse filtro, aparecem 2.023 casos; restringindo a declarantes do regime <code>NORMAL</code>, restam <strong>980</strong> — os outros 1.043 são falsos positivos. Como observa o script 07, essa diferença é o achado didático mais importante da base: <em>a consulta tecnicamente correta pode estar juridicamente errada</em>.</li>
+</ol>
+<pre class='hljs'><code><div><span class="hljs-comment">-- A mesma antijunção, agora sem falso positivo: 980 documentos</span>
+<span class="hljs-keyword">SELECT</span>  <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> omissoes_regime_normal
+<span class="hljs-keyword">FROM</span>    dbo.nfe <span class="hljs-keyword">AS</span> n
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+                <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+        <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">OUTER</span> <span class="hljs-keyword">JOIN</span> dbo.efd_c100 <span class="hljs-keyword">AS</span> e
+                <span class="hljs-keyword">ON</span>  e.chave_acesso    <span class="hljs-operator">=</span> n.chave_acesso
+                <span class="hljs-keyword">AND</span> e.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+                <span class="hljs-keyword">AND</span> e.ind_oper        <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+                <span class="hljs-keyword">AND</span> e.cod_situacao    <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;00&#x27;</span>
+<span class="hljs-keyword">WHERE</span>   n.situacao          <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+  <span class="hljs-keyword">AND</span>   n.tipo_operacao     <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+  <span class="hljs-keyword">AND</span>   c.regime_tributario <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;NORMAL&#x27;</span>
+  <span class="hljs-keyword">AND</span>   e.id_c100 <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>;
+</div></code></pre>
+<h3 id="7.5-encadeando-jun%C3%A7%C3%B5es-externas" tabindex="-1">7.5 Encadeando junções externas</h3>
+<p>Uma vez que uma junção externa entra na consulta, <strong>as junções seguintes que dependem do lado preservado também precisam ser externas</strong> — do contrário, o <code>INNER JOIN</code> seguinte descarta as linhas cujo par veio nulo:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Contribuinte -&gt; OS (pode não haver) -&gt; auto (pode não haver)</span>
+<span class="hljs-keyword">SELECT</span>  c.cnpj, c.razao_social,
+        o.numero_os, o.tipo_fiscalizacao,
+        a.numero_auto, a.valor_multa
+<span class="hljs-keyword">FROM</span>    dbo.contribuinte <span class="hljs-keyword">AS</span> c
+        <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.ordem_servico <span class="hljs-keyword">AS</span> o <span class="hljs-keyword">ON</span> o.id_contribuinte <span class="hljs-operator">=</span> c.id_contribuinte
+        <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.auto_infracao <span class="hljs-keyword">AS</span> a <span class="hljs-keyword">ON</span> a.id_os           <span class="hljs-operator">=</span> o.id_os
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> c.razao_social, o.numero_os;
+</div></code></pre>
+<p>Se a segunda junção fosse <code>INNER JOIN</code>, todo contribuinte sem ordem de serviço sumiria — porque <code>o.id_os</code> viria <code>NULL</code> e nenhum auto casaria com <code>NULL</code>. O <code>INNER</code> posterior <strong>anula</strong> o <code>LEFT</code> anterior. Guarde essa frase: é uma das causas mais frequentes de &quot;minha consulta perdeu linhas e eu não sei onde&quot;.</p>
+<hr>
+<h2 id="8.-right-outer-join-%E2%80%94-preservando-o-lado-direito" tabindex="-1">8. RIGHT OUTER JOIN — preservando o lado direito</h2>
+<h3 id="8.1-sem%C3%A2ntica" tabindex="-1">8.1 Semântica</h3>
+<p>Espelho exato do <code>LEFT</code>: preserva todas as linhas da tabela <strong>à direita</strong>, completando com <code>NULL</code> o lado esquerdo quando não há par.</p>
+<pre class='hljs'><code><div>Esquerda: A B C D          RIGHT JOIN em X:
+Direita:  B C E                resultado = B C E(NULL)
+</div></code></pre>
+<h3 id="8.2-toda-right-pode-virar-left" tabindex="-1">8.2 Toda <code>RIGHT</code> pode virar <code>LEFT</code></h3>
+<p>As duas consultas abaixo são <strong>logicamente idênticas</strong>:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Com RIGHT</span>
+<span class="hljs-keyword">SELECT</span> au.matricula, au.nome, o.numero_os
+<span class="hljs-keyword">FROM</span>   dbo.ordem_servico  <span class="hljs-keyword">AS</span> o
+       <span class="hljs-keyword">RIGHT</span> <span class="hljs-keyword">OUTER</span> <span class="hljs-keyword">JOIN</span> dbo.auditor_fiscal <span class="hljs-keyword">AS</span> au
+               <span class="hljs-keyword">ON</span> au.matricula <span class="hljs-operator">=</span> o.matricula_auditor;
+
+<span class="hljs-comment">-- Com LEFT (mesma coisa, tabelas invertidas)</span>
+<span class="hljs-keyword">SELECT</span> au.matricula, au.nome, o.numero_os
+<span class="hljs-keyword">FROM</span>   dbo.auditor_fiscal <span class="hljs-keyword">AS</span> au
+       <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">OUTER</span> <span class="hljs-keyword">JOIN</span> dbo.ordem_servico <span class="hljs-keyword">AS</span> o
+               <span class="hljs-keyword">ON</span> o.matricula_auditor <span class="hljs-operator">=</span> au.matricula;
+</div></code></pre>
+<p>Ambas listam os 20 auditores, inclusive os que não têm ordem de serviço designada.</p>
+<h3 id="8.3-ent%C3%A3o-para-que-serve-o-right-join%3F" tabindex="-1">8.3 Então para que serve o <code>RIGHT JOIN</code>?</h3>
+<p>Na prática, para muito pouco — e essa é a conclusão honesta que o curso deve registrar. A recomendação profissional, que este material adota, é:</p>
+<blockquote>
+<p><strong>Padronize em <code>LEFT JOIN</code> e leia a consulta sempre no mesmo sentido: da tabela principal para as complementares.</strong></p>
+</blockquote>
+<p>O <code>RIGHT JOIN</code> tem, ainda assim, três situações em que aparece legitimamente:</p>
+<ol>
+<li><strong>Ao acrescentar uma tabela ao final de uma consulta longa já pronta</strong>, quando reordenar o <code>FROM</code> daria trabalho e risco. É uma conveniência de manutenção, não uma escolha de projeto.</li>
+<li><strong>Ao ler código de terceiros</strong> — inclusive SQL gerado por ferramentas de BI, que às vezes emitem <code>RIGHT JOIN</code>. É preciso saber traduzir mentalmente.</li>
+<li><strong>Em consultas geradas dinamicamente</strong>, em que a ordem das tabelas no <code>FROM</code> não está sob controle de quem escreve o predicado.</li>
+</ol>
+<h3 id="8.4-a-armadilha-de-misturar-left-e-right-na-mesma-consulta" tabindex="-1">8.4 A armadilha de misturar <code>LEFT</code> e <code>RIGHT</code> na mesma consulta</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Difícil de ler e fácil de errar. Evite.</span>
+<span class="hljs-keyword">SELECT</span> ...
+<span class="hljs-keyword">FROM</span>       dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span>  dbo.efd_c100 <span class="hljs-keyword">AS</span> e      <span class="hljs-keyword">ON</span> e.chave_acesso <span class="hljs-operator">=</span> n.chave_acesso
+<span class="hljs-keyword">RIGHT</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c  <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente;
+</div></code></pre>
+<p>Ao misturar os sentidos, &quot;o lado preservado&quot; deixa de ser óbvio: o <code>RIGHT JOIN</code> final preserva <code>contribuinte</code> contra <strong>todo o resultado acumulado</strong> das junções anteriores, não contra <code>nfe</code> isoladamente. Consultas assim passam em revisão porque ninguém consegue provar que estão erradas — e é exatamente esse o problema.</p>
+<h3 id="8.5-um-caso-em-que-o-right-join-se-l%C3%AA-bem" tabindex="-1">8.5 Um caso em que o <code>RIGHT JOIN</code> se lê bem</h3>
+<p>Quando a tabela de referência (a &quot;lista de chamada&quot;) entra por último, o <code>RIGHT</code> preserva a naturalidade da leitura:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Quantas notas cada regime tributário emitiu, incluindo regimes sem nenhuma nota</span>
+<span class="hljs-keyword">SELECT</span>  c.regime_tributario, <span class="hljs-built_in">COUNT</span>(n.id_nfe) <span class="hljs-keyword">AS</span> qtd_notas
+<span class="hljs-keyword">FROM</span>    dbo.nfe <span class="hljs-keyword">AS</span> n
+        <span class="hljs-keyword">RIGHT</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> c.regime_tributario;
+</div></code></pre>
+<p>Note o <code>COUNT(n.id_nfe)</code> e não <code>COUNT(*)</code>: em junção externa, <code>COUNT(*)</code> conta a linha fantasma preenchida com <code>NULL</code> e devolveria 1 onde o correto é 0. Este detalhe cai em prova — e cai em relatório de fiscalização.</p>
+<hr>
+<h2 id="9.-full-outer-join-%E2%80%94-a-concilia%C3%A7%C3%A3o-bidirecional" tabindex="-1">9. FULL OUTER JOIN — a conciliação bidirecional</h2>
+<h3 id="9.1-sem%C3%A2ntica" tabindex="-1">9.1 Semântica</h3>
+<p>Preserva <strong>os dois lados</strong>: linhas com par aparecem casadas; linhas sem par aparecem com <code>NULL</code> do lado que faltou.</p>
+<pre class='hljs'><code><div>Esquerda: A B C D          FULL JOIN em X:
+Direita:  B C E                resultado = A(NULL) B C D(NULL) (NULL)E
+</div></code></pre>
+<h3 id="9.2-o-uso-can%C3%B4nico%3A-conciliar-nf-e-contra-efd-nos-dois-sentidos" tabindex="-1">9.2 O uso canônico: conciliar NF-e contra EFD nos dois sentidos</h3>
+<p>Este é o relatório de conciliação completo da malha fiscal. Ele responde, numa consulta só, às três perguntas que interessam:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>  <span class="hljs-built_in">COALESCE</span>(n.chave_acesso, e.chave_acesso) <span class="hljs-keyword">AS</span> chave_acesso,
+        <span class="hljs-keyword">CASE</span>
+            <span class="hljs-keyword">WHEN</span> e.id_c100 <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;EMITIDA E NAO ESCRITURADA&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> n.id_nfe  <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;ESCRITURADA SEM NF-e NA BASE&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> <span class="hljs-built_in">ABS</span>(n.valor_total <span class="hljs-operator">-</span> e.valor_documento) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0.01</span>
+              <span class="hljs-keyword">OR</span> <span class="hljs-built_in">ABS</span>(n.valor_icms  <span class="hljs-operator">-</span> e.valor_icms)      <span class="hljs-operator">&gt;</span> <span class="hljs-number">0.01</span>
+                                   <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;DIVERGENCIA DE VALOR&#x27;</span>
+            <span class="hljs-keyword">ELSE</span>                        <span class="hljs-string">&#x27;CONCILIADA&#x27;</span>
+        <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> resultado,
+        n.valor_total      <span class="hljs-keyword">AS</span> valor_nfe,
+        e.valor_documento  <span class="hljs-keyword">AS</span> valor_efd,
+        n.valor_icms       <span class="hljs-keyword">AS</span> icms_nfe,
+        e.valor_icms       <span class="hljs-keyword">AS</span> icms_efd
+<span class="hljs-keyword">FROM</span>    dbo.nfe <span class="hljs-keyword">AS</span> n
+        <span class="hljs-keyword">FULL</span> <span class="hljs-keyword">OUTER</span> <span class="hljs-keyword">JOIN</span> dbo.efd_c100 <span class="hljs-keyword">AS</span> e
+                <span class="hljs-keyword">ON</span> e.chave_acesso <span class="hljs-operator">=</span> n.chave_acesso
+<span class="hljs-keyword">WHERE</span>   (n.id_nfe <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">OR</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>)
+  <span class="hljs-keyword">AND</span>   (e.id_c100 <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">OR</span> e.chave_acesso <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>);
+</div></code></pre>
+<p>O <code>COALESCE</code> na primeira coluna é indispensável: dependendo do lado que faltou, a chave só existe em um dos dois lados. Escrever apenas <code>n.chave_acesso</code> produziria <code>NULL</code> justamente nas linhas mais interessantes do relatório.</p>
+<p>Os números de referência do script 07 permitem conferir o resultado:</p>
+<table>
+<thead>
+<tr>
+<th>Situação</th>
+<th>Como se obtém</th>
+<th>Esperado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chaves de NF-e autorizada ausentes na EFD</td>
+<td><code>EXCEPT</code> (nfe − efd)</td>
+<td>2.994</td>
+</tr>
+<tr>
+<td>Chaves na EFD ausentes entre as NF-e autorizadas</td>
+<td><code>EXCEPT</code> (efd − nfe)</td>
+<td>440</td>
+</tr>
+<tr>
+<td>Chaves presentes nos dois lados</td>
+<td><code>INTERSECT</code></td>
+<td>6.897</td>
+</tr>
+<tr>
+<td>Chaves na EFD que não existem em nenhuma NF-e da base</td>
+<td><code>NOT EXISTS</code></td>
+<td>38</td>
+</tr>
+</tbody>
+</table>
+<p>Note a diferença entre as linhas 2 e 4: das 440 chaves escrituradas que não constam entre as NF-e <strong>autorizadas</strong>, apenas 38 não existem na base de forma alguma (documento de outra UF ou inexistente). As outras 402 existem — são notas <strong>canceladas</strong>, escrituradas corretamente com <code>cod_situacao = '02'</code>. É a distinção entre &quot;não achei&quot; e &quot;achei em outro estado&quot;, e ela separa uma intimação legítima de um constrangimento indevido ao contribuinte.</p>
+<h3 id="9.3-contando-cada-bloco-de-uma-vez" tabindex="-1">9.3 Contando cada bloco de uma vez</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>  <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> e.id_c100 <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;SO NA NF-e&#x27;</span>
+             <span class="hljs-keyword">WHEN</span> n.id_nfe  <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;SO NA EFD&#x27;</span>
+             <span class="hljs-keyword">ELSE</span>                        <span class="hljs-string">&#x27;NOS DOIS&#x27;</span> <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> lado,
+        <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> qtd
+<span class="hljs-keyword">FROM</span>    dbo.nfe <span class="hljs-keyword">AS</span> n
+        <span class="hljs-keyword">FULL</span> <span class="hljs-keyword">OUTER</span> <span class="hljs-keyword">JOIN</span> dbo.efd_c100 <span class="hljs-keyword">AS</span> e
+                <span class="hljs-keyword">ON</span>  e.chave_acesso <span class="hljs-operator">=</span> n.chave_acesso
+                <span class="hljs-keyword">AND</span> n.situacao     <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> e.id_c100 <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;SO NA NF-e&#x27;</span>
+              <span class="hljs-keyword">WHEN</span> n.id_nfe  <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;SO NA EFD&#x27;</span>
+              <span class="hljs-keyword">ELSE</span>                        <span class="hljs-string">&#x27;NOS DOIS&#x27;</span> <span class="hljs-keyword">END</span>;
+</div></code></pre>
+<h3 id="9.4-full-outer-join-%C3%97-operadores-de-conjunto" tabindex="-1">9.4 <code>FULL OUTER JOIN</code> × operadores de conjunto</h3>
+<p><code>EXCEPT</code>, <code>INTERSECT</code> e <code>UNION</code> também comparam conjuntos, mas em outro nível:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Junção externa</th>
+<th>Operador de conjunto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Compara</td>
+<td>linhas por um predicado arbitrário</td>
+<td>listas de colunas posicionalmente compatíveis</td>
+</tr>
+<tr>
+<td>Devolve</td>
+<td>colunas dos dois lados</td>
+<td>apenas as colunas da lista</td>
+</tr>
+<tr>
+<td>Duplicatas</td>
+<td>preservadas</td>
+<td>eliminadas (exceto<code>UNION ALL</code>)</td>
+</tr>
+<tr>
+<td>Permite ver os valores divergentes</td>
+<td><strong>Sim</strong></td>
+<td>Não, só a presença/ausência</td>
+</tr>
+</tbody>
+</table>
+<p>Para &quot;quais chaves faltam&quot;, <code>EXCEPT</code> é mais curto. Para &quot;quais chaves faltam <strong>e quanto valem</strong>&quot;, só a junção externa serve.</p>
+<hr>
+<h2 id="10.-on-ou-where%3F-o-erro-que-anula-a-jun%C3%A7%C3%A3o-externa" tabindex="-1">10. ON ou WHERE? O erro que anula a junção externa</h2>
+<p>Este é o ponto do módulo que mais gera erro em produção. Leia com atenção.</p>
+<p>Em uma junção <strong>interna</strong>, mover um predicado do <code>ON</code> para o <code>WHERE</code> não muda o resultado. Em uma junção <strong>externa</strong>, muda tudo.</p>
+<h3 id="10.1-o-predicado-no-on%3A-filtra-o-que-pode-casar" tabindex="-1">10.1 O predicado no <code>ON</code>: filtra o que pode casar</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- CORRETO: lista TODAS as 150 ordens de serviço; para as concluídas em 2026,</span>
+<span class="hljs-comment">-- traz o auto; para as demais, traz NULL.</span>
+<span class="hljs-keyword">SELECT</span> o.numero_os, o.situacao, a.numero_auto
+<span class="hljs-keyword">FROM</span>   dbo.ordem_servico <span class="hljs-keyword">AS</span> o
+       <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.auto_infracao <span class="hljs-keyword">AS</span> a
+              <span class="hljs-keyword">ON</span>  a.id_os <span class="hljs-operator">=</span> o.id_os
+              <span class="hljs-keyword">AND</span> a.data_lavratura <span class="hljs-operator">&gt;=</span> <span class="hljs-string">&#x27;2026-01-01&#x27;</span>;
+</div></code></pre>
+<p>O predicado no <code>ON</code> participa da decisão de <strong>quem casa com quem</strong>. Ordens sem auto em 2026 continuam no resultado, apenas sem par.</p>
+<h3 id="10.2-o-mesmo-predicado-no-where%3A-descarta-a-linha-inteira" tabindex="-1">10.2 O mesmo predicado no <code>WHERE</code>: descarta a linha inteira</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- ERRADO (se a intenção era a de cima): o LEFT JOIN virou INNER JOIN na prática.</span>
+<span class="hljs-keyword">SELECT</span> o.numero_os, o.situacao, a.numero_auto
+<span class="hljs-keyword">FROM</span>   dbo.ordem_servico <span class="hljs-keyword">AS</span> o
+       <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.auto_infracao <span class="hljs-keyword">AS</span> a
+              <span class="hljs-keyword">ON</span> a.id_os <span class="hljs-operator">=</span> o.id_os
+<span class="hljs-keyword">WHERE</span>  a.data_lavratura <span class="hljs-operator">&gt;=</span> <span class="hljs-string">&#x27;2026-01-01&#x27;</span>;
+</div></code></pre>
+<p>O <code>WHERE</code> é aplicado <strong>depois</strong> da junção. As linhas sem par têm <code>a.data_lavratura = NULL</code>, e <code>NULL &gt;= '2026-01-01'</code> não é verdadeiro — é <em>desconhecido</em>. Logo, todas as linhas sem par são descartadas e a junção externa se degrada em interna.</p>
+<p><strong>Regra prática:</strong></p>
+<blockquote>
+<p>Em junção externa, tudo o que se refere à <strong>tabela preservada</strong> vai no <code>WHERE</code>; tudo o que se refere à <strong>tabela opcional</strong> vai no <code>ON</code>. A única exceção é o teste <code>IS NULL</code> da antijunção, que é feito de propósito no <code>WHERE</code>.</p>
+</blockquote>
+<h3 id="10.3-demonstra%C3%A7%C3%A3o-num%C3%A9rica" tabindex="-1">10.3 Demonstração numérica</h3>
+<p>Execute as três e compare as contagens:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- (a) Todas as OS, com auto quando houver</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> dbo.ordem_servico <span class="hljs-keyword">AS</span> o
+       <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.auto_infracao <span class="hljs-keyword">AS</span> a <span class="hljs-keyword">ON</span> a.id_os <span class="hljs-operator">=</span> o.id_os;
+
+<span class="hljs-comment">-- (b) Todas as OS, casando só com autos acima de R$ 50.000</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> dbo.ordem_servico <span class="hljs-keyword">AS</span> o
+       <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.auto_infracao <span class="hljs-keyword">AS</span> a
+              <span class="hljs-keyword">ON</span> a.id_os <span class="hljs-operator">=</span> o.id_os <span class="hljs-keyword">AND</span> a.valor_principal <span class="hljs-operator">&gt;</span> <span class="hljs-number">50000</span>;
+
+<span class="hljs-comment">-- (c) Só as OS que têm auto acima de R$ 50.000 (LEFT anulado pelo WHERE)</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> dbo.ordem_servico <span class="hljs-keyword">AS</span> o
+       <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.auto_infracao <span class="hljs-keyword">AS</span> a <span class="hljs-keyword">ON</span> a.id_os <span class="hljs-operator">=</span> o.id_os
+<span class="hljs-keyword">WHERE</span>  a.valor_principal <span class="hljs-operator">&gt;</span> <span class="hljs-number">50000</span>;
+</div></code></pre>
+<p>As contagens de (a) e (b) devem ser <strong>iguais</strong> — o predicado adicional no <code>ON</code> não elimina linhas, apenas troca pares por <code>NULL</code>. A de (c) é bem menor. Se você entendeu por que, entendeu junção externa.</p>
+<hr>
+<h2 id="11.-antijun%C3%A7%C3%A3o-e-semijun%C3%A7%C3%A3o" tabindex="-1">11. Antijunção e semijunção</h2>
+<h3 id="11.1-as-quatro-formas-de-perguntar-%22existe-par%3F%22" tabindex="-1">11.1 As quatro formas de perguntar &quot;existe par?&quot;</h3>
+<table>
+<thead>
+<tr>
+<th>Objetivo</th>
+<th>Forma</th>
+<th>Observação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Existe par (semijunção)</td>
+<td><code>WHERE EXISTS (SELECT 1 ...)</code></td>
+<td>Não duplica linhas</td>
+</tr>
+<tr>
+<td>Existe par</td>
+<td><code>INNER JOIN</code> + <code>DISTINCT</code></td>
+<td>Duplica antes de deduplicar; evite</td>
+</tr>
+<tr>
+<td>Não existe par (antijunção)</td>
+<td><code>WHERE NOT EXISTS (SELECT 1 ...)</code></td>
+<td><strong>Forma preferida</strong></td>
+</tr>
+<tr>
+<td>Não existe par</td>
+<td><code>LEFT JOIN ... WHERE chave IS NULL</code></td>
+<td>Equivalente; útil para ver colunas do lado direito</td>
+</tr>
+<tr>
+<td>Não existe par</td>
+<td><code>WHERE col NOT IN (SELECT ...)</code></td>
+<td>⚠️<strong>Perigoso com <code>NULL</code></strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="11.2-o-perigo-do-not-in" tabindex="-1">11.2 O perigo do <code>NOT IN</code></h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- ARMADILHA: se a subconsulta retornar ao menos um NULL, o resultado é VAZIO.</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)
+<span class="hljs-keyword">FROM</span>   dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">WHERE</span>  c.id_contribuinte <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">IN</span> (<span class="hljs-keyword">SELECT</span> n.id_destinatario <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n);
+</div></code></pre>
+<p>Como <code>nfe.id_destinatario</code> é anulável e há 1.041 notas para consumidor não identificado, a subconsulta devolve <code>NULL</code>s. A comparação <code>id &lt;&gt; NULL</code> é <em>desconhecida</em> para toda linha, e a consulta retorna <strong>zero</strong> — silenciosamente, sem erro, sem aviso. A versão correta:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Esperado: 7 contribuintes que nunca figuraram como destinatários</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> nunca_destinatarios
+<span class="hljs-keyword">FROM</span>   dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">WHERE</span>  <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span> <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+                   <span class="hljs-keyword">WHERE</span> n.id_destinatario <span class="hljs-operator">=</span> c.id_contribuinte);
+</div></code></pre>
+<p><code>NOT EXISTS</code> trata <code>NULL</code> corretamente porque não compara valores: apenas verifica se a subconsulta produziu alguma linha.</p>
+<h3 id="11.3-semijun%C3%A7%C3%A3o%3A-filtrar-sem-trazer-colunas" tabindex="-1">11.3 Semijunção: filtrar sem trazer colunas</h3>
+<p>Quando você precisa <strong>filtrar</strong> por existência mas não quer as colunas da outra tabela, <code>EXISTS</code> é mais preciso que <code>JOIN</code>:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Contribuintes ATIVOS que emitiram ao menos uma nota acima de R$ 100.000</span>
+<span class="hljs-comment">-- Cada contribuinte aparece UMA vez, mesmo tendo 50 notas assim.</span>
+<span class="hljs-keyword">SELECT</span> c.cnpj, c.razao_social
+<span class="hljs-keyword">FROM</span>   dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">WHERE</span>  c.situacao_cadastral <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;ATIVO&#x27;</span>
+  <span class="hljs-keyword">AND</span>  <span class="hljs-keyword">EXISTS</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span> <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+               <span class="hljs-keyword">WHERE</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+                 <span class="hljs-keyword">AND</span> n.situacao    <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+                 <span class="hljs-keyword">AND</span> n.valor_total <span class="hljs-operator">&gt;</span> <span class="hljs-number">100000</span>);
+</div></code></pre>
+<p>Com <code>INNER JOIN</code>, o mesmo contribuinte apareceria uma vez por nota qualificada, exigindo <code>DISTINCT</code> — que custa uma ordenação ou hash desnecessários.</p>
+<h3 id="11.4-omissos-de-obriga%C3%A7%C3%A3o-acess%C3%B3ria%3A-cross-join-%2B-antijun%C3%A7%C3%A3o" tabindex="-1">11.4 Omissos de obrigação acessória: <code>CROSS JOIN</code> + antijunção</h3>
+<p>Aqui as duas técnicas se encontram. A grade da seção 5 fornece a lista do que <em>deveria</em> existir; a antijunção aponta o que falta:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Quem, entre os ATIVOS do regime NORMAL, deixou de entregar cada período de 2025</span>
+<span class="hljs-keyword">WITH</span> grade <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> c.id_contribuinte, c.cnpj, c.razao_social, p.periodo_apuracao
+    <span class="hljs-keyword">FROM</span>   dbo.contribuinte <span class="hljs-keyword">AS</span> c
+           <span class="hljs-keyword">CROSS</span> <span class="hljs-keyword">JOIN</span> (<span class="hljs-keyword">VALUES</span> (<span class="hljs-string">&#x27;202501&#x27;</span>),(<span class="hljs-string">&#x27;202502&#x27;</span>),(<span class="hljs-string">&#x27;202503&#x27;</span>),(<span class="hljs-string">&#x27;202504&#x27;</span>),
+                              (<span class="hljs-string">&#x27;202505&#x27;</span>),(<span class="hljs-string">&#x27;202506&#x27;</span>),(<span class="hljs-string">&#x27;202507&#x27;</span>),(<span class="hljs-string">&#x27;202508&#x27;</span>),
+                              (<span class="hljs-string">&#x27;202509&#x27;</span>),(<span class="hljs-string">&#x27;202510&#x27;</span>),(<span class="hljs-string">&#x27;202511&#x27;</span>),(<span class="hljs-string">&#x27;202512&#x27;</span>)
+                      ) <span class="hljs-keyword">AS</span> p(periodo_apuracao)
+    <span class="hljs-keyword">WHERE</span>  c.situacao_cadastral <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;ATIVO&#x27;</span>
+      <span class="hljs-keyword">AND</span>  c.regime_tributario  <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;NORMAL&#x27;</span>
+)
+<span class="hljs-keyword">SELECT</span>  g.cnpj, g.razao_social, g.periodo_apuracao
+<span class="hljs-keyword">FROM</span>    grade <span class="hljs-keyword">AS</span> g
+        <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.efd_c100 <span class="hljs-keyword">AS</span> e
+               <span class="hljs-keyword">ON</span>  e.id_contribuinte  <span class="hljs-operator">=</span> g.id_contribuinte
+               <span class="hljs-keyword">AND</span> e.periodo_apuracao <span class="hljs-operator">=</span> g.periodo_apuracao
+<span class="hljs-keyword">WHERE</span>   e.id_c100 <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> g.razao_social, g.periodo_apuracao;
+</div></code></pre>
+<p>Para conferência parcial: o script 07 registra <strong>8 contribuintes ATIVOS do regime NORMAL sem nenhuma EFD do período <code>202501</code></strong>.</p>
+<hr>
+<h2 id="12.-self-join-%E2%80%94-a-tabela-consigo-mesma" tabindex="-1">12. SELF JOIN — a tabela consigo mesma</h2>
+<p>Não é um tipo novo de junção — é o uso de <code>INNER</code>, <code>LEFT</code> ou <code>FULL</code> com a <strong>mesma tabela nos dois lados</strong>, distinguida por aliases diferentes. Sem alias, o comando é sintaticamente ambíguo e o SQL Server recusa.</p>
+<h3 id="12.1-hierarquia-de-auditores" tabindex="-1">12.1 Hierarquia de auditores</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>  a.matricula,
+        a.nome        <span class="hljs-keyword">AS</span> auditor,
+        a.cargo,
+        a.regiao_fiscal,
+        s.matricula   <span class="hljs-keyword">AS</span> matricula_supervisor,
+        s.nome        <span class="hljs-keyword">AS</span> supervisor,
+        s.cargo       <span class="hljs-keyword">AS</span> cargo_supervisor
+<span class="hljs-keyword">FROM</span>    dbo.auditor_fiscal <span class="hljs-keyword">AS</span> a
+        <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.auditor_fiscal <span class="hljs-keyword">AS</span> s
+               <span class="hljs-keyword">ON</span> s.matricula <span class="hljs-operator">=</span> a.matricula_supervisor
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> s.nome, a.nome;
+</div></code></pre>
+<p><code>LEFT</code>, e não <code>INNER</code>: a gerente ANA BEATRIZ COSTA (matrícula 1001) tem <code>matricula_supervisor</code> nulo por estar no topo da hierarquia. Um <code>INNER JOIN</code> a excluiria do organograma — e o organograma sem o topo é um organograma errado.</p>
+<p>Para três níveis, encadeiam-se dois autorrelacionamentos:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>  a.nome <span class="hljs-keyword">AS</span> auditor, s.nome <span class="hljs-keyword">AS</span> supervisor, g.nome <span class="hljs-keyword">AS</span> gerente
+<span class="hljs-keyword">FROM</span>    dbo.auditor_fiscal <span class="hljs-keyword">AS</span> a
+        <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.auditor_fiscal <span class="hljs-keyword">AS</span> s <span class="hljs-keyword">ON</span> s.matricula <span class="hljs-operator">=</span> a.matricula_supervisor
+        <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.auditor_fiscal <span class="hljs-keyword">AS</span> g <span class="hljs-keyword">ON</span> g.matricula <span class="hljs-operator">=</span> s.matricula_supervisor
+<span class="hljs-keyword">WHERE</span>   a.cargo <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUDITOR&#x27;</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> g.nome, s.nome, a.nome;
+</div></code></pre>
+<blockquote>
+<p>Para hierarquias de profundidade indefinida, a ferramenta correta é a CTE recursiva (<code>WITH ... UNION ALL</code>), assunto de módulo próprio. Autojunções encadeadas só funcionam quando o número de níveis é conhecido de antemão.</p>
+</blockquote>
+<h3 id="12.2-opera%C3%A7%C3%B5es-circulares-entre-contribuintes" tabindex="-1">12.2 Operações circulares entre contribuintes</h3>
+<p>Esta é a autojunção mais interessante da base — e um indício clássico de simulação de operações. A pergunta é: existem pares de contribuintes que emitem notas <strong>um para o outro</strong>, em curto intervalo?</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>  n1.id_emitente     <span class="hljs-keyword">AS</span> contribuinte_a,
+        n1.id_destinatario <span class="hljs-keyword">AS</span> contribuinte_b,
+        <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> n1.id_nfe) <span class="hljs-keyword">AS</span> notas_a_para_b,
+        <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> n2.id_nfe) <span class="hljs-keyword">AS</span> notas_b_para_a
+<span class="hljs-keyword">FROM</span>    dbo.nfe <span class="hljs-keyword">AS</span> n1
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.nfe <span class="hljs-keyword">AS</span> n2
+                <span class="hljs-keyword">ON</span>  n2.id_emitente     <span class="hljs-operator">=</span> n1.id_destinatario
+                <span class="hljs-keyword">AND</span> n2.id_destinatario <span class="hljs-operator">=</span> n1.id_emitente
+                <span class="hljs-keyword">AND</span> <span class="hljs-built_in">ABS</span>(DATEDIFF(<span class="hljs-keyword">DAY</span>, n1.data_emissao, n2.data_emissao)) <span class="hljs-operator">&lt;=</span> <span class="hljs-number">30</span>
+<span class="hljs-keyword">WHERE</span>   n1.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+  <span class="hljs-keyword">AND</span>   n2.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+  <span class="hljs-keyword">AND</span>   n1.id_emitente <span class="hljs-operator">&lt;</span> n1.id_destinatario      <span class="hljs-comment">-- evita listar o par duas vezes</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> n1.id_emitente, n1.id_destinatario
+<span class="hljs-keyword">HAVING</span>  <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> n1.id_nfe) <span class="hljs-operator">&gt;=</span> <span class="hljs-number">3</span>
+   <span class="hljs-keyword">AND</span>  <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> n2.id_nfe) <span class="hljs-operator">&gt;=</span> <span class="hljs-number">3</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> notas_a_para_b <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p>Três técnicas se combinam aqui:</p>
+<ul>
+<li><strong>Autojunção invertida</strong>: o <code>ON</code> cruza emitente com destinatário <em>trocados</em>, que é a definição algébrica de &quot;circularidade&quot;.</li>
+<li><strong>Predicado de desigualdade</strong> <code>n1.id_emitente &lt; n1.id_destinatario</code>: sem ele, o par (8, 19) apareceria também como (19, 8). É o padrão para deduplicar pares simétricos.</li>
+<li><strong><code>COUNT(DISTINCT ...)</code> obrigatório</strong>: a junção multiplica as combinações de notas (fan-out, seção 15). <code>COUNT(*)</code> contaria pares de notas, não notas.</li>
+</ul>
+<p>Resultado esperado pelo script 07: <strong>3 pares</strong> — contribuintes (8, 19), (14, 27) e (23, 31).</p>
+<h3 id="12.3-s%C3%B3cios-em-comum-(script-09)" tabindex="-1">12.3 Sócios em comum (script 09)</h3>
+<p>Se a tabela <code>socio_administrador</code> estiver carregada, a autojunção por CPF revela vínculo societário entre empresas distintas — o chamado &quot;grupo econômico de fato&quot;:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>  s1.cpf, s1.nome,
+        s1.id_contribuinte <span class="hljs-keyword">AS</span> empresa_1,
+        s2.id_contribuinte <span class="hljs-keyword">AS</span> empresa_2
+<span class="hljs-keyword">FROM</span>    dbo.socio_administrador <span class="hljs-keyword">AS</span> s1
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.socio_administrador <span class="hljs-keyword">AS</span> s2
+                <span class="hljs-keyword">ON</span>  s2.cpf <span class="hljs-operator">=</span> s1.cpf
+                <span class="hljs-keyword">AND</span> s2.id_contribuinte <span class="hljs-operator">&gt;</span> s1.id_contribuinte;
+</div></code></pre>
+<p>⚠️ Esta consulta <strong>vai devolver menos vínculos do que existem</strong>. A coluna <code>cpf</code> foi propositalmente gravada com formatos heterogêneos (com máscara, sem máscara, com espaços, com zero à esquerda perdido). Junção por texto sujo é junção que perde par. A normalização do dado antes do cruzamento é tema do módulo de tratamento de dados; aqui ela serve como advertência: <strong>antes de confiar numa junção, verifique se as duas colunas falam a mesma língua</strong>.</p>
+<hr>
+<h2 id="13.-jun%C3%A7%C3%A3o-theta-(n%C3%A3o-equijun%C3%A7%C3%A3o)" tabindex="-1">13. Junção theta (não equijunção)</h2>
+<p>Quando o predicado de junção usa <code>&lt;</code>, <code>&gt;</code>, <code>BETWEEN</code> ou qualquer comparação que não seja igualdade, a operação se chama <strong>junção theta</strong>. A equijunção é apenas o caso particular em que theta é <code>=</code>.</p>
+<h3 id="13.1-pre%C3%A7o-praticado-contra-a-pauta-fiscal" tabindex="-1">13.1 Preço praticado contra a pauta fiscal</h3>
+<p>A tabela <code>referencia_preco</code> guarda a faixa aceitável por NCM. O cruzamento é por igualdade no NCM e por <strong>faixa</strong> no valor:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Itens vendidos abaixo do piso da pauta (indício de subfaturamento)</span>
+<span class="hljs-keyword">SELECT</span>  n.chave_acesso,
+        c.cnpj,
+        c.razao_social,
+        i.descricao,
+        i.ncm,
+        r.descricao      <span class="hljs-keyword">AS</span> produto_pauta,
+        i.valor_unitario,
+        r.valor_min,
+        r.valor_max,
+        <span class="hljs-built_in">CAST</span>((r.valor_min <span class="hljs-operator">-</span> i.valor_unitario) <span class="hljs-operator">/</span> <span class="hljs-built_in">NULLIF</span>(r.valor_min,<span class="hljs-number">0</span>) <span class="hljs-operator">*</span> <span class="hljs-number">100</span>
+             <span class="hljs-keyword">AS</span> <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">6</span>,<span class="hljs-number">2</span>)) <span class="hljs-keyword">AS</span> pct_abaixo_da_pauta
+<span class="hljs-keyword">FROM</span>    dbo.nfe_item <span class="hljs-keyword">AS</span> i
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.nfe          <span class="hljs-keyword">AS</span> n <span class="hljs-keyword">ON</span> n.id_nfe         <span class="hljs-operator">=</span> i.id_nfe
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.referencia_preco <span class="hljs-keyword">AS</span> r
+                <span class="hljs-keyword">ON</span>  r.ncm <span class="hljs-operator">=</span> i.ncm                    <span class="hljs-comment">-- equijunção</span>
+               <span class="hljs-keyword">AND</span>  i.valor_unitario <span class="hljs-operator">&lt;</span> r.valor_min   <span class="hljs-comment">-- theta</span>
+<span class="hljs-keyword">WHERE</span>   n.situacao      <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+  <span class="hljs-keyword">AND</span>   n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> pct_abaixo_da_pauta <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p>Invertendo o sinal, obtém-se o indício oposto — venda acima do teto, que pode indicar erro de digitação, produto diferente do declarado ou NCM incorreto:</p>
+<pre class='hljs'><code><div>               <span class="hljs-keyword">AND</span>  i.valor_unitario <span class="hljs-operator">&gt;</span> r.valor_max
+</div></code></pre>
+<p>E para separar os três casos numa passagem só, a junção volta a ser simples e a classificação vai para o <code>SELECT</code>:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>  i.ncm, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> qtd_itens,
+        <span class="hljs-built_in">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> i.valor_unitario <span class="hljs-operator">&lt;</span> r.valor_min <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span> <span class="hljs-keyword">END</span>) <span class="hljs-keyword">AS</span> abaixo,
+        <span class="hljs-built_in">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> i.valor_unitario <span class="hljs-keyword">BETWEEN</span> r.valor_min <span class="hljs-keyword">AND</span> r.valor_max
+                 <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span> <span class="hljs-keyword">END</span>)                                     <span class="hljs-keyword">AS</span> dentro,
+        <span class="hljs-built_in">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> i.valor_unitario <span class="hljs-operator">&gt;</span> r.valor_max <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span> <span class="hljs-keyword">END</span>) <span class="hljs-keyword">AS</span> acima
+<span class="hljs-keyword">FROM</span>    dbo.nfe_item <span class="hljs-keyword">AS</span> i
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.referencia_preco <span class="hljs-keyword">AS</span> r <span class="hljs-keyword">ON</span> r.ncm <span class="hljs-operator">=</span> i.ncm
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> i.ncm
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> abaixo <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<h3 id="13.2-jun%C3%A7%C3%A3o-por-intervalo-de-datas" tabindex="-1">13.2 Junção por intervalo de datas</h3>
+<p>O mesmo princípio aplicado ao tempo: relacionar cada auto de infração com a ordem de serviço vigente na data da lavratura.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>  a.numero_auto, a.data_lavratura,
+        o.numero_os, o.data_abertura, o.data_conclusao
+<span class="hljs-keyword">FROM</span>    dbo.auto_infracao <span class="hljs-keyword">AS</span> a
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.ordem_servico <span class="hljs-keyword">AS</span> o
+                <span class="hljs-keyword">ON</span>  o.id_contribuinte <span class="hljs-operator">=</span> a.id_contribuinte
+                <span class="hljs-keyword">AND</span> a.data_lavratura <span class="hljs-keyword">BETWEEN</span> o.data_abertura
+                                         <span class="hljs-keyword">AND</span> <span class="hljs-built_in">COALESCE</span>(o.data_conclusao, <span class="hljs-string">&#x27;9999-12-31&#x27;</span>);
+</div></code></pre>
+<p>O <code>COALESCE</code> resolve o caso da ordem ainda em andamento (63 delas, sem <code>data_conclusao</code>). Sem ele, o <code>BETWEEN</code> contra <code>NULL</code> seria desconhecido e essas ordens desapareceriam.</p>
+<p>⚠️ <strong>Junções theta não usam índice com a mesma eficiência que equijunções.</strong> O SQL Server não pode aplicar <em>hash join</em> a um predicado de desigualdade — sobra-lhe <em>nested loops</em> ou <em>merge</em>. Em tabelas grandes, combine sempre a theta com ao menos uma igualdade seletiva (aqui, <code>r.ncm = i.ncm</code>) que restrinja o universo antes da comparação por faixa.</p>
+<hr>
+<h2 id="14.-cross-apply-e-outer-apply" tabindex="-1">14. CROSS APPLY e OUTER APPLY</h2>
+<p><code>APPLY</code> é uma extensão do T-SQL (não é padrão ANSI) que junta cada linha da esquerda a uma <strong>subconsulta correlacionada</strong> — algo que o <code>JOIN</code> comum não permite, porque no <code>JOIN</code> o lado direito não pode referenciar colunas do lado esquerdo.</p>
+<table>
+<thead>
+<tr>
+<th>Operador</th>
+<th>Correspondência</th>
+<th>Linhas sem par</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CROSS APPLY</code></td>
+<td>como<code>INNER JOIN</code></td>
+<td>descartadas</td>
+</tr>
+<tr>
+<td><code>OUTER APPLY</code></td>
+<td>como<code>LEFT JOIN</code></td>
+<td>preservadas com<code>NULL</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="14.1-top-n-por-grupo%3A-as-3-maiores-notas-de-cada-contribuinte" tabindex="-1">14.1 Top-N por grupo: as 3 maiores notas de cada contribuinte</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>  c.cnpj, c.razao_social,
+        t.chave_acesso, t.data_emissao, t.valor_total
+<span class="hljs-keyword">FROM</span>    dbo.contribuinte <span class="hljs-keyword">AS</span> c
+        <span class="hljs-keyword">CROSS</span> APPLY (
+            <span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">3</span>) n.chave_acesso, n.data_emissao, n.valor_total
+            <span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n
+            <span class="hljs-keyword">WHERE</span>  n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte   <span class="hljs-comment">-- correlação: só APPLY permite</span>
+              <span class="hljs-keyword">AND</span>  n.situacao    <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+            <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> n.valor_total <span class="hljs-keyword">DESC</span>
+        ) <span class="hljs-keyword">AS</span> t
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> c.razao_social, t.valor_total <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p>Trocando para <code>OUTER APPLY</code>, os contribuintes sem nenhuma nota autorizada continuam listados, com <code>NULL</code> nas colunas do documento.</p>
+<h3 id="14.2-%C3%BAltima-ocorr%C3%AAncia%3A-a-fiscaliza%C3%A7%C3%A3o-mais-recente-de-cada-contribuinte" tabindex="-1">14.2 Última ocorrência: a fiscalização mais recente de cada contribuinte</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>  c.cnpj, c.razao_social,
+        ult.numero_os, ult.data_abertura, ult.situacao
+<span class="hljs-keyword">FROM</span>    dbo.contribuinte <span class="hljs-keyword">AS</span> c
+        <span class="hljs-keyword">OUTER</span> APPLY (
+            <span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">1</span>) o.numero_os, o.data_abertura, o.situacao
+            <span class="hljs-keyword">FROM</span>   dbo.ordem_servico <span class="hljs-keyword">AS</span> o
+            <span class="hljs-keyword">WHERE</span>  o.id_contribuinte <span class="hljs-operator">=</span> c.id_contribuinte
+            <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> o.data_abertura <span class="hljs-keyword">DESC</span>
+        ) <span class="hljs-keyword">AS</span> ult
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> ult.data_abertura <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p>Sem <code>APPLY</code>, isso exigiria uma função de janela (<code>ROW_NUMBER()</code>) numa subconsulta, ou uma junção contra uma agregação por <code>MAX(data_abertura)</code> — que dá empate quando há duas ordens no mesmo dia. O <code>OUTER APPLY</code> com <code>TOP (1)</code> é mais direto e mais legível.</p>
+<hr>
+<h2 id="15.-jun%C3%A7%C3%A3o-e-agrega%C3%A7%C3%A3o%3A-o-problema-do-fan-out" tabindex="-1">15. Junção e agregação: o problema do fan-out</h2>
+<h3 id="15.1-o-sintoma" tabindex="-1">15.1 O sintoma</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- CONSULTA ERRADA: o valor total sai inflacionado</span>
+<span class="hljs-keyword">SELECT</span>  c.razao_social,
+        <span class="hljs-built_in">SUM</span>(n.valor_total)      <span class="hljs-keyword">AS</span> total_notas,       <span class="hljs-comment">-- &lt;&lt;&lt; ERRADO</span>
+        <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> n.id_nfe) <span class="hljs-keyword">AS</span> qtd_notas
+<span class="hljs-keyword">FROM</span>    dbo.contribuinte <span class="hljs-keyword">AS</span> c
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.nfe      <span class="hljs-keyword">AS</span> n <span class="hljs-keyword">ON</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.nfe_item <span class="hljs-keyword">AS</span> i <span class="hljs-keyword">ON</span> i.id_nfe      <span class="hljs-operator">=</span> n.id_nfe
+<span class="hljs-keyword">WHERE</span>   n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> c.razao_social;
+</div></code></pre>
+<p>O erro é sutil e não gera mensagem alguma. Ao juntar <code>nfe</code> com <code>nfe_item</code>, <strong>cada cabeçalho de nota é repetido uma vez por item</strong>. Uma nota de R<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1.000</mn><mi>c</mi><mi>o</mi><mi>m</mi><mn>4</mn><mi>i</mi><mi>t</mi><mi>e</mi><mi>n</mi><mi>s</mi><mi>v</mi><mi>i</mi><mi>r</mi><mi>a</mi><mi>q</mi><mi>u</mi><mi>a</mi><mi>t</mi><mi>r</mi><mi>o</mi><mi>l</mi><mi>i</mi><mi>n</mi><mi>h</mi><mi>a</mi><mi>s</mi><mi>d</mi><mi>e</mi><mi>R</mi></mrow><annotation encoding="application/x-tex"> 1.000 com 4 itens vira quatro linhas de R</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">1.000</span><span class="mord mathnormal">co</span><span class="mord mathnormal">m</span><span class="mord">4</span><span class="mord mathnormal">i</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal">s</span><span class="mord mathnormal" style="margin-right:0.0359em;">v</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span><span class="mord mathnormal">u</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.0197em;">l</span><span class="mord mathnormal">inha</span><span class="mord mathnormal">s</span><span class="mord mathnormal">d</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.0077em;">R</span></span></span></span> 1.000, e <code>SUM(n.valor_total)</code> devolve R$ 4.000. Com 10.636 notas e 30.794 itens, o total sai aproximadamente <strong>três vezes maior</strong> que o correto.</p>
+<p>Esse é o <em>fan-out</em>: a junção 1:N multiplica as linhas do lado &quot;1&quot;.</p>
+<h3 id="15.2-as-tr%C3%AAs-corre%C3%A7%C3%B5es" tabindex="-1">15.2 As três correções</h3>
+<p><strong>(a) Agregar antes de juntar</strong> — a forma mais clara e a que se recomenda:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">WITH</span> tot_nfe <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> n.id_emitente,
+           <span class="hljs-built_in">SUM</span>(n.valor_total) <span class="hljs-keyword">AS</span> total_notas,
+           <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)           <span class="hljs-keyword">AS</span> qtd_notas
+    <span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">WHERE</span>  n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> n.id_emitente
+),
+tot_item <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> n.id_emitente,
+           <span class="hljs-built_in">SUM</span>(i.valor_total_item) <span class="hljs-keyword">AS</span> total_itens,
+           <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)                <span class="hljs-keyword">AS</span> qtd_itens
+    <span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n
+           <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.nfe_item <span class="hljs-keyword">AS</span> i <span class="hljs-keyword">ON</span> i.id_nfe <span class="hljs-operator">=</span> n.id_nfe
+    <span class="hljs-keyword">WHERE</span>  n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> n.id_emitente
+)
+<span class="hljs-keyword">SELECT</span>  c.cnpj, c.razao_social,
+        t.qtd_notas, t.total_notas,
+        it.qtd_itens, it.total_itens,
+        t.total_notas <span class="hljs-operator">-</span> it.total_itens <span class="hljs-keyword">AS</span> diferenca
+<span class="hljs-keyword">FROM</span>    dbo.contribuinte <span class="hljs-keyword">AS</span> c
+        <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> tot_nfe  <span class="hljs-keyword">AS</span> t  <span class="hljs-keyword">ON</span> t.id_emitente  <span class="hljs-operator">=</span> c.id_contribuinte
+        <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> tot_item <span class="hljs-keyword">AS</span> it <span class="hljs-keyword">ON</span> it.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-built_in">ABS</span>(<span class="hljs-built_in">COALESCE</span>(t.total_notas,<span class="hljs-number">0</span>) <span class="hljs-operator">-</span> <span class="hljs-built_in">COALESCE</span>(it.total_itens,<span class="hljs-number">0</span>)) <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p>De quebra, essa consulta é um cruzamento fiscal de verdade: a coluna <code>diferenca</code> denuncia as notas em que a soma dos itens não bate com o cabeçalho. O script 07 registra <strong>15 notas</strong> nessa condição.</p>
+<p><strong>(b) <code>SUM(DISTINCT ...)</code></strong> — só funciona quando os valores repetidos são de fato idênticos, e falha se duas notas do mesmo contribuinte tiverem exatamente o mesmo valor. <strong>Não use como solução geral.</strong></p>
+<p><strong>(c) Agregar sobre a chave</strong> — <code>SUM(n.valor_total) / COUNT(*) * COUNT(DISTINCT n.id_nfe)</code> e variantes: matematicamente possível, ilegível na prática. Evite.</p>
+<h3 id="15.3-como-detectar-o-fan-out-antes-de-publicar-o-relat%C3%B3rio" tabindex="-1">15.3 Como detectar o fan-out antes de publicar o relatório</h3>
+<p>Antes de confiar em qualquer somatório sobre junção, execute a checagem de granularidade:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> linhas_apos_juncao, <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> n.id_nfe) <span class="hljs-keyword">AS</span> notas_distintas
+<span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.nfe_item <span class="hljs-keyword">AS</span> i <span class="hljs-keyword">ON</span> i.id_nfe <span class="hljs-operator">=</span> n.id_nfe;
+</div></code></pre>
+<p>Se <code>linhas_apos_juncao</code> &gt; <code>notas_distintas</code>, <strong>qualquer agregação sobre colunas de <code>nfe</code> está inflacionada</strong>. A regra é: identifique a granularidade do resultado (uma linha por quê?) e verifique se ela é a mesma da coluna que você está somando.</p>
+<hr>
+<h2 id="16.-null-nas-colunas-de-jun%C3%A7%C3%A3o" tabindex="-1">16. NULL nas colunas de junção</h2>
+<p>Três comportamentos precisam estar claros:</p>
+<p><strong>1. <code>NULL</code> nunca casa com <code>NULL</code> numa junção.</strong></p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Zero linhas: as 1.041 notas sem destinatário não casam entre si nem com nada</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)
+<span class="hljs-keyword">FROM</span>   dbo.nfe <span class="hljs-keyword">AS</span> n1
+       <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.nfe <span class="hljs-keyword">AS</span> n2 <span class="hljs-keyword">ON</span> n2.id_destinatario <span class="hljs-operator">=</span> n1.id_destinatario
+<span class="hljs-keyword">WHERE</span>  n1.id_destinatario <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>;
+</div></code></pre>
+<p>Para casar nulos deliberadamente, use <code>INTERSECT</code>, <code>EXISTS</code> com <code>IS NULL</code>, ou o predicado explícito:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">ON</span> (a.col <span class="hljs-operator">=</span> b.col) <span class="hljs-keyword">OR</span> (a.col <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">AND</span> b.col <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>)
+</div></code></pre>
+<p>...ciente de que essa forma normalmente impede o uso de índice.</p>
+<p><strong>2. Junção externa produz <code>NULL</code> que não existe nos dados.</strong> Um <code>NULL</code> no resultado de um <code>LEFT JOIN</code> pode significar duas coisas diferentes: &quot;não houve par&quot; ou &quot;houve par e o valor lá é nulo&quot;. Distinguir exige testar uma coluna <code>NOT NULL</code> do lado direito — normalmente a chave primária.</p>
+<p><strong>3. Agregações ignoram <code>NULL</code>, exceto <code>COUNT(*)</code>.</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>  c.razao_social,
+        <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)          <span class="hljs-keyword">AS</span> conta_tudo,      <span class="hljs-comment">-- conta a linha fantasma: mínimo 1</span>
+        <span class="hljs-built_in">COUNT</span>(o.id_os)    <span class="hljs-keyword">AS</span> conta_os,        <span class="hljs-comment">-- correto: 0 quando não há OS</span>
+        <span class="hljs-built_in">COUNT</span>(a.id_auto)  <span class="hljs-keyword">AS</span> conta_autos
+<span class="hljs-keyword">FROM</span>    dbo.contribuinte <span class="hljs-keyword">AS</span> c
+        <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.ordem_servico <span class="hljs-keyword">AS</span> o <span class="hljs-keyword">ON</span> o.id_contribuinte <span class="hljs-operator">=</span> c.id_contribuinte
+        <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.auto_infracao <span class="hljs-keyword">AS</span> a <span class="hljs-keyword">ON</span> a.id_os           <span class="hljs-operator">=</span> o.id_os
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> c.razao_social
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> conta_autos <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p>Em relatório de fiscalização, a diferença entre <code>COUNT(*)</code> e <code>COUNT(coluna)</code> é a diferença entre dizer que um contribuinte tem uma fiscalização e dizer que ele não tem nenhuma.</p>
+<hr>
+<h2 id="17.-jun%C3%A7%C3%B5es-e-desempenho" tabindex="-1">17. Junções e desempenho</h2>
+<p>O SQL Server implementa a junção lógica com três algoritmos físicos. O otimizador escolhe; o analista precisa saber ler a escolha no plano de execução (<code>Ctrl+M</code> no SSMS, &quot;Include Actual Execution Plan&quot;).</p>
+<table>
+<thead>
+<tr>
+<th>Algoritmo</th>
+<th>Como funciona</th>
+<th>Bom quando</th>
+<th>Sinal de alerta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Nested Loops</strong></td>
+<td>Para cada linha da entrada externa, busca correspondências na interna</td>
+<td>Entrada externa pequena e índice na interna</td>
+<td>Entrada externa grande sem índice → custo explode</td>
+</tr>
+<tr>
+<td><strong>Merge Join</strong></td>
+<td>Percorre as duas entradas já ordenadas, em paralelo</td>
+<td>Ambos os lados ordenados pela chave de junção</td>
+<td>Um<code>Sort</code> caro aparece antes do operador</td>
+</tr>
+<tr>
+<td><strong>Hash Match</strong></td>
+<td>Constrói tabela hash do lado menor e sonda com o maior</td>
+<td>Tabelas grandes, sem índice adequado</td>
+<td><em>Hash spill to tempdb</em> → memória insuficiente</td>
+</tr>
+</tbody>
+</table>
+<p>Boas práticas que valem para esta base:</p>
+<ol>
+<li><strong>Índice nas colunas de junção.</strong> O script <code>01_criar_banco.sql</code> já cria os índices mínimos sobre as chaves estrangeiras mais usadas (<code>IX_nfe_emitente</code>, <code>IX_nfe_item_nfe</code>, <code>IX_efd_c170_c100</code> etc.). O script <code>08_indices_opcionais.sql</code> acrescenta os índices de cobertura — inclusive <code>IX_efd_c100_chave</code>, que transforma o cruzamento NF-e × EFD por chave de acesso.</li>
+<li><strong>Não aplique função sobre a coluna de junção.</strong> Um predicado como <code>ON LEFT(e.chave_acesso, 44) = n.chave_acesso</code> impede o uso do índice (o predicado deixa de ser <em>SARGable</em>).</li>
+<li><strong>Cuidado com tipos diferentes.</strong> Juntar <code>CHAR(44)</code> com <code>VARCHAR(44)</code> funciona, mas juntar texto com número força conversão implícita e descarta o índice. É outra razão para normalizar o CPF de <code>socio_administrador</code> antes de cruzar.</li>
+<li><strong>Filtre cedo.</strong> Quanto menor o conjunto que chega à junção, melhor. Predicados seletivos sobre a tabela preservada devem estar no <code>WHERE</code>; sobre a opcional, no <code>ON</code>.</li>
+<li><strong>Junção externa custa mais que interna.</strong> Use <code>LEFT JOIN</code> quando a semântica exigir — não por hábito. Um <code>LEFT JOIN</code> cujo resultado é depois filtrado por <code>WHERE coluna_direita = 'X'</code> é apenas um <code>INNER JOIN</code> mais caro e mais confuso.</li>
+</ol>
+<blockquote>
+<p>O exercício comparativo de plano de execução — rodar a consulta, ler a sugestão de índice ausente, criar o índice do script 08 e comparar — pertence ao módulo de desempenho. Por ora, basta observar que <strong>a mesma junção lógica pode ter custos radicalmente diferentes</strong>.</p>
+</blockquote>
+<hr>
+<h2 id="18.-erros-comuns-%E2%80%94-quadro-de-diagn%C3%B3stico" tabindex="-1">18. Erros comuns — quadro de diagnóstico</h2>
+<table>
+<thead>
+<tr>
+<th>Sintoma observado</th>
+<th>Causa provável</th>
+<th>Correção</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Resultado com muito mais linhas que o esperado</td>
+<td>Critério de junção incompleto (faltou<code>num_item</code>, por exemplo) ou ausente</td>
+<td>Verifique se o<code>ON</code> cobre a chave inteira do lado N</td>
+</tr>
+<tr>
+<td>Somatório absurdamente alto</td>
+<td>Fan-out em junção 1:N</td>
+<td>Agregue antes de juntar (seção 15)</td>
+</tr>
+<tr>
+<td><code>LEFT JOIN</code> que &quot;não trouxe os nulos&quot;</td>
+<td>Predicado da tabela opcional colocado no<code>WHERE</code></td>
+<td>Mova o predicado para o<code>ON</code> (seção 10)</td>
+</tr>
+<tr>
+<td>Contribuintes sumiram do relatório</td>
+<td><code>INNER JOIN</code> depois de <code>LEFT JOIN</code> na mesma cadeia</td>
+<td>Torne externas todas as junções dependentes</td>
+</tr>
+<tr>
+<td>Consulta de omissos retorna zero</td>
+<td><code>NOT IN</code> com subconsulta contendo <code>NULL</code></td>
+<td>Troque por<code>NOT EXISTS</code></td>
+</tr>
+<tr>
+<td><code>COUNT</code> devolve 1 onde deveria ser 0</td>
+<td><code>COUNT(*)</code> sobre junção externa</td>
+<td>Use<code>COUNT(coluna_da_tabela_direita)</code></td>
+</tr>
+<tr>
+<td>Chave nula no relatório de conciliação</td>
+<td><code>SELECT n.chave_acesso</code> em <code>FULL JOIN</code></td>
+<td>Use<code>COALESCE(n.chave, e.chave)</code></td>
+</tr>
+<tr>
+<td>Vínculos societários não encontrados</td>
+<td>Junção por texto com formatos heterogêneos</td>
+<td>Normalize o dado antes de cruzar</td>
+</tr>
+<tr>
+<td>Consulta correta, conclusão errada</td>
+<td>Falta de filtro de regime tributário</td>
+<td>Simples/MEI não entregam EFD ICMS/IPI</td>
+</tr>
+<tr>
+<td><code>Ambiguous column name</code></td>
+<td>Coluna com mesmo nome nas duas tabelas, sem qualificação</td>
+<td>Qualifique com o alias</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="19.-quadro-resumo-dos-tipos-de-jun%C3%A7%C3%A3o" tabindex="-1">19. Quadro resumo dos tipos de junção</h2>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Sintaxe</th>
+<th>Preserva</th>
+<th>Pergunta que responde</th>
+<th>Uso típico nesta base</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Interna</td>
+<td><code>INNER JOIN</code></td>
+<td>nenhum lado</td>
+<td>&quot;O que existe nos dois?&quot;</td>
+<td>NF-e × emitente; item × C170</td>
+</tr>
+<tr>
+<td>Externa à esquerda</td>
+<td><code>LEFT [OUTER] JOIN</code></td>
+<td>esquerda</td>
+<td>&quot;Tudo da esquerda, com o par se houver&quot;</td>
+<td>OS com/sem auto; nota com/sem destinatário</td>
+</tr>
+<tr>
+<td>Antijunção</td>
+<td><code>LEFT JOIN</code> + <code>IS NULL</code></td>
+<td>esquerda sem par</td>
+<td>&quot;O que existe<strong>só</strong> à esquerda?&quot;</td>
+<td>NF-e não escriturada (2.023 / 980)</td>
+</tr>
+<tr>
+<td>Externa à direita</td>
+<td><code>RIGHT [OUTER] JOIN</code></td>
+<td>direita</td>
+<td>Espelho do<code>LEFT</code></td>
+<td>Reescreva como<code>LEFT</code></td>
+</tr>
+<tr>
+<td>Externa completa</td>
+<td><code>FULL [OUTER] JOIN</code></td>
+<td>ambos</td>
+<td>&quot;O que existe em cada lado e nos dois?&quot;</td>
+<td>Conciliação NF-e × EFD</td>
+</tr>
+<tr>
+<td>Produto cartesiano</td>
+<td><code>CROSS JOIN</code></td>
+<td>—</td>
+<td>&quot;Todas as combinações&quot;</td>
+<td>Grade contribuinte × período</td>
+</tr>
+<tr>
+<td>Autojunção</td>
+<td>qualquer, com aliases</td>
+<td>conforme o tipo</td>
+<td>&quot;Relação da tabela com ela mesma&quot;</td>
+<td>Hierarquia; operações circulares</td>
+</tr>
+<tr>
+<td>Theta</td>
+<td><code>ON</code> com <code>&lt;</code>, <code>&gt;</code>, <code>BETWEEN</code></td>
+<td>conforme o tipo</td>
+<td>&quot;Correspondência por faixa&quot;</td>
+<td>Preço × pauta de referência</td>
+</tr>
+<tr>
+<td><code>CROSS APPLY</code></td>
+<td><code>CROSS APPLY (subconsulta)</code></td>
+<td>esquerda com par</td>
+<td>&quot;Top-N por grupo&quot;</td>
+<td>3 maiores notas por contribuinte</td>
+</tr>
+<tr>
+<td><code>OUTER APPLY</code></td>
+<td><code>OUTER APPLY (subconsulta)</code></td>
+<td>esquerda</td>
+<td>&quot;Top-N por grupo, mantendo os sem&quot;</td>
+<td>Última OS de cada contribuinte</td>
+</tr>
+<tr>
+<td>Semijunção</td>
+<td><code>WHERE EXISTS</code></td>
+<td>esquerda</td>
+<td>&quot;Existe ao menos um?&quot;</td>
+<td>Emitiu nota acima de R$ 100 mil</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="20.-roteiro-pr%C3%A1tico-de-laborat%C3%B3rio" tabindex="-1">20. Roteiro prático de laboratório</h2>
+<p><strong>Duração estimada:</strong> 2 horas
+<strong>Ambiente:</strong> SSMS ou VS Code + extensão MSSQL, conectado à instância do curso
+<strong>Base:</strong> <code>curso_integridade_fiscal</code>, carregada com os scripts 01 a 05</p>
+<h3 id="como-este-laborat%C3%B3rio-est%C3%A1-organizado" tabindex="-1">Como este laboratório está organizado</h3>
+<p>Cada atividade parte de uma <strong>regra de verificação da auditoria fiscal</strong> — o tipo de regra que a malha fiscal aplica sobre a base de documentos eletrônicos. A regra vem primeiro; a junção vem depois, como consequência técnica dela. A pergunta a responder nunca é &quot;escreva um <code>LEFT JOIN</code>&quot;, e sim &quot;qual junção sustenta esta regra?&quot;.</p>
+<p>Cada atividade traz:</p>
+<table>
+<thead>
+<tr>
+<th>Seção</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Regra</strong></td>
+<td>O enunciado da verificação, na linguagem da fiscalização</td>
+</tr>
+<tr>
+<td><strong>Fundamento</strong></td>
+<td>Por que a regra existe e o que a violação indica</td>
+</tr>
+<tr>
+<td><strong>Junção exigida</strong></td>
+<td>O tipo de junção que a regra impõe, e por quê</td>
+</tr>
+<tr>
+<td><strong>Rascunho</strong></td>
+<td>Consulta parcialmente escrita, com lacunas numeradas<code>/* (n) ... */</code></td>
+</tr>
+<tr>
+<td><strong>Conferência</strong></td>
+<td>O número que a consulta correta deve produzir</td>
+</tr>
+<tr>
+<td><strong>Análise</strong></td>
+<td>Pergunta a responder em comentário, dentro do próprio script</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Entrega.</strong> Um único arquivo <code>lab_juncoes_&lt;seu_nome&gt;.sql</code>, com as cinco atividades separadas por comentários, as lacunas preenchidas e as respostas de análise escritas como comentário logo abaixo de cada consulta.</p>
+</blockquote>
+<p><strong>Preparação (5 min).</strong> Antes de começar, confirme que a base está íntegra:</p>
+<pre class='hljs'><code><div>USE curso_integridade_fiscal;
+GO
+<span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;nfe&#x27;</span> <span class="hljs-keyword">AS</span> tabela, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> obtido, <span class="hljs-number">10636</span> <span class="hljs-keyword">AS</span> esperado <span class="hljs-keyword">FROM</span> dbo.nfe
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;nfe_item&#x27;</span>, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>), <span class="hljs-number">30794</span> <span class="hljs-keyword">FROM</span> dbo.nfe_item
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;efd_c100&#x27;</span>, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>),  <span class="hljs-number">8059</span> <span class="hljs-keyword">FROM</span> dbo.efd_c100
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;efd_c170&#x27;</span>, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>), <span class="hljs-number">23158</span> <span class="hljs-keyword">FROM</span> dbo.efd_c170;
+</div></code></pre>
+<p>Se alguma linha divergir, recarregue os scripts 01 a 05: todas as conferências deste laboratório dependem desses volumes.</p>
+<hr>
+<h3 id="atividade-1-%E2%80%94-omiss%C3%A3o-de-escritura%C3%A7%C3%A3o" tabindex="-1">Atividade 1 — Omissão de escrituração</h3>
+<p><strong>Regra.</strong> <em>Toda NF-e de saída em situação <code>AUTORIZADA</code>, cujo emitente esteja no regime tributário <code>NORMAL</code>, deve corresponder a um registro C100 regular (<code>cod_situacao = '00'</code>, <code>ind_oper = '1'</code>) escriturado pelo próprio emitente. A ausência desse registro caracteriza omissão de escrituração.</em></p>
+<p><strong>Fundamento.</strong> O contribuinte do regime normal é obrigado à EFD ICMS/IPI. Se o documento foi autorizado pela SEFAZ mas não aparece na escrituração do emitente, ou houve falha na entrega da obrigação acessória, ou houve omissão deliberada de receita. O filtro de regime é parte da regra, não um detalhe técnico: contribuintes do Simples Nacional e do MEI não entregam essa escrituração e apareceriam como falso positivo.</p>
+<p><strong>Junção exigida.</strong> Antijunção — <code>LEFT JOIN</code> seguido de teste <code>IS NULL</code>. A regra pergunta pelo que <strong>não</strong> existe do lado direito, e nenhuma junção interna consegue responder isso.</p>
+<p><strong>Rascunho.</strong></p>
+<pre class='hljs'><code><div><span class="hljs-comment">/* ATIVIDADE 1 - Omissão de escrituração ------------------------------- */</span>
+<span class="hljs-keyword">SELECT</span>  c.cnpj,
+        c.razao_social,
+        n.chave_acesso,
+        n.numero,
+        n.data_emissao,
+        n.valor_total,
+        n.valor_icms
+<span class="hljs-keyword">FROM</span>    dbo.nfe <span class="hljs-keyword">AS</span> n
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+                <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+        <span class="hljs-keyword">LEFT</span>  <span class="hljs-keyword">JOIN</span> dbo.efd_c100 <span class="hljs-keyword">AS</span> e
+                <span class="hljs-keyword">ON</span>  e.chave_acesso    <span class="hljs-operator">=</span> n.chave_acesso
+                <span class="hljs-keyword">AND</span> e.id_contribuinte <span class="hljs-operator">=</span> <span class="hljs-comment">/* (1) o declarante deve ser o próprio emitente */</span>
+                <span class="hljs-keyword">AND</span> e.ind_oper        <span class="hljs-operator">=</span> <span class="hljs-comment">/* (2) indicador de operação de saída */</span>
+                <span class="hljs-keyword">AND</span> e.cod_situacao    <span class="hljs-operator">=</span> <span class="hljs-comment">/* (3) código de documento regular */</span>
+<span class="hljs-keyword">WHERE</span>   n.situacao          <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+  <span class="hljs-keyword">AND</span>   n.tipo_operacao     <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+  <span class="hljs-keyword">AND</span>   c.regime_tributario <span class="hljs-operator">=</span> <span class="hljs-comment">/* (4) regime obrigado à EFD ICMS/IPI */</span>
+  <span class="hljs-keyword">AND</span>   <span class="hljs-comment">/* (5) o teste que isola as linhas sem par - use a PK de efd_c100 */</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> n.valor_icms <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p><strong>Conferência.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Variação</th>
+<th style="text-align:right">Esperado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Consulta acima, com<code>COUNT(*)</code> no lugar da lista de colunas</td>
+<td style="text-align:right"><strong>980</strong></td>
+</tr>
+<tr>
+<td>A mesma consulta<strong>sem</strong> a lacuna (4) — isto é, sem filtro de regime</td>
+<td style="text-align:right"><strong>2.023</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Análise.</strong> (a) Por que as lacunas (1), (2) e (3) precisam ficar na cláusula <code>ON</code> e não no <code>WHERE</code>? Descreva o que aconteceria com o resultado se fossem movidas. (b) Os 1.043 documentos que somem quando o filtro de regime entra são falsos positivos. Qual seria a consequência prática de intimar esses contribuintes?</p>
+<hr>
+<h3 id="atividade-2-%E2%80%94-concilia%C3%A7%C3%A3o-nf-e-%C3%97-efd-nos-dois-sentidos" tabindex="-1">Atividade 2 — Conciliação NF-e × EFD nos dois sentidos</h3>
+<p><strong>Regra.</strong> <em>Para cada chave de acesso, o valor do documento e o valor do ICMS declarados na EFD devem coincidir com os da NF-e autorizada correspondente, com tolerância de R$ 0,01. Além disso, toda chave escriturada deve existir na base de documentos autorizados, e toda NF-e autorizada deve estar escriturada.</em></p>
+<p><strong>Fundamento.</strong> A regra tem três violações possíveis, e a conciliação precisa enxergar as três: documento emitido e não escriturado, documento escriturado sem NF-e correspondente na base, e documento presente nos dois lados com valores divergentes. Note que a segunda violação nem sempre é irregularidade — pode ser documento de outra UF, ausente da base local, ou nota cancelada escriturada corretamente com <code>cod_situacao = '02'</code>.</p>
+<p><strong>Junção exigida.</strong> <code>FULL OUTER JOIN</code>. Nenhuma junção que preserve um só lado responde às três perguntas de uma vez.</p>
+<p><strong>Rascunho.</strong></p>
+<pre class='hljs'><code><div><span class="hljs-comment">/* ATIVIDADE 2 - Conciliação bidirecional ------------------------------ */</span>
+<span class="hljs-keyword">SELECT</span>  <span class="hljs-comment">/* (1) a chave de acesso, vinda do lado que existir - use COALESCE */</span> <span class="hljs-keyword">AS</span> chave_acesso,
+        <span class="hljs-keyword">CASE</span>
+            <span class="hljs-keyword">WHEN</span> <span class="hljs-comment">/* (2) não houve par na EFD */</span>  <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;EMITIDA E NAO ESCRITURADA&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> <span class="hljs-comment">/* (3) não houve par na NF-e */</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;ESCRITURADA SEM NF-e NA BASE&#x27;</span>
+            <span class="hljs-keyword">WHEN</span> <span class="hljs-built_in">ABS</span>(n.valor_total <span class="hljs-operator">-</span> e.valor_documento) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0.01</span>
+              <span class="hljs-keyword">OR</span> <span class="hljs-built_in">ABS</span>(n.valor_icms  <span class="hljs-operator">-</span> e.valor_icms)      <span class="hljs-operator">&gt;</span> <span class="hljs-number">0.01</span>
+                                                <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;DIVERGENCIA DE VALOR&#x27;</span>
+            <span class="hljs-keyword">ELSE</span>                                     <span class="hljs-string">&#x27;CONCILIADA&#x27;</span>
+        <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> resultado,
+        <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> qtd,
+        <span class="hljs-built_in">SUM</span>(<span class="hljs-built_in">ABS</span>(<span class="hljs-built_in">COALESCE</span>(n.valor_total,<span class="hljs-number">0</span>) <span class="hljs-operator">-</span> <span class="hljs-built_in">COALESCE</span>(e.valor_documento,<span class="hljs-number">0</span>))) <span class="hljs-keyword">AS</span> soma_diferencas
+<span class="hljs-keyword">FROM</span>    dbo.nfe <span class="hljs-keyword">AS</span> n
+        <span class="hljs-keyword">FULL</span> <span class="hljs-keyword">OUTER</span> <span class="hljs-keyword">JOIN</span> dbo.efd_c100 <span class="hljs-keyword">AS</span> e
+                <span class="hljs-keyword">ON</span>  e.chave_acesso <span class="hljs-operator">=</span> n.chave_acesso
+                <span class="hljs-keyword">AND</span> <span class="hljs-comment">/* (4) restrinja o lado da NF-e às autorizadas, SEM perder as linhas
+                       que só existem na EFD - pense em qual cláusula suporta isso */</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">CASE</span>
+            <span class="hljs-keyword">WHEN</span> <span class="hljs-comment">/* repita aqui a mesma expressão do SELECT */</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;EMITIDA E NAO ESCRITURADA&#x27;</span>
+            ...
+         <span class="hljs-keyword">END</span>;
+</div></code></pre>
+<p>Em seguida, escreva as três consultas de conferência com operadores de conjunto:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- (5) chaves de NF-e autorizada ausentes na EFD</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> ( <span class="hljs-keyword">SELECT</span> chave_acesso <span class="hljs-keyword">FROM</span> dbo.nfe      <span class="hljs-keyword">WHERE</span> <span class="hljs-comment">/* ... */</span>
+                       <span class="hljs-keyword">EXCEPT</span>
+                       <span class="hljs-keyword">SELECT</span> chave_acesso <span class="hljs-keyword">FROM</span> dbo.efd_c100 <span class="hljs-keyword">WHERE</span> <span class="hljs-comment">/* ... */</span> ) <span class="hljs-keyword">AS</span> t;
+
+<span class="hljs-comment">-- (6) chaves escrituradas ausentes entre as NF-e autorizadas</span>
+<span class="hljs-comment">-- (7) chaves que NÃO existem em nenhuma NF-e da base, em qualquer situação</span>
+<span class="hljs-comment">--     (dica: NOT EXISTS sem filtro de situação)</span>
+</div></code></pre>
+<p><strong>Conferência.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Verificação</th>
+<th style="text-align:right">Esperado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chaves de NF-e autorizada ausentes na EFD</td>
+<td style="text-align:right"><strong>2.994</strong></td>
+</tr>
+<tr>
+<td>Chaves escrituradas ausentes entre as autorizadas</td>
+<td style="text-align:right"><strong>440</strong></td>
+</tr>
+<tr>
+<td>Chaves presentes nos dois lados (<code>INTERSECT</code>)</td>
+<td style="text-align:right"><strong>6.897</strong></td>
+</tr>
+<tr>
+<td>Chaves que não existem em nenhuma NF-e da base</td>
+<td style="text-align:right"><strong>38</strong></td>
+</tr>
+<tr>
+<td>Documentos conciliados com divergência de valor ou ICMS</td>
+<td style="text-align:right"><strong>147</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Análise.</strong> Das 440 chaves da segunda linha, apenas 38 não existem de forma alguma na base. As outras 402 existem. (a) O que são elas? (b) Por que a distinção entre esses dois grupos é decisiva antes de emitir qualquer intimação? (c) Por que o <code>COALESCE</code> da lacuna (1) é indispensável neste relatório e não seria em um <code>INNER JOIN</code>?</p>
+<hr>
+<h3 id="atividade-3-%E2%80%94-pre%C3%A7o-praticado-contra-a-pauta-fiscal" tabindex="-1">Atividade 3 — Preço praticado contra a pauta fiscal</h3>
+<p><strong>Regra.</strong> <em>O valor unitário praticado em cada item de NF-e de saída deve estar contido na faixa <code>[valor_min, valor_max]</code> definida na pauta de referência para o respectivo NCM. Valor abaixo do piso é indício de subfaturamento; valor acima do teto é indício de erro de classificação fiscal. O painel de acompanhamento deve exibir os 28 NCM da pauta, inclusive os que não tiveram movimento no período.</em></p>
+<p><strong>Fundamento.</strong> A pauta fiscal é o parâmetro de valor que a administração tributária usa para presumir a base de cálculo quando o preço declarado destoa do mercado. A última frase da regra é a parte que costuma ser esquecida: um NCM da pauta <strong>sem nenhum movimento</strong> também é informação — pode indicar que um produto sujeito a controle deixou de ser declarado.</p>
+<p><strong>Junção exigida.</strong> Junção theta (a faixa é comparada com <code>&lt;</code>, <code>&gt;</code> ou <code>BETWEEN</code>) combinada com uma junção externa que <strong>preserve a pauta</strong>. Como <code>referencia_preco</code> entra depois de <code>nfe_item</code> no <code>FROM</code>, este é um dos poucos casos em que o <code>RIGHT JOIN</code> se lê com naturalidade — mas a versão com <code>LEFT JOIN</code> e as tabelas invertidas é igualmente aceitável.</p>
+<p><strong>Rascunho.</strong></p>
+<pre class='hljs'><code><div><span class="hljs-comment">/* ATIVIDADE 3 - Aderência à pauta fiscal ------------------------------ */</span>
+<span class="hljs-keyword">SELECT</span>  r.ncm,
+        r.descricao,
+        r.valor_min,
+        r.valor_max,
+        <span class="hljs-built_in">COUNT</span>(<span class="hljs-comment">/* (1) conte os ITENS, não as linhas - qual coluna evita contar 1
+                  quando não houve movimento algum? */</span>) <span class="hljs-keyword">AS</span> qtd_itens,
+        <span class="hljs-built_in">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> i.valor_unitario <span class="hljs-operator">&lt;</span> r.valor_min <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span> <span class="hljs-keyword">END</span>) <span class="hljs-keyword">AS</span> abaixo_da_pauta,
+        <span class="hljs-built_in">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> <span class="hljs-comment">/* (2) dentro da faixa */</span>      <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span> <span class="hljs-keyword">END</span>) <span class="hljs-keyword">AS</span> dentro_da_pauta,
+        <span class="hljs-built_in">SUM</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> <span class="hljs-comment">/* (3) acima do teto */</span>        <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">ELSE</span> <span class="hljs-number">0</span> <span class="hljs-keyword">END</span>) <span class="hljs-keyword">AS</span> acima_da_pauta,
+        <span class="hljs-built_in">MIN</span>(i.valor_unitario) <span class="hljs-keyword">AS</span> menor_praticado
+<span class="hljs-keyword">FROM</span>    dbo.nfe_item <span class="hljs-keyword">AS</span> i
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+                <span class="hljs-keyword">ON</span> n.id_nfe <span class="hljs-operator">=</span> i.id_nfe
+               <span class="hljs-keyword">AND</span> <span class="hljs-comment">/* (4) restrinja às saídas autorizadas SEM excluir os NCM sem movimento */</span>
+        <span class="hljs-keyword">RIGHT</span> <span class="hljs-keyword">JOIN</span> dbo.referencia_preco <span class="hljs-keyword">AS</span> r
+                <span class="hljs-keyword">ON</span> r.ncm <span class="hljs-operator">=</span> i.ncm
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> r.ncm, r.descricao, r.valor_min, r.valor_max
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> abaixo_da_pauta <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p>Depois, escreva a consulta de detalhe: os itens <strong>abaixo do piso</strong>, com CNPJ e razão social do emitente, chave de acesso, descrição do produto, valor praticado, <code>valor_min</code> e o percentual de desvio, ordenados pelo maior desvio.</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Detalhe do subfaturamento</span>
+<span class="hljs-keyword">SELECT</span>  c.cnpj, c.razao_social, n.chave_acesso, i.descricao, i.ncm,
+        i.valor_unitario, r.valor_min,
+        <span class="hljs-built_in">CAST</span>(<span class="hljs-comment">/* (5) percentual de desvio abaixo do piso */</span> <span class="hljs-keyword">AS</span> <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">6</span>,<span class="hljs-number">2</span>)) <span class="hljs-keyword">AS</span> pct_abaixo
+<span class="hljs-keyword">FROM</span>    dbo.nfe_item <span class="hljs-keyword">AS</span> i
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.nfe             <span class="hljs-keyword">AS</span> n <span class="hljs-keyword">ON</span> <span class="hljs-comment">/* (6) */</span>
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte    <span class="hljs-keyword">AS</span> c <span class="hljs-keyword">ON</span> <span class="hljs-comment">/* (7) */</span>
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.referencia_preco <span class="hljs-keyword">AS</span> r
+                <span class="hljs-keyword">ON</span>  r.ncm <span class="hljs-operator">=</span> i.ncm
+               <span class="hljs-keyword">AND</span>  <span class="hljs-comment">/* (8) a condição theta que caracteriza o subfaturamento */</span>
+<span class="hljs-keyword">WHERE</span>   n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span> <span class="hljs-keyword">AND</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> pct_abaixo <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p><strong>Conferência.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Verificação</th>
+<th style="text-align:right">Esperado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linhas do painel (uma por NCM da pauta)</td>
+<td style="text-align:right"><strong>28</strong></td>
+</tr>
+<tr>
+<td>NCM cujo<code>qtd_itens</code> é zero</td>
+<td style="text-align:right">devem existir, e não podem sumir do painel</td>
+</tr>
+<tr>
+<td>Soma de<code>abaixo + dentro + acima</code> em cada linha</td>
+<td style="text-align:right">igual a<code>qtd_itens</code> da mesma linha</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Análise.</strong> (a) Se a lacuna (4) fosse escrita no <code>WHERE</code> em vez do <code>ON</code>, quantas linhas o painel passaria a ter e por quê? (b) Por que a junção theta desta atividade traz uma igualdade (<code>r.ncm = i.ncm</code>) junto da comparação por faixa? O que aconteceria com o desempenho se a igualdade fosse removida?</p>
+<hr>
+<h3 id="atividade-4-%E2%80%94-consist%C3%AAncia-interna-do-documento" tabindex="-1">Atividade 4 — Consistência interna do documento</h3>
+<p><strong>Regra.</strong> <em>A soma dos valores dos itens de uma NF-e deve ser igual ao valor total declarado no cabeçalho, com tolerância de R$ 0,01. Documento em que essa igualdade não se verifica está internamente inconsistente e não pode ser usado como prova sem diligência prévia.</em></p>
+<p><strong>Fundamento.</strong> É uma regra de consistência interna: não depende de nenhuma declaração do contribuinte, apenas do próprio documento. Também é a regra que expõe o erro técnico mais comum em relatórios de auditoria — somar uma coluna do cabeçalho depois de juntar com a tabela de itens, o que <strong>multiplica</strong> o valor pelo número de itens.</p>
+<p><strong>Junção exigida.</strong> Agregação antes da junção. Primeiro consolide <code>nfe_item</code> por documento; só então junte com <code>nfe</code>. O caminho inverso produz <em>fan-out</em>.</p>
+<p><strong>Rascunho.</strong></p>
+<pre class='hljs'><code><div><span class="hljs-comment">/* ATIVIDADE 4a - Demonstração do fan-out (consulta ERRADA, execute e anote) */</span>
+<span class="hljs-keyword">SELECT</span>  <span class="hljs-built_in">SUM</span>(n.valor_total) <span class="hljs-keyword">AS</span> total_inflacionado,
+        <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)           <span class="hljs-keyword">AS</span> linhas_apos_juncao,
+        <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> n.id_nfe) <span class="hljs-keyword">AS</span> notas_distintas
+<span class="hljs-keyword">FROM</span>    dbo.nfe <span class="hljs-keyword">AS</span> n
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.nfe_item <span class="hljs-keyword">AS</span> i <span class="hljs-keyword">ON</span> i.id_nfe <span class="hljs-operator">=</span> n.id_nfe
+<span class="hljs-keyword">WHERE</span>   n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>;
+
+<span class="hljs-comment">/* ATIVIDADE 4b - Consulta CORRETA */</span>
+<span class="hljs-keyword">WITH</span> itens <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span>  i.id_nfe,
+            <span class="hljs-built_in">SUM</span>(<span class="hljs-comment">/* (1) coluna de valor do item */</span>) <span class="hljs-keyword">AS</span> total_itens,
+            <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)                               <span class="hljs-keyword">AS</span> qtd_itens
+    <span class="hljs-keyword">FROM</span>    dbo.nfe_item <span class="hljs-keyword">AS</span> i
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> i.id_nfe
+)
+<span class="hljs-keyword">SELECT</span>  c.cnpj,
+        c.razao_social,
+        n.chave_acesso,
+        n.data_emissao,
+        n.valor_total        <span class="hljs-keyword">AS</span> valor_cabecalho,
+        it.total_itens,
+        it.qtd_itens,
+        <span class="hljs-comment">/* (2) a diferença entre cabeçalho e soma dos itens */</span> <span class="hljs-keyword">AS</span> diferenca
+<span class="hljs-keyword">FROM</span>    dbo.nfe <span class="hljs-keyword">AS</span> n
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+        <span class="hljs-comment">/* (3) qual junção liga &#x27;nfe&#x27; à CTE &#x27;itens&#x27; sem descartar
+               notas que porventura não tenham item algum? */</span> itens <span class="hljs-keyword">AS</span> it
+                <span class="hljs-keyword">ON</span> it.id_nfe <span class="hljs-operator">=</span> n.id_nfe
+<span class="hljs-keyword">WHERE</span>   <span class="hljs-comment">/* (4) o predicado que caracteriza a inconsistência, com tolerância de R$ 0,01 */</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-built_in">ABS</span>(n.valor_total <span class="hljs-operator">-</span> it.total_itens) <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p><strong>Conferência.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Verificação</th>
+<th style="text-align:right">Esperado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Notas com soma de itens divergente do cabeçalho</td>
+<td style="text-align:right"><strong>15</strong></td>
+</tr>
+<tr>
+<td><code>linhas_apos_juncao</code> vs. <code>notas_distintas</code> em 4a</td>
+<td style="text-align:right">a primeira é bem maior — anote a razão entre elas</td>
+</tr>
+<tr>
+<td><code>total_inflacionado</code> de 4a vs. soma correta de <code>valor_total</code></td>
+<td style="text-align:right">anote os dois e a proporção</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Análise.</strong> (a) Qual foi a razão entre o total inflacionado e o total correto? Relacione esse número com a razão entre <code>linhas_apos_juncao</code> e <code>notas_distintas</code>. (b) Por que <code>COUNT(DISTINCT n.id_nfe)</code> na consulta 4a devolve o número certo enquanto <code>SUM(n.valor_total)</code> não? (c) Repita a checagem de granularidade para o par <code>efd_c100 × efd_c170</code> e registre os dois números.</p>
+<hr>
+<h3 id="atividade-5-%E2%80%94-circularidade-de-opera%C3%A7%C3%B5es-entre-contribuintes" tabindex="-1">Atividade 5 — Circularidade de operações entre contribuintes</h3>
+<p><strong>Regra.</strong> <em>Dois contribuintes que emitem, um para o outro, três ou mais notas autorizadas em intervalo inferior a 30 dias configuram indício de operação circular, hipótese de simulação de circulação de mercadoria para geração de crédito de ICMS. Cada par deve ser reportado uma única vez.</em></p>
+<p><strong>Fundamento.</strong> Na circulação real de mercadoria, o fluxo tem direção: fornecedor → cliente. O fluxo que volta na mesma intensidade e no mesmo intervalo curto raramente corresponde a mercadoria física; costuma corresponder a documento emitido para gerar crédito. É um dos indicadores clássicos da malha fiscal.</p>
+<p><strong>Junção exigida.</strong> Autojunção de <code>nfe</code> consigo mesma, com o predicado <strong>invertido</strong> (emitente de um lado casando com destinatário do outro) e um predicado de desigualdade para não reportar o mesmo par duas vezes.</p>
+<p><strong>Rascunho.</strong></p>
+<pre class='hljs'><code><div><span class="hljs-comment">/* ATIVIDADE 5 - Operações circulares --------------------------------- */</span>
+<span class="hljs-keyword">SELECT</span>  ca.cnpj              <span class="hljs-keyword">AS</span> cnpj_a,
+        ca.razao_social      <span class="hljs-keyword">AS</span> contribuinte_a,
+        cb.cnpj              <span class="hljs-keyword">AS</span> cnpj_b,
+        cb.razao_social      <span class="hljs-keyword">AS</span> contribuinte_b,
+        <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> n1.id_nfe) <span class="hljs-keyword">AS</span> notas_a_para_b,
+        <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> n2.id_nfe) <span class="hljs-keyword">AS</span> notas_b_para_a,
+        <span class="hljs-built_in">SUM</span>(<span class="hljs-comment">/* (1) por que somar aqui daria um valor errado?
+                deixe esta coluna de fora e explique na análise */</span>) <span class="hljs-keyword">AS</span> nao_usar
+<span class="hljs-keyword">FROM</span>    dbo.nfe <span class="hljs-keyword">AS</span> n1
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.nfe <span class="hljs-keyword">AS</span> n2
+                <span class="hljs-keyword">ON</span>  n2.id_emitente     <span class="hljs-operator">=</span> <span class="hljs-comment">/* (2) */</span>
+                <span class="hljs-keyword">AND</span> n2.id_destinatario <span class="hljs-operator">=</span> <span class="hljs-comment">/* (3) */</span>
+                <span class="hljs-keyword">AND</span> <span class="hljs-built_in">ABS</span>(DATEDIFF(<span class="hljs-keyword">DAY</span>, n1.data_emissao, n2.data_emissao)) <span class="hljs-operator">&lt;=</span> <span class="hljs-number">30</span>
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> ca <span class="hljs-keyword">ON</span> ca.id_contribuinte <span class="hljs-operator">=</span> n1.id_emitente
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> cb <span class="hljs-keyword">ON</span> cb.id_contribuinte <span class="hljs-operator">=</span> n1.id_destinatario
+<span class="hljs-keyword">WHERE</span>   n1.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+  <span class="hljs-keyword">AND</span>   n2.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+  <span class="hljs-keyword">AND</span>   <span class="hljs-comment">/* (4) o predicado que impede reportar o par (A,B) e também (B,A) */</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> ca.cnpj, ca.razao_social, cb.cnpj, cb.razao_social
+<span class="hljs-keyword">HAVING</span>  <span class="hljs-comment">/* (5) os dois limiares da regra: três ou mais notas em cada sentido */</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> notas_a_para_b <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p><strong>Conferência.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Verificação</th>
+<th style="text-align:right">Esperado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pares reportados</td>
+<td style="text-align:right"><strong>3</strong></td>
+</tr>
+<tr>
+<td>Identificação dos pares (<code>id_contribuinte</code>)</td>
+<td style="text-align:right"><strong>(8, 19)</strong>, <strong>(14, 27)</strong> e <strong>(23, 31)</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Análise.</strong> (a) O que acontece com o resultado se o predicado da lacuna (4) for removido? (b) Por que as contagens precisam ser <code>COUNT(DISTINCT ...)</code> e não <code>COUNT(*)</code>? Relacione sua resposta com o fan-out da Atividade 4. (c) Deixamos a lacuna (1) sem uso: explique por que somar <code>valor_total</code> diretamente nesta consulta produziria um valor sem significado, e descreva como obter o valor correto trafegado entre os dois contribuintes.</p>
+<hr>
+<h3 id="ficha-de-confer%C3%AAncia" tabindex="-1">Ficha de conferência</h3>
+<table>
+<thead>
+<tr>
+<th>Atividade</th>
+<th>Verificação</th>
+<th style="text-align:right">Esperado</th>
+<th>Obtido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Omissões de escrituração, regime<code>NORMAL</code></td>
+<td style="text-align:right">980</td>
+<td></td>
+</tr>
+<tr>
+<td>1</td>
+<td>Idem, sem filtro de regime</td>
+<td style="text-align:right">2.023</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>EXCEPT</code> (NF-e − EFD)</td>
+<td style="text-align:right">2.994</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>EXCEPT</code> (EFD − NF-e)</td>
+<td style="text-align:right">440</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>INTERSECT</code></td>
+<td style="text-align:right">6.897</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Chaves inexistentes na base de NF-e</td>
+<td style="text-align:right">38</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Divergências de valor / ICMS</td>
+<td style="text-align:right">147</td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Linhas do painel de pauta</td>
+<td style="text-align:right">28</td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Notas com soma de itens divergente</td>
+<td style="text-align:right">15</td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Razão entre total inflacionado e total correto</td>
+<td style="text-align:right">anotar</td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Pares em operação circular</td>
+<td style="text-align:right">3</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="crit%C3%A9rios-de-avalia%C3%A7%C3%A3o" tabindex="-1">Critérios de avaliação</h3>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th style="text-align:right">Peso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Correção dos resultados (ficha de conferência)</td>
+<td style="text-align:right">40%</td>
+</tr>
+<tr>
+<td>Adequação da junção escolhida à regra de auditoria enunciada</td>
+<td style="text-align:right">25%</td>
+</tr>
+<tr>
+<td>Posicionamento correto dos predicados (<code>ON</code> × <code>WHERE</code>)</td>
+<td style="text-align:right">15%</td>
+</tr>
+<tr>
+<td>Qualidade das respostas de análise</td>
+<td style="text-align:right">20%</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="21.-refer%C3%AAncias" tabindex="-1">21. Referências</h2>
+<p><strong>Documentação oficial da Microsoft</strong></p>
+<ul>
+<li><em>FROM plus JOIN, APPLY, PIVOT (Transact-SQL)</em> — https://learn.microsoft.com/pt-br/sql/t-sql/queries/from-transact-sql</li>
+<li><em>SELECT (Transact-SQL)</em> — https://learn.microsoft.com/pt-br/sql/t-sql/queries/select-transact-sql</li>
+<li><em>Joins (SQL Server)</em> — https://learn.microsoft.com/pt-br/sql/relational-databases/performance/joins</li>
+<li><em>Query Processing Architecture Guide</em> — https://learn.microsoft.com/pt-br/sql/relational-databases/query-processing-architecture-guide</li>
+<li><em>Discontinued Database Engine Functionality in SQL Server</em> (fim da sintaxe <code>*=</code> e <code>=*</code>) — https://learn.microsoft.com/en-us/sql/database-engine/discontinued-database-engine-functionality-in-sql-server</li>
+<li><em>Display an Actual Execution Plan</em> — https://learn.microsoft.com/pt-br/sql/relational-databases/performance/display-an-actual-execution-plan</li>
+</ul>
+<p><strong>Bibliografia</strong></p>
+<ul>
+<li>ELMASRI, R.; NAVATHE, S. B. <em>Sistemas de Banco de Dados</em>. 7. ed. São Paulo: Pearson. (Capítulos de álgebra relacional e SQL — a junção como composição de produto cartesiano e seleção.)</li>
+<li>SILBERSCHATZ, A.; KORTH, H. F.; SUDARSHAN, S. <em>Sistema de Banco de Dados</em>. 7. ed. Rio de Janeiro: LTC. (Capítulos de SQL intermediário — junções externas e valores nulos.)</li>
+<li>DATE, C. J. <em>SQL and Relational Theory</em>. 3. ed. O'Reilly. (Discussão sobre o tratamento de <code>NULL</code> em junções.)</li>
+</ul>
+<p><strong>Legislação e normas técnicas de referência do domínio fiscal</strong></p>
+<ul>
+<li>Ajuste SINIEF 07/05 e alterações — Nota Fiscal Eletrônica (NF-e) e estrutura da chave de acesso.</li>
+<li>Convênio ICMS 143/06 e Ajuste SINIEF 02/09 — Escrituração Fiscal Digital (EFD), registros do Bloco C.</li>
+<li>Guia Prático da EFD ICMS/IPI — Secretaria Especial da Receita Federal / CONFAZ (registros C100 e C170).</li>
+</ul>
+<p><strong>Scripts do curso utilizados neste módulo</strong></p>
+<table>
+<thead>
+<tr>
+<th>Script</th>
+<th>Função</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>01_criar_banco.sql</code></td>
+<td>Estrutura, restrições e índices mínimos</td>
+</tr>
+<tr>
+<td><code>02_inserir_cadastros.sql</code></td>
+<td>Municípios, contribuintes, auditores, pauta</td>
+</tr>
+<tr>
+<td><code>03_inserir_nfe.sql</code></td>
+<td>NF-e e itens</td>
+</tr>
+<tr>
+<td><code>04_inserir_efd.sql</code></td>
+<td>EFD C100 e C170</td>
+</tr>
+<tr>
+<td><code>05_inserir_fiscalizacao.sql</code></td>
+<td>Ordens de serviço e autos de infração</td>
+</tr>
+<tr>
+<td><code>07_verificacao.sql</code></td>
+<td>Conferência da carga e mapa das inconsistências</td>
+</tr>
+<tr>
+<td><code>08_indices_opcionais.sql</code></td>
+<td>Índices de desempenho (módulo de plano de execução)</td>
+</tr>
+<tr>
+<td><code>09_quadro_societario.SQL</code></td>
+<td>Quadro societário (opcional, autojunção por CPF da seção 12.3)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><em>Módulo elaborado para o Curso de Banco de Dados Relacional aplicado à Fiscalização Tributária — SEFAZ-PB. Todos os exemplos foram escritos e conferidos contra a base <code>curso_integridade_fiscal</code> gerada pelos scripts 01 a 05.</em></p>
+
+    </div>
+</body>
+</html>

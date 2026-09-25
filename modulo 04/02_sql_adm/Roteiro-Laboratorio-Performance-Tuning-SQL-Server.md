@@ -356,7 +356,24 @@ IX_TB202_NF_DHEMI
 
 # 10. Etapa 8 — Comparar Table Scan × Index Seek
 
-## Sem índice
+A comparação entre `Table Scan` e `Index Seek` é central para entender o comportamento do otimizador. A ideia é simples: quando a consulta precisa localizar um subconjunto pequeno de linhas, a busca direta em um índice geralmente é mais eficiente do que percorrer toda a tabela. Quando a consulta exige praticamente todos os registros, um `Table Scan` pode ser até mais vantajoso do que buscar em um índice, porque o custo de navegação no índice pode ser maior do que o custo de varrer a estrutura de dados inteira.
+
+## Exemplo 1 — consulta sem índice
+
+Se a tabela ainda estiver em estado de `heap` e a consulta for:
+
+```sql
+SELECT
+    COUNT_BIG(*) AS quantidade_itens,
+    SUM(ITEMNF_VPROD) AS valor_produtos
+FROM fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01
+WHERE NF_DHEMI >= '20260101'
+  AND NF_DHEMI <  '20260201';
+```
+
+e não houver índice em `NF_DHEMI`, o SQL Server não consegue localizar rapidamente somente o período pesquisado. Em vez disso, ele percorre a tabela inteira.
+
+Conceitualmente:
 
 ```text
 HEAP
@@ -368,10 +385,24 @@ Table Scan
 toda a tabela
  │
  ▼
-filtro
+filtro de data
 ```
 
-## Com índice
+Esse operador representa uma leitura sequencial de grande parte da estrutura. O custo cresce conforme o volume de dados aumenta, principalmente em tabelas de itens fiscais.
+
+## Exemplo 2 — consulta com índice em data
+
+Agora, depois de criar o índice:
+
+```sql
+CREATE INDEX IX_TB202_NF_DHEMI
+ON fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01
+(
+    NF_DHEMI
+);
+```
+
+a mesma consulta pode ser atendida por um caminho mais direto:
 
 ```text
 IX_TB202_NF_DHEMI
@@ -383,15 +414,83 @@ IX_TB202_NF_DHEMI
  somente registros do período
 ```
 
+Nesse caso, o SQL Server utiliza a árvore do índice para localizar rapidamente o intervalo de datas solicitado e evitar a leitura de todo o conjunto de registros.
+
+## Quando aparece cada operador?
+
+### `Table Scan`
+
+Aparece quando o otimizador decide percorrer a tabela inteira, geralmente porque:
+
+- não há índice útil para o predicado;
+- o filtro retorna uma parte grande da tabela;
+- a análise exige a leitura de muitos registros;
+- o custo estimado do scan é menor do que o custo de usar o índice.
+
+### `Index Seek`
+
+Aparece quando o otimizador consegue localizar diretamente os registros relevantes usando a estrutura de índice, especialmente quando:
+
+- a coluna do filtro é indexada;
+- o predicado é seletivo;
+- a condição é SARGable, como `>=` e `<` em intervalos de datas;
+- o índice permite identificar um subconjunto pequeno dos dados.
+
+## Comparação prática
+
+### Cenário A — filtro por data em uma tabela grande
+
+```sql
+WHERE NF_DHEMI >= '20260101'
+  AND NF_DHEMI <  '20260201';
+```
+
+Isso normalmente favorece `Index Seek`, porque o período é uma fração pequena da tabela.
+
+### Cenário B — consulta sem filtro ou filtro muito amplo
+
+```sql
+WHERE NF_UF_EMITENTE = 'SP';
+```
+
+se a UF tiver muitos registros, o otimizador pode preferir um `Table Scan` ou um `Index Scan`, dependendo da seletividade e do número estimado de linhas.
+
+## O que observar no plano
+
+No plano de execução, é importante olhar:
+
+- operador de acesso: `Table Scan` ou `Index Seek`;
+- `Estimated Number of Rows`;
+- `Actual Number of Rows`;
+- `Logical Reads`;
+- custo estimado do operador.
+
+Se o plano mostra `Table Scan` para uma consulta altamente seletiva, isso costuma indicar que:
+
+- não existe um índice adequado;
+- o filtro não está SARGable;
+- o otimizador calculou que a leitura completa pode ser mais barata que a busca indexada.
+
+## Conclusão
+
+`Table Scan` e `Index Seek` representam duas formas diferentes de localizar dados:
+
+- `Table Scan` é uma leitura ampla e mais simples;
+- `Index Seek` é uma busca direcionada e mais eficiente quando há seletividade.
+
+A escolha correta depende do padrão de acesso, da seletividade, do volume de dados e do plano estimado pelo otimizador.
+
 ### Questão para discussão
 
-> Se a consulta precisa de apenas uma pequena parcela da tabela, qual estratégia tende a ser mais eficiente?
+> Em uma tabela fiscal com milhões de itens, qual operador tende a ser mais eficiente para um filtro por data: `Table Scan` ou `Index Seek`? Justifique com base na seletividade da consulta.
 
 ---
 
 # 11. Etapa 9 — Demonstrar SARGability
 
-Agora compare duas formas de escrever a mesma consulta.
+Uma condição é considerada **SARGable** quando ela permite ao otimizador do SQL Server usar um índice de forma eficiente para localizar as linhas relevantes. O termo vem de **Search Argument Able**, ou seja, a expressão pode servir como argumento de busca útil ao índice.
+
+Em outras palavras, uma condição SARGable "fala diretamente" com a coluna indexada. Quando a coluna é transformada, convertida ou usada dentro de funções, o índice deixa de ser tão útil e o otimizador tende a escolher uma estratégia mais custosa, como `Table Scan` ou `Index Scan`.
 
 ## Consulta A — usando funções sobre a coluna
 
@@ -404,6 +503,8 @@ WHERE YEAR(NF_DHEMI) = 2026
   AND MONTH(NF_DHEMI) = 1;
 ```
 
+Essa condição não é SARGable, porque o SQL Server precisa aplicar `YEAR()` e `MONTH()` sobre a coluna antes da comparação. Isso reduz a capacidade do índice em `NF_DHEMI` de ser aproveitado de maneira eficiente.
+
 ## Consulta B — utilizando intervalo
 
 ```sql
@@ -414,6 +515,38 @@ FROM fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01
 WHERE NF_DHEMI >= '20260101'
   AND NF_DHEMI <  '20260201';
 ```
+
+Essa condição é SARGable, porque a comparação é feita diretamente sobre a coluna indexada. O otimizador consegue localizar o intervalo de datas de forma mais eficiente e, normalmente, usa um `Index Seek` em vez de percorrer toda a tabela.
+
+## Exemplo adicional de condição não SARGable
+
+```sql
+WHERE CONVERT(VARCHAR(10), NF_DHEMI, 112) = '20260101';
+```
+
+Aqui, a função `CONVERT()` atua sobre a coluna antes da comparação, o que geralmente impede o uso eficiente do índice. A mesma lógica vale para condições como:
+
+```sql
+WHERE LTRIM(RTRIM(NF_UF_EMITENTE)) = 'SP';
+```
+
+Se a intenção é preservar a capacidade de busca pelo índice, o ideal é evitar transformações diretas sobre a coluna no predicado.
+
+## Por que isso é importante no laboratório
+
+Ao comparar os planos de execução:
+
+- uma condição SARGable tende a produzir `Index Seek`;
+- uma condição não SARGable tende a gerar `Table Scan` ou `Index Scan`;
+- o custo em `logical reads` e `CPU` costuma aumentar no segundo caso.
+
+## Conclusão
+
+A regra prática é simples:
+
+- compare a coluna diretamente;
+- evite converter, transformar ou aplicar funções sobre a coluna no `WHERE`;
+- prefira intervalos e comparações simples quando o objetivo for usar o índice de forma eficiente.
 
 Execute ambas com:
 
@@ -452,7 +585,27 @@ A segunda forma é mais favorável à utilização eficiente de índices e é um
 
 # 12. Etapa 10 — Criar um índice de cobertura
 
-Agora vamos criar um índice que contenha a data como chave e as principais colunas utilizadas pela consulta como `INCLUDE`.
+Até aqui, o índice simples em `NF_DHEMI` já ajuda o SQL Server a localizar rapidamente os registros de um período. Porém, em muitas consultas analíticas, a busca por data é apenas o ponto de partida. Em seguida, o mecanismo precisa também de outras colunas para calcular agregados, como `NF_CHAVE_ACESSO`, `ITEMNF_VPROD`, `ITEMNF_VDESC`, `ITEMNF_VLICMS`, `ITEMNF_VICMSST` e `ITEMNF_VIPI`.
+
+Esse é o ponto em que o índice simples pode deixar de ser suficiente. Em um índice simples, o banco geralmente guarda a chave do índice e o identificador da linha. Se a consulta precisa de outras colunas além da chave, ele pode ter que ir até a tabela base para buscar o restante dos dados. Isso gera o que chamamos de `Lookup` adicional.
+
+Um índice de cobertura é diferente: ele foi criado para que a consulta consiga obter todas as colunas que ela precisa diretamente do próprio índice, sem precisar acessar o heap ou a tabela de dados principal. Em outras palavras, o SQL Server consegue responder a consulta usando apenas o índice, o que reduz leitura extra, reduz custo de I/O e pode melhorar bastante o desempenho em relatórios e consultas agregadas.
+
+## Diferença entre índice simples e índice de cobertura
+
+### Índice simples
+
+```sql
+CREATE INDEX IX_TB202_NF_DHEMI
+ON fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01
+(
+    NF_DHEMI
+);
+```
+
+Esse índice organiza a busca pela data. Ele é muito útil quando a consulta filtra por período e a chave do índice já resolve bem a condição. Mas, se a consulta também exigir outras colunas, o otimizador pode precisar buscar os dados completos em outra estrutura.
+
+### Índice de cobertura
 
 ```sql
 CREATE INDEX IX_TB202_NF_DHEMI_COVERING
@@ -471,21 +624,63 @@ INCLUDE
 );
 ```
 
+Esse índice mantém a busca por `NF_DHEMI` como chave e, além disso, armazena as colunas usadas no cálculo e no filtro. Com isso, o SQL Server consegue atender a consulta sem procurar os dados na tabela física. Ele funciona como um "resultado parcial pronto para consumo".
+
 Conceitualmente:
 
 ```text
-                    Índice
+                    Índice simples
                        │
-              ┌────────┴────────┐
-              │                 │
-          NF_DHEMI          INCLUDE
-                              │
-               ┌──────────────┼──────────────┐
-               │              │              │
-          VPROD           VLICMS          VIPI
+                 NF_DHEMI
+                       │
+                  localizar linha
+                       │
+                pode exigir Lookup
+                       │
+                     tabela base
 ```
 
-O objetivo é reduzir a necessidade de buscar dados adicionais na estrutura principal.
+```text
+                    Índice de cobertura
+                       │
+             ┌─────────┴─────────┐
+             │                   │
+          NF_DHEMI          INCLUDE
+             │                   │
+       filtra período    guarda colunas úteis
+             │                   │
+             └─────────┬─────────┘
+                       │
+                consulta atendida
+                sem acesso extra
+```
+
+Nesse caso, o objetivo é reduzir a necessidade de buscar dados adicionais na estrutura principal.
+
+## Aplicabilidade
+
+O índice de cobertura tem grande aplicação em consultas que:
+
+- filtram por um intervalo de datas ou outra chave seletiva;
+- calculam agregações (`SUM`, `AVG`, `COUNT`, `MIN`, `MAX`);
+- acessam poucas colunas em comparação com a tabela inteira;
+- são executadas frequentemente em relatórios, dashboards e auditorias.
+
+Ele é especialmente útil quando a consulta não precisa de muitas colunas da tabela, mas exige uma combinação de filtro e projeção. Em cenários de análise fiscal, por exemplo, um índice em `NF_DHEMI` com `INCLUDE` das colunas monetárias e de chave de documento pode reduzir bastante a carga de leitura.
+
+## Atenção importante
+
+O índice de cobertura não é uma solução universal. Ele pode aumentar:
+
+- o espaço em disco necessário;
+- o custo de manutenção em `INSERT`, `UPDATE` e `DELETE`;
+- a quantidade de dados que precisam ser regravados quando o índice muda.
+
+Logo, ele deve ser usado quando a consulta frequente justificar a vantagem em desempenho. Em outras palavras, o benefício aparece quando a economia de leitura e de `Lookup` compensa o custo adicional de manter o índice.
+
+### Questão para discussão
+
+> Em uma consulta de auditoria fiscal com filtro por data e vários campos agregados, vale a pena um índice de cobertura? Quando o ganho real fica mais evidente?
 
 ---
 
@@ -499,26 +694,77 @@ Como a tabela original é um heap, pode aparecer:
 RID Lookup
 ```
 
-Uma representação:
+Esse operador indica que o SQL Server fez uma busca no índice para localizar as linhas relevantes, mas, para concluir a consulta, precisou voltar à tabela base para obter colunas que não estavam presentes no índice. Em um heap, a referência de localização da linha é o RID, que funciona como um identificador do registro físico dentro da tabela.
+
+Em outras palavras, o banco fez algo como:
+
+```text
+1. localiza as linhas no índice pela data;
+2. obtém o RID;
+3. usa esse RID para ir até o heap;
+4. busca os demais campos que a consulta precisa.
+```
+
+Uma representação conceitual:
 
 ```text
 Index Seek
      │
      ▼
-encontra os registros
+encontra os registros por NF_DHEMI
      │
      ▼
 RID Lookup
      │
      ▼
 Heap
+     │
+     ▼
+busca colunas adicionais
 ```
 
-O índice de cobertura pode reduzir ou eliminar essa necessidade para as colunas incluídas.
+Isso significa que o plano de execução é composto por duas etapas:
+
+- uma busca seletiva no índice para reduzir o volume de linhas;
+- uma volta à tabela para completar os dados que o índice não contém.
+
+Esse comportamento é típico de consultas em heap quando o índice não é de cobertura. O custo do `RID Lookup` pode ser elevado, porque o SQL Server precisa acessar a estrutura de dados principal para cada conjunto de linhas identificadas pela chave do índice.
+
+### Como o plano de execução é montado
+
+Quando a consulta filtra por data e depois precisa de valores monetários, descrições e chaves de documento, o otimizador pode montar um plano nessa ordem:
+
+```text
+SELECT
+   │
+   ▼
+Filter por NF_DHEMI
+   │
+   ▼
+Index Seek (busca no índice)
+   │
+   ▼
+RID Lookup
+   │
+   ▼
+Heap
+   │
+   ▼
+Retorna colunas necessárias
+   │
+   ▼
+Aggregate / Sort / Compute Scalar
+```
+
+O ponto crítico é que o `Index Seek` reduz a quantidade de linhas a serem lidas, mas o `RID Lookup` pode anular parte do ganho, porque a consulta ainda precisa acessar o heap. Esse é um dos motivos pelos quais um índice de cobertura pode ser mais eficiente: ele guarda as colunas úteis junto com a chave e reduz ou elimina esse acesso extra.
 
 ### Questão
 
 > Qual é o custo de utilizar um índice que encontra a linha, mas não possui todas as informações necessárias para produzir o resultado?
+
+### Observação prática
+
+Se a consulta é muito frequente e o conjunto de colunas acessadas é estável, o índice de cobertura costuma produzir uma vantagem maior do que um índice simples. Já em consultas muito pontuais ou em tabelas com baixa cardinalidade, o ganho pode ser menos relevante, e o custo extra de manutenção do índice pode não compensar.
 
 ---
 

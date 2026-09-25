@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>subconsultas.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 id="m%C3%B3dulo%3A-subconsultas-em-t-sql-(sql-server)" tabindex="-1">Módulo: Subconsultas em T-SQL (SQL Server)</h1>
+<p><strong>Curso:</strong> Banco de Dados Relacionais aplicado à Administração Tributária
+<strong>Público-alvo:</strong> Profissionais da Secretaria de Estado da Fazenda da Paraíba (SEFAZ-PB)
+<strong>SGBD utilizado:</strong> Microsoft SQL Server (T-SQL) — ferramenta: SQL Server Management Studio (SSMS)
+<strong>Carga horária sugerida:</strong> 4 horas (2h teoria + 2h prática)
+<strong>Pré-requisitos:</strong> domínio de <code>SELECT</code>, <code>JOIN</code>, <code>GROUP BY</code>/<code>HAVING</code> e das cláusulas DML/DQL básicas (ver <a href="../modulo_02/00%20Comandos%20SQL.md">00 Comandos SQL.md</a>)</p>
+<hr>
+<h2 id="sum%C3%A1rio" tabindex="-1">Sumário</h2>
+<ol>
+<li><a href="#1-objetivos-do-m%C3%B3dulo">Objetivos do Módulo</a></li>
+<li><a href="#2-o-que-%C3%A9-uma-subconsulta">O que é uma Subconsulta</a></li>
+<li><a href="#3-classifica%C3%A7%C3%A3o-das-subconsultas">Classificação das Subconsultas</a></li>
+<li><a href="#4-subconsultas-escalares">Subconsultas Escalares</a></li>
+<li><a href="#5-subconsultas-na-cl%C3%A1usula-where">Subconsultas na Cláusula <code>WHERE</code></a></li>
+<li><a href="#6-exists-e-not-exists"><code>EXISTS</code> e <code>NOT EXISTS</code></a></li>
+<li><a href="#7-subconsultas-correlacionadas">Subconsultas Correlacionadas</a></li>
+<li><a href="#8-subconsultas-na-cl%C3%A1usula-from-derived-tables">Subconsultas na Cláusula <code>FROM</code> (Derived Tables)</a></li>
+<li><a href="#9-subconsultas-na-cl%C3%A1usula-having">Subconsultas na Cláusula <code>HAVING</code></a></li>
+<li><a href="#10-apply--subconsultas-correlacionadas-como-jun%C3%A7%C3%A3o"><code>APPLY</code> — Subconsultas Correlacionadas como Junção</a></li>
+<li><a href="#11-o-perigo-do-not-in-com-null">O Perigo do <code>NOT IN</code> com <code>NULL</code></a></li>
+<li><a href="#12-subconsulta-x-join-x-cte-quando-usar-cada-um">Subconsulta x JOIN x CTE: Quando Usar Cada Um</a></li>
+<li><a href="#13-desempenho-e-plano-de-execu%C3%A7%C3%A3o">Desempenho e Plano de Execução</a></li>
+<li><a href="#14-cen%C3%A1rio-integrado-an%C3%A1lise-fiscal-completa">Cenário Integrado: Análise Fiscal Completa</a></li>
+<li><a href="#15-boas-pr%C3%A1ticas">Boas Práticas</a></li>
+<li><a href="#16-gloss%C3%A1rio">Glossário</a></li>
+<li><a href="#17-exerc%C3%ADcios">Exercícios</a></li>
+<li><a href="#18-refer%C3%AAncias">Referências</a></li>
+</ol>
+<hr>
+<h2 id="1.-objetivos-do-m%C3%B3dulo" tabindex="-1">1. Objetivos do Módulo</h2>
+<p>Ao final deste módulo, o participante será capaz de:</p>
+<ul>
+<li>Definir o que é uma subconsulta (<em>subquery</em>) e reconhecer em quais cláusulas do T-SQL ela pode aparecer (<code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, <code>HAVING</code>).</li>
+<li>Classificar subconsultas quanto ao <strong>retorno</strong> (escalar, de linha, de tabela) e quanto à <strong>dependência</strong> (independentes x correlacionadas).</li>
+<li>Escrever subconsultas com <code>IN</code>, <code>NOT IN</code>, <code>ANY</code>/<code>SOME</code>, <code>ALL</code>, <code>EXISTS</code> e <code>NOT EXISTS</code>, entendendo a semântica de cada operador.</li>
+<li>Identificar e evitar a armadilha clássica do <code>NOT IN</code> combinado com valores <code>NULL</code>.</li>
+<li>Reescrever subconsultas correlacionadas usando <code>CROSS APPLY</code>/<code>OUTER APPLY</code> quando apropriado.</li>
+<li>Comparar subconsultas com <code>JOIN</code> e com CTEs (<code>WITH</code>), escolhendo a abordagem mais legível e performática para cada cenário fiscal.</li>
+<li>Ler um plano de execução simples do SSMS para diagnosticar o custo de uma subconsulta correlacionada.</li>
+</ul>
+<hr>
+<h2 id="2.-o-que-%C3%A9-uma-subconsulta" tabindex="-1">2. O que é uma Subconsulta</h2>
+<p>Uma <strong>subconsulta</strong> (<em>subquery</em>) é uma instrução <code>SELECT</code> completa, escrita entre parênteses, aninhada dentro de outra instrução T-SQL (<code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> ou até dentro de outra subconsulta). A consulta que contém a subconsulta é chamada de <strong>consulta externa</strong> (<em>outer query</em>); a consulta aninhada é a <strong>consulta interna</strong> (<em>inner query</em>).</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> razao_social
+<span class="hljs-keyword">FROM</span> dbo.contribuinte
+<span class="hljs-keyword">WHERE</span> id_contribuinte <span class="hljs-keyword">IN</span> (
+    <span class="hljs-keyword">SELECT</span> id_emitente                       <span class="hljs-comment">-- consulta interna (subconsulta)</span>
+    <span class="hljs-keyword">FROM</span> dbo.nfe
+    <span class="hljs-keyword">WHERE</span> valor_total <span class="hljs-operator">&gt;</span> <span class="hljs-number">50000.00</span>
+);                                             <span class="hljs-comment">-- consulta externa</span>
+</div></code></pre>
+<p><strong>Por que usar subconsultas:</strong></p>
+<ul>
+<li>Permitem expressar <strong>&quot;consultas dentro de consultas&quot;</strong> — por exemplo, &quot;quais contribuintes emitiram notas acima da média geral&quot; exige primeiro calcular a média (subconsulta) para depois filtrar (consulta externa).</li>
+<li>Tornam certas perguntas de negócio mais legíveis do que a alternativa equivalente com <code>JOIN</code> + <code>GROUP BY</code>.</li>
+<li>São a base conceitual para recursos mais avançados como CTEs, <code>APPLY</code> e funções de janela.</li>
+</ul>
+<p><strong>Regras gerais do T-SQL:</strong></p>
+<ul>
+<li>A subconsulta é sempre delimitada por parênteses <code>( ... )</code>.</li>
+<li>Uma subconsulta que retorna uma única coluna e um único valor pode ser usada onde uma expressão escalar é esperada (ex.: após <code>=</code>).</li>
+<li>Uma subconsulta não pode conter <code>ORDER BY</code>, exceto quando usada junto com <code>TOP</code>.</li>
+<li>Subconsultas podem ser aninhadas em múltiplos níveis, mas mais de 2–3 níveis geralmente prejudicam a legibilidade — nesses casos, uma CTE costuma ser preferível (ver <a href="#12-subconsulta-x-join-x-cte-quando-usar-cada-um">seção 12</a>).</li>
+</ul>
+<hr>
+<h2 id="3.-classifica%C3%A7%C3%A3o-das-subconsultas" tabindex="-1">3. Classificação das Subconsultas</h2>
+<p>Subconsultas podem ser classificadas sob duas óticas complementares:</p>
+<h3 id="3.1-quanto-ao-formato-do-retorno" tabindex="-1">3.1 Quanto ao formato do retorno</h3>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Retorna</th>
+<th>Onde costuma ser usada</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Escalar</strong></td>
+<td>Uma única linha, uma única coluna (um valor)</td>
+<td>Após<code>=</code>, <code>&gt;</code>, <code>&lt;</code>, em <code>SELECT</code>, em <code>SET</code> de <code>UPDATE</code></td>
+</tr>
+<tr>
+<td><strong>De linha</strong> (<em>row</em>)</td>
+<td>Uma única linha, múltiplas colunas</td>
+<td>Menos comum no T-SQL puro; usada em comparações de tupla em alguns SGBDs — no SQL Server, geralmente reescrita como múltiplas condições ou<code>EXISTS</code></td>
+</tr>
+<tr>
+<td><strong>De tabela</strong> (<em>table</em>)</td>
+<td>Múltiplas linhas, múltiplas colunas</td>
+<td>Em<code>FROM</code> (derived table), com <code>IN</code>/<code>ANY</code>/<code>ALL</code>/<code>EXISTS</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="3.2-quanto-%C3%A0-depend%C3%AAncia-da-consulta-externa" tabindex="-1">3.2 Quanto à dependência da consulta externa</h3>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Característica</th>
+<th>Desempenho típico</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Independente</strong> (<em>não correlacionada</em>)</td>
+<td>Executada<strong>uma única vez</strong>, de forma isolada; não referencia colunas da consulta externa</td>
+<td>Geralmente mais previsível — o otimizador pode calculá-la uma vez e reutilizar o resultado</td>
+</tr>
+<tr>
+<td><strong>Correlacionada</strong></td>
+<td>Referencia uma ou mais colunas da consulta externa; conceitualmente reexecutada<strong>para cada linha</strong> candidata da consulta externa</td>
+<td>Pode ser cara em tabelas grandes se não houver índice de apoio — ver<a href="#7-subconsultas-correlacionadas">seção 7</a> e <a href="#13-desempenho-e-plano-de-execu%C3%A7%C3%A3o">seção 13</a></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Nota:</strong> dizer que uma subconsulta correlacionada &quot;executa uma vez por linha&quot; é a forma didática de explicar a semântica lógica do comando. Na prática, o <strong>otimizador de consultas</strong> do SQL Server frequentemente reescreve a subconsulta correlacionada como um <code>JOIN</code>/<code>APPLY</code> internamente, evitando a execução literal linha a linha. Ainda assim, o comportamento lógico (o resultado) é sempre equivalente a uma reavaliação por linha.</p>
+</blockquote>
+<hr>
+<h2 id="4.-subconsultas-escalares" tabindex="-1">4. Subconsultas Escalares</h2>
+<p>Uma subconsulta escalar retorna <strong>exatamente um valor</strong> (uma linha, uma coluna) e pode ser usada em qualquer lugar onde uma expressão simples seria aceita.</p>
+<h3 id="4.1-no-select-(coluna-calculada)" tabindex="-1">4.1 No <code>SELECT</code> (coluna calculada)</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    n.chave_acesso,
+    n.valor_total,
+    (<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">AVG</span>(valor_total) <span class="hljs-keyword">FROM</span> dbo.nfe) <span class="hljs-keyword">AS</span> media_geral_notas
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n;
+</div></code></pre>
+<p>Cada linha do resultado exibe o mesmo valor de <code>media_geral_notas</code> — a subconsulta é independente e é recalculada (ou reaproveitada pelo otimizador) para todas as linhas.</p>
+<h3 id="4.2-comparando-com-um-valor-%C3%BAnico-no-where" tabindex="-1">4.2 Comparando com um valor único no <code>WHERE</code></h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> razao_social, regime_tributario
+<span class="hljs-keyword">FROM</span> dbo.contribuinte
+<span class="hljs-keyword">WHERE</span> id_contribuinte <span class="hljs-operator">=</span> (
+    <span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">1</span>) id_emitente
+    <span class="hljs-keyword">FROM</span> dbo.nfe
+    <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> valor_total <span class="hljs-keyword">DESC</span>, id_nfe <span class="hljs-keyword">DESC</span>
+);
+</div></code></pre>
+<p><strong>Cuidado T-SQL:</strong> se a subconsulta escalar retornar <strong>mais de uma linha</strong> em tempo de execução, o SQL Server lança o erro:</p>
+<pre class='hljs'><code><div>Subquery returned more than 1 value. This is not permitted when the subquery
+follows =, !=, &lt;, &lt;= , &gt;, &gt;= or when the subquery is used as an expression.
+</div></code></pre>
+<p>Por isso, subconsultas escalares em comparações simples (<code>=</code>) devem sempre garantir unicidade — com <code>TOP (1)</code> + <code>ORDER BY</code>, agregações (<code>MAX</code>, <code>MIN</code>, <code>AVG</code>) ou filtros que naturalmente resultem em uma única linha (ex.: filtro por chave primária).</p>
+<h3 id="4.3-em-update" tabindex="-1">4.3 Em <code>UPDATE</code></h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">UPDATE</span> c
+<span class="hljs-keyword">SET</span> faturamento_declarado <span class="hljs-operator">=</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">SUM</span>(n.valor_total)
+    <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">WHERE</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+)
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">EXISTS</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span>
+    <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">WHERE</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+);
+</div></code></pre>
+<p>Aqui a subconsulta do <code>SET</code> é <strong>correlacionada</strong> (referencia <code>dbo.contribuinte.id_contribuinte</code> da linha sendo atualizada), assim como a subconsulta do <code>WHERE</code>.</p>
+<hr>
+<h2 id="5.-subconsultas-na-cl%C3%A1usula-where" tabindex="-1">5. Subconsultas na Cláusula <code>WHERE</code></h2>
+<p>Esta é a aplicação mais comum de subconsultas: filtrar a consulta externa com base em um conjunto de valores produzido pela consulta interna.</p>
+<h3 id="5.1-in-%E2%80%94-pertence-a-um-conjunto" tabindex="-1">5.1 <code>IN</code> — pertence a um conjunto</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> razao_social
+<span class="hljs-keyword">FROM</span> dbo.contribuinte
+<span class="hljs-keyword">WHERE</span> id_contribuinte <span class="hljs-keyword">IN</span> (
+    <span class="hljs-keyword">SELECT</span> id_emitente
+    <span class="hljs-keyword">FROM</span> dbo.nfe
+    <span class="hljs-keyword">WHERE</span> situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CANCELADA&#x27;</span>
+);
+</div></code></pre>
+<p>Retorna contribuintes que emitiram <strong>pelo menos uma</strong> nota cancelada.</p>
+<h3 id="5.2-not-in-%E2%80%94-n%C3%A3o-pertence-a-um-conjunto" tabindex="-1">5.2 <code>NOT IN</code> — não pertence a um conjunto</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> razao_social
+<span class="hljs-keyword">FROM</span> dbo.contribuinte
+<span class="hljs-keyword">WHERE</span> id_contribuinte <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">IN</span> (
+    <span class="hljs-keyword">SELECT</span> id_emitente
+    <span class="hljs-keyword">FROM</span> dbo.nfe
+    <span class="hljs-keyword">WHERE</span> situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CANCELADA&#x27;</span>
+);
+</div></code></pre>
+<p>Retorna contribuintes que <strong>nunca</strong> emitiram nota cancelada. <strong>Atenção:</strong> ver a armadilha do <code>NULL</code> na <a href="#11-o-perigo-do-not-in-com-null">seção 11</a> antes de usar <code>NOT IN</code> em produção.</p>
+<h3 id="5.3-any-%2F-some-%E2%80%94-compara-com-pelo-menos-um-valor-do-conjunto" tabindex="-1">5.3 <code>ANY</code> / <code>SOME</code> — compara com pelo menos um valor do conjunto</h3>
+<p><code>ANY</code> e <code>SOME</code> são sinônimos no T-SQL; a condição é satisfeita se ela for verdadeira para <strong>pelo menos um</strong> valor retornado pela subconsulta.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> c.razao_social
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">WHERE</span> c.id_contribuinte <span class="hljs-operator">=</span> <span class="hljs-keyword">ANY</span> (
+    <span class="hljs-keyword">SELECT</span> id_emitente
+    <span class="hljs-keyword">FROM</span> dbo.nfe
+    <span class="hljs-keyword">WHERE</span> valor_total <span class="hljs-operator">&gt;</span> <span class="hljs-number">100000.00</span>
+);
+</div></code></pre>
+<p>Exemplo mais natural — contribuintes com pelo menos uma nota maior que <strong>qualquer</strong> nota emitida no regime <code>SIMPLES</code>:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> razao_social
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">JOIN</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">ON</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+<span class="hljs-keyword">WHERE</span> n.valor_total <span class="hljs-operator">&gt;</span> <span class="hljs-keyword">ANY</span> (
+    <span class="hljs-keyword">SELECT</span> valor_total
+    <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n2
+    <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c2 <span class="hljs-keyword">ON</span> c2.id_contribuinte <span class="hljs-operator">=</span> n2.id_emitente
+    <span class="hljs-keyword">WHERE</span> c2.regime_tributario <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;SIMPLES&#x27;</span>
+);
+</div></code></pre>
+<p><code>&gt; ANY (...)</code> equivale a &quot;maior que o <strong>menor</strong> valor do conjunto&quot; — ou seja, é suficiente superar apenas um dos valores.</p>
+<h3 id="5.4-all-%E2%80%94-compara-com-todos-os-valores-do-conjunto" tabindex="-1">5.4 <code>ALL</code> — compara com todos os valores do conjunto</h3>
+<p>A condição só é satisfeita se ela for verdadeira para <strong>todos</strong> os valores retornados pela subconsulta.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> razao_social
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">JOIN</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">ON</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+<span class="hljs-keyword">WHERE</span> n.valor_total <span class="hljs-operator">&gt;</span> <span class="hljs-keyword">ALL</span> (
+    <span class="hljs-keyword">SELECT</span> valor_total
+    <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n2
+    <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c2 <span class="hljs-keyword">ON</span> c2.id_contribuinte <span class="hljs-operator">=</span> n2.id_emitente
+    <span class="hljs-keyword">WHERE</span> c2.regime_tributario <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;SIMPLES&#x27;</span>
+);
+</div></code></pre>
+<p><code>&gt; ALL (...)</code> equivale a &quot;maior que o <strong>maior</strong> valor do conjunto&quot;. Contribuintes retornados aqui emitiram uma nota mais valiosa do que <strong>qualquer</strong> nota do regime <code>SIMPLES</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Operador</th>
+<th>Equivalência lógica</th>
+<th>Cuidado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>= ANY (...)</code></td>
+<td>Equivalente a<code>IN (...)</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>&lt;&gt; ALL (...)</code></td>
+<td>Equivalente a<code>NOT IN (...)</code> (mas sem a armadilha do <code>NULL</code>, se reescrito com <code>EXISTS</code>)</td>
+<td>Prefira<code>NOT EXISTS</code> quando o conjunto pode ter <code>NULL</code></td>
+</tr>
+<tr>
+<td><code>&gt; ANY (...)</code></td>
+<td>Maior que o mínimo do conjunto</td>
+<td>Se o conjunto vier vazio, a condição é<code>FALSE</code></td>
+</tr>
+<tr>
+<td><code>&gt; ALL (...)</code></td>
+<td>Maior que o máximo do conjunto</td>
+<td>Se o conjunto vier vazio, a condição é<code>TRUE</code> (comportamento contraintuitivo — testar sempre)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="6.-exists-e-not-exists" tabindex="-1">6. <code>EXISTS</code> e <code>NOT EXISTS</code></h2>
+<p><code>EXISTS</code> testa apenas <strong>se a subconsulta retorna alguma linha</strong>, sem se importar com os valores retornados — por isso, é comum escrever <code>SELECT 1</code> ou <code>SELECT *</code> dentro da subconsulta, sem impacto de desempenho (o otimizador não materializa as colunas).</p>
+<h3 id="6.1-exists" tabindex="-1">6.1 <code>EXISTS</code></h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> c.razao_social
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">EXISTS</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span>
+    <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">WHERE</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+      <span class="hljs-keyword">AND</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CANCELADA&#x27;</span>
+);
+</div></code></pre>
+<p>Retorna contribuintes que possuem pelo menos uma nota cancelada — mesmo resultado do exemplo com <code>IN</code> da <a href="#51-in--pertence-a-um-conjunto">seção 5.1</a>, mas com uma diferença estrutural importante: aqui a subconsulta é <strong>correlacionada</strong> (referencia <code>c.id_contribuinte</code> da linha externa).</p>
+<h3 id="6.2-not-exists" tabindex="-1">6.2 <code>NOT EXISTS</code></h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> c.razao_social
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span>
+    <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">WHERE</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+      <span class="hljs-keyword">AND</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CANCELADA&#x27;</span>
+);
+</div></code></pre>
+<p>Retorna contribuintes que <strong>nunca</strong> emitiram nota cancelada — semanticamente equivalente ao <code>NOT IN</code> da <a href="#52-not-in--n%C3%A3o-pertence-a-um-conjunto">seção 5.2</a>, mas <strong>imune ao problema de <code>NULL</code></strong> (ver <a href="#11-o-perigo-do-not-in-com-null">seção 11</a>). Por esse motivo, <code>NOT EXISTS</code> é a forma <strong>recomendada</strong> de expressar &quot;não existe&quot; em T-SQL de produção.</p>
+<h3 id="6.3-exists-x-in%3A-quando-preferir-cada-um" tabindex="-1">6.3 <code>EXISTS</code> x <code>IN</code>: quando preferir cada um</h3>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th><code>IN</code></th>
+<th><code>EXISTS</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Coluna única, sem risco de<code>NULL</code></td>
+<td>Ambos funcionam igual</td>
+<td>Ambos funcionam igual</td>
+</tr>
+<tr>
+<td>Coluna com possibilidade de<code>NULL</code> (especialmente com <code>NOT IN</code>)</td>
+<td>Risco de resultado vazio inesperado</td>
+<td>Seguro</td>
+</tr>
+<tr>
+<td>Múltiplas condições de correlação</td>
+<td>Não se aplica diretamente</td>
+<td>Natural — pode combinar várias colunas no<code>WHERE</code> interno</td>
+</tr>
+<tr>
+<td>Legibilidade para &quot;existe pelo menos um relacionado&quot;</td>
+<td>Boa</td>
+<td>Geralmente mais clara para quem já pensa em termos relacionais</td>
+</tr>
+<tr>
+<td>Desempenho</td>
+<td>O otimizador do SQL Server, na prática, costuma gerar planos equivalentes para<code>IN</code>/<code>EXISTS</code> bem escritos</td>
+<td>Idem</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="7.-subconsultas-correlacionadas" tabindex="-1">7. Subconsultas Correlacionadas</h2>
+<p>Uma subconsulta é <strong>correlacionada</strong> quando referencia uma ou mais colunas da consulta externa em sua cláusula <code>WHERE</code> (ou <code>JOIN</code>), tornando seu resultado dependente da linha atualmente avaliada pela consulta externa.</p>
+<h3 id="7.1-exemplo-%E2%80%94-nota-mais-recente-de-cada-contribuinte" tabindex="-1">7.1 Exemplo — nota mais recente de cada contribuinte</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    c.razao_social,
+    (
+        <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">MAX</span>(n.data_emissao)
+        <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+        <span class="hljs-keyword">WHERE</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte                 <span class="hljs-comment">-- correlação</span>
+    ) <span class="hljs-keyword">AS</span> ultima_emissao
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c;
+</div></code></pre>
+<p>A subconsulta não pode ser executada de forma isolada — ela <strong>depende</strong> de <code>c.id_contribuinte</code>, que muda a cada linha da consulta externa.</p>
+<h3 id="7.2-exemplo-%E2%80%94-contribuintes-cuja-%C3%BAltima-nota-foi-cancelada" tabindex="-1">7.2 Exemplo — contribuintes cuja última nota foi cancelada</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> c.razao_social
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">WHERE</span> <span class="hljs-string">&#x27;CANCELADA&#x27;</span> <span class="hljs-operator">=</span> (
+    <span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">1</span>) n.situacao
+    <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">WHERE</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+    <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> n.data_emissao <span class="hljs-keyword">DESC</span>
+);
+</div></code></pre>
+<h3 id="7.3-correla%C3%A7%C3%A3o-em-update%2Fdelete" tabindex="-1">7.3 Correlação em <code>UPDATE</code>/<code>DELETE</code></h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Marca como &quot;INAPTO&quot; contribuintes sem nenhuma nota fiscal emitida nos últimos 24 meses</span>
+<span class="hljs-keyword">UPDATE</span> dbo.contribuinte
+<span class="hljs-keyword">SET</span> situacao_cadastral <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;INAPTO&#x27;</span>
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span>
+    <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">WHERE</span> n.id_emitente <span class="hljs-operator">=</span> dbo.contribuinte.id_contribuinte
+      <span class="hljs-keyword">AND</span> n.data_emissao <span class="hljs-operator">&gt;=</span> DATEADD(<span class="hljs-keyword">MONTH</span>, <span class="hljs-number">-24</span>, SYSUTCDATETIME())
+);
+</div></code></pre>
+<p>Subconsultas correlacionadas em <code>UPDATE</code>/<code>DELETE</code> são o padrão mais seguro para expressar &quot;altere/apague com base em uma condição de outra tabela&quot;, evitando os efeitos colaterais de um <code>JOIN</code> malformado em <code>UPDATE ... FROM</code>.</p>
+<hr>
+<h2 id="8.-subconsultas-na-cl%C3%A1usula-from-(derived-tables)" tabindex="-1">8. Subconsultas na Cláusula <code>FROM</code> (Derived Tables)</h2>
+<p>Uma subconsulta usada na cláusula <code>FROM</code> é chamada de <strong>tabela derivada</strong> (<em>derived table</em>). Ela é tratada como se fosse uma tabela temporária existente apenas durante a execução da consulta — e <strong>exige um alias obrigatório</strong> em T-SQL.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    resumo.regime_tributario,
+    resumo.total_contribuintes,
+    resumo.valor_medio
+<span class="hljs-keyword">FROM</span> (
+    <span class="hljs-keyword">SELECT</span>
+        c.regime_tributario,
+        <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> c.id_contribuinte) <span class="hljs-keyword">AS</span> total_contribuintes,
+        <span class="hljs-built_in">AVG</span>(n.valor_total) <span class="hljs-keyword">AS</span> valor_medio
+    <span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+    <span class="hljs-keyword">JOIN</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+        <span class="hljs-keyword">ON</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> c.regime_tributario
+) <span class="hljs-keyword">AS</span> resumo                                     <span class="hljs-comment">-- alias obrigatório</span>
+<span class="hljs-keyword">WHERE</span> resumo.total_contribuintes <span class="hljs-operator">&gt;</span> <span class="hljs-number">10</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> resumo.valor_medio <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p><strong>Por que usar:</strong> permite aplicar um filtro (<code>WHERE</code>) ou uma nova agregação <strong>sobre o resultado já agregado</strong> de uma consulta anterior — algo que não é possível fazer diretamente em <code>HAVING</code> quando a condição envolve uma coluna derivada de forma mais complexa, ou quando o resultado intermediário precisa ser reutilizado várias vezes na mesma consulta (via <code>JOIN</code> com ele mesmo, por exemplo).</p>
+<p><strong>Alternativa moderna:</strong> para consultas com múltiplos níveis de tabela derivada, uma CTE (<code>WITH nome AS (...)</code>) costuma ser mais legível — ver comparação na <a href="#12-subconsulta-x-join-x-cte-quando-usar-cada-um">seção 12</a>.</p>
+<hr>
+<h2 id="9.-subconsultas-na-cl%C3%A1usula-having" tabindex="-1">9. Subconsultas na Cláusula <code>HAVING</code></h2>
+<p>Assim como o <code>WHERE</code> filtra linhas antes do agrupamento, o <code>HAVING</code> filtra <strong>grupos</strong> — e também aceita subconsultas, tipicamente para comparar um agregado do grupo com um valor calculado de forma independente.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    c.regime_tributario,
+    <span class="hljs-built_in">AVG</span>(n.valor_total) <span class="hljs-keyword">AS</span> media_regime
+    <span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">JOIN</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">ON</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> c.regime_tributario
+<span class="hljs-keyword">HAVING</span> <span class="hljs-built_in">AVG</span>(n.valor_total) <span class="hljs-operator">&gt;</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">AVG</span>(valor_total) <span class="hljs-keyword">FROM</span> dbo.nfe
+);
+</div></code></pre>
+<p>Retorna apenas os regimes tributários cuja média de valor por nota supera a média <strong>geral</strong> de todas as notas — uma pergunta que não poderia ser respondida só com <code>WHERE</code>, porque a média geral é um agregado calculado sobre toda a tabela, não sobre cada grupo.</p>
+<hr>
+<h2 id="10.-apply-%E2%80%94-subconsultas-correlacionadas-como-jun%C3%A7%C3%A3o" tabindex="-1">10. <code>APPLY</code> — Subconsultas Correlacionadas como Junção</h2>
+<p><code>CROSS APPLY</code> e <code>OUTER APPLY</code> são extensões do T-SQL (sem equivalente direto no padrão ANSI) que permitem &quot;juntar&quot; cada linha da tabela externa com o resultado de uma subconsulta correlacionada <strong>que retorna múltiplas colunas ou múltiplas linhas</strong> — algo que uma subconsulta escalar tradicional não suporta.</p>
+<h3 id="10.1-cross-apply-%E2%80%94-equivalente-a-um-inner-join-correlacionado" tabindex="-1">10.1 <code>CROSS APPLY</code> — equivalente a um <code>INNER JOIN</code> correlacionado</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    c.razao_social,
+    top3.chave_acesso,
+    top3.valor_total
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">CROSS</span> APPLY (
+    <span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">3</span>) n.chave_acesso, n.valor_total
+    <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">WHERE</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+    <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> n.valor_total <span class="hljs-keyword">DESC</span>
+) <span class="hljs-keyword">AS</span> top3;
+</div></code></pre>
+<p>Para <strong>cada contribuinte</strong>, retorna as <strong>3 notas de maior valor</strong> — uma consulta impossível de escrever com uma subconsulta escalar tradicional (que só devolve um valor), e trabalhosa de expressar só com <code>JOIN</code> + função de janela sem repetir lógica.</p>
+<h3 id="10.2-outer-apply-%E2%80%94-equivalente-a-um-left-join-correlacionado" tabindex="-1">10.2 <code>OUTER APPLY</code> — equivalente a um <code>LEFT JOIN</code> correlacionado</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    c.razao_social,
+    ultima.chave_acesso,
+    ultima.data_emissao
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">OUTER</span> APPLY (
+    <span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">1</span>) n.chave_acesso, n.data_emissao
+    <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">WHERE</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+    <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> n.data_emissao <span class="hljs-keyword">DESC</span>
+) <span class="hljs-keyword">AS</span> ultima;
+</div></code></pre>
+<p>Diferente de <code>CROSS APPLY</code>, o <code>OUTER APPLY</code> <strong>preserva</strong> contribuintes sem nenhuma nota fiscal (as colunas <code>ultima.*</code> vêm como <code>NULL</code>), da mesma forma que um <code>LEFT JOIN</code> preserva o lado esquerdo.</p>
+<table>
+<thead>
+<tr>
+<th>Cláusula</th>
+<th>Comportamento quando a subconsulta não retorna linhas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CROSS APPLY</code></td>
+<td>Descarta a linha externa (como<code>INNER JOIN</code>)</td>
+</tr>
+<tr>
+<td><code>OUTER APPLY</code></td>
+<td>Mantém a linha externa com<code>NULL</code> nas colunas da subconsulta (como <code>LEFT JOIN</code>)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="11.-o-perigo-do-not-in-com-null" tabindex="-1">11. O Perigo do <code>NOT IN</code> com <code>NULL</code></h2>
+<p>Este é um dos erros mais comuns — e mais silenciosos — envolvendo subconsultas em T-SQL.</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- id_destinatario aceita NULL (ex.: consumidor nao identificado)</span>
+<span class="hljs-keyword">SELECT</span> razao_social
+<span class="hljs-keyword">FROM</span> dbo.contribuinte
+<span class="hljs-keyword">WHERE</span> id_contribuinte <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">IN</span> (
+    <span class="hljs-keyword">SELECT</span> id_destinatario
+    <span class="hljs-keyword">FROM</span> dbo.nfe
+);
+</div></code></pre>
+<p><strong>Se a subconsulta retornar sequer um <code>NULL</code></strong> entre os valores de <code>id_destinatario</code>, a consulta externa inteira <strong>não retorna nenhuma linha</strong> — mesmo que existam contribuintes claramente ausentes da lista. Isso ocorre porque, em lógica de três valores do SQL (<code>TRUE</code>/<code>FALSE</code>/<code>UNKNOWN</code>), comparar qualquer valor com <code>NULL</code> usando <code>&lt;&gt;</code> resulta em <code>UNKNOWN</code>, e o <code>NOT IN</code> internamente é avaliado como uma cadeia de <code>AND (valor &lt;&gt; x1) AND (valor &lt;&gt; x2) AND ...</code> — bastando um único <code>UNKNOWN</code> para que toda a condição deixe de ser <code>TRUE</code>.</p>
+<p><strong>Formas seguras de evitar o problema:</strong></p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Opção 1: filtrar o NULL explicitamente dentro da subconsulta</span>
+<span class="hljs-keyword">SELECT</span> razao_social
+<span class="hljs-keyword">FROM</span> dbo.contribuinte
+<span class="hljs-keyword">WHERE</span> id_contribuinte <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">IN</span> (
+    <span class="hljs-keyword">SELECT</span> id_destinatario
+    <span class="hljs-keyword">FROM</span> dbo.nfe
+    <span class="hljs-keyword">WHERE</span> id_destinatario <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+);
+
+<span class="hljs-comment">-- Opção 2 (recomendada): usar NOT EXISTS, imune ao problema</span>
+<span class="hljs-keyword">SELECT</span> c.razao_social
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span>
+    <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">WHERE</span> n.id_destinatario <span class="hljs-operator">=</span> c.id_contribuinte
+);
+</div></code></pre>
+<blockquote>
+<p><strong>Regra prática para a equipe:</strong> em rotinas fiscais de produção, prefira sempre <code>NOT EXISTS</code> a <code>NOT IN</code> quando houver qualquer possibilidade de <code>NULL</code> na coluna da subconsulta — o que, na dúvida, deve ser tratado como &quot;sempre possível&quot;, a menos que a coluna tenha <code>NOT NULL</code> garantido por constraint.</p>
+</blockquote>
+<hr>
+<h2 id="12.-subconsulta-x-join-x-cte%3A-quando-usar-cada-um" tabindex="-1">12. Subconsulta x JOIN x CTE: Quando Usar Cada Um</h2>
+<p>As três abordagens frequentemente produzem o <strong>mesmo resultado lógico</strong>, mas comunicam intenções diferentes e nem sempre têm o mesmo desempenho.</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- (A) Subconsulta com EXISTS</span>
+<span class="hljs-keyword">SELECT</span> c.razao_social
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">EXISTS</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span> <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">WHERE</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+);
+
+<span class="hljs-comment">-- (B) JOIN equivalente (exige DISTINCT para não duplicar contribuintes com várias notas)</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DISTINCT</span> c.razao_social
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">JOIN</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">ON</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte;
+
+<span class="hljs-comment">-- (C) CTE equivalente</span>
+<span class="hljs-keyword">WITH</span> contribuintes_com_nota <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DISTINCT</span> id_emitente <span class="hljs-keyword">AS</span> id_contribuinte
+    <span class="hljs-keyword">FROM</span> dbo.nfe
+)
+<span class="hljs-keyword">SELECT</span> c.razao_social
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">JOIN</span> contribuintes_com_nota <span class="hljs-keyword">AS</span> ccn
+    <span class="hljs-keyword">ON</span> ccn.id_contribuinte <span class="hljs-operator">=</span> c.id_contribuinte;
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th>Subconsulta (<code>EXISTS</code>/<code>IN</code>)</th>
+<th><code>JOIN</code></th>
+<th>CTE (<code>WITH</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quando a intenção é**&quot;filtrar por existência&quot;**</td>
+<td>Mais natural e direto</td>
+<td>Exige<code>DISTINCT</code>/cuidado com duplicação</td>
+<td>Funciona, mas é mais verboso para esse caso simples</td>
+</tr>
+<tr>
+<td>Quando é preciso<strong>trazer colunas</strong> da tabela relacionada</td>
+<td>Não serve (subconsulta não expõe colunas para o<code>SELECT</code> externo)</td>
+<td>Ideal</td>
+<td>Ideal</td>
+</tr>
+<tr>
+<td>Reaproveitar o mesmo resultado intermediário<strong>várias vezes</strong> na mesma consulta</td>
+<td>Repetiria a subconsulta em cada lugar</td>
+<td>Repetiria o<code>JOIN</code></td>
+<td>Ideal — a CTE é definida uma vez e referenciada quantas vezes for preciso</td>
+</tr>
+<tr>
+<td>Consultas recursivas (ex.: hierarquia de contas contábeis)</td>
+<td>Não suportado</td>
+<td>Não suportado diretamente</td>
+<td><strong>Único que suporta</strong> (<code>WITH ... AS (... UNION ALL ...)</code>)</td>
+</tr>
+<tr>
+<td>Legibilidade em consultas com 3+ níveis de aninhamento</td>
+<td>Degrada rapidamente</td>
+<td>Não se aplica</td>
+<td>Mantém legibilidade (blocos nomeados e sequenciais)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Regra prática:</strong> comece pela forma mais direta para a pergunta de negócio (<code>EXISTS</code> para &quot;existe?&quot;, <code>JOIN</code> para &quot;traga os dados relacionados&quot;); migre para CTE quando a consulta precisar reutilizar um resultado intermediário mais de uma vez ou quando o aninhamento de subconsultas passar de dois níveis.</p>
+<hr>
+<h2 id="13.-desempenho-e-plano-de-execu%C3%A7%C3%A3o" tabindex="-1">13. Desempenho e Plano de Execução</h2>
+<p>Subconsultas <strong>não são, por definição, mais lentas</strong> que <code>JOIN</code>s — o otimizador de consultas do SQL Server frequentemente as reescreve internamente para planos equivalentes. Ainda assim, alguns pontos merecem atenção prática:</p>
+<ul>
+<li><strong>Índices na coluna de correlação:</strong> uma subconsulta correlacionada (ou um <code>EXISTS</code>) que filtra por <code>n.id_emitente = c.id_contribuinte</code> se beneficia diretamente de um índice em <code>dbo.nfe(id_emitente)</code>. Sem esse índice, cada avaliação da subconsulta pode exigir uma varredura completa da tabela (<em>table scan</em>).</li>
+<li><strong><code>SELECT 1</code> em <code>EXISTS</code>:</strong> não há ganho real em trocar <code>SELECT 1</code> por <code>SELECT *</code> ou por uma coluna específica dentro de <code>EXISTS</code> — o otimizador ignora a lista de colunas nesse contexto, pois só o fato de &quot;existir linha&quot; importa.</li>
+<li><strong>Ler o plano de execução (SSMS):</strong> <code>Ctrl+M</code> (Include Actual Execution Plan) antes de rodar a consulta permite visualizar se uma subconsulta foi transformada em <code>Nested Loops</code>, <code>Hash Match</code> ou <code>Merge Join</code> — e se algum operador está fazendo <em>scan</em> em vez de <em>seek</em>.</li>
+<li><strong><code>TOP (1)</code> sem <code>ORDER BY</code> determinístico:</strong> ao usar <code>TOP (1)</code> dentro de uma subconsulta escalar (ex.: <a href="#42-comparando-com-um-valor-%C3%BAnico-no-where">seção 4.2</a>) sem uma coluna que garanta desempate único (como a chave primária como critério secundário), o resultado pode variar entre execuções caso haja empate no critério de ordenação principal.</li>
+<li><strong>Subconsultas correlacionadas em grande volume:</strong> para tabelas fiscais com milhões de notas, compare sempre o desempenho da subconsulta correlacionada com a alternativa via <code>CROSS APPLY</code>/<code>OUTER APPLY</code> (<a href="#10-apply--subconsultas-correlacionadas-como-jun%C3%A7%C3%A3o">seção 10</a>) ou função de janela (<code>ROW_NUMBER() OVER (PARTITION BY ...)</code>) — em muitos casos essas alternativas geram planos mais eficientes para &quot;top N por grupo&quot;.</li>
+</ul>
+<hr>
+<h2 id="14.-cen%C3%A1rio-integrado%3A-an%C3%A1lise-fiscal-completa" tabindex="-1">14. Cenário Integrado: Análise Fiscal Completa</h2>
+<p>O exemplo a seguir combina várias técnicas deste módulo em uma única rotina analítica típica de auditoria fiscal:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">WITH</span> media_por_regime <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span>
+        c.regime_tributario,
+        <span class="hljs-built_in">AVG</span>(n.valor_total) <span class="hljs-keyword">AS</span> media_regime
+    <span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+    <span class="hljs-keyword">JOIN</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+        <span class="hljs-keyword">ON</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> c.regime_tributario
+)
+<span class="hljs-keyword">SELECT</span>
+    c.razao_social,
+    c.regime_tributario,
+    ultima_nota.chave_acesso        <span class="hljs-keyword">AS</span> ultima_nota_emitida,
+    ultima_nota.valor_total         <span class="hljs-keyword">AS</span> valor_ultima_nota,
+    mr.media_regime
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-comment">-- subconsulta correlacionada via APPLY: última nota de cada contribuinte</span>
+<span class="hljs-keyword">OUTER</span> APPLY (
+    <span class="hljs-keyword">SELECT</span> TOP (<span class="hljs-number">1</span>) n.chave_acesso, n.valor_total
+    <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">WHERE</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+    <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> n.data_emissao <span class="hljs-keyword">DESC</span>
+) <span class="hljs-keyword">AS</span> ultima_nota
+<span class="hljs-comment">-- CTE reaproveitada para trazer a média do regime do contribuinte</span>
+<span class="hljs-keyword">JOIN</span> media_por_regime <span class="hljs-keyword">AS</span> mr
+    <span class="hljs-keyword">ON</span> mr.regime_tributario <span class="hljs-operator">=</span> c.regime_tributario
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">EXISTS</span> (
+    <span class="hljs-comment">-- subconsulta correlacionada: só contribuintes com nota acima da média do próprio regime</span>
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span>
+    <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n2
+    <span class="hljs-keyword">WHERE</span> n2.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+      <span class="hljs-keyword">AND</span> n2.valor_total <span class="hljs-operator">&gt;</span> mr.media_regime
+)
+<span class="hljs-keyword">AND</span> c.id_contribuinte <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">IN</span> (
+    <span class="hljs-comment">-- subconsulta independente, com filtro de NULL por segurança</span>
+        <span class="hljs-keyword">SELECT</span> id_emitente
+        <span class="hljs-keyword">FROM</span> dbo.nfe
+    <span class="hljs-keyword">WHERE</span> situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CANCELADA&#x27;</span>
+            <span class="hljs-keyword">AND</span> id_emitente <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+)
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> mr.media_regime <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p>Essa consulta responde: <em>&quot;quais contribuintes, que nunca tiveram nota cancelada, emitiram ao menos uma nota acima da média do próprio regime tributário — e qual foi a última nota de cada um?&quot;</em> — combinando CTE, <code>OUTER APPLY</code>, subconsulta correlacionada com <code>EXISTS</code> e subconsulta independente com <code>NOT IN</code> protegida contra <code>NULL</code>.</p>
+<hr>
+<h2 id="15.-boas-pr%C3%A1ticas" tabindex="-1">15. Boas Práticas</h2>
+<ul>
+<li>Prefira <strong><code>EXISTS</code>/<code>NOT EXISTS</code></strong> a <strong><code>IN</code>/<code>NOT IN</code></strong> quando a coluna testada puder conter <code>NULL</code> — especialmente em <code>NOT IN</code> (ver <a href="#11-o-perigo-do-not-in-com-null">seção 11</a>).</li>
+<li>Garanta que subconsultas escalares usadas com <code>=</code> <strong>sempre</strong> retornem no máximo uma linha (<code>TOP (1)</code> com <code>ORDER BY</code> determinístico, ou agregação).</li>
+<li>Dê <strong>alias explícito e descritivo</strong> a toda tabela derivada (<code>FROM (...) AS alias</code>) — o T-SQL exige o alias, mas um nome significativo também documenta a intenção da subconsulta.</li>
+<li>Evite mais de dois ou três níveis de subconsultas aninhadas: prefira decompor em CTEs nomeadas, que tornam a lógica sequencial e mais fácil de revisar em auditoria de código.</li>
+<li>Ao usar subconsultas correlacionadas em rotinas que rodam sobre tabelas fiscais volumosas, <strong>valide o plano de execução</strong> e garanta índice de apoio na coluna de correlação.</li>
+<li>Prefira <code>CROSS APPLY</code>/<code>OUTER APPLY</code> quando a &quot;subconsulta por linha&quot; precisar retornar mais de um valor ou mais de uma linha (ex.: &quot;as 3 notas mais recentes de cada contribuinte&quot;).</li>
+<li>Teste sempre o caso de <strong>conjunto vazio</strong> ao usar <code>ALL</code> (a condição se torna <code>TRUE</code>) e <code>ANY</code>/<code>SOME</code> (a condição se torna <code>FALSE</code>) — comportamento fácil de esquecer e que já causou falsos positivos em relatórios fiscais.</li>
+</ul>
+<hr>
+<h2 id="16.-gloss%C3%A1rio" tabindex="-1">16. Glossário</h2>
+<table>
+<thead>
+<tr>
+<th>Termo</th>
+<th>Definição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Subconsulta (subquery)</strong></td>
+<td>Instrução<code>SELECT</code> aninhada dentro de outra instrução SQL</td>
+</tr>
+<tr>
+<td><strong>Consulta externa / interna</strong></td>
+<td>A instrução que contém a subconsulta (externa) e a subconsulta propriamente dita (interna)</td>
+</tr>
+<tr>
+<td><strong>Subconsulta escalar</strong></td>
+<td>Subconsulta que retorna um único valor (uma linha, uma coluna)</td>
+</tr>
+<tr>
+<td><strong>Subconsulta correlacionada</strong></td>
+<td>Subconsulta que referencia colunas da consulta externa, sendo logicamente reavaliada a cada linha candidata</td>
+</tr>
+<tr>
+<td><strong>Tabela derivada (derived table)</strong></td>
+<td>Subconsulta usada na cláusula<code>FROM</code>, tratada como uma tabela temporária com alias obrigatório</td>
+</tr>
+<tr>
+<td><strong><code>APPLY</code> (<code>CROSS</code>/<code>OUTER</code>)</strong></td>
+<td>Extensão T-SQL que junta cada linha externa ao resultado de uma subconsulta correlacionada, mesmo que ela retorne múltiplas linhas/colunas</td>
+</tr>
+<tr>
+<td><strong>Lógica de três valores</strong></td>
+<td>Modelo lógico do SQL em que uma comparação pode resultar em<code>TRUE</code>, <code>FALSE</code> ou <code>UNKNOWN</code> (quando envolve <code>NULL</code>)</td>
+</tr>
+<tr>
+<td><strong>Plano de execução</strong></td>
+<td>Representação, gerada pelo otimizador, de como o SQL Server efetivamente executará uma consulta (operadores como<em>Seek</em>, <em>Scan</em>, <em>Nested Loops</em>, <em>Hash Match</em>)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="17.-exerc%C3%ADcios" tabindex="-1">17. Exercícios</h2>
+<h3 id="parte-i-%E2%80%94-subconsultas-independentes-e-escalares" tabindex="-1">Parte I — Subconsultas independentes e escalares</h3>
+<ol>
+<li>Liste os contribuintes cujo <code>id_contribuinte</code> está entre os que emitiram notas com <code>valor_total</code> maior que R$ 20.000,00, usando <code>IN</code>.</li>
+<li>Escreva uma consulta que traga, para cada nota fiscal, o valor da nota e a média geral de todas as notas em uma coluna calculada (subconsulta escalar no <code>SELECT</code>).</li>
+<li>Encontre o contribuinte com a nota fiscal de maior valor usando uma subconsulta escalar com <code>TOP (1)</code> no <code>WHERE</code>.</li>
+</ol>
+<h3 id="parte-ii-%E2%80%94-any%2C-all%2C-exists" tabindex="-1">Parte II — <code>ANY</code>, <code>ALL</code>, <code>EXISTS</code></h3>
+<ol start="4">
+<li>Liste os contribuintes que emitiram alguma nota com valor maior que <strong>qualquer</strong> nota do regime &quot;MEI&quot; (<code>&gt; ANY</code>).</li>
+<li>Liste os contribuintes que emitiram uma nota com valor maior que <strong>todas</strong> as notas do regime &quot;MEI&quot; (<code>&gt; ALL</code>).</li>
+<li>Reescreva o exercício 1 usando <code>EXISTS</code> em vez de <code>IN</code>, com subconsulta correlacionada.</li>
+<li>Liste os contribuintes que nunca emitiram nenhuma nota fiscal, usando <code>NOT EXISTS</code>.</li>
+</ol>
+<h3 id="parte-iii-%E2%80%94-derived-tables%2C-having-e-apply" tabindex="-1">Parte III — Derived tables, <code>HAVING</code> e <code>APPLY</code></h3>
+<ol start="8">
+<li>Construa uma tabela derivada que agregue o total de notas por contribuinte, e filtre no <code>WHERE</code> externo apenas os contribuintes com mais de 5 notas.</li>
+<li>Escreva uma consulta com <code>HAVING</code> que traga apenas os regimes tributários cuja soma de <code>valor_total</code> supera a soma média entre todos os regimes.</li>
+<li>Utilize <code>CROSS APPLY</code> para trazer, para cada contribuinte, as 2 notas fiscais de maior valor.</li>
+<li>Utilize <code>OUTER APPLY</code> para trazer a última nota emitida por contribuinte, preservando contribuintes sem nenhuma nota.</li>
+</ol>
+<h3 id="parte-iv-%E2%80%94-armadilhas-e-compara%C3%A7%C3%A3o" tabindex="-1">Parte IV — Armadilhas e comparação</h3>
+<ol start="12">
+<li>Demonstre, com uma massa de dados de teste contendo ao menos um <code>NULL</code> em <code>id_destinatario</code>, o problema do <code>NOT IN</code> descrito na <a href="#11-o-perigo-do-not-in-com-null">seção 11</a>. Em seguida, corrija a consulta com <code>NOT EXISTS</code>.</li>
+<li>Reescreva a consulta do exercício 7 usando <code>LEFT JOIN ... WHERE ... IS NULL</code> e compare o plano de execução com a versão <code>NOT EXISTS</code>.</li>
+</ol>
+<h3 id="desafio" tabindex="-1">Desafio</h3>
+<p>Desenvolva uma consulta única (pode usar CTE) que responda: <em>&quot;Quais contribuintes emitiram, no último trimestre, uma nota com valor acima da média do próprio regime tributário, considerando apenas notas não canceladas, e qual foi a data da nota mais recente de cada um?&quot;</em></p>
+<p>Requisitos:</p>
+<ul>
+<li>Ao menos uma subconsulta correlacionada.</li>
+<li>Ao menos um uso de <code>CROSS APPLY</code> ou <code>OUTER APPLY</code>.</li>
+<li>Tratamento seguro de <code>NULL</code> (sem uso de <code>NOT IN</code> desprotegido).</li>
+<li>Apresente o plano de execução (<code>Ctrl+M</code>) e identifique o operador mais custoso.</li>
+</ul>
+<hr>
+<h2 id="18.-refer%C3%AAncias" tabindex="-1">18. Referências</h2>
+<ul>
+<li><strong>Microsoft Learn — Subqueries (Transact-SQL)</strong>: referência oficial sobre sintaxe e regras de subconsultas no SQL Server (<code>docs.microsoft.com/sql/t-sql/queries</code>).</li>
+<li><strong>Microsoft Learn — Use Correlated Subqueries</strong>: documentação específica sobre subconsultas correlacionadas.</li>
+<li><strong>Microsoft Learn — APPLY (Transact-SQL)</strong>: referência de <code>CROSS APPLY</code>/<code>OUTER APPLY</code>.</li>
+<li><strong>Microsoft Learn — EXISTS (Transact-SQL)</strong> e <strong>IN (Transact-SQL)</strong>: sintaxe e semântica detalhada de cada operador.</li>
+<li><strong>Itzik Ben-Gan — &quot;T-SQL Querying&quot;</strong> (Microsoft Press): capítulo dedicado a subconsultas, <code>APPLY</code> e lógica de três valores, com discussão aprofundada da armadilha do <code>NOT IN</code>/<code>NULL</code>.</li>
+<li>Consulte também <a href="../modulo_02/00%20Comandos%20SQL.md">00 Comandos SQL.md</a> para revisão das cláusulas DQL básicas antes deste módulo.</li>
+</ul>
+
+    </div>
+</body>
+</html>

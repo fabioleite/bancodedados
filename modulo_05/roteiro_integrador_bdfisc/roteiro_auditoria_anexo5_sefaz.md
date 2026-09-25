@@ -1,3 +1,7 @@
+```sql
+MVA_Original_N_deriv_Petr
+```
+
 # Roteiro de carga, limpeza e auditoria fiscal para tabela do Anexo 5 da SEFAZ
 
 ## 1. Objetivo
@@ -47,7 +51,7 @@ $campos
 #### 2) Quantos registros ao todo o arquivo possui
 
 ```powershell
-$arquivo = 'C:\projetos\bancodedados\modulo_05\roteiro_integrador_bdfisc\tabela_anexo_5_sefaz.csv'
+$arquivo = 'C:\Users\fabio\projetos\bancodedados\modulo_05\roteiro_integrador_bdfisc\tabela_anexo_5_sefaz.csv'
 $registros = (Get-Content $arquivo).Count - 1
 Write-Host "Total de registros em tabela_anexo_5_sefaz.csv: $registros"
 ```
@@ -483,6 +487,14 @@ SELECT
 FROM staging.anexo5_sefaz_raw;
 ```
 
+### Atualização do percentual
+
+```sql
+alter table fisc.anexo5_sefaz_normalizado add Aliq_Interna_percentual decimal (8,2)
+update fisc.anexo5_sefaz_normalizado 
+set Aliq_Interna_percentual = Aliq_interna * 100
+```
+
 ---
 
 ## 7. Auditoria fiscal sugerida
@@ -628,6 +640,9 @@ SELECT
 FROM fisc.anexo5_sefaz_normalizado a
 LEFT JOIN fisc.TB_138_PR_SAIDAS_ITENS_PARA_ANALISE_REGISTROS b
     ON a.NCM_SH = b.ITEMNF_NCM
+	-- LEFT(b.ITEMNF_NCM, LEN(a.NCM_SH)) = a.NCM_SH
+
+  
 WHERE a.CEST IS NOT NULL
   AND b.ITEMNF_CPROD IS NOT NULL
   AND LOWER(a.DESCRICAO) NOT LIKE '%' + LOWER(b.ITEMNF_XPROD) + '%';
@@ -655,12 +670,15 @@ Conectando com a seção 3.3.4 e 3.3.7:
 
 A lógica é simples: comparar a data do documento fiscal com a vigência da regra aplicada.
 
+Exemplo simples:
+
 ```sql
 SELECT
     n.NF_CHAVE_ACESSO,
     n.NF_DHEMI,
     n.ITEMNF_NCM,
     n.ITEMNF_CEST,
+    n.ITEMNF_PICMS,
     a.CEST AS CEST_TABELA,
     a.Vigencia_inicial,
     a.Vigencia_final,
@@ -673,6 +691,75 @@ WHERE n.NF_DHEMI >= a.Vigencia_inicial
   AND (a.Vigencia_final IS NULL OR n.NF_DHEMI <= a.Vigencia_final)
   AND n.ITEMNF_NCM IS NOT NULL;
 ```
+
+```sql
+DECLARE @PeriodoDeclaracao CHAR(7) = NULL; -- use o formato armazenado na tabela
+DECLARE @DataInicial DATE = NULL;
+DECLARE @DataFinal DATE = NULL;
+DECLARE @NCM VARCHAR(20) = NULL;
+DECLARE @CEST VARCHAR(20) = NULL;
+
+-- Exemplos de preenchimento:
+-- 1) Todas as operações de uma competência:
+--    @PeriodoDeclaracao = '06/2025'
+--    @DataInicial = NULL, @DataFinal = NULL,
+--    @NCM = NULL, @CEST = NULL
+--
+-- 2) Operações emitidas em um intervalo, sem restringir NCM ou CEST:
+--    @PeriodoDeclaracao = NULL
+--    @DataInicial = '2025-01-01', @DataFinal = '2025-03-31',
+--    @NCM = NULL, @CEST = NULL
+--
+-- 3) Investigação de um NCM específico:
+--    @PeriodoDeclaracao = NULL
+--    @DataInicial = '2025-01-01', @DataFinal = '2025-06-30',
+--    @NCM = '3917', @CEST = NULL
+--
+-- 4) Investigação de um CEST informado na operação:
+--    @PeriodoDeclaracao = NULL
+--    @DataInicial = NULL, @DataFinal = NULL,
+--    @NCM = NULL, @CEST = '01.002.00'
+
+-- NULL significa que o respectivo filtro não será aplicado.
+
+SELECT
+    n.NF_CHAVE_ACESSO,
+    n.NF_DHEMI,
+    n.ITEMNF_NCM,
+    n.ITEMNF_CEST,
+    a.CEST AS CEST_TABELA,
+    a.Vigencia_inicial,
+    a.Vigencia_final,
+    a.Aliq_Interna,
+    a.MVA_Original
+FROM fisc.TB_138_PR_SAIDAS_ITENS_PARA_ANALISE_REGISTROS n
+INNER JOIN fisc.anexo5_sefaz_normalizado a
+    ON n.ITEMNF_NCM = a.NCM_SH
+WHERE n.ITEMNF_NCM IS NOT NULL
+    AND a.NCM_SH IS NOT NULL
+    AND a.Vigencia_inicial IS NOT NULL
+    AND (@PeriodoDeclaracao IS NULL
+             OR n.REG0_PERIODO_DECLARACAO = @PeriodoDeclaracao)
+    AND (@DataInicial IS NULL OR n.NF_DHEMI >= @DataInicial)
+    AND (@DataFinal IS NULL OR n.NF_DHEMI < DATEADD(DAY, 1, @DataFinal))
+    AND (@NCM IS NULL OR n.ITEMNF_NCM = @NCM)
+    AND (@CEST IS NULL OR n.ITEMNF_CEST = @CEST)
+    AND n.NF_DHEMI >= a.Vigencia_inicial
+    AND (a.Vigencia_final IS NULL OR n.NF_DHEMI <= a.Vigencia_final)
+OPTION (RECOMPILE);
+```
+
+#### Filtros recomendados
+
+- `REG0_PERIODO_DECLARACAO`: limita a consulta a uma competência. O valor do parâmetro deve seguir exatamente o formato armazenado, pois a coluna é textual.
+- `NF_DHEMI`: use `@DataInicial` e `@DataFinal` para restringir o intervalo de emissão sem aplicar conversão na coluna.
+- `ITEMNF_NCM`: restringe a investigação a um NCM específico. O exemplo mantém a igualdade original; tratar `NCM_SH` como prefixo exige uma regra de junção própria.
+- `ITEMNF_CEST`: restringe a investigação a um CEST informado na operação. Ele não foi colocado na condição do `JOIN`, pois isso mudaria a semântica e poderia ocultar divergências entre o CEST da operação e o CEST encontrado na tabela.
+- `Vigencia_inicial` e `Vigencia_final`: continuam obrigatórios para garantir que a regra estava ativa na data da operação.
+
+O `LEFT JOIN` original produzia, na prática, o mesmo resultado de um `INNER JOIN`, pois as condições de vigência no `WHERE` eliminavam as linhas sem correspondência no Anexo 5. Se a auditoria precisar listar também operações sem regra correspondente, mantenha o `LEFT JOIN` e mova as condições de vigência para a cláusula `ON`.
+
+`OPTION (RECOMPILE)` permite que o SQL Server gere um plano adequado aos filtros informados, já que eles são opcionais. Em execução recorrente, compare o plano e o tempo com e sem essa opção.
 
 #### Explicação da auditoria
 
@@ -726,6 +813,8 @@ Essas auditorias não são apenas técnicas; elas representam a forma pela qual 
 
 ## 8. Stored procedure para automatizar o processo
 
+> A procedure cria, de forma condicional, o schema `staging`, a tabela `staging.anexo5_sefaz_raw` e a tabela `fisc.anexo5_sefaz_normalizado_SP`. A tabela original `fisc.anexo5_sefaz_normalizado` não é alterada por esta procedure.
+
 ```sql
 CREATE OR ALTER PROCEDURE dbo.usp_carga_anexo5_sefaz
     @ArquivoCSV NVARCHAR(4000)
@@ -734,21 +823,130 @@ BEGIN
     SET NOCOUNT ON;
 
     BEGIN TRY
+        IF SCHEMA_ID('staging') IS NULL
+            EXEC ('CREATE SCHEMA staging');
+
+        IF OBJECT_ID('staging.anexo5_sefaz_raw', 'U') IS NULL
+        BEGIN
+            CREATE TABLE staging.anexo5_sefaz_raw (
+                Tabela_CEST                   NVARCHAR(50) NULL,
+                ITEM                          NVARCHAR(50) NULL,
+                CEST                          NVARCHAR(50) NULL,
+                NCM_SH                        NVARCHAR(50) NULL,
+                DESCRICAO                     NVARCHAR(2000) NULL,
+                Legislacao                    NVARCHAR(2000) NULL,
+                Vigencia_inicial              NVARCHAR(100) NULL,
+                Vigencia_final                NVARCHAR(100) NULL,
+                Aliq_Interna                  NVARCHAR(50) NULL,
+                MVA_Original                  NVARCHAR(50) NULL,
+                MVA_Original_S_Fid            NVARCHAR(50) NULL,
+                MVA_S_Fid_Aliq_4              NVARCHAR(50) NULL,
+                MVA_S_Fid_Aliq_7              NVARCHAR(50) NULL,
+                MVA_S_Fid_Aliq_12             NVARCHAR(50) NULL,
+                MVA_Original_C_Fid            NVARCHAR(50) NULL,
+                MVA_C_Fid_Aliq_4              NVARCHAR(50) NULL,
+                MVA_C_Fid_Aliq_7              NVARCHAR(50) NULL,
+                MVA_C_Fid_Aliq_12             NVARCHAR(50) NULL,
+                Funcep                        NVARCHAR(50) NULL,
+                Pauta_Fiscal                  NVARCHAR(200) NULL,
+                MVA_Aliq_4                    NVARCHAR(50) NULL,
+                MVA_Aliq_7                    NVARCHAR(50) NULL,
+                MVA_Aliq_12                   NVARCHAR(50) NULL,
+                Funcep_Bebidas_Gaseificada    NVARCHAR(200) NULL,
+                MVA_Original_deriv_Petr       NVARCHAR(50) NULL,
+                MVA_deriv_Petr_Aliq_4         NVARCHAR(50) NULL,
+                MVA_deriv_Petr_Aliq_7         NVARCHAR(50) NULL,
+                MVA_deriv_Petr_Aliq_12        NVARCHAR(50) NULL,
+                MVA_Original_N_deriv_Petr     NVARCHAR(50) NULL,
+                MVA_N_deriv_Petr_Aliq_4       NVARCHAR(50) NULL,
+                MVA_N_deriv_Petr_Aliq_7       NVARCHAR(50) NULL,
+                MVA_N_deriv_Petr_Aliq_12      NVARCHAR(50) NULL,
+                MVA_Original_Outros_Prod      NVARCHAR(50) NULL,
+                MVA_Outros_Prod_Aliq_4        NVARCHAR(50) NULL,
+                MVA_Outros_Prod_Aliq_7        NVARCHAR(50) NULL,
+                MVA_Outros_Prod_Aliq_12       NVARCHAR(50) NULL,
+                Funcep_Consumo_maior_100Kw_h  NVARCHAR(50) NULL,
+                Lista                         NVARCHAR(50) NULL,
+                UF_Signataria                 NVARCHAR(50) NULL,
+                Exterior_UF_nao_Signat        NVARCHAR(50) NULL,
+                Ato_Cotepe                    NVARCHAR(200) NULL,
+                Origem_Arquivo                NVARCHAR(200) NULL,
+                Nome_Aba_Planilha             NVARCHAR(200) NULL
+            );
+        END;
+
+        IF OBJECT_ID('fisc.anexo5_sefaz_normalizado_SP', 'U') IS NULL
+        BEGIN
+            CREATE TABLE fisc.anexo5_sefaz_normalizado_SP (
+                Id BIGINT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+                Tabela_CEST                   NVARCHAR(50) NULL,
+                ITEM                          DECIMAL(18,4) NULL,
+                CEST                          NVARCHAR(50) NULL,
+                NCM_SH                        NVARCHAR(50) NULL,
+                DESCRICAO                     NVARCHAR(2000) NULL,
+                Legislacao                    NVARCHAR(2000) NULL,
+                Vigencia_inicial              DATETIME NULL,
+                Vigencia_final                DATETIME NULL,
+                Aliq_Interna                  DECIMAL(18,4) NULL,
+                Aliq_Interna_percentual       DECIMAL(8,2) NULL,
+                MVA_Original                  DECIMAL(18,4) NULL,
+                MVA_Original_S_Fid            DECIMAL(18,4) NULL,
+                MVA_S_Fid_Aliq_4              DECIMAL(18,4) NULL,
+                MVA_S_Fid_Aliq_7              DECIMAL(18,4) NULL,
+                MVA_S_Fid_Aliq_12             DECIMAL(18,4) NULL,
+                MVA_Original_C_Fid            DECIMAL(18,4) NULL,
+                MVA_C_Fid_Aliq_4              DECIMAL(18,4) NULL,
+                MVA_C_Fid_Aliq_7              DECIMAL(18,4) NULL,
+                MVA_C_Fid_Aliq_12             DECIMAL(18,4) NULL,
+                Funcep                        DECIMAL(18,4) NULL,
+                Pauta_Fiscal                  NVARCHAR(200) NULL,
+                MVA_Aliq_4                    DECIMAL(18,4) NULL,
+                MVA_Aliq_7                    DECIMAL(18,4) NULL,
+                MVA_Aliq_12                   DECIMAL(18,4) NULL,
+                Funcep_Bebidas_Gaseificada    NVARCHAR(200) NULL,
+                MVA_Original_deriv_Petr       DECIMAL(18,4) NULL,
+                MVA_deriv_Petr_Aliq_4         DECIMAL(18,4) NULL,
+                MVA_deriv_Petr_Aliq_7         DECIMAL(18,4) NULL,
+                MVA_deriv_Petr_Aliq_12        DECIMAL(18,4) NULL,
+                MVA_Original_N_deriv_Petr     DECIMAL(18,4) NULL,
+                MVA_N_deriv_Petr_Aliq_4       DECIMAL(18,4) NULL,
+                MVA_N_deriv_Petr_Aliq_7       DECIMAL(18,4) NULL,
+                MVA_N_deriv_Petr_Aliq_12      DECIMAL(18,4) NULL,
+                MVA_Original_Outros_Prod      DECIMAL(18,4) NULL,
+                MVA_Outros_Prod_Aliq_4        DECIMAL(18,4) NULL,
+                MVA_Outros_Prod_Aliq_7        DECIMAL(18,4) NULL,
+                MVA_Outros_Prod_Aliq_12       DECIMAL(18,4) NULL,
+                Funcep_Consumo_maior_100Kw_h  DECIMAL(18,4) NULL,
+                Lista                         NVARCHAR(50) NULL,
+                UF_Signataria                 NVARCHAR(50) NULL,
+                Exterior_UF_nao_Signat        NVARCHAR(50) NULL,
+                Ato_Cotepe                    NVARCHAR(200) NULL,
+                Origem_Arquivo                NVARCHAR(200) NULL,
+                Nome_Aba_Planilha             NVARCHAR(200) NULL
+            );
+        END;
+
         TRUNCATE TABLE staging.anexo5_sefaz_raw;
+        TRUNCATE TABLE fisc.anexo5_sefaz_normalizado_SP;
 
-        BULK INSERT staging.anexo5_sefaz_raw
-        FROM @ArquivoCSV
-        WITH (
-            FIELDTERMINATOR = '|',
-            ROWTERMINATOR = '\n',
-            FIRSTROW = 2,
-            DATAFILETYPE = 'char',
-            CODEPAGE = '65001',
-            TABLOCK,
-            MAXERRORS = 100
-        );
+        DECLARE @SQLBulkInsert NVARCHAR(MAX);
 
-        INSERT INTO dbo.anexo5_sefaz_normalizado (
+        SET @SQLBulkInsert =
+            N'BULK INSERT staging.anexo5_sefaz_raw
+              FROM ''' + REPLACE(@ArquivoCSV, '''', '''''') + N'''
+              WITH (
+                  FIELDTERMINATOR = ''|'',
+                  ROWTERMINATOR = ''\n'',
+                  FIRSTROW = 2,
+                  DATAFILETYPE = ''char'',
+                  CODEPAGE = ''65001'',
+                  TABLOCK,
+                  MAXERRORS = 100
+              );';
+
+        EXEC sys.sp_executesql @SQLBulkInsert;
+
+        INSERT INTO fisc.anexo5_sefaz_normalizado_SP (
             Tabela_CEST,
             ITEM,
             CEST,
@@ -803,6 +1001,9 @@ BEGIN
             LTRIM(RTRIM(Nome_Aba_Planilha))
         FROM staging.anexo5_sefaz_raw;
 
+        UPDATE fisc.anexo5_sefaz_normalizado_SP
+        SET Aliq_Interna_percentual = Aliq_Interna * 100;
+
         SELECT 'Carga do Anexo 5 concluída com sucesso.' AS Resultado;
 
     END TRY
@@ -821,6 +1022,63 @@ GO
 ```sql
 EXEC dbo.usp_carga_anexo5_sefaz
     @ArquivoCSV = 'C:\dados\staging\tabela_anexo_5_sefaz.csv';
+```
+
+### 8.1 Verificação quantitativa dos registros carregados
+
+Os comandos abaixo apresentam somente os quantitativos da carga realizada, sem classificar registros ou interpretar regras fiscais.
+
+#### Total de registros na staging e na tabela normalizada
+
+```sql
+SELECT
+    (SELECT COUNT(*) FROM staging.anexo5_sefaz_raw) AS registros_staging,
+    (SELECT COUNT(*) FROM fisc.anexo5_sefaz_normalizado_SP) AS registros_normalizados;
+```
+
+#### Quantidade de registros normalizados por origem do arquivo
+
+```sql
+SELECT
+    Origem_Arquivo,
+    COUNT(*) AS quantidade_registros
+FROM fisc.anexo5_sefaz_normalizado_SP
+GROUP BY Origem_Arquivo
+ORDER BY quantidade_registros DESC, Origem_Arquivo;
+```
+
+#### Quantidade de registros normalizados por aba da planilha
+
+```sql
+SELECT
+    Nome_Aba_Planilha,
+    COUNT(*) AS quantidade_registros
+FROM fisc.anexo5_sefaz_normalizado_SP
+GROUP BY Nome_Aba_Planilha
+ORDER BY quantidade_registros DESC, Nome_Aba_Planilha;
+```
+
+#### Quantidade de valores distintos carregados
+
+```sql
+SELECT
+    COUNT(DISTINCT CEST) AS cest_distintos,
+    COUNT(DISTINCT NCM_SH) AS ncm_distintos,
+    COUNT(DISTINCT Tabela_CEST) AS tabelas_cest_distintas,
+    COUNT(DISTINCT Origem_Arquivo) AS arquivos_origem_distintos,
+    COUNT(DISTINCT Nome_Aba_Planilha) AS abas_planilha_distintas
+FROM fisc.anexo5_sefaz_normalizado_SP;
+```
+
+#### Quantidade de registros por tabela CEST
+
+```sql
+SELECT
+    Tabela_CEST,
+    COUNT(*) AS quantidade_registros
+FROM fisc.anexo5_sefaz_normalizado_SP
+GROUP BY Tabela_CEST
+ORDER BY Tabela_CEST;
 ```
 
 ---

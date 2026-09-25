@@ -1039,7 +1039,18 @@ SELECT
 </div></code></pre>
 <hr>
 <h1 id="10.-etapa-8-%E2%80%94-comparar-table-scan-%C3%97-index-seek" tabindex="-1">10. Etapa 8 — Comparar Table Scan × Index Seek</h1>
-<h2 id="sem-%C3%ADndice" tabindex="-1">Sem índice</h2>
+<p>A comparação entre <code>Table Scan</code> e <code>Index Seek</code> é central para entender o comportamento do otimizador. A ideia é simples: quando a consulta precisa localizar um subconjunto pequeno de linhas, a busca direta em um índice geralmente é mais eficiente do que percorrer toda a tabela. Quando a consulta exige praticamente todos os registros, um <code>Table Scan</code> pode ser até mais vantajoso do que buscar em um índice, porque o custo de navegação no índice pode ser maior do que o custo de varrer a estrutura de dados inteira.</p>
+<h2 id="exemplo-1-%E2%80%94-consulta-sem-%C3%ADndice" tabindex="-1">Exemplo 1 — consulta sem índice</h2>
+<p>Se a tabela ainda estiver em estado de <code>heap</code> e a consulta for:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    COUNT_BIG(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> quantidade_itens,
+    <span class="hljs-built_in">SUM</span>(ITEMNF_VPROD) <span class="hljs-keyword">AS</span> valor_produtos
+<span class="hljs-keyword">FROM</span> fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01
+<span class="hljs-keyword">WHERE</span> NF_DHEMI <span class="hljs-operator">&gt;=</span> <span class="hljs-string">&#x27;20260101&#x27;</span>
+  <span class="hljs-keyword">AND</span> NF_DHEMI <span class="hljs-operator">&lt;</span>  <span class="hljs-string">&#x27;20260201&#x27;</span>;
+</div></code></pre>
+<p>e não houver índice em <code>NF_DHEMI</code>, o SQL Server não consegue localizar rapidamente somente o período pesquisado. Em vez disso, ele percorre a tabela inteira.</p>
+<p>Conceitualmente:</p>
 <pre class='hljs'><code><div>HEAP
  │
  ▼
@@ -1049,9 +1060,18 @@ Table Scan
 toda a tabela
  │
  ▼
-filtro
+filtro de data
 </div></code></pre>
-<h2 id="com-%C3%ADndice" tabindex="-1">Com índice</h2>
+<p>Esse operador representa uma leitura sequencial de grande parte da estrutura. O custo cresce conforme o volume de dados aumenta, principalmente em tabelas de itens fiscais.</p>
+<h2 id="exemplo-2-%E2%80%94-consulta-com-%C3%ADndice-em-data" tabindex="-1">Exemplo 2 — consulta com índice em data</h2>
+<p>Agora, depois de criar o índice:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> INDEX IX_TB202_NF_DHEMI
+<span class="hljs-keyword">ON</span> fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01
+(
+    NF_DHEMI
+);
+</div></code></pre>
+<p>a mesma consulta pode ser atendida por um caminho mais direto:</p>
 <pre class='hljs'><code><div>IX_TB202_NF_DHEMI
         │
         ▼
@@ -1060,13 +1080,64 @@ filtro
         ▼
  somente registros do período
 </div></code></pre>
+<p>Nesse caso, o SQL Server utiliza a árvore do índice para localizar rapidamente o intervalo de datas solicitado e evitar a leitura de todo o conjunto de registros.</p>
+<h2 id="quando-aparece-cada-operador%3F" tabindex="-1">Quando aparece cada operador?</h2>
+<h3 id="table-scan" tabindex="-1"><code>Table Scan</code></h3>
+<p>Aparece quando o otimizador decide percorrer a tabela inteira, geralmente porque:</p>
+<ul>
+<li>não há índice útil para o predicado;</li>
+<li>o filtro retorna uma parte grande da tabela;</li>
+<li>a análise exige a leitura de muitos registros;</li>
+<li>o custo estimado do scan é menor do que o custo de usar o índice.</li>
+</ul>
+<h3 id="index-seek" tabindex="-1"><code>Index Seek</code></h3>
+<p>Aparece quando o otimizador consegue localizar diretamente os registros relevantes usando a estrutura de índice, especialmente quando:</p>
+<ul>
+<li>a coluna do filtro é indexada;</li>
+<li>o predicado é seletivo;</li>
+<li>a condição é SARGable, como <code>&gt;=</code> e <code>&lt;</code> em intervalos de datas;</li>
+<li>o índice permite identificar um subconjunto pequeno dos dados.</li>
+</ul>
+<h2 id="compara%C3%A7%C3%A3o-pr%C3%A1tica" tabindex="-1">Comparação prática</h2>
+<h3 id="cen%C3%A1rio-a-%E2%80%94-filtro-por-data-em-uma-tabela-grande" tabindex="-1">Cenário A — filtro por data em uma tabela grande</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">WHERE</span> NF_DHEMI <span class="hljs-operator">&gt;=</span> <span class="hljs-string">&#x27;20260101&#x27;</span>
+  <span class="hljs-keyword">AND</span> NF_DHEMI <span class="hljs-operator">&lt;</span>  <span class="hljs-string">&#x27;20260201&#x27;</span>;
+</div></code></pre>
+<p>Isso normalmente favorece <code>Index Seek</code>, porque o período é uma fração pequena da tabela.</p>
+<h3 id="cen%C3%A1rio-b-%E2%80%94-consulta-sem-filtro-ou-filtro-muito-amplo" tabindex="-1">Cenário B — consulta sem filtro ou filtro muito amplo</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">WHERE</span> NF_UF_EMITENTE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;SP&#x27;</span>;
+</div></code></pre>
+<p>se a UF tiver muitos registros, o otimizador pode preferir um <code>Table Scan</code> ou um <code>Index Scan</code>, dependendo da seletividade e do número estimado de linhas.</p>
+<h2 id="o-que-observar-no-plano" tabindex="-1">O que observar no plano</h2>
+<p>No plano de execução, é importante olhar:</p>
+<ul>
+<li>operador de acesso: <code>Table Scan</code> ou <code>Index Seek</code>;</li>
+<li><code>Estimated Number of Rows</code>;</li>
+<li><code>Actual Number of Rows</code>;</li>
+<li><code>Logical Reads</code>;</li>
+<li>custo estimado do operador.</li>
+</ul>
+<p>Se o plano mostra <code>Table Scan</code> para uma consulta altamente seletiva, isso costuma indicar que:</p>
+<ul>
+<li>não existe um índice adequado;</li>
+<li>o filtro não está SARGable;</li>
+<li>o otimizador calculou que a leitura completa pode ser mais barata que a busca indexada.</li>
+</ul>
+<h2 id="conclus%C3%A3o" tabindex="-1">Conclusão</h2>
+<p><code>Table Scan</code> e <code>Index Seek</code> representam duas formas diferentes de localizar dados:</p>
+<ul>
+<li><code>Table Scan</code> é uma leitura ampla e mais simples;</li>
+<li><code>Index Seek</code> é uma busca direcionada e mais eficiente quando há seletividade.</li>
+</ul>
+<p>A escolha correta depende do padrão de acesso, da seletividade, do volume de dados e do plano estimado pelo otimizador.</p>
 <h3 id="quest%C3%A3o-para-discuss%C3%A3o-1" tabindex="-1">Questão para discussão</h3>
 <blockquote>
-<p>Se a consulta precisa de apenas uma pequena parcela da tabela, qual estratégia tende a ser mais eficiente?</p>
+<p>Em uma tabela fiscal com milhões de itens, qual operador tende a ser mais eficiente para um filtro por data: <code>Table Scan</code> ou <code>Index Seek</code>? Justifique com base na seletividade da consulta.</p>
 </blockquote>
 <hr>
 <h1 id="11.-etapa-9-%E2%80%94-demonstrar-sargability" tabindex="-1">11. Etapa 9 — Demonstrar SARGability</h1>
-<p>Agora compare duas formas de escrever a mesma consulta.</p>
+<p>Uma condição é considerada <strong>SARGable</strong> quando ela permite ao otimizador do SQL Server usar um índice de forma eficiente para localizar as linhas relevantes. O termo vem de <strong>Search Argument Able</strong>, ou seja, a expressão pode servir como argumento de busca útil ao índice.</p>
+<p>Em outras palavras, uma condição SARGable &quot;fala diretamente&quot; com a coluna indexada. Quando a coluna é transformada, convertida ou usada dentro de funções, o índice deixa de ser tão útil e o otimizador tende a escolher uma estratégia mais custosa, como <code>Table Scan</code> ou <code>Index Scan</code>.</p>
 <h2 id="consulta-a-%E2%80%94-usando-fun%C3%A7%C3%B5es-sobre-a-coluna" tabindex="-1">Consulta A — usando funções sobre a coluna</h2>
 <pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
     COUNT_BIG(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> quantidade_itens,
@@ -1075,6 +1146,7 @@ filtro
 <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">YEAR</span>(NF_DHEMI) <span class="hljs-operator">=</span> <span class="hljs-number">2026</span>
   <span class="hljs-keyword">AND</span> <span class="hljs-keyword">MONTH</span>(NF_DHEMI) <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;
 </div></code></pre>
+<p>Essa condição não é SARGable, porque o SQL Server precisa aplicar <code>YEAR()</code> e <code>MONTH()</code> sobre a coluna antes da comparação. Isso reduz a capacidade do índice em <code>NF_DHEMI</code> de ser aproveitado de maneira eficiente.</p>
 <h2 id="consulta-b-%E2%80%94-utilizando-intervalo" tabindex="-1">Consulta B — utilizando intervalo</h2>
 <pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
     COUNT_BIG(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> quantidade_itens,
@@ -1083,6 +1155,28 @@ filtro
 <span class="hljs-keyword">WHERE</span> NF_DHEMI <span class="hljs-operator">&gt;=</span> <span class="hljs-string">&#x27;20260101&#x27;</span>
   <span class="hljs-keyword">AND</span> NF_DHEMI <span class="hljs-operator">&lt;</span>  <span class="hljs-string">&#x27;20260201&#x27;</span>;
 </div></code></pre>
+<p>Essa condição é SARGable, porque a comparação é feita diretamente sobre a coluna indexada. O otimizador consegue localizar o intervalo de datas de forma mais eficiente e, normalmente, usa um <code>Index Seek</code> em vez de percorrer toda a tabela.</p>
+<h2 id="exemplo-adicional-de-condi%C3%A7%C3%A3o-n%C3%A3o-sargable" tabindex="-1">Exemplo adicional de condição não SARGable</h2>
+<pre class='hljs'><code><div><span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">CONVERT</span>(<span class="hljs-type">VARCHAR</span>(<span class="hljs-number">10</span>), NF_DHEMI, <span class="hljs-number">112</span>) <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;20260101&#x27;</span>;
+</div></code></pre>
+<p>Aqui, a função <code>CONVERT()</code> atua sobre a coluna antes da comparação, o que geralmente impede o uso eficiente do índice. A mesma lógica vale para condições como:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">WHERE</span> LTRIM(RTRIM(NF_UF_EMITENTE)) <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;SP&#x27;</span>;
+</div></code></pre>
+<p>Se a intenção é preservar a capacidade de busca pelo índice, o ideal é evitar transformações diretas sobre a coluna no predicado.</p>
+<h2 id="por-que-isso-%C3%A9-importante-no-laborat%C3%B3rio" tabindex="-1">Por que isso é importante no laboratório</h2>
+<p>Ao comparar os planos de execução:</p>
+<ul>
+<li>uma condição SARGable tende a produzir <code>Index Seek</code>;</li>
+<li>uma condição não SARGable tende a gerar <code>Table Scan</code> ou <code>Index Scan</code>;</li>
+<li>o custo em <code>logical reads</code> e <code>CPU</code> costuma aumentar no segundo caso.</li>
+</ul>
+<h2 id="conclus%C3%A3o-1" tabindex="-1">Conclusão</h2>
+<p>A regra prática é simples:</p>
+<ul>
+<li>compare a coluna diretamente;</li>
+<li>evite converter, transformar ou aplicar funções sobre a coluna no <code>WHERE</code>;</li>
+<li>prefira intervalos e comparações simples quando o objetivo for usar o índice de forma eficiente.</li>
+</ul>
 <p>Execute ambas com:</p>
 <pre class='hljs'><code><div><span class="hljs-keyword">SET</span> STATISTICS IO <span class="hljs-keyword">ON</span>;
 <span class="hljs-keyword">SET</span> STATISTICS <span class="hljs-type">TIME</span> <span class="hljs-keyword">ON</span>;
@@ -1107,7 +1201,19 @@ AND NF_DHEMI &lt; ...
 <p>A segunda forma é mais favorável à utilização eficiente de índices e é um exemplo clássico de uma condição <strong>SARGable</strong>.</p>
 <hr>
 <h1 id="12.-etapa-10-%E2%80%94-criar-um-%C3%ADndice-de-cobertura" tabindex="-1">12. Etapa 10 — Criar um índice de cobertura</h1>
-<p>Agora vamos criar um índice que contenha a data como chave e as principais colunas utilizadas pela consulta como <code>INCLUDE</code>.</p>
+<p>Até aqui, o índice simples em <code>NF_DHEMI</code> já ajuda o SQL Server a localizar rapidamente os registros de um período. Porém, em muitas consultas analíticas, a busca por data é apenas o ponto de partida. Em seguida, o mecanismo precisa também de outras colunas para calcular agregados, como <code>NF_CHAVE_ACESSO</code>, <code>ITEMNF_VPROD</code>, <code>ITEMNF_VDESC</code>, <code>ITEMNF_VLICMS</code>, <code>ITEMNF_VICMSST</code> e <code>ITEMNF_VIPI</code>.</p>
+<p>Esse é o ponto em que o índice simples pode deixar de ser suficiente. Em um índice simples, o banco geralmente guarda a chave do índice e o identificador da linha. Se a consulta precisa de outras colunas além da chave, ele pode ter que ir até a tabela base para buscar o restante dos dados. Isso gera o que chamamos de <code>Lookup</code> adicional.</p>
+<p>Um índice de cobertura é diferente: ele foi criado para que a consulta consiga obter todas as colunas que ela precisa diretamente do próprio índice, sem precisar acessar o heap ou a tabela de dados principal. Em outras palavras, o SQL Server consegue responder a consulta usando apenas o índice, o que reduz leitura extra, reduz custo de I/O e pode melhorar bastante o desempenho em relatórios e consultas agregadas.</p>
+<h2 id="diferen%C3%A7a-entre-%C3%ADndice-simples-e-%C3%ADndice-de-cobertura" tabindex="-1">Diferença entre índice simples e índice de cobertura</h2>
+<h3 id="%C3%ADndice-simples" tabindex="-1">Índice simples</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> INDEX IX_TB202_NF_DHEMI
+<span class="hljs-keyword">ON</span> fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01
+(
+    NF_DHEMI
+);
+</div></code></pre>
+<p>Esse índice organiza a busca pela data. Ele é muito útil quando a consulta filtra por período e a chave do índice já resolve bem a condição. Mas, se a consulta também exigir outras colunas, o otimizador pode precisar buscar os dados completos em outra estrutura.</p>
+<h3 id="%C3%ADndice-de-cobertura" tabindex="-1">Índice de cobertura</h3>
 <pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> INDEX IX_TB202_NF_DHEMI_COVERING
 <span class="hljs-keyword">ON</span> fisc.TB_202_PR_XML_ITENS_NOTAS_FISCAIS_PROPRIAS_E_TERCEIROS_01
 (
@@ -1123,41 +1229,116 @@ INCLUDE
     ITEMNF_VIPI
 );
 </div></code></pre>
+<p>Esse índice mantém a busca por <code>NF_DHEMI</code> como chave e, além disso, armazena as colunas usadas no cálculo e no filtro. Com isso, o SQL Server consegue atender a consulta sem procurar os dados na tabela física. Ele funciona como um &quot;resultado parcial pronto para consumo&quot;.</p>
 <p>Conceitualmente:</p>
-<pre class='hljs'><code><div>                    Índice
+<pre class='hljs'><code><div>                    Índice simples
                        │
-              ┌────────┴────────┐
-              │                 │
-          NF_DHEMI          INCLUDE
-                              │
-               ┌──────────────┼──────────────┐
-               │              │              │
-          VPROD           VLICMS          VIPI
+                 NF_DHEMI
+                       │
+                  localizar linha
+                       │
+                pode exigir Lookup
+                       │
+                     tabela base
 </div></code></pre>
-<p>O objetivo é reduzir a necessidade de buscar dados adicionais na estrutura principal.</p>
+<pre class='hljs'><code><div>                    Índice de cobertura
+                       │
+             ┌─────────┴─────────┐
+             │                   │
+          NF_DHEMI          INCLUDE
+             │                   │
+       filtra período    guarda colunas úteis
+             │                   │
+             └─────────┬─────────┘
+                       │
+                consulta atendida
+                sem acesso extra
+</div></code></pre>
+<p>Nesse caso, o objetivo é reduzir a necessidade de buscar dados adicionais na estrutura principal.</p>
+<h2 id="aplicabilidade" tabindex="-1">Aplicabilidade</h2>
+<p>O índice de cobertura tem grande aplicação em consultas que:</p>
+<ul>
+<li>filtram por um intervalo de datas ou outra chave seletiva;</li>
+<li>calculam agregações (<code>SUM</code>, <code>AVG</code>, <code>COUNT</code>, <code>MIN</code>, <code>MAX</code>);</li>
+<li>acessam poucas colunas em comparação com a tabela inteira;</li>
+<li>são executadas frequentemente em relatórios, dashboards e auditorias.</li>
+</ul>
+<p>Ele é especialmente útil quando a consulta não precisa de muitas colunas da tabela, mas exige uma combinação de filtro e projeção. Em cenários de análise fiscal, por exemplo, um índice em <code>NF_DHEMI</code> com <code>INCLUDE</code> das colunas monetárias e de chave de documento pode reduzir bastante a carga de leitura.</p>
+<h2 id="aten%C3%A7%C3%A3o-importante" tabindex="-1">Atenção importante</h2>
+<p>O índice de cobertura não é uma solução universal. Ele pode aumentar:</p>
+<ul>
+<li>o espaço em disco necessário;</li>
+<li>o custo de manutenção em <code>INSERT</code>, <code>UPDATE</code> e <code>DELETE</code>;</li>
+<li>a quantidade de dados que precisam ser regravados quando o índice muda.</li>
+</ul>
+<p>Logo, ele deve ser usado quando a consulta frequente justificar a vantagem em desempenho. Em outras palavras, o benefício aparece quando a economia de leitura e de <code>Lookup</code> compensa o custo adicional de manter o índice.</p>
+<h3 id="quest%C3%A3o-para-discuss%C3%A3o-2" tabindex="-1">Questão para discussão</h3>
+<blockquote>
+<p>Em uma consulta de auditoria fiscal com filtro por data e vários campos agregados, vale a pena um índice de cobertura? Quando o ganho real fica mais evidente?</p>
+</blockquote>
 <hr>
 <h1 id="13.-etapa-11-%E2%80%94-procurar-rid-lookup" tabindex="-1">13. Etapa 11 — Procurar RID Lookup</h1>
 <p>Observe o plano de execução.</p>
 <p>Como a tabela original é um heap, pode aparecer:</p>
 <pre class='hljs'><code><div>RID Lookup
 </div></code></pre>
-<p>Uma representação:</p>
+<p>Esse operador indica que o SQL Server fez uma busca no índice para localizar as linhas relevantes, mas, para concluir a consulta, precisou voltar à tabela base para obter colunas que não estavam presentes no índice. Em um heap, a referência de localização da linha é o RID, que funciona como um identificador do registro físico dentro da tabela.</p>
+<p>Em outras palavras, o banco fez algo como:</p>
+<pre class='hljs'><code><div>1. localiza as linhas no índice pela data;
+2. obtém o RID;
+3. usa esse RID para ir até o heap;
+4. busca os demais campos que a consulta precisa.
+</div></code></pre>
+<p>Uma representação conceitual:</p>
 <pre class='hljs'><code><div>Index Seek
      │
      ▼
-encontra os registros
+encontra os registros por NF_DHEMI
      │
      ▼
 RID Lookup
      │
      ▼
 Heap
+     │
+     ▼
+busca colunas adicionais
 </div></code></pre>
-<p>O índice de cobertura pode reduzir ou eliminar essa necessidade para as colunas incluídas.</p>
+<p>Isso significa que o plano de execução é composto por duas etapas:</p>
+<ul>
+<li>uma busca seletiva no índice para reduzir o volume de linhas;</li>
+<li>uma volta à tabela para completar os dados que o índice não contém.</li>
+</ul>
+<p>Esse comportamento é típico de consultas em heap quando o índice não é de cobertura. O custo do <code>RID Lookup</code> pode ser elevado, porque o SQL Server precisa acessar a estrutura de dados principal para cada conjunto de linhas identificadas pela chave do índice.</p>
+<h3 id="como-o-plano-de-execu%C3%A7%C3%A3o-%C3%A9-montado" tabindex="-1">Como o plano de execução é montado</h3>
+<p>Quando a consulta filtra por data e depois precisa de valores monetários, descrições e chaves de documento, o otimizador pode montar um plano nessa ordem:</p>
+<pre class='hljs'><code><div>SELECT
+   │
+   ▼
+Filter por NF_DHEMI
+   │
+   ▼
+Index Seek (busca no índice)
+   │
+   ▼
+RID Lookup
+   │
+   ▼
+Heap
+   │
+   ▼
+Retorna colunas necessárias
+   │
+   ▼
+Aggregate / Sort / Compute Scalar
+</div></code></pre>
+<p>O ponto crítico é que o <code>Index Seek</code> reduz a quantidade de linhas a serem lidas, mas o <code>RID Lookup</code> pode anular parte do ganho, porque a consulta ainda precisa acessar o heap. Esse é um dos motivos pelos quais um índice de cobertura pode ser mais eficiente: ele guarda as colunas úteis junto com a chave e reduz ou elimina esse acesso extra.</p>
 <h3 id="quest%C3%A3o" tabindex="-1">Questão</h3>
 <blockquote>
 <p>Qual é o custo de utilizar um índice que encontra a linha, mas não possui todas as informações necessárias para produzir o resultado?</p>
 </blockquote>
+<h3 id="observa%C3%A7%C3%A3o-pr%C3%A1tica" tabindex="-1">Observação prática</h3>
+<p>Se a consulta é muito frequente e o conjunto de colunas acessadas é estável, o índice de cobertura costuma produzir uma vantagem maior do que um índice simples. Já em consultas muito pontuais ou em tabelas com baixa cardinalidade, o ganho pode ser menos relevante, e o custo extra de manutenção do índice pode não compensar.</p>
 <hr>
 <h1 id="14.-etapa-12-%E2%80%94-criar-um-%C3%ADndice-composto" tabindex="-1">14. Etapa 12 — Criar um índice composto</h1>
 <p>Agora vamos testar um índice alinhado às dimensões da consulta analítica:</p>

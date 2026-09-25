@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>12_roteiro_agregacao_juncoes.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 id="roteiro%3A-juncoes-e-agregacoes-com-sql-server" tabindex="-1">Roteiro: juncoes e agregacoes com SQL Server</h1>
+<p><strong>Base:</strong> <code>curso_integridade_fiscal</code><strong>Pre-requisitos:</strong> SELECT, INNER JOIN, LEFT JOIN, WHERE e GROUP BY<strong>Objetivo:</strong> praticar agregacoes simples, diferenciar <code>WHERE</code> de <code>HAVING</code> e introduzir subconsultas sem fan-out.</p>
+<blockquote>
+<p>Este roteiro usa <code>efd_c100</code> como tabela de documentos da EFD. A palavra &quot;EFD&quot; neste material se refere a essa tabela.</p>
+</blockquote>
+<h2 id="preparacao" tabindex="-1">Preparacao</h2>
+<ol>
+<li>Execute os scripts <code>01_criar_banco.sql</code> a <code>05_inserir_fiscalizacao.sql</code>.</li>
+<li>Execute <code>06_criar_views.sql</code> para criar as views de apoio.</li>
+<li>Selecione o banco:</li>
+</ol>
+<pre class='hljs'><code><div>USE curso_integridade_fiscal;
+GO
+</div></code></pre>
+<ol start="4">
+<li>Confira a carga basica:</li>
+</ol>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;contribuinte&#x27;</span> <span class="hljs-keyword">AS</span> tabela, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> quantidade <span class="hljs-keyword">FROM</span> dbo.contribuinte
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;auditor_fiscal&#x27;</span>, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> dbo.auditor_fiscal
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;nfe&#x27;</span>, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> dbo.nfe
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;efd_c100&#x27;</span>, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> dbo.efd_c100
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;ordem_servico&#x27;</span>, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> dbo.ordem_servico
+<span class="hljs-keyword">UNION</span> <span class="hljs-keyword">ALL</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;auto_infracao&#x27;</span>, <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> dbo.auto_infracao;
+</div></code></pre>
+<h3 id="tabelas-e-chaves-usadas" tabindex="-1">Tabelas e chaves usadas</h3>
+<table>
+<thead>
+<tr>
+<th>Tabela</th>
+<th>Papel</th>
+<th>Chave usada no roteiro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>auditor_fiscal</code></td>
+<td>cadastro do fiscal</td>
+<td><code>matricula</code></td>
+</tr>
+<tr>
+<td><code>ordem_servico</code></td>
+<td>trabalho atribuido ao fiscal</td>
+<td><code>matricula_auditor</code>, <code>id_os</code></td>
+</tr>
+<tr>
+<td><code>auto_infracao</code></td>
+<td>auto gerado durante uma OS</td>
+<td><code>id_os</code>, <code>valor_principal</code></td>
+</tr>
+<tr>
+<td><code>contribuinte</code></td>
+<td>cadastro do emitente/declarante</td>
+<td><code>id_contribuinte</code></td>
+</tr>
+<tr>
+<td><code>nfe</code></td>
+<td>documento fiscal emitido</td>
+<td><code>id_emitente</code>, <code>chave_acesso</code></td>
+</tr>
+<tr>
+<td><code>efd_c100</code></td>
+<td>documento escriturado na EFD</td>
+<td><code>id_contribuinte</code>, <code>chave_acesso</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="questao-1---visao-de-produtividade-por-auditor" tabindex="-1">Questao 1 - Visao de produtividade por auditor</h2>
+<h3 id="objetivo" tabindex="-1">Objetivo</h3>
+<p>Criar uma visao que consolide cada auditor, suas ordens de servico e seus autos de infracao. Depois, comparar:</p>
+<ul>
+<li><code>WHERE</code>: filtra linhas antes da agregacao;</li>
+<li><code>HAVING</code>: filtra grupos depois da agregacao.</li>
+</ul>
+<p>A atividade deve preservar os 20 auditores, inclusive aqueles sem OS ou sem auto.</p>
+<h3 id="tabelas-selecionadas" tabindex="-1">Tabelas selecionadas</h3>
+<ul>
+<li><code>dbo.auditor_fiscal AS af</code></li>
+<li><code>dbo.ordem_servico AS os</code></li>
+<li><code>dbo.auto_infracao AS ai</code></li>
+</ul>
+<h3 id="passo-1---desenhar-as-juncoes" tabindex="-1">Passo 1 - Desenhar as juncoes</h3>
+<p>Escreva primeiro somente o SELECT das colunas de identificacao e verifique as juncoes:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> af.matricula, af.nome, os.id_os, ai.id_auto,
+       ai.valor_principal
+<span class="hljs-keyword">FROM</span> dbo.auditor_fiscal <span class="hljs-keyword">AS</span> af
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.ordem_servico <span class="hljs-keyword">AS</span> os
+       <span class="hljs-keyword">ON</span> os.matricula_auditor <span class="hljs-operator">=</span> af.matricula
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.auto_infracao <span class="hljs-keyword">AS</span> ai
+       <span class="hljs-keyword">ON</span> ai.id_os <span class="hljs-operator">=</span> os.id_os;
+</div></code></pre>
+<p>Explique por que as duas juncoes sao <code>LEFT JOIN</code>. Troque temporariamente a primeira por <code>INNER JOIN</code> e observe se o numero de auditores muda.</p>
+<h3 id="passo-2---criar-a-visao-agregada" tabindex="-1">Passo 2 - Criar a visao agregada</h3>
+<p>Crie a visao abaixo, preenchendo as funcoes de agregacao e os aliases indicados. A visao deve ter uma linha por auditor.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> dbo.vw_roteiro_produtividade_auditor <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span> af.matricula,
+       af.nome,
+       af.cargo,
+       af.regiao_fiscal,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> os.id_os) <span class="hljs-keyword">AS</span> qtd_os,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> os.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CONCLUIDA&#x27;</span>
+                           <span class="hljs-keyword">THEN</span> os.id_os <span class="hljs-keyword">END</span>) <span class="hljs-keyword">AS</span> qtd_os_concluidas,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> ai.id_auto) <span class="hljs-keyword">AS</span> qtd_autos,
+       <span class="hljs-built_in">COALESCE</span>(<span class="hljs-built_in">SUM</span>(ai.valor_principal), <span class="hljs-number">0</span>) <span class="hljs-keyword">AS</span> valor_principal_total
+<span class="hljs-keyword">FROM</span> dbo.auditor_fiscal <span class="hljs-keyword">AS</span> af
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.ordem_servico <span class="hljs-keyword">AS</span> os
+       <span class="hljs-keyword">ON</span> os.matricula_auditor <span class="hljs-operator">=</span> af.matricula
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.auto_infracao <span class="hljs-keyword">AS</span> ai
+       <span class="hljs-keyword">ON</span> ai.id_os <span class="hljs-operator">=</span> os.id_os
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> af.matricula, af.nome, af.cargo, af.regiao_fiscal;
+GO
+</div></code></pre>
+<h3 id="passo-3---usar-where-sobre-a-visao" tabindex="-1">Passo 3 - Usar <code>WHERE</code> sobre a visao</h3>
+<p>A visao ja esta agregada. Portanto, neste SELECT o <code>WHERE</code> filtra linhas prontas, isto e, auditores consolidados:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> matricula, nome, qtd_os, qtd_autos, valor_principal_total
+<span class="hljs-keyword">FROM</span> dbo.vw_roteiro_produtividade_auditor
+<span class="hljs-keyword">WHERE</span> valor_principal_total <span class="hljs-operator">&gt;</span> <span class="hljs-number">100000</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> valor_principal_total <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p>Anote quantos auditores foram encontrados.</p>
+<h3 id="passo-4---reproduzir-o-mesmo-resultado-com-having" tabindex="-1">Passo 4 - Reproduzir o mesmo resultado com <code>HAVING</code></h3>
+<p>Agora escreva a consulta diretamente sobre as tabelas. O filtro do valor total deve ficar no <code>HAVING</code>:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> af.matricula, af.nome,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> os.id_os) <span class="hljs-keyword">AS</span> qtd_os,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> ai.id_auto) <span class="hljs-keyword">AS</span> qtd_autos,
+       <span class="hljs-built_in">COALESCE</span>(<span class="hljs-built_in">SUM</span>(ai.valor_principal), <span class="hljs-number">0</span>) <span class="hljs-keyword">AS</span> valor_principal_total
+<span class="hljs-keyword">FROM</span> dbo.auditor_fiscal <span class="hljs-keyword">AS</span> af
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.ordem_servico <span class="hljs-keyword">AS</span> os
+       <span class="hljs-keyword">ON</span> os.matricula_auditor <span class="hljs-operator">=</span> af.matricula
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.auto_infracao <span class="hljs-keyword">AS</span> ai
+       <span class="hljs-keyword">ON</span> ai.id_os <span class="hljs-operator">=</span> os.id_os
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> af.matricula, af.nome
+<span class="hljs-keyword">HAVING</span> <span class="hljs-built_in">SUM</span>(ai.valor_principal) <span class="hljs-operator">&gt;</span> <span class="hljs-number">100000</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> valor_principal_total <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<blockquote>
+<p>Compare as duas consultas. A primeira usa <code>WHERE</code> porque o valor ja e uma coluna materializada da visao. A segunda usa <code>HAVING</code> porque o valor ainda esta sendo calculado para cada grupo.</p>
+</blockquote>
+<h3 id="passo-5---experimento-com-filtro-de-linha" tabindex="-1">Passo 5 - Experimento com filtro de linha</h3>
+<p>Compare as consultas abaixo e explique por que elas nao respondem a mesma pergunta:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Filtra OS antes de contar e somar</span>
+<span class="hljs-keyword">SELECT</span> af.matricula, af.nome,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> os.id_os) <span class="hljs-keyword">AS</span> qtd_os,
+       <span class="hljs-built_in">SUM</span>(ai.valor_principal) <span class="hljs-keyword">AS</span> valor_principal_total
+<span class="hljs-keyword">FROM</span> dbo.auditor_fiscal <span class="hljs-keyword">AS</span> af
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.ordem_servico <span class="hljs-keyword">AS</span> os
+       <span class="hljs-keyword">ON</span> os.matricula_auditor <span class="hljs-operator">=</span> af.matricula
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.auto_infracao <span class="hljs-keyword">AS</span> ai
+       <span class="hljs-keyword">ON</span> ai.id_os <span class="hljs-operator">=</span> os.id_os
+<span class="hljs-keyword">WHERE</span> os.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CONCLUIDA&#x27;</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> af.matricula, af.nome;
+
+<span class="hljs-comment">-- Agrega todas as OS e seleciona apenas grupos com OS concluida</span>
+<span class="hljs-keyword">SELECT</span> af.matricula, af.nome,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> os.id_os) <span class="hljs-keyword">AS</span> qtd_os,
+       <span class="hljs-built_in">SUM</span>(ai.valor_principal) <span class="hljs-keyword">AS</span> valor_principal_total
+<span class="hljs-keyword">FROM</span> dbo.auditor_fiscal <span class="hljs-keyword">AS</span> af
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.ordem_servico <span class="hljs-keyword">AS</span> os
+       <span class="hljs-keyword">ON</span> os.matricula_auditor <span class="hljs-operator">=</span> af.matricula
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.auto_infracao <span class="hljs-keyword">AS</span> ai
+       <span class="hljs-keyword">ON</span> ai.id_os <span class="hljs-operator">=</span> os.id_os
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> af.matricula, af.nome
+<span class="hljs-keyword">HAVING</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> os.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;CONCLUIDA&#x27;</span>
+                          <span class="hljs-keyword">THEN</span> os.id_os <span class="hljs-keyword">END</span>) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span>;
+</div></code></pre>
+<h3 id="conferencia-da-questao-1" tabindex="-1">Conferencia da questao 1</h3>
+<table>
+<thead>
+<tr>
+<th>Verificacao</th>
+<th style="text-align:right">Resposta correta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Auditores cadastrados</td>
+<td style="text-align:right">20</td>
+</tr>
+<tr>
+<td>Ordens de servico</td>
+<td style="text-align:right">150</td>
+</tr>
+<tr>
+<td>Autos de infracao</td>
+<td style="text-align:right">72</td>
+</tr>
+<tr>
+<td>Linhas da visao</td>
+<td style="text-align:right">20</td>
+</tr>
+<tr>
+<td>Soma de<code>qtd_os</code> na visao</td>
+<td style="text-align:right">150</td>
+</tr>
+<tr>
+<td>Soma de<code>qtd_autos</code> na visao</td>
+<td style="text-align:right">72</td>
+</tr>
+<tr>
+<td>Consulta com<code>WHERE valor_principal_total &gt; 100000</code></td>
+<td style="text-align:right">executar e registrar</td>
+</tr>
+<tr>
+<td>Consulta com<code>HAVING SUM(valor_principal) &gt; 100000</code></td>
+<td style="text-align:right">igual ao item anterior</td>
+</tr>
+</tbody>
+</table>
+<p>Conferencia automatica:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> linhas,
+       <span class="hljs-built_in">SUM</span>(qtd_os) <span class="hljs-keyword">AS</span> total_os,
+       <span class="hljs-built_in">SUM</span>(qtd_autos) <span class="hljs-keyword">AS</span> total_autos
+<span class="hljs-keyword">FROM</span> dbo.vw_roteiro_produtividade_auditor;
+</div></code></pre>
+<hr>
+<h2 id="questao-2---contribuinte%2C-nf-e-e-efd" tabindex="-1">Questao 2 - Contribuinte, NF-e e EFD</h2>
+<h3 id="objetivo-1" tabindex="-1">Objetivo</h3>
+<p>Consolidar, por contribuinte, a quantidade e o valor das NF-e de saida autorizadas e dos documentos regulares de saida escriturados na EFD. Usar <code>WHERE</code> para definir quais documentos entram na conta e <code>HAVING</code> para selecionar grupos com movimento relevante.</p>
+<h3 id="tabelas-selecionadas-1" tabindex="-1">Tabelas selecionadas</h3>
+<ul>
+<li><code>dbo.contribuinte AS c</code></li>
+<li><code>dbo.nfe AS n</code></li>
+<li><code>dbo.efd_c100 AS e</code></li>
+</ul>
+<h3 id="passo-1---criar-uma-view-para-as-nf-e" tabindex="-1">Passo 1 - Criar uma view para as NF-e</h3>
+<p>Nao junte <code>nfe</code> e <code>efd_c100</code> antes de agregar: um contribuinte pode ter muitos documentos nos dois lados. Primeiro crie uma view com uma linha por contribuinte e filtre os documentos no <code>WHERE</code> antes da agregacao:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> dbo.vw_roteiro_nfe_contribuinte <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span> n.id_emitente <span class="hljs-keyword">AS</span> id_contribuinte,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> qtd_nfe,
+       <span class="hljs-built_in">SUM</span>(n.valor_total) <span class="hljs-keyword">AS</span> valor_nfe,
+       <span class="hljs-built_in">SUM</span>(n.valor_icms) <span class="hljs-keyword">AS</span> icms_nfe
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">WHERE</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+  <span class="hljs-keyword">AND</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> n.id_emitente;
+GO
+</div></code></pre>
+<p>O <code>WHERE</code> desta view responde: <strong>quais documentos entram na agregacao?</strong></p>
+<h3 id="passo-2---criar-uma-view-para-a-efd" tabindex="-1">Passo 2 - Criar uma view para a EFD</h3>
+<p>Crie outra view, tambem com uma linha por contribuinte. Considere somente documentos regulares de saida:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> dbo.vw_roteiro_efd_contribuinte <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span> e.id_contribuinte,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> qtd_efd,
+       <span class="hljs-built_in">SUM</span>(e.valor_documento) <span class="hljs-keyword">AS</span> valor_efd,
+       <span class="hljs-built_in">SUM</span>(e.valor_icms) <span class="hljs-keyword">AS</span> icms_efd
+<span class="hljs-keyword">FROM</span> dbo.efd_c100 <span class="hljs-keyword">AS</span> e
+<span class="hljs-keyword">WHERE</span> e.ind_oper <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+  <span class="hljs-keyword">AND</span> e.cod_situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;00&#x27;</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> e.id_contribuinte;
+GO
+</div></code></pre>
+<h3 id="passo-3---consultar-as-views-com-juncoes" tabindex="-1">Passo 3 - Consultar as views com juncoes</h3>
+<p>Junte as duas views ao cadastro de contribuintes. Use <code>LEFT JOIN</code> para manter no resultado contribuinte que tenha NF-e, EFD ou somente um dos dois:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> c.id_contribuinte,
+       c.razao_social,
+       <span class="hljs-built_in">COALESCE</span>(n.qtd_nfe, <span class="hljs-number">0</span>) <span class="hljs-keyword">AS</span> qtd_nfe,
+       <span class="hljs-built_in">COALESCE</span>(n.valor_nfe, <span class="hljs-number">0</span>) <span class="hljs-keyword">AS</span> valor_nfe,
+       <span class="hljs-built_in">COALESCE</span>(e.qtd_efd, <span class="hljs-number">0</span>) <span class="hljs-keyword">AS</span> qtd_efd,
+       <span class="hljs-built_in">COALESCE</span>(e.valor_efd, <span class="hljs-number">0</span>) <span class="hljs-keyword">AS</span> valor_efd,
+       <span class="hljs-built_in">COALESCE</span>(n.valor_nfe, <span class="hljs-number">0</span>) <span class="hljs-operator">-</span> <span class="hljs-built_in">COALESCE</span>(e.valor_efd, <span class="hljs-number">0</span>) <span class="hljs-keyword">AS</span> diferenca_valor
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.vw_roteiro_nfe_contribuinte <span class="hljs-keyword">AS</span> n
+       <span class="hljs-keyword">ON</span> n.id_contribuinte <span class="hljs-operator">=</span> c.id_contribuinte
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.vw_roteiro_efd_contribuinte <span class="hljs-keyword">AS</span> e
+       <span class="hljs-keyword">ON</span> e.id_contribuinte <span class="hljs-operator">=</span> c.id_contribuinte
+<span class="hljs-keyword">WHERE</span> c.regime_tributario <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;NORMAL&#x27;</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> c.razao_social;
+</div></code></pre>
+<h3 id="passo-4---aplicar-having-sobre-os-grupos" tabindex="-1">Passo 4 - Aplicar <code>HAVING</code> sobre os grupos</h3>
+<p>Agora exiba somente contribuintes do regime <code>NORMAL</code> cujo total de NF-e autorizadas de saida seja superior a R$ 100.000. Como a consulta final possui <code>GROUP BY</code>, o limite deve ser aplicado com <code>HAVING</code>:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> c.id_contribuinte,
+       c.razao_social,
+       <span class="hljs-built_in">MAX</span>(<span class="hljs-built_in">COALESCE</span>(n.qtd_nfe, <span class="hljs-number">0</span>)) <span class="hljs-keyword">AS</span> qtd_nfe,
+       <span class="hljs-built_in">MAX</span>(<span class="hljs-built_in">COALESCE</span>(n.valor_nfe, <span class="hljs-number">0</span>)) <span class="hljs-keyword">AS</span> valor_nfe,
+       <span class="hljs-built_in">MAX</span>(<span class="hljs-built_in">COALESCE</span>(e.qtd_efd, <span class="hljs-number">0</span>)) <span class="hljs-keyword">AS</span> qtd_efd,
+       <span class="hljs-built_in">MAX</span>(<span class="hljs-built_in">COALESCE</span>(e.valor_efd, <span class="hljs-number">0</span>)) <span class="hljs-keyword">AS</span> valor_efd,
+       <span class="hljs-built_in">MAX</span>(<span class="hljs-built_in">COALESCE</span>(n.valor_nfe, <span class="hljs-number">0</span>))
+       <span class="hljs-operator">-</span> <span class="hljs-built_in">MAX</span>(<span class="hljs-built_in">COALESCE</span>(e.valor_efd, <span class="hljs-number">0</span>)) <span class="hljs-keyword">AS</span> diferenca_valor
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.vw_roteiro_nfe_contribuinte <span class="hljs-keyword">AS</span> n
+       <span class="hljs-keyword">ON</span> n.id_contribuinte <span class="hljs-operator">=</span> c.id_contribuinte
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.vw_roteiro_efd_contribuinte <span class="hljs-keyword">AS</span> e
+       <span class="hljs-keyword">ON</span> e.id_contribuinte <span class="hljs-operator">=</span> c.id_contribuinte
+<span class="hljs-keyword">WHERE</span> c.regime_tributario <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;NORMAL&#x27;</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> c.id_contribuinte, c.razao_social
+<span class="hljs-keyword">HAVING</span> <span class="hljs-built_in">MAX</span>(<span class="hljs-built_in">COALESCE</span>(n.valor_nfe, <span class="hljs-number">0</span>)) <span class="hljs-operator">&gt;</span> <span class="hljs-number">100000</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> valor_nfe <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<blockquote>
+<p>O <code>WHERE</code> seleciona contribuintes do regime <code>NORMAL</code>, antes do agrupamento. O <code>HAVING</code> seleciona grupos cujo valor agregado de NF-e supera R$ 100.000.</p>
+</blockquote>
+<h3 id="passo-5---comparar-where-e-having" tabindex="-1">Passo 5 - Comparar <code>WHERE</code> e <code>HAVING</code></h3>
+<p>Para experimentar o filtro de linha, recrie temporariamente a view <code>vw_roteiro_nfe_contribuinte</code> acrescentando <code>n.valor_total &gt; 1000</code> ao <code>WHERE</code> da tabela <code>nfe</code>:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> dbo.vw_roteiro_nfe_contribuinte <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span> n.id_emitente <span class="hljs-keyword">AS</span> id_contribuinte,
+                      <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> qtd_nfe,
+                      <span class="hljs-built_in">SUM</span>(n.valor_total) <span class="hljs-keyword">AS</span> valor_nfe,
+                      <span class="hljs-built_in">SUM</span>(n.valor_icms) <span class="hljs-keyword">AS</span> icms_nfe
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">WHERE</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+  <span class="hljs-keyword">AND</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+  <span class="hljs-keyword">AND</span> n.valor_total <span class="hljs-operator">&gt;</span> <span class="hljs-number">1000</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> n.id_emitente;
+GO
+</div></code></pre>
+<p>Depois de recriar a view com esse filtro, execute a consulta do Passo 3. Compare com uma consulta que mantém a view original, soma todas as notas autorizadas e usa <code>HAVING</code> para filtrar contribuintes:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">HAVING</span> <span class="hljs-built_in">MAX</span>(<span class="hljs-built_in">COALESCE</span>(n.valor_nfe, <span class="hljs-number">0</span>)) <span class="hljs-operator">&gt;</span> <span class="hljs-number">1000</span>
+</div></code></pre>
+<p>Na primeira variacao, uma nota abaixo de R$ 1.000 sai da conta. Na segunda, todas as notas entram na soma e somente o contribuinte com total acima do limite e mantido. Depois do experimento, recrie a view sem <code>n.valor_total &gt; 1000</code> para restaurar a definicao original.</p>
+<h3 id="conferencia-da-questao-2" tabindex="-1">Conferencia da questao 2</h3>
+<table>
+<thead>
+<tr>
+<th>Verificacao</th>
+<th style="text-align:right">Resposta correta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Contribuintes cadastrados</td>
+<td style="text-align:right">60</td>
+</tr>
+<tr>
+<td>Contribuintes do regime<code>NORMAL</code></td>
+<td style="text-align:right">executar a consulta</td>
+</tr>
+<tr>
+<td>Linhas apos<code>HAVING valor_nfe &gt; 100000</code></td>
+<td style="text-align:right">executar a consulta</td>
+</tr>
+<tr>
+<td>Resultado de<code>HAVING</code> com <code>valor_nfe &gt; 100000</code> e <code>WHERE n.valor_total &gt; 1000</code></td>
+<td style="text-align:right">diferente do anterior</td>
+</tr>
+<tr>
+<td>Soma de NF-e autorizadas de saida usada na conferencia</td>
+<td style="text-align:right">deve vir da view<code>vw_roteiro_nfe_contribuinte</code></td>
+</tr>
+<tr>
+<td>Soma de EFD regular de saida usada na conferencia</td>
+<td style="text-align:right">deve vir da view<code>vw_roteiro_efd_contribuinte</code></td>
+</tr>
+</tbody>
+</table>
+<p>Consulta de conferencia sugerida:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> grupos_encontrados,
+       <span class="hljs-built_in">SUM</span>(<span class="hljs-built_in">COALESCE</span>(n.qtd_nfe, <span class="hljs-number">0</span>)) <span class="hljs-keyword">AS</span> documentos_nfe,
+       <span class="hljs-built_in">SUM</span>(<span class="hljs-built_in">COALESCE</span>(e.qtd_efd, <span class="hljs-number">0</span>)) <span class="hljs-keyword">AS</span> documentos_efd
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.vw_roteiro_nfe_contribuinte <span class="hljs-keyword">AS</span> n
+       <span class="hljs-keyword">ON</span> n.id_contribuinte <span class="hljs-operator">=</span> c.id_contribuinte
+<span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> dbo.vw_roteiro_efd_contribuinte <span class="hljs-keyword">AS</span> e
+       <span class="hljs-keyword">ON</span> e.id_contribuinte <span class="hljs-operator">=</span> c.id_contribuinte
+<span class="hljs-keyword">WHERE</span> c.regime_tributario <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;NORMAL&#x27;</span>
+  <span class="hljs-keyword">AND</span> <span class="hljs-built_in">COALESCE</span>(n.valor_nfe, <span class="hljs-number">0</span>) <span class="hljs-operator">&gt;</span> <span class="hljs-number">100000</span>;
+</div></code></pre>
+<hr>
+<h2 id="questao-3---a-mesma-consulta-com-join-e-subconsulta" tabindex="-1">Questao 3 - A mesma consulta com JOIN e subconsulta</h2>
+<h3 id="objetivo-2" tabindex="-1">Objetivo</h3>
+<p>Encontrar contribuintes que possuem pelo menos uma NF-e autorizada de saida que tambem aparece como documento regular na EFD. A questao deve ser feita sem <code>GROUP BY</code>, sem <code>COUNT</code>, sem <code>SUM</code> e sem qualquer agregacao.</p>
+<h3 id="tabelas-selecionadas-2" tabindex="-1">Tabelas selecionadas</h3>
+<ul>
+<li><code>dbo.contribuinte AS c</code></li>
+<li><code>dbo.nfe AS n</code></li>
+<li><code>dbo.efd_c100 AS e</code></li>
+</ul>
+<h3 id="passo-1---solucao-com-juncoes" tabindex="-1">Passo 1 - Solucao com juncoes</h3>
+<p>Escreva uma consulta que retorne apenas <code>id_contribuinte</code>, <code>cnpj</code> e <code>razao_social</code>. Use <code>DISTINCT</code>, pois um contribuinte pode ter varias notas:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DISTINCT</span> c.id_contribuinte, c.cnpj, c.razao_social
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+        <span class="hljs-keyword">ON</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+       <span class="hljs-keyword">AND</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+       <span class="hljs-keyword">AND</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.efd_c100 <span class="hljs-keyword">AS</span> e
+        <span class="hljs-keyword">ON</span> e.id_contribuinte <span class="hljs-operator">=</span> c.id_contribuinte
+       <span class="hljs-keyword">AND</span> e.chave_acesso <span class="hljs-operator">=</span> n.chave_acesso
+       <span class="hljs-keyword">AND</span> e.ind_oper <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+       <span class="hljs-keyword">AND</span> e.cod_situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;00&#x27;</span>;
+</div></code></pre>
+<h3 id="passo-2---reescrever-com-exists" tabindex="-1">Passo 2 - Reescrever com <code>EXISTS</code></h3>
+<p>Substitua as juncoes com documentos por subconsultas correlacionadas. A consulta externa deve continuar retornando uma linha por contribuinte:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> c.id_contribuinte, c.cnpj, c.razao_social
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">EXISTS</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span>
+    <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.efd_c100 <span class="hljs-keyword">AS</span> e
+            <span class="hljs-keyword">ON</span> e.chave_acesso <span class="hljs-operator">=</span> n.chave_acesso
+           <span class="hljs-keyword">AND</span> e.id_contribuinte <span class="hljs-operator">=</span> c.id_contribuinte
+           <span class="hljs-keyword">AND</span> e.ind_oper <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+           <span class="hljs-keyword">AND</span> e.cod_situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;00&#x27;</span>
+    <span class="hljs-keyword">WHERE</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+      <span class="hljs-keyword">AND</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+      <span class="hljs-keyword">AND</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+);
+</div></code></pre>
+<h3 id="passo-3---comparar-as-formas" tabindex="-1">Passo 3 - Comparar as formas</h3>
+<ol>
+<li>Execute as duas consultas.</li>
+<li>Compare a quantidade de linhas.</li>
+<li>Confira se os conjuntos de <code>id_contribuinte</code> sao iguais.</li>
+<li>Retire <code>DISTINCT</code> da primeira consulta e explique a duplicacao.</li>
+<li>Explique por que <code>EXISTS</code> nao precisa de <code>DISTINCT</code>: ele responde apenas se encontrou pelo menos uma linha.</li>
+</ol>
+<h3 id="conferencia-da-questao-3" tabindex="-1">Conferencia da questao 3</h3>
+<table>
+<thead>
+<tr>
+<th>Verificacao</th>
+<th style="text-align:right">Resposta correta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linhas da consulta com<code>JOIN</code> e <code>DISTINCT</code></td>
+<td style="text-align:right">igual a consulta com<code>EXISTS</code></td>
+</tr>
+<tr>
+<td>Linhas da consulta com<code>EXISTS</code></td>
+<td style="text-align:right">executar a consulta</td>
+</tr>
+<tr>
+<td>Diferenca entre os conjuntos de IDs</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>Uso de<code>GROUP BY</code>, <code>SUM</code> ou <code>COUNT</code></td>
+<td style="text-align:right">nenhum</td>
+</tr>
+<tr>
+<td>Consulta com<code>JOIN</code> sem <code>DISTINCT</code></td>
+<td style="text-align:right">pode repetir contribuintes</td>
+</tr>
+</tbody>
+</table>
+<p>Conferencia dos conjuntos:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- A consulta abaixo deve retornar zero.</span>
+<span class="hljs-keyword">SELECT</span> id_contribuinte <span class="hljs-keyword">FROM</span> (
+    <span class="hljs-comment">-- coloque aqui o resultado da consulta com JOIN</span>
+) <span class="hljs-keyword">AS</span> com_join
+<span class="hljs-keyword">EXCEPT</span>
+<span class="hljs-keyword">SELECT</span> id_contribuinte <span class="hljs-keyword">FROM</span> (
+    <span class="hljs-comment">-- coloque aqui o resultado da consulta com EXISTS</span>
+) <span class="hljs-keyword">AS</span> com_exists;
+</div></code></pre>
+<hr>
+<h2 id="questao-4---auditores-acima-da-media-de-valor-principal" tabindex="-1">Questao 4 - Auditores acima da media de valor principal</h2>
+<h3 id="objetivo-3" tabindex="-1">Objetivo</h3>
+<p>Encontrar os auditores que realizaram OSs com autos de infracao cujo valor principal acumulado ficou acima da media dos totais acumulados por auditor.</p>
+<p>A atividade combina:</p>
+<ul>
+<li>juncoes;</li>
+<li><code>GROUP BY</code> por auditor;</li>
+<li><code>SUM(valor_principal)</code>;</li>
+<li><code>HAVING</code>;</li>
+<li>subconsulta escalar para calcular a media.</li>
+</ul>
+<p>A media deve considerar somente auditores que possuem pelo menos um auto. Auditores sem autos nao entram no denominador.</p>
+<h3 id="tabelas-selecionadas-3" tabindex="-1">Tabelas selecionadas</h3>
+<ul>
+<li><code>dbo.auditor_fiscal AS af</code></li>
+<li><code>dbo.ordem_servico AS os</code></li>
+<li><code>dbo.auto_infracao AS ai</code></li>
+</ul>
+<h3 id="passo-1---calcular-o-total-por-auditor" tabindex="-1">Passo 1 - Calcular o total por auditor</h3>
+<p>Comece com a consulta sem o filtro da media:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> af.matricula,
+       af.nome,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> os.id_os) <span class="hljs-keyword">AS</span> qtd_os_com_auto,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> ai.id_auto) <span class="hljs-keyword">AS</span> qtd_autos,
+       <span class="hljs-built_in">SUM</span>(ai.valor_principal) <span class="hljs-keyword">AS</span> valor_principal_total
+<span class="hljs-keyword">FROM</span> dbo.auditor_fiscal <span class="hljs-keyword">AS</span> af
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.ordem_servico <span class="hljs-keyword">AS</span> os
+        <span class="hljs-keyword">ON</span> os.matricula_auditor <span class="hljs-operator">=</span> af.matricula
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.auto_infracao <span class="hljs-keyword">AS</span> ai
+        <span class="hljs-keyword">ON</span> ai.id_os <span class="hljs-operator">=</span> os.id_os
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> af.matricula, af.nome
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> valor_principal_total <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<p>Anote quantas linhas foram produzidas. Elas representam auditores com pelo menos um auto, nao necessariamente os 20 auditores cadastrados.</p>
+<h3 id="passo-2---calcular-a-media-em-uma-subconsulta" tabindex="-1">Passo 2 - Calcular a media em uma subconsulta</h3>
+<p>A subconsulta deve repetir a agregacao por auditor e devolver uma unica coluna de totais. Depois, use <code>AVG</code> sobre esses totais:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">AVG</span>(x.valor_principal_total) <span class="hljs-keyword">AS</span> media_valor_principal_por_auditor
+<span class="hljs-keyword">FROM</span> (
+    <span class="hljs-keyword">SELECT</span> af2.matricula,
+           <span class="hljs-built_in">SUM</span>(ai2.valor_principal) <span class="hljs-keyword">AS</span> valor_principal_total
+    <span class="hljs-keyword">FROM</span> dbo.auditor_fiscal <span class="hljs-keyword">AS</span> af2
+    <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.ordem_servico <span class="hljs-keyword">AS</span> os2
+            <span class="hljs-keyword">ON</span> os2.matricula_auditor <span class="hljs-operator">=</span> af2.matricula
+    <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.auto_infracao <span class="hljs-keyword">AS</span> ai2
+            <span class="hljs-keyword">ON</span> ai2.id_os <span class="hljs-operator">=</span> os2.id_os
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> af2.matricula
+) <span class="hljs-keyword">AS</span> x;
+</div></code></pre>
+<h3 id="passo-3---colocar-a-subconsulta-no-having" tabindex="-1">Passo 3 - Colocar a subconsulta no <code>HAVING</code></h3>
+<p>Complete a consulta para que o <code>HAVING</code> compare o total de cada auditor com a media calculada pela subconsulta:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span> af.matricula,
+       af.nome,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> os.id_os) <span class="hljs-keyword">AS</span> qtd_os_com_auto,
+       <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> ai.id_auto) <span class="hljs-keyword">AS</span> qtd_autos,
+       <span class="hljs-built_in">SUM</span>(ai.valor_principal) <span class="hljs-keyword">AS</span> valor_principal_total
+<span class="hljs-keyword">FROM</span> dbo.auditor_fiscal <span class="hljs-keyword">AS</span> af
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.ordem_servico <span class="hljs-keyword">AS</span> os
+        <span class="hljs-keyword">ON</span> os.matricula_auditor <span class="hljs-operator">=</span> af.matricula
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.auto_infracao <span class="hljs-keyword">AS</span> ai
+        <span class="hljs-keyword">ON</span> ai.id_os <span class="hljs-operator">=</span> os.id_os
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> af.matricula, af.nome
+<span class="hljs-keyword">HAVING</span> <span class="hljs-built_in">SUM</span>(ai.valor_principal) <span class="hljs-operator">&gt;</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">AVG</span>(x.valor_principal_total)
+    <span class="hljs-keyword">FROM</span> (
+        <span class="hljs-keyword">SELECT</span> af2.matricula,
+               <span class="hljs-built_in">SUM</span>(ai2.valor_principal) <span class="hljs-keyword">AS</span> valor_principal_total
+        <span class="hljs-keyword">FROM</span> dbo.auditor_fiscal <span class="hljs-keyword">AS</span> af2
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.ordem_servico <span class="hljs-keyword">AS</span> os2
+                <span class="hljs-keyword">ON</span> os2.matricula_auditor <span class="hljs-operator">=</span> af2.matricula
+        <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.auto_infracao <span class="hljs-keyword">AS</span> ai2
+                <span class="hljs-keyword">ON</span> ai2.id_os <span class="hljs-operator">=</span> os2.id_os
+        <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> af2.matricula
+    ) <span class="hljs-keyword">AS</span> x
+)
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> valor_principal_total <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<h3 id="passo-4---interpretar-o-resultado" tabindex="-1">Passo 4 - Interpretar o resultado</h3>
+<p>Para cada auditor retornado, responda:</p>
+<ol>
+<li>Quantas OSs com auto ele realizou?</li>
+<li>Quantos autos foram lavrados nessas OSs?</li>
+<li>Qual e o valor principal total?</li>
+<li>Por que um auditor com varias OSs pode nao aparecer?</li>
+<li>Por que a media nao deve ser calculada diretamente sobre as 72 linhas de autos?</li>
+</ol>
+<h3 id="conferencia-da-questao-4" tabindex="-1">Conferencia da questao 4</h3>
+<table>
+<thead>
+<tr>
+<th>Verificacao</th>
+<th style="text-align:right">Resposta correta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Auditores cadastrados</td>
+<td style="text-align:right">20</td>
+</tr>
+<tr>
+<td>OSs na base</td>
+<td style="text-align:right">150</td>
+</tr>
+<tr>
+<td>Autos na base</td>
+<td style="text-align:right">72</td>
+</tr>
+<tr>
+<td>Auditores com pelo menos um auto</td>
+<td style="text-align:right">resultado do Passo 1</td>
+</tr>
+<tr>
+<td>Media dos totais por auditor</td>
+<td style="text-align:right">resultado do Passo 2</td>
+</tr>
+<tr>
+<td>Auditores acima da media</td>
+<td style="text-align:right">resultado do Passo 3</td>
+</tr>
+<tr>
+<td>Autos pertencentes aos auditores acima da media</td>
+<td style="text-align:right">executar conferencia</td>
+</tr>
+</tbody>
+</table>
+<p>Consulta de conferencia unica:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">WITH</span> totais <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> af.matricula, af.nome,
+           <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> os.id_os) <span class="hljs-keyword">AS</span> qtd_os_com_auto,
+           <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> ai.id_auto) <span class="hljs-keyword">AS</span> qtd_autos,
+           <span class="hljs-built_in">SUM</span>(ai.valor_principal) <span class="hljs-keyword">AS</span> valor_principal_total
+    <span class="hljs-keyword">FROM</span> dbo.auditor_fiscal <span class="hljs-keyword">AS</span> af
+    <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.ordem_servico <span class="hljs-keyword">AS</span> os
+            <span class="hljs-keyword">ON</span> os.matricula_auditor <span class="hljs-operator">=</span> af.matricula
+    <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> dbo.auto_infracao <span class="hljs-keyword">AS</span> ai
+            <span class="hljs-keyword">ON</span> ai.id_os <span class="hljs-operator">=</span> os.id_os
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> af.matricula, af.nome
+), media <span class="hljs-keyword">AS</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">AVG</span>(valor_principal_total) <span class="hljs-keyword">AS</span> media_valor_principal
+    <span class="hljs-keyword">FROM</span> totais
+)
+<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> auditores_acima_media,
+       <span class="hljs-built_in">SUM</span>(qtd_autos) <span class="hljs-keyword">AS</span> autos_dos_auditores_acima_media,
+       <span class="hljs-built_in">MIN</span>(media.media_valor_principal) <span class="hljs-keyword">AS</span> media_usada
+<span class="hljs-keyword">FROM</span> totais
+<span class="hljs-keyword">CROSS</span> <span class="hljs-keyword">JOIN</span> media
+<span class="hljs-keyword">WHERE</span> totais.valor_principal_total <span class="hljs-operator">&gt;</span> media.media_valor_principal;
+</div></code></pre>
+<blockquote>
+<p>A CTE da conferencia tem a mesma granularidade da consulta da atividade: uma linha por auditor com auto. Isso evita comparar um auditor com o valor de um auto individual e evita que auditores com muitos autos tenham peso indevido na media.</p>
+</blockquote>
+<hr>
+<h2 id="entrega-esperada" tabindex="-1">Entrega esperada</h2>
+<p>Entregue um arquivo <code>lab_agregacao_juncoes.sql</code> contendo:</p>
+<ol>
+<li>a criacao da <code>vw_roteiro_produtividade_auditor</code>;</li>
+<li>as consultas dos quatro exercicios;</li>
+<li>os resultados obtidos nas tabelas de conferencia;</li>
+<li>respostas curtas para as perguntas de interpretacao;</li>
+<li>uma observacao sobre a diferenca entre filtrar linhas (<code>WHERE</code>) e filtrar grupos (<code>HAVING</code>).</li>
+</ol>
+<h2 id="criterios-de-avaliacao" tabindex="-1">Criterios de avaliacao</h2>
+<table>
+<thead>
+<tr>
+<th>Criterio</th>
+<th style="text-align:right">Peso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Juncoes corretas e chaves usadas</td>
+<td style="text-align:right">25%</td>
+</tr>
+<tr>
+<td>Escolha entre<code>INNER JOIN</code> e <code>LEFT JOIN</code></td>
+<td style="text-align:right">20%</td>
+</tr>
+<tr>
+<td>Agregacao na granularidade correta</td>
+<td style="text-align:right">25%</td>
+</tr>
+<tr>
+<td>Diferenciacao entre<code>WHERE</code> e <code>HAVING</code></td>
+<td style="text-align:right">20%</td>
+</tr>
+<tr>
+<td>Uso correto de subconsultas e interpretacao</td>
+<td style="text-align:right">10%</td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+</body>
+</html>

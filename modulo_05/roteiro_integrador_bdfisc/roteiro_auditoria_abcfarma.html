@@ -780,94 +780,112 @@ body {
 <pre class='hljs'><code><div><span class="hljs-built_in">Get-Content</span> <span class="hljs-string">&#x27;C:\projetos\bancodedados\modulo_05\roteiro_integrador_bdfisc\p50_abcfarma_utf8.csv&#x27;</span> <span class="hljs-literal">-TotalCount</span> <span class="hljs-number">11</span>
 </div></code></pre>
 <p><strong>A armadilha:</strong> se o separador estiver incorreto, a contagem de colunas e a carga em massa podem falhar antes mesmo do <code>BULK INSERT</code>.</p>
-<h3 id="estrutura-do-csv" tabindex="-1">Estrutura do CSV</h3>
-<p>Os primeiros registros apresentam o padrão abaixo:</p>
-<pre class='hljs'><code><div>&quot;CODIGO&quot;|&quot;EAN&quot;|&quot;REGISTRO ANVISA&quot;|&quot;NCM&quot;|&quot;CEST&quot;|&quot;NOME&quot;|&quot;LABORATORIO&quot;|&quot;TIPO&quot;|&quot;CLASSE TERAPEUTICA&quot;|...
-&quot;245746&quot;|&quot;7891317158705&quot;|&quot;4707603680023&quot;|&quot;21069090&quot;|&quot;&quot;|&quot;20 BI&quot;|&quot;MOMENTA&quot;|&quot;O&quot;|&quot;PRODUTOS PROBIOTICOS&quot;|...
-</div></code></pre>
-<p>Observações:</p>
-<ul>
-<li>o separador é <code>|</code> e não <code>,</code>;</li>
-<li>a linha de cabeçalho existe e deve ser ignorada no <code>BULK INSERT</code>;</li>
-<li>há valores numéricos com vírgula decimal (<code>29,39</code>, <code>38,42</code>), então a conversão deve ser feita na etapa de normalização;</li>
-<li>alguns campos de texto podem conter acentos e símbolos especiais, por isso a codificação deve ser consistente.</li>
-</ul>
-<hr>
-<h2 id="3.-cen%C3%A1rio-de-uso-fiscal" tabindex="-1">3. Cenário de uso fiscal</h2>
-<h3 id="caso-de-uso-proposto%3A-auditoria-de-pre%C3%A7os-e-varia%C3%A7%C3%A3o-de-medicamentos" tabindex="-1">Caso de uso proposto: auditoria de preços e variação de medicamentos</h3>
-<p>O objetivo é verificar se os preços de venda praticados por laboratório e produto estão coerentes com a data de vigência, com a composição e com a variação de períodos anteriores.</p>
-<h3 id="regras-de-auditoria" tabindex="-1">Regras de auditoria</h3>
-<ol>
-<li>Identificar produtos com variação de preço acima do esperado em curto intervalo.</li>
-<li>Verificar se a mesma apresentação do mesmo produto foi reajustada sem justificativa.</li>
-<li>Analisar registros com <code>DATA_REFERENCIA</code> ou <code>DATA_VIGENCIA</code> inconsistentes.</li>
-<li>Detectar <code>vPF</code> e <code>vPMC</code> divergentes em relação aos percentuais de tabela.</li>
-<li>Verificar produtos com laboratórios repetidos e preços anômalos.</li>
-<li>Validar divergência entre arquivo de origem e data de referência.</li>
-</ol>
-<h3 id="exemplo-de-evid%C3%AAncia-fiscal" tabindex="-1">Exemplo de evidência fiscal</h3>
-<ul>
-<li>produto com mesmo código e laboratório;</li>
-<li>o mesmo medicamento aparece em meses consecutivos;</li>
-<li>o valor do preço de venda muda de <code>R$ 29,39</code> para <code>R$ 38,42</code> em um intervalo curto;</li>
-<li>o impacto pode ser classificado como revisão de tarifa ou anomalia de mercado.</li>
-</ul>
-<hr>
-<h2 id="4.-estrutura-de-staging-recomendada" tabindex="-1">4. Estrutura de staging recomendada</h2>
-<p>Crie um schema para guardar o dado bruto antes da limpeza.</p>
-<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> SCHEMA staging;
+<h2 id="4.-estrutura-de-staging-com-os-nomes-originais-do-csv" tabindex="-1">4. Estrutura de staging com os nomes originais do CSV</h2>
+<p>O cabeçalho de <code>p50_abcfarma_utf8.csv</code> possui 95 colunas. A tabela abaixo preserva os nomes do arquivo e a ordem original. Os colchetes são necessários nos nomes que contêm espaços, <code>%</code>, <code>/</code>, parênteses ou caracteres especiais.</p>
+<pre class='hljs'><code><div>IF SCHEMA_ID(<span class="hljs-string">&#x27;staging&#x27;</span>) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+    <span class="hljs-keyword">EXEC</span> (<span class="hljs-string">&#x27;CREATE SCHEMA staging&#x27;</span>);
+GO
+
+IF OBJECT_ID(<span class="hljs-string">&#x27;staging.abcfarma_raw&#x27;</span>, <span class="hljs-string">&#x27;U&#x27;</span>) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+    <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> staging.abcfarma_raw;
 GO
 
 <span class="hljs-keyword">CREATE TABLE</span> staging.abcfarma_raw (
-    CODIGO NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
-    EAN NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
-    REGISTRO_ANVISA NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
-    NCM NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
-    CEST NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
-    NOME NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
-    LABORATORIO NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
-    TIPO NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
-    CLASSE_TERAPEUTICA NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
-    COMPOSICAO NVARCHAR(<span class="hljs-number">1000</span>) <span class="hljs-keyword">NULL</span>,
-    TARJA NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
-    UNIDADE_DE_VENDA NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
-    CNPJ_LABORATORIO NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
-    APRESENTACAO NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
-    LISTAPISC OFINS NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
-    RESTRHOSP NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
-    CNPJ_DECLARANTE NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
-    NOME_DECLARANTE NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
-    PICMS NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
-    VPF NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
-    VPMC NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
-    VPMCEMBFRAC NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
-    VPMCEMBMULT NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
-    CODIGO_LABORATORIO NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
-    LABORATORIO_2 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
-    DESCRICAO NVARCHAR(<span class="hljs-number">1000</span>) <span class="hljs-keyword">NULL</span>,
-    COMPOSICAO_2 NVARCHAR(<span class="hljs-number">1000</span>) <span class="hljs-keyword">NULL</span>,
-    REGIME_PRECO NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
-    LISTA_LCCT NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
-    PF_20 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
-    PMC_20 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
-    FRA_20 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
-    DATA_VIGENCIA NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
-    NOVO NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
-    VARIACAO_PRECO NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
-    REFERENCIA NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
-    ATC NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
-    CLASSE_TERAPEUTICA_2 NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
-    PORTARIA_344_98 NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
-    TISS_TUSS NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
-    CONFAZ_87 NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
-    CAP NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
-    GGREM NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
-    DCB NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
-    CAS NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
-    ARQUIVO_ORIGEM NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
-    DATA_REFERENCIA NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
-    ANO_PASTA NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>,
-    ORIGEM_ARQUIVO NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>
+    [CODIGO] NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    [EAN] NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    [REGISTRO ANVISA] NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    [NCM] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [CEST] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [NOME] NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
+    [LABORATORIO] NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    [TIPO] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [CLASSE TERAPEUTICA] NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
+    [COMPOSICAO] NVARCHAR(<span class="hljs-number">1000</span>) <span class="hljs-keyword">NULL</span>,
+    [TARJA] NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    [UNIDADE DE VENDA] NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    [CNPJ_LABORATORIO] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [apresentacao] NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    [listaPisCofins] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [restrHosp] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [CNPJ_DECLARANTE] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [NOME_DECLARANTE] NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
+    [pICMS] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [vPF] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [vPMC] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [vPMCEmbFrac] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [vPMCEmbMult] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [CODIGO LABORATORIO] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [LABORATÓRIO] NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    [DESCRIÇÃO] NVARCHAR(<span class="hljs-number">1000</span>) <span class="hljs-keyword">NULL</span>,
+    [COMPOSIÇÃO] NVARCHAR(<span class="hljs-number">1000</span>) <span class="hljs-keyword">NULL</span>,
+    [REGIME PREÇO] NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    [LISTA (LCCT)] NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    [PF <span class="hljs-number">20</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PMC <span class="hljs-number">20</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [FRA <span class="hljs-number">20</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PF <span class="hljs-number">18</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PMC <span class="hljs-number">18</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [FRA <span class="hljs-number">18</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PF <span class="hljs-number">17</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PMC <span class="hljs-number">17</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [FRA <span class="hljs-number">17</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PF <span class="hljs-number">17</span>,<span class="hljs-number">5</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PMC <span class="hljs-number">17</span>,<span class="hljs-number">5</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [FRA <span class="hljs-number">17</span>,<span class="hljs-number">5</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PF <span class="hljs-number">12</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PMC <span class="hljs-number">12</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [FRA <span class="hljs-number">12</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PF <span class="hljs-number">17</span><span class="hljs-operator">%</span> ALC] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PMC <span class="hljs-number">17</span><span class="hljs-operator">%</span> ALC] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [FRA <span class="hljs-number">17</span><span class="hljs-operator">%</span> ALC] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PF <span class="hljs-number">17</span>,<span class="hljs-number">5</span><span class="hljs-operator">%</span> ALC] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PMC <span class="hljs-number">17</span>,<span class="hljs-number">5</span><span class="hljs-operator">%</span> ALC] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [FRA <span class="hljs-number">17</span>,<span class="hljs-number">5</span><span class="hljs-operator">%</span> ALC] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PF <span class="hljs-number">18</span><span class="hljs-operator">%</span> ALC] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PMC <span class="hljs-number">18</span><span class="hljs-operator">%</span> ALC] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [FRA <span class="hljs-number">18</span><span class="hljs-operator">%</span> ALC] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PF <span class="hljs-number">0</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PMC <span class="hljs-number">0</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [FRA <span class="hljs-number">0</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PERCENTUAL IPI] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [DATA VIGENCIA] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [NOVO_1] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [VARIAÇÃO DE PREÇO] NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    [REFERÊNCIA] NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    [ATC] NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    [CLASSE TERAPÊUTICA] NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
+    [PORTARIA <span class="hljs-number">344</span><span class="hljs-operator">/</span><span class="hljs-number">98</span>] NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    [TISS<span class="hljs-operator">/</span>TUSS] NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    [CONFAZ <span class="hljs-number">87</span>] NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    [CAP] NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+    [NOVO] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [GGREM] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [DCB] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [CAS] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PF <span class="hljs-number">22</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PMC <span class="hljs-number">22</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PF <span class="hljs-number">21</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PMC <span class="hljs-number">21</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PF <span class="hljs-number">19</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PMC <span class="hljs-number">19</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PF <span class="hljs-number">19</span><span class="hljs-operator">%</span> ALC] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PMC <span class="hljs-number">19</span><span class="hljs-operator">%</span> ALC] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PF <span class="hljs-number">20</span><span class="hljs-operator">%</span> ALC] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PMC <span class="hljs-number">20</span><span class="hljs-operator">%</span> ALC] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PF <span class="hljs-number">20</span>,<span class="hljs-number">5</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PMC <span class="hljs-number">20</span>,<span class="hljs-number">5</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PF <span class="hljs-number">19</span>,<span class="hljs-number">5</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PMC <span class="hljs-number">19</span>,<span class="hljs-number">5</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PF <span class="hljs-number">19</span>,<span class="hljs-number">5</span><span class="hljs-operator">%</span> ALC] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PMC <span class="hljs-number">19</span>,<span class="hljs-number">5</span><span class="hljs-operator">%</span> ALC] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PF <span class="hljs-number">23</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PMC <span class="hljs-number">23</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PF <span class="hljs-number">22</span>,<span class="hljs-number">5</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [PMC <span class="hljs-number">22</span>,<span class="hljs-number">5</span><span class="hljs-operator">%</span>] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [ARQUIVO_ORIGEM] NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+    [DATA_REFERENCIA] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+    [ANO_PASTA] NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>,
+    [ORIGEM_ARQUIVO] NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>
 );
 GO
 </div></code></pre>
@@ -875,7 +893,7 @@ GO
 <h2 id="5.-carga-em-massa-com-bulk-insert" tabindex="-1">5. Carga em massa com BULK INSERT</h2>
 <p>O comando deve ignorar a primeira linha do cabeçalho, usar <code>|</code> como delimitador e <code>UTF-8</code> como página de código.</p>
 <pre class='hljs'><code><div>BULK <span class="hljs-keyword">INSERT</span> staging.abcfarma_raw
-<span class="hljs-keyword">FROM</span> <span class="hljs-string">&#x27;C:\dados\staging\p50_abcfarma_utf8.csv&#x27;</span>
+<span class="hljs-keyword">FROM</span> <span class="hljs-string">&#x27;C:\temp\p50_abcfarma_utf8.csv&#x27;</span>
 <span class="hljs-keyword">WITH</span> (
     FIELDTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;|&#x27;</span>,
     ROWTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;\n&#x27;</span>,
@@ -985,7 +1003,8 @@ GO
 <p>Esse resultado deve ser tratado como exceção de qualidade ou de preenchimento fiscal. O valor ausente não prova, sozinho, que houve preço incorreto, mas impede a comparação com o preço máximo informado na documentação da operação.</p>
 <h3 id="7.2-varia%C3%A7%C3%A3o-do-pre%C3%A7o-m%C3%A1ximo-entre-documentos" tabindex="-1">7.2 Variação do preço máximo entre documentos</h3>
 <p>Como <code>TB_512</code> possui a data do documento e o código do item, é possível comparar o preço máximo informado em documentos consecutivos do mesmo produto.</p>
-<pre class='hljs'><code><div><span class="hljs-keyword">WITH</span> historico <span class="hljs-keyword">AS</span> (
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> dbo.vw_abcfarma_historico_preco_maximo
+<span class="hljs-keyword">AS</span>
     <span class="hljs-keyword">SELECT</span>
         REG0_IE,
         REG0200_COD_ITEM,
@@ -1000,9 +1019,11 @@ GO
         ) <span class="hljs-keyword">AS</span> PRECO_ANTERIOR
     <span class="hljs-keyword">FROM</span> fisc.TB_512_PR_EFD_REGISTRO_C173_OPERACOES_COM_MEDICAMENTOS
     <span class="hljs-keyword">WHERE</span> C100_DT_DOC <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
-      <span class="hljs-keyword">AND</span> C173_VL_TAB_MAX <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
-)
-<span class="hljs-keyword">SELECT</span>
+        <span class="hljs-keyword">AND</span> C173_VL_TAB_MAX <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>;
+GO
+</div></code></pre>
+<p>A visão encapsula o cálculo do preço anterior. Assim, outras consultas e relatórios podem reutilizar o histórico sem repetir a função de janela.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
     REG0_IE,
     REG0200_COD_ITEM,
     REG0200_DESCR_ITEM,
@@ -1016,7 +1037,7 @@ GO
         <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;AUDITAR&#x27;</span>
         <span class="hljs-keyword">ELSE</span> <span class="hljs-string">&#x27;NORMAL&#x27;</span>
     <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> ALERTA
-<span class="hljs-keyword">FROM</span> historico
+<span class="hljs-keyword">FROM</span> dbo.vw_abcfarma_historico_preco_maximo
 <span class="hljs-keyword">WHERE</span> PRECO_ANTERIOR <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
   <span class="hljs-keyword">AND</span> <span class="hljs-built_in">ABS</span>(C173_VL_TAB_MAX <span class="hljs-operator">-</span> PRECO_ANTERIOR) <span class="hljs-operator">&gt;</span> <span class="hljs-number">10</span>
 <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> C100_DT_DOC <span class="hljs-keyword">DESC</span>;
@@ -1162,30 +1183,135 @@ GO
     <span class="hljs-keyword">SET</span> NOCOUNT <span class="hljs-keyword">ON</span>;
 
     <span class="hljs-keyword">BEGIN</span> TRY
-        <span class="hljs-keyword">TRUNCATE</span> <span class="hljs-keyword">TABLE</span> staging.abcfarma_raw;
+        IF SCHEMA_ID(<span class="hljs-string">&#x27;staging&#x27;</span>) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+            <span class="hljs-keyword">EXEC</span> (<span class="hljs-string">&#x27;CREATE SCHEMA staging&#x27;</span>);
 
-        BULK <span class="hljs-keyword">INSERT</span> staging.abcfarma_raw
-        <span class="hljs-keyword">FROM</span> <span class="hljs-variable">@ArquivoCSV</span>
-        <span class="hljs-keyword">WITH</span> (
-            FIELDTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;|&#x27;</span>,
-            ROWTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;\n&#x27;</span>,
-            FIRSTROW <span class="hljs-operator">=</span> <span class="hljs-number">2</span>,
-            DATAFILETYPE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;char&#x27;</span>,
-            CODEPAGE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;65001&#x27;</span>,
-            TABLOCK,
-            MAXERRORS <span class="hljs-operator">=</span> <span class="hljs-number">100</span>
+        IF OBJECT_ID(<span class="hljs-string">&#x27;staging.abcfarma_raw&#x27;</span>, <span class="hljs-string">&#x27;U&#x27;</span>) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+            <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> staging.abcfarma_raw;
+
+        <span class="hljs-keyword">CREATE TABLE</span> staging.abcfarma_raw (
+            CODIGO NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            EAN NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            REGISTRO_ANVISA NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_04 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_05 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            NOME NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
+            LABORATORIO NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_08 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            CLASSE_TERAPEUTICA NVARCHAR(<span class="hljs-number">500</span>) <span class="hljs-keyword">NULL</span>,
+            COMPOSICAO NVARCHAR(<span class="hljs-number">1000</span>) <span class="hljs-keyword">NULL</span>,
+            TARJA NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+            COL_12 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_13 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_14 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_15 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_16 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_17 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_18 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_19 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            VPF NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+            VPMC NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+            COL_22 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_23 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_24 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_25 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_26 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_27 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_28 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_29 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_30 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_31 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_32 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_33 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_34 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_35 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_36 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_37 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_38 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_39 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_40 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_41 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_42 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_43 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_44 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_45 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_46 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_47 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_48 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_49 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_50 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_51 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_52 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_53 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_54 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_55 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_56 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_57 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_58 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_59 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_60 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_61 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_62 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_63 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_64 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_65 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_66 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_67 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_68 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_69 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_70 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_71 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_72 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_73 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_74 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_75 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_76 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_77 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_78 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_79 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_80 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_81 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_82 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_83 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_84 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_85 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_86 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_87 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_88 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_89 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_90 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            COL_91 NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            ARQUIVO_ORIGEM NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+            DATA_REFERENCIA NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+            ANO_PASTA NVARCHAR(<span class="hljs-number">20</span>) <span class="hljs-keyword">NULL</span>,
+            ORIGEM_ARQUIVO NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>
         );
+
+        <span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@SQLBulkInsert</span> NVARCHAR(MAX) <span class="hljs-operator">=</span>
+            N<span class="hljs-string">&#x27;BULK INSERT staging.abcfarma_raw
+              FROM &#x27;&#x27;&#x27;</span> <span class="hljs-operator">+</span> REPLACE(<span class="hljs-variable">@ArquivoCSV</span>, <span class="hljs-string">&#x27;&#x27;&#x27;&#x27;</span>, <span class="hljs-string">&#x27;&#x27;&#x27;&#x27;&#x27;&#x27;</span>) <span class="hljs-operator">+</span> N<span class="hljs-string">&#x27;&#x27;&#x27;
+              WITH (
+                  FIELDTERMINATOR = &#x27;&#x27;|&#x27;&#x27;,
+                  ROWTERMINATOR = &#x27;&#x27;\n&#x27;&#x27;,
+                  FIRSTROW = 2,
+                  DATAFILETYPE = &#x27;&#x27;char&#x27;&#x27;,
+                  CODEPAGE = &#x27;&#x27;65001&#x27;&#x27;,
+                  TABLOCK,
+                  MAXERRORS = 100
+              );&#x27;</span>;
+
+        <span class="hljs-keyword">EXEC</span> sys.sp_executesql <span class="hljs-variable">@SQLBulkInsert</span>;
 
         ;<span class="hljs-keyword">WITH</span> base <span class="hljs-keyword">AS</span> (
             <span class="hljs-keyword">SELECT</span>
                 TRY_CONVERT(<span class="hljs-type">INT</span>, LTRIM(RTRIM(CODIGO))) <span class="hljs-keyword">AS</span> CODIGO,
                 LTRIM(RTRIM(EAN)) <span class="hljs-keyword">AS</span> EAN,
-                LTRIM(RTRIM(REGISTRO_ANVISA)) <span class="hljs-keyword">AS</span> REGISTRO_ANVISA,
+                LTRIM(RTRIM([REGISTRO ANVISA])) <span class="hljs-keyword">AS</span> REGISTRO_ANVISA,
                 LTRIM(RTRIM(NOME)) <span class="hljs-keyword">AS</span> NOME,
                 LTRIM(RTRIM(LABORATORIO)) <span class="hljs-keyword">AS</span> LABORATORIO,
-                LTRIM(RTRIM(CLASSE_TERAPEUTICA)) <span class="hljs-keyword">AS</span> CLASSE_TERAPEUTICA,
+                LTRIM(RTRIM([CLASSE TERAPEUTICA])) <span class="hljs-keyword">AS</span> CLASSE_TERAPEUTICA,
                 LTRIM(RTRIM(COMPOSICAO)) <span class="hljs-keyword">AS</span> COMPOSICAO,
-                LTRIM(RTRIM(TARJA)) <span class="hljs-keyword">AS</span> TARJA,
+                LTRIM(RTRIM([TARJA])) <span class="hljs-keyword">AS</span> TARJA,
                 TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(VPF, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)) <span class="hljs-keyword">AS</span> VPF,
                 TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(VPMC, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)) <span class="hljs-keyword">AS</span> VPMC,
                 TRY_CONVERT(<span class="hljs-type">DATE</span>, DATA_REFERENCIA) <span class="hljs-keyword">AS</span> DATA_REFERENCIA,

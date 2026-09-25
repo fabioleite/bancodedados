@@ -729,7 +729,9 @@ body {
 </head>
 <body>
     <div class="content-wrapper">
-        <h1 id="roteiro-de-carga%2C-limpeza-e-auditoria-fiscal-para-tabela-do-anexo-5-da-sefaz" tabindex="-1">Roteiro de carga, limpeza e auditoria fiscal para tabela do Anexo 5 da SEFAZ</h1>
+        <pre class='hljs'><code><div>MVA_Original_N_deriv_Petr
+</div></code></pre>
+<h1 id="roteiro-de-carga%2C-limpeza-e-auditoria-fiscal-para-tabela-do-anexo-5-da-sefaz" tabindex="-1">Roteiro de carga, limpeza e auditoria fiscal para tabela do Anexo 5 da SEFAZ</h1>
 <h2 id="1.-objetivo" tabindex="-1">1. Objetivo</h2>
 <p>Este arquivo trata de uma tabela fiscal de referencia do Anexo 5, com dados de CEST, NCM/SH, descrição, legislação e parâmetros de MVA/aliquota. Ele é útil para:</p>
 <ul>
@@ -762,7 +764,7 @@ body {
 </div></code></pre>
 <p><strong>O que observar:</strong> o resultado deve mostrar a quantidade real de colunas do cabeçalho. Como o separador do arquivo é <code>|</code>, o número esperado tende a ser maior do que em arquivos CSV com <code>;</code>.</p>
 <h4 id="2)-quantos-registros-ao-todo-o-arquivo-possui" tabindex="-1">2) Quantos registros ao todo o arquivo possui</h4>
-<pre class='hljs'><code><div><span class="hljs-variable">$arquivo</span> = <span class="hljs-string">&#x27;C:\projetos\bancodedados\modulo_05\roteiro_integrador_bdfisc\tabela_anexo_5_sefaz.csv&#x27;</span>
+<pre class='hljs'><code><div><span class="hljs-variable">$arquivo</span> = <span class="hljs-string">&#x27;C:\Users\fabio\projetos\bancodedados\modulo_05\roteiro_integrador_bdfisc\tabela_anexo_5_sefaz.csv&#x27;</span>
 <span class="hljs-variable">$registros</span> = (<span class="hljs-built_in">Get-Content</span> <span class="hljs-variable">$arquivo</span>).Count - <span class="hljs-number">1</span>
 <span class="hljs-built_in">Write-Host</span> <span class="hljs-string">&quot;Total de registros em tabela_anexo_5_sefaz.csv: <span class="hljs-variable">$registros</span>&quot;</span>
 </div></code></pre>
@@ -1082,6 +1084,14 @@ GO
 GO
 </div></code></pre>
 <h3 id="transforma%C3%A7%C3%A3o-dos-campos-principais" tabindex="-1">Transformação dos campos principais</h3>
+<p>Os valores numéricos do arquivo podem usar ponto como separador decimal, como <code>1.011082926829268</code>, ou vírgula em arquivos exportados no padrão brasileiro, como <code>1,011082926829268</code>. A conversão anterior removia todos os pontos antes de converter o valor. Assim, <code>1.011082926829268</code> virava <code>1011082926829268</code>, excedia a precisão de <code>DECIMAL(18,4)</code> e o <code>TRY_CONVERT</code> retornava <code>NULL</code>.</p>
+<p>Na transformação abaixo, a regra é:</p>
+<ul>
+<li>quando houver vírgula, os pontos são tratados como separadores de milhar e a vírgula é convertida para ponto;</li>
+<li>quando não houver vírgula, o ponto é preservado como separador decimal;</li>
+<li>o símbolo <code>%</code> é removido quando existir;</li>
+<li>campos vazios continuam sujeitos ao tratamento de <code>TRY_CONVERT</code>.</li>
+</ul>
 <pre class='hljs'><code><div><span class="hljs-keyword">INSERT INTO</span> dbo.anexo5_sefaz_normalizado (
     Tabela_CEST,
     ITEM,
@@ -1118,24 +1128,29 @@ GO
     LTRIM(RTRIM(Legislacao)),
     TRY_CONVERT(DATETIME, Vigencia_inicial),
     TRY_CONVERT(DATETIME, Vigencia_final),
-    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(Aliq_Interna, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Original, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Original_S_Fid, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_S_Fid_Aliq_4, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_S_Fid_Aliq_7, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_S_Fid_Aliq_12, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Original_C_Fid, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_C_Fid_Aliq_4, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_C_Fid_Aliq_7, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_C_Fid_Aliq_12, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), Funcep),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, Aliq_Interna) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(Aliq_Interna)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(REPLACE(LTRIM(RTRIM(Aliq_Interna)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_Original) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_Original)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(REPLACE(LTRIM(RTRIM(MVA_Original)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_Original_S_Fid) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_Original_S_Fid)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(REPLACE(LTRIM(RTRIM(MVA_Original_S_Fid)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_S_Fid_Aliq_4) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_S_Fid_Aliq_4)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(REPLACE(LTRIM(RTRIM(MVA_S_Fid_Aliq_4)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_S_Fid_Aliq_7) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_S_Fid_Aliq_7)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(REPLACE(LTRIM(RTRIM(MVA_S_Fid_Aliq_7)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_S_Fid_Aliq_12) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_S_Fid_Aliq_12)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(REPLACE(LTRIM(RTRIM(MVA_S_Fid_Aliq_12)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_Original_C_Fid) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_Original_C_Fid)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(REPLACE(LTRIM(RTRIM(MVA_Original_C_Fid)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_C_Fid_Aliq_4) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_C_Fid_Aliq_4)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(REPLACE(LTRIM(RTRIM(MVA_C_Fid_Aliq_4)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_C_Fid_Aliq_7) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_C_Fid_Aliq_7)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(REPLACE(LTRIM(RTRIM(MVA_C_Fid_Aliq_7)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_C_Fid_Aliq_12) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_C_Fid_Aliq_12)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(REPLACE(LTRIM(RTRIM(MVA_C_Fid_Aliq_12)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, Funcep) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(LTRIM(RTRIM(FUNCEP)), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> LTRIM(RTRIM(FUNCEP)) <span class="hljs-keyword">END</span>),
     LTRIM(RTRIM(Pauta_Fiscal)),
-    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Aliq_4, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Aliq_7, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Aliq_12, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_Aliq_4) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_Aliq_4)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(REPLACE(LTRIM(RTRIM(MVA_Aliq_4)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_Aliq_7) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_Aliq_7)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(REPLACE(LTRIM(RTRIM(MVA_Aliq_7)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+    TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_Aliq_12) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_Aliq_12)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(REPLACE(LTRIM(RTRIM(MVA_Aliq_12)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
     LTRIM(RTRIM(Origem_Arquivo)),
     LTRIM(RTRIM(Nome_Aba_Planilha))
 <span class="hljs-keyword">FROM</span> staging.anexo5_sefaz_raw;
+</div></code></pre>
+<h3 id="atualiza%C3%A7%C3%A3o-do-percentual" tabindex="-1">Atualização do percentual</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">alter table</span> fisc.anexo5_sefaz_normalizado <span class="hljs-keyword">add</span> Aliq_Interna_percentual <span class="hljs-type">decimal</span> (<span class="hljs-number">8</span>,<span class="hljs-number">2</span>)
+<span class="hljs-keyword">update</span> fisc.anexo5_sefaz_normalizado 
+<span class="hljs-keyword">set</span> Aliq_Interna_percentual <span class="hljs-operator">=</span> Aliq_interna <span class="hljs-operator">*</span> <span class="hljs-number">100</span>
 </div></code></pre>
 <hr>
 <h2 id="7.-auditoria-fiscal-sugerida" tabindex="-1">7. Auditoria fiscal sugerida</h2>
@@ -1255,6 +1270,9 @@ GO
 <span class="hljs-keyword">FROM</span> fisc.anexo5_sefaz_normalizado a
 <span class="hljs-keyword">LEFT</span> <span class="hljs-keyword">JOIN</span> fisc.TB_138_PR_SAIDAS_ITENS_PARA_ANALISE_REGISTROS b
     <span class="hljs-keyword">ON</span> a.NCM_SH <span class="hljs-operator">=</span> b.ITEMNF_NCM
+	<span class="hljs-comment">-- LEFT(b.ITEMNF_NCM, LEN(a.NCM_SH)) = a.NCM_SH</span>
+
+  
 <span class="hljs-keyword">WHERE</span> a.CEST <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
   <span class="hljs-keyword">AND</span> b.ITEMNF_CPROD <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
   <span class="hljs-keyword">AND</span> <span class="hljs-built_in">LOWER</span>(a.DESCRICAO) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;%&#x27;</span> <span class="hljs-operator">+</span> <span class="hljs-built_in">LOWER</span>(b.ITEMNF_XPROD) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;%&#x27;</span>;
@@ -1276,11 +1294,13 @@ GO
 <li>o auditor precisa verificar se o produto foi tributado pela regra correta em cada momento.</li>
 </ul>
 <p>A lógica é simples: comparar a data do documento fiscal com a vigência da regra aplicada.</p>
+<p>Exemplo simples:</p>
 <pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
     n.NF_CHAVE_ACESSO,
     n.NF_DHEMI,
     n.ITEMNF_NCM,
     n.ITEMNF_CEST,
+    n.ITEMNF_PICMS,
     a.CEST <span class="hljs-keyword">AS</span> CEST_TABELA,
     a.Vigencia_inicial,
     a.Vigencia_final,
@@ -1293,6 +1313,71 @@ GO
   <span class="hljs-keyword">AND</span> (a.Vigencia_final <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">OR</span> n.NF_DHEMI <span class="hljs-operator">&lt;=</span> a.Vigencia_final)
   <span class="hljs-keyword">AND</span> n.ITEMNF_NCM <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>;
 </div></code></pre>
+<pre class='hljs'><code><div><span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@PeriodoDeclaracao</span> <span class="hljs-type">CHAR</span>(<span class="hljs-number">7</span>) <span class="hljs-operator">=</span> <span class="hljs-keyword">NULL</span>; <span class="hljs-comment">-- use o formato armazenado na tabela</span>
+<span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@DataInicial</span> <span class="hljs-type">DATE</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">NULL</span>;
+<span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@DataFinal</span> <span class="hljs-type">DATE</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">NULL</span>;
+<span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@NCM</span> <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-operator">=</span> <span class="hljs-keyword">NULL</span>;
+<span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@CEST</span> <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-operator">=</span> <span class="hljs-keyword">NULL</span>;
+
+<span class="hljs-comment">-- Exemplos de preenchimento:</span>
+<span class="hljs-comment">-- 1) Todas as operações de uma competência:</span>
+<span class="hljs-comment">--    @PeriodoDeclaracao = &#x27;06/2025&#x27;</span>
+<span class="hljs-comment">--    @DataInicial = NULL, @DataFinal = NULL,</span>
+<span class="hljs-comment">--    @NCM = NULL, @CEST = NULL</span>
+<span class="hljs-comment">--</span>
+<span class="hljs-comment">-- 2) Operações emitidas em um intervalo, sem restringir NCM ou CEST:</span>
+<span class="hljs-comment">--    @PeriodoDeclaracao = NULL</span>
+<span class="hljs-comment">--    @DataInicial = &#x27;2025-01-01&#x27;, @DataFinal = &#x27;2025-03-31&#x27;,</span>
+<span class="hljs-comment">--    @NCM = NULL, @CEST = NULL</span>
+<span class="hljs-comment">--</span>
+<span class="hljs-comment">-- 3) Investigação de um NCM específico:</span>
+<span class="hljs-comment">--    @PeriodoDeclaracao = NULL</span>
+<span class="hljs-comment">--    @DataInicial = &#x27;2025-01-01&#x27;, @DataFinal = &#x27;2025-06-30&#x27;,</span>
+<span class="hljs-comment">--    @NCM = &#x27;3917&#x27;, @CEST = NULL</span>
+<span class="hljs-comment">--</span>
+<span class="hljs-comment">-- 4) Investigação de um CEST informado na operação:</span>
+<span class="hljs-comment">--    @PeriodoDeclaracao = NULL</span>
+<span class="hljs-comment">--    @DataInicial = NULL, @DataFinal = NULL,</span>
+<span class="hljs-comment">--    @NCM = NULL, @CEST = &#x27;01.002.00&#x27;</span>
+
+<span class="hljs-comment">-- NULL significa que o respectivo filtro não será aplicado.</span>
+
+<span class="hljs-keyword">SELECT</span>
+    n.NF_CHAVE_ACESSO,
+    n.NF_DHEMI,
+    n.ITEMNF_NCM,
+    n.ITEMNF_CEST,
+    a.CEST <span class="hljs-keyword">AS</span> CEST_TABELA,
+    a.Vigencia_inicial,
+    a.Vigencia_final,
+    a.Aliq_Interna,
+    a.MVA_Original
+<span class="hljs-keyword">FROM</span> fisc.TB_138_PR_SAIDAS_ITENS_PARA_ANALISE_REGISTROS n
+<span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> fisc.anexo5_sefaz_normalizado a
+    <span class="hljs-keyword">ON</span> n.ITEMNF_NCM <span class="hljs-operator">=</span> a.NCM_SH
+<span class="hljs-keyword">WHERE</span> n.ITEMNF_NCM <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+    <span class="hljs-keyword">AND</span> a.NCM_SH <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+    <span class="hljs-keyword">AND</span> a.Vigencia_inicial <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT NULL</span>
+    <span class="hljs-keyword">AND</span> (<span class="hljs-variable">@PeriodoDeclaracao</span> <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+             <span class="hljs-keyword">OR</span> n.REG0_PERIODO_DECLARACAO <span class="hljs-operator">=</span> <span class="hljs-variable">@PeriodoDeclaracao</span>)
+    <span class="hljs-keyword">AND</span> (<span class="hljs-variable">@DataInicial</span> <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">OR</span> n.NF_DHEMI <span class="hljs-operator">&gt;=</span> <span class="hljs-variable">@DataInicial</span>)
+    <span class="hljs-keyword">AND</span> (<span class="hljs-variable">@DataFinal</span> <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">OR</span> n.NF_DHEMI <span class="hljs-operator">&lt;</span> DATEADD(<span class="hljs-keyword">DAY</span>, <span class="hljs-number">1</span>, <span class="hljs-variable">@DataFinal</span>))
+    <span class="hljs-keyword">AND</span> (<span class="hljs-variable">@NCM</span> <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">OR</span> n.ITEMNF_NCM <span class="hljs-operator">=</span> <span class="hljs-variable">@NCM</span>)
+    <span class="hljs-keyword">AND</span> (<span class="hljs-variable">@CEST</span> <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">OR</span> n.ITEMNF_CEST <span class="hljs-operator">=</span> <span class="hljs-variable">@CEST</span>)
+    <span class="hljs-keyword">AND</span> n.NF_DHEMI <span class="hljs-operator">&gt;=</span> a.Vigencia_inicial
+    <span class="hljs-keyword">AND</span> (a.Vigencia_final <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">OR</span> n.NF_DHEMI <span class="hljs-operator">&lt;=</span> a.Vigencia_final)
+OPTION (RECOMPILE);
+</div></code></pre>
+<h4 id="filtros-recomendados" tabindex="-1">Filtros recomendados</h4>
+<ul>
+<li><code>REG0_PERIODO_DECLARACAO</code>: limita a consulta a uma competência. O valor do parâmetro deve seguir exatamente o formato armazenado, pois a coluna é textual.</li>
+<li><code>NF_DHEMI</code>: use <code>@DataInicial</code> e <code>@DataFinal</code> para restringir o intervalo de emissão sem aplicar conversão na coluna.</li>
+<li><code>ITEMNF_NCM</code>: restringe a investigação a um NCM específico. O exemplo mantém a igualdade original; tratar <code>NCM_SH</code> como prefixo exige uma regra de junção própria.</li>
+<li><code>ITEMNF_CEST</code>: restringe a investigação a um CEST informado na operação. Ele não foi colocado na condição do <code>JOIN</code>, pois isso mudaria a semântica e poderia ocultar divergências entre o CEST da operação e o CEST encontrado na tabela.</li>
+<li><code>Vigencia_inicial</code> e <code>Vigencia_final</code>: continuam obrigatórios para garantir que a regra estava ativa na data da operação.</li>
+</ul>
+<p>O <code>LEFT JOIN</code> original produzia, na prática, o mesmo resultado de um <code>INNER JOIN</code>, pois as condições de vigência no <code>WHERE</code> eliminavam as linhas sem correspondência no Anexo 5. Se a auditoria precisar listar também operações sem regra correspondente, mantenha o <code>LEFT JOIN</code> e mova as condições de vigência para a cláusula <code>ON</code>.</p>
+<p><code>OPTION (RECOMPILE)</code> permite que o SQL Server gere um plano adequado aos filtros informados, já que eles são opcionais. Em execução recorrente, compare o plano e o tempo com e sem essa opção.</p>
 <h4 id="explica%C3%A7%C3%A3o-da-auditoria-4" tabindex="-1">Explicação da auditoria</h4>
 <p>Essa análise é a peça central da validação fiscal por tempo. Se a operação foi realizada em um período em que a regra vigente era outra, a empresa pode estar recolhendo ou creditando ICMS de forma inadequada. Ela usa a tabela gerada pela procedure de saídas (<code>TB_138...REGISTROS</code>) e compara a data da nota com as datas da regra do Anexo 5.</p>
 <p>Assim, a regra “vigência correta” se conecta diretamente à regra trazida na seção 3: o imposto depende do momento em que a operação ocorreu.</p>
@@ -1329,6 +1414,9 @@ GO
 <p>Essas auditorias não são apenas técnicas; elas representam a forma pela qual a empresa e o auditor validam se a tributação está alinhada com a legislação oficial.</p>
 <hr>
 <h2 id="8.-stored-procedure-para-automatizar-o-processo" tabindex="-1">8. Stored procedure para automatizar o processo</h2>
+<blockquote>
+<p>A procedure cria, de forma condicional, o schema <code>staging</code>, a tabela <code>staging.anexo5_sefaz_raw</code> e a tabela <code>fisc.anexo5_sefaz_normalizado_SP</code>. A tabela original <code>fisc.anexo5_sefaz_normalizado</code> não é alterada por esta procedure.</p>
+</blockquote>
 <pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">PROCEDURE</span> dbo.usp_carga_anexo5_sefaz
     <span class="hljs-variable">@ArquivoCSV</span> NVARCHAR(<span class="hljs-number">4000</span>)
 <span class="hljs-keyword">AS</span>
@@ -1336,21 +1424,130 @@ GO
     <span class="hljs-keyword">SET</span> NOCOUNT <span class="hljs-keyword">ON</span>;
 
     <span class="hljs-keyword">BEGIN</span> TRY
+        IF SCHEMA_ID(<span class="hljs-string">&#x27;staging&#x27;</span>) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+            <span class="hljs-keyword">EXEC</span> (<span class="hljs-string">&#x27;CREATE SCHEMA staging&#x27;</span>);
+
+        IF OBJECT_ID(<span class="hljs-string">&#x27;staging.anexo5_sefaz_raw&#x27;</span>, <span class="hljs-string">&#x27;U&#x27;</span>) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+        <span class="hljs-keyword">BEGIN</span>
+            <span class="hljs-keyword">CREATE TABLE</span> staging.anexo5_sefaz_raw (
+                Tabela_CEST                   NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                ITEM                          NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                CEST                          NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                NCM_SH                        NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                DESCRICAO                     NVARCHAR(<span class="hljs-number">2000</span>) <span class="hljs-keyword">NULL</span>,
+                Legislacao                    NVARCHAR(<span class="hljs-number">2000</span>) <span class="hljs-keyword">NULL</span>,
+                Vigencia_inicial              NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+                Vigencia_final                NVARCHAR(<span class="hljs-number">100</span>) <span class="hljs-keyword">NULL</span>,
+                Aliq_Interna                  NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Original                  NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Original_S_Fid            NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_S_Fid_Aliq_4              NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_S_Fid_Aliq_7              NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_S_Fid_Aliq_12             NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Original_C_Fid            NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_C_Fid_Aliq_4              NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_C_Fid_Aliq_7              NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_C_Fid_Aliq_12             NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                Funcep                        NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                Pauta_Fiscal                  NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Aliq_4                    NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Aliq_7                    NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Aliq_12                   NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                Funcep_Bebidas_Gaseificada    NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Original_deriv_Petr       NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_deriv_Petr_Aliq_4         NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_deriv_Petr_Aliq_7         NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_deriv_Petr_Aliq_12        NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Original_N_deriv_Petr     NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_N_deriv_Petr_Aliq_4       NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_N_deriv_Petr_Aliq_7       NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_N_deriv_Petr_Aliq_12      NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Original_Outros_Prod      NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Outros_Prod_Aliq_4        NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Outros_Prod_Aliq_7        NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Outros_Prod_Aliq_12       NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                Funcep_Consumo_maior_100Kw_h  NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                Lista                         NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                UF_Signataria                 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                Exterior_UF_nao_Signat        NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                Ato_Cotepe                    NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+                Origem_Arquivo                NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+                Nome_Aba_Planilha             NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>
+            );
+        <span class="hljs-keyword">END</span>;
+
+        IF OBJECT_ID(<span class="hljs-string">&#x27;fisc.anexo5_sefaz_normalizado_SP&#x27;</span>, <span class="hljs-string">&#x27;U&#x27;</span>) <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>
+        <span class="hljs-keyword">BEGIN</span>
+            <span class="hljs-keyword">CREATE TABLE</span> fisc.anexo5_sefaz_normalizado_SP (
+                Id <span class="hljs-type">BIGINT</span> <span class="hljs-keyword">IDENTITY</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>) <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">PRIMARY KEY</span>,
+                Tabela_CEST                   NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                ITEM                          <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                CEST                          NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                NCM_SH                        NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                DESCRICAO                     NVARCHAR(<span class="hljs-number">2000</span>) <span class="hljs-keyword">NULL</span>,
+                Legislacao                    NVARCHAR(<span class="hljs-number">2000</span>) <span class="hljs-keyword">NULL</span>,
+                Vigencia_inicial              DATETIME <span class="hljs-keyword">NULL</span>,
+                Vigencia_final                DATETIME <span class="hljs-keyword">NULL</span>,
+                Aliq_Interna                  <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                Aliq_Interna_percentual       <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">8</span>,<span class="hljs-number">2</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Original                  <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Original_S_Fid            <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_S_Fid_Aliq_4              <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_S_Fid_Aliq_7              <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_S_Fid_Aliq_12             <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Original_C_Fid            <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_C_Fid_Aliq_4              <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_C_Fid_Aliq_7              <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_C_Fid_Aliq_12             <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                Funcep                        <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                Pauta_Fiscal                  NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Aliq_4                    <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Aliq_7                    <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Aliq_12                   <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                Funcep_Bebidas_Gaseificada    NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Original_deriv_Petr       <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_deriv_Petr_Aliq_4         <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_deriv_Petr_Aliq_7         <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_deriv_Petr_Aliq_12        <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Original_N_deriv_Petr     <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_N_deriv_Petr_Aliq_4       <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_N_deriv_Petr_Aliq_7       <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_N_deriv_Petr_Aliq_12      <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Original_Outros_Prod      <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Outros_Prod_Aliq_4        <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Outros_Prod_Aliq_7        <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                MVA_Outros_Prod_Aliq_12       <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                Funcep_Consumo_maior_100Kw_h  <span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>) <span class="hljs-keyword">NULL</span>,
+                Lista                         NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                UF_Signataria                 NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                Exterior_UF_nao_Signat        NVARCHAR(<span class="hljs-number">50</span>) <span class="hljs-keyword">NULL</span>,
+                Ato_Cotepe                    NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+                Origem_Arquivo                NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>,
+                Nome_Aba_Planilha             NVARCHAR(<span class="hljs-number">200</span>) <span class="hljs-keyword">NULL</span>
+            );
+        <span class="hljs-keyword">END</span>;
+
         <span class="hljs-keyword">TRUNCATE</span> <span class="hljs-keyword">TABLE</span> staging.anexo5_sefaz_raw;
+        <span class="hljs-keyword">TRUNCATE</span> <span class="hljs-keyword">TABLE</span> fisc.anexo5_sefaz_normalizado_SP;
 
-        BULK <span class="hljs-keyword">INSERT</span> staging.anexo5_sefaz_raw
-        <span class="hljs-keyword">FROM</span> <span class="hljs-variable">@ArquivoCSV</span>
-        <span class="hljs-keyword">WITH</span> (
-            FIELDTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;|&#x27;</span>,
-            ROWTERMINATOR <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;\n&#x27;</span>,
-            FIRSTROW <span class="hljs-operator">=</span> <span class="hljs-number">2</span>,
-            DATAFILETYPE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;char&#x27;</span>,
-            CODEPAGE <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;65001&#x27;</span>,
-            TABLOCK,
-            MAXERRORS <span class="hljs-operator">=</span> <span class="hljs-number">100</span>
-        );
+        <span class="hljs-keyword">DECLARE</span> <span class="hljs-variable">@SQLBulkInsert</span> NVARCHAR(MAX);
 
-        <span class="hljs-keyword">INSERT INTO</span> dbo.anexo5_sefaz_normalizado (
+        <span class="hljs-keyword">SET</span> <span class="hljs-variable">@SQLBulkInsert</span> <span class="hljs-operator">=</span>
+            N<span class="hljs-string">&#x27;BULK INSERT staging.anexo5_sefaz_raw
+              FROM &#x27;&#x27;&#x27;</span> <span class="hljs-operator">+</span> REPLACE(<span class="hljs-variable">@ArquivoCSV</span>, <span class="hljs-string">&#x27;&#x27;&#x27;&#x27;</span>, <span class="hljs-string">&#x27;&#x27;&#x27;&#x27;&#x27;&#x27;</span>) <span class="hljs-operator">+</span> N<span class="hljs-string">&#x27;&#x27;&#x27;
+              WITH (
+                  FIELDTERMINATOR = &#x27;&#x27;|&#x27;&#x27;,
+                  ROWTERMINATOR = &#x27;&#x27;\n&#x27;&#x27;,
+                  FIRSTROW = 2,
+                  DATAFILETYPE = &#x27;&#x27;char&#x27;&#x27;,
+                  CODEPAGE = &#x27;&#x27;65001&#x27;&#x27;,
+                  TABLOCK,
+                  MAXERRORS = 100
+              );&#x27;</span>;
+
+        <span class="hljs-keyword">EXEC</span> sys.sp_executesql <span class="hljs-variable">@SQLBulkInsert</span>;
+
+        <span class="hljs-keyword">INSERT INTO</span> fisc.anexo5_sefaz_normalizado_SP (
             Tabela_CEST,
             ITEM,
             CEST,
@@ -1386,24 +1583,27 @@ GO
             LTRIM(RTRIM(Legislacao)),
             TRY_CONVERT(DATETIME, Vigencia_inicial),
             TRY_CONVERT(DATETIME, Vigencia_final),
-            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(Aliq_Interna, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Original, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Original_S_Fid, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_S_Fid_Aliq_4, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_S_Fid_Aliq_7, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_S_Fid_Aliq_12, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Original_C_Fid, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_C_Fid_Aliq_4, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_C_Fid_Aliq_7, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_C_Fid_Aliq_12, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), Funcep),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, Aliq_Interna) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(Aliq_Interna)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(LTRIM(RTRIM(Aliq_Interna)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_Original) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_Original)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(LTRIM(RTRIM(MVA_Original)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_Original_S_Fid) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_Original_S_Fid)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(LTRIM(RTRIM(MVA_Original_S_Fid)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_S_Fid_Aliq_4) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_S_Fid_Aliq_4)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(LTRIM(RTRIM(MVA_S_Fid_Aliq_4)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_S_Fid_Aliq_7) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_S_Fid_Aliq_7)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(LTRIM(RTRIM(MVA_S_Fid_Aliq_7)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_S_Fid_Aliq_12) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_S_Fid_Aliq_12)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(LTRIM(RTRIM(MVA_S_Fid_Aliq_12)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_Original_C_Fid) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_Original_C_Fid)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(LTRIM(RTRIM(MVA_Original_C_Fid)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_C_Fid_Aliq_4) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_C_Fid_Aliq_4)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(LTRIM(RTRIM(MVA_C_Fid_Aliq_4)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_C_Fid_Aliq_7) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_C_Fid_Aliq_7)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(LTRIM(RTRIM(MVA_C_Fid_Aliq_7)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_C_Fid_Aliq_12) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_C_Fid_Aliq_12)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(LTRIM(RTRIM(MVA_C_Fid_Aliq_12)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, Funcep) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(LTRIM(RTRIM(FUNCEP)), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> LTRIM(RTRIM(FUNCEP)) <span class="hljs-keyword">END</span>),
             LTRIM(RTRIM(Pauta_Fiscal)),
-            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Aliq_4, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Aliq_7, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
-            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), REPLACE(REPLACE(MVA_Aliq_12, <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>)),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_Aliq_4) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_Aliq_4)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(LTRIM(RTRIM(MVA_Aliq_4)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_Aliq_7) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_Aliq_7)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(LTRIM(RTRIM(MVA_Aliq_7)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
+            TRY_CONVERT(<span class="hljs-type">DECIMAL</span>(<span class="hljs-number">18</span>,<span class="hljs-number">4</span>), <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> CHARINDEX(<span class="hljs-string">&#x27;,&#x27;</span>, MVA_Aliq_12) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0</span> <span class="hljs-keyword">THEN</span> REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(MVA_Aliq_12)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;.&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>), <span class="hljs-string">&#x27;,&#x27;</span>, <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">ELSE</span> REPLACE(LTRIM(RTRIM(MVA_Aliq_12)), <span class="hljs-string">&#x27;%&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">END</span>),
             LTRIM(RTRIM(Origem_Arquivo)),
             LTRIM(RTRIM(Nome_Aba_Planilha))
         <span class="hljs-keyword">FROM</span> staging.anexo5_sefaz_raw;
+
+        <span class="hljs-keyword">UPDATE</span> fisc.anexo5_sefaz_normalizado_SP
+        <span class="hljs-keyword">SET</span> Aliq_Interna_percentual <span class="hljs-operator">=</span> Aliq_Interna <span class="hljs-operator">*</span> <span class="hljs-number">100</span>;
 
         <span class="hljs-keyword">SELECT</span> <span class="hljs-string">&#x27;Carga do Anexo 5 concluída com sucesso.&#x27;</span> <span class="hljs-keyword">AS</span> Resultado;
 
@@ -1420,6 +1620,46 @@ GO
 <h3 id="execu%C3%A7%C3%A3o-da-procedure" tabindex="-1">Execução da procedure</h3>
 <pre class='hljs'><code><div><span class="hljs-keyword">EXEC</span> dbo.usp_carga_anexo5_sefaz
     <span class="hljs-variable">@ArquivoCSV</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;C:\dados\staging\tabela_anexo_5_sefaz.csv&#x27;</span>;
+</div></code></pre>
+<h3 id="8.1-verifica%C3%A7%C3%A3o-quantitativa-dos-registros-carregados" tabindex="-1">8.1 Verificação quantitativa dos registros carregados</h3>
+<p>Os comandos abaixo apresentam somente os quantitativos da carga realizada, sem classificar registros ou interpretar regras fiscais.</p>
+<h4 id="total-de-registros-na-staging-e-na-tabela-normalizada" tabindex="-1">Total de registros na staging e na tabela normalizada</h4>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    (<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> staging.anexo5_sefaz_raw) <span class="hljs-keyword">AS</span> registros_staging,
+    (<span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">FROM</span> fisc.anexo5_sefaz_normalizado_SP) <span class="hljs-keyword">AS</span> registros_normalizados;
+</div></code></pre>
+<h4 id="quantidade-de-registros-normalizados-por-origem-do-arquivo" tabindex="-1">Quantidade de registros normalizados por origem do arquivo</h4>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    Origem_Arquivo,
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> quantidade_registros
+<span class="hljs-keyword">FROM</span> fisc.anexo5_sefaz_normalizado_SP
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> Origem_Arquivo
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> quantidade_registros <span class="hljs-keyword">DESC</span>, Origem_Arquivo;
+</div></code></pre>
+<h4 id="quantidade-de-registros-normalizados-por-aba-da-planilha" tabindex="-1">Quantidade de registros normalizados por aba da planilha</h4>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    Nome_Aba_Planilha,
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> quantidade_registros
+<span class="hljs-keyword">FROM</span> fisc.anexo5_sefaz_normalizado_SP
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> Nome_Aba_Planilha
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> quantidade_registros <span class="hljs-keyword">DESC</span>, Nome_Aba_Planilha;
+</div></code></pre>
+<h4 id="quantidade-de-valores-distintos-carregados" tabindex="-1">Quantidade de valores distintos carregados</h4>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> CEST) <span class="hljs-keyword">AS</span> cest_distintos,
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> NCM_SH) <span class="hljs-keyword">AS</span> ncm_distintos,
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> Tabela_CEST) <span class="hljs-keyword">AS</span> tabelas_cest_distintas,
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> Origem_Arquivo) <span class="hljs-keyword">AS</span> arquivos_origem_distintos,
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> Nome_Aba_Planilha) <span class="hljs-keyword">AS</span> abas_planilha_distintas
+<span class="hljs-keyword">FROM</span> fisc.anexo5_sefaz_normalizado_SP;
+</div></code></pre>
+<h4 id="quantidade-de-registros-por-tabela-cest" tabindex="-1">Quantidade de registros por tabela CEST</h4>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    Tabela_CEST,
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">AS</span> quantidade_registros
+<span class="hljs-keyword">FROM</span> fisc.anexo5_sefaz_normalizado_SP
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> Tabela_CEST
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Tabela_CEST;
 </div></code></pre>
 <hr>
 <h2 id="9.-conclus%C3%A3o" tabindex="-1">9. Conclusão</h2>

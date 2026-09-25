@@ -51,10 +51,10 @@ Uma **subconsulta** (*subquery*) é uma instrução `SELECT` completa, escrita e
 
 ```sql
 SELECT razao_social
-FROM fiscal.contribuinte
+FROM dbo.contribuinte
 WHERE id_contribuinte IN (
-    SELECT id_contribuinte_emitente          -- consulta interna (subconsulta)
-    FROM fiscal.nota_fiscal
+    SELECT id_emitente                       -- consulta interna (subconsulta)
+    FROM dbo.nfe
     WHERE valor_total > 50000.00
 );                                             -- consulta externa
 ```
@@ -109,8 +109,8 @@ Uma subconsulta escalar retorna **exatamente um valor** (uma linha, uma coluna) 
 SELECT
     n.chave_acesso,
     n.valor_total,
-    (SELECT AVG(valor_total) FROM fiscal.nota_fiscal) AS media_geral_notas
-FROM fiscal.nota_fiscal AS n;
+    (SELECT AVG(valor_total) FROM dbo.nfe) AS media_geral_notas
+FROM dbo.nfe AS n;
 ```
 
 Cada linha do resultado exibe o mesmo valor de `media_geral_notas` — a subconsulta é independente e é recalculada (ou reaproveitada pelo otimizador) para todas as linhas.
@@ -119,11 +119,11 @@ Cada linha do resultado exibe o mesmo valor de `media_geral_notas` — a subcons
 
 ```sql
 SELECT razao_social, regime_tributario
-FROM fiscal.contribuinte
+FROM dbo.contribuinte
 WHERE id_contribuinte = (
-    SELECT TOP (1) id_contribuinte_emitente
-    FROM fiscal.nota_fiscal
-    ORDER BY valor_total DESC
+    SELECT TOP (1) id_emitente
+    FROM dbo.nfe
+    ORDER BY valor_total DESC, id_nfe DESC
 );
 ```
 
@@ -139,16 +139,21 @@ Por isso, subconsultas escalares em comparações simples (`=`) devem sempre gar
 ### 4.3 Em `UPDATE`
 
 ```sql
-UPDATE fiscal.contribuinte
-SET regime_tributario = (
-    SELECT TOP (1) regime_sugerido
-    FROM staging.stg_reclassificacao
-    WHERE staging.stg_reclassificacao.cnpj = fiscal.contribuinte.cnpj
+UPDATE c
+SET faturamento_declarado = (
+    SELECT SUM(n.valor_total)
+    FROM dbo.nfe AS n
+    WHERE n.id_emitente = c.id_contribuinte
 )
-WHERE cnpj IN (SELECT cnpj FROM staging.stg_reclassificacao);
+FROM dbo.contribuinte AS c
+WHERE EXISTS (
+    SELECT 1
+    FROM dbo.nfe AS n
+    WHERE n.id_emitente = c.id_contribuinte
+);
 ```
 
-Aqui a subconsulta do `SET` é **correlacionada** (referencia `fiscal.contribuinte.cnpj` da linha sendo atualizada), enquanto a subconsulta do `WHERE` é **independente**.
+Aqui a subconsulta do `SET` é **correlacionada** (referencia `dbo.contribuinte.id_contribuinte` da linha sendo atualizada), assim como a subconsulta do `WHERE`.
 
 ---
 
@@ -160,10 +165,10 @@ Esta é a aplicação mais comum de subconsultas: filtrar a consulta externa com
 
 ```sql
 SELECT razao_social
-FROM fiscal.contribuinte
+FROM dbo.contribuinte
 WHERE id_contribuinte IN (
-    SELECT id_contribuinte_emitente
-    FROM fiscal.nota_fiscal
+    SELECT id_emitente
+    FROM dbo.nfe
     WHERE situacao = 'CANCELADA'
 );
 ```
@@ -174,10 +179,10 @@ Retorna contribuintes que emitiram **pelo menos uma** nota cancelada.
 
 ```sql
 SELECT razao_social
-FROM fiscal.contribuinte
+FROM dbo.contribuinte
 WHERE id_contribuinte NOT IN (
-    SELECT id_contribuinte_emitente
-    FROM fiscal.nota_fiscal
+    SELECT id_emitente
+    FROM dbo.nfe
     WHERE situacao = 'CANCELADA'
 );
 ```
@@ -189,27 +194,27 @@ Retorna contribuintes que **nunca** emitiram nota cancelada. **Atenção:** ver 
 `ANY` e `SOME` são sinônimos no T-SQL; a condição é satisfeita se ela for verdadeira para **pelo menos um** valor retornado pela subconsulta.
 
 ```sql
-SELECT razao_social, valor_total = NULL  -- placeholder ilustrativo
-FROM fiscal.contribuinte AS c
+SELECT c.razao_social
+FROM dbo.contribuinte AS c
 WHERE c.id_contribuinte = ANY (
-    SELECT id_contribuinte_emitente
-    FROM fiscal.nota_fiscal
+    SELECT id_emitente
+    FROM dbo.nfe
     WHERE valor_total > 100000.00
 );
 ```
 
-Exemplo mais natural — contribuintes com pelo menos uma nota maior que **qualquer** nota emitida no regime "Simples Nacional":
+Exemplo mais natural — contribuintes com pelo menos uma nota maior que **qualquer** nota emitida no regime `SIMPLES`:
 
 ```sql
 SELECT razao_social
-FROM fiscal.contribuinte AS c
-JOIN fiscal.nota_fiscal AS n
-    ON n.id_contribuinte_emitente = c.id_contribuinte
+FROM dbo.contribuinte AS c
+JOIN dbo.nfe AS n
+    ON n.id_emitente = c.id_contribuinte
 WHERE n.valor_total > ANY (
     SELECT valor_total
-    FROM fiscal.nota_fiscal AS n2
-    JOIN fiscal.contribuinte AS c2 ON c2.id_contribuinte = n2.id_contribuinte_emitente
-    WHERE c2.regime_tributario = 'Simples Nacional'
+    FROM dbo.nfe AS n2
+    JOIN dbo.contribuinte AS c2 ON c2.id_contribuinte = n2.id_emitente
+    WHERE c2.regime_tributario = 'SIMPLES'
 );
 ```
 
@@ -221,18 +226,18 @@ A condição só é satisfeita se ela for verdadeira para **todos** os valores r
 
 ```sql
 SELECT razao_social
-FROM fiscal.contribuinte AS c
-JOIN fiscal.nota_fiscal AS n
-    ON n.id_contribuinte_emitente = c.id_contribuinte
+FROM dbo.contribuinte AS c
+JOIN dbo.nfe AS n
+    ON n.id_emitente = c.id_contribuinte
 WHERE n.valor_total > ALL (
     SELECT valor_total
-    FROM fiscal.nota_fiscal AS n2
-    JOIN fiscal.contribuinte AS c2 ON c2.id_contribuinte = n2.id_contribuinte_emitente
-    WHERE c2.regime_tributario = 'Simples Nacional'
+    FROM dbo.nfe AS n2
+    JOIN dbo.contribuinte AS c2 ON c2.id_contribuinte = n2.id_emitente
+    WHERE c2.regime_tributario = 'SIMPLES'
 );
 ```
 
-`> ALL (...)` equivale a "maior que o **maior** valor do conjunto". Contribuintes retornados aqui emitiram uma nota mais valiosa do que **qualquer** nota do Simples Nacional.
+`> ALL (...)` equivale a "maior que o **maior** valor do conjunto". Contribuintes retornados aqui emitiram uma nota mais valiosa do que **qualquer** nota do regime `SIMPLES`.
 
 
 | Operador       | Equivalência lógica                                                                  | Cuidado                                                                                          |
@@ -252,11 +257,11 @@ WHERE n.valor_total > ALL (
 
 ```sql
 SELECT c.razao_social
-FROM fiscal.contribuinte AS c
+FROM dbo.contribuinte AS c
 WHERE EXISTS (
     SELECT 1
-    FROM fiscal.nota_fiscal AS n
-    WHERE n.id_contribuinte_emitente = c.id_contribuinte
+    FROM dbo.nfe AS n
+    WHERE n.id_emitente = c.id_contribuinte
       AND n.situacao = 'CANCELADA'
 );
 ```
@@ -267,11 +272,11 @@ Retorna contribuintes que possuem pelo menos uma nota cancelada — mesmo result
 
 ```sql
 SELECT c.razao_social
-FROM fiscal.contribuinte AS c
+FROM dbo.contribuinte AS c
 WHERE NOT EXISTS (
     SELECT 1
-    FROM fiscal.nota_fiscal AS n
-    WHERE n.id_contribuinte_emitente = c.id_contribuinte
+    FROM dbo.nfe AS n
+    WHERE n.id_emitente = c.id_contribuinte
       AND n.situacao = 'CANCELADA'
 );
 ```
@@ -302,10 +307,10 @@ SELECT
     c.razao_social,
     (
         SELECT MAX(n.data_emissao)
-        FROM fiscal.nota_fiscal AS n
-        WHERE n.id_contribuinte_emitente = c.id_contribuinte   -- correlação
+        FROM dbo.nfe AS n
+        WHERE n.id_emitente = c.id_contribuinte                 -- correlação
     ) AS ultima_emissao
-FROM fiscal.contribuinte AS c;
+FROM dbo.contribuinte AS c;
 ```
 
 A subconsulta não pode ser executada de forma isolada — ela **depende** de `c.id_contribuinte`, que muda a cada linha da consulta externa.
@@ -314,11 +319,11 @@ A subconsulta não pode ser executada de forma isolada — ela **depende** de `c
 
 ```sql
 SELECT c.razao_social
-FROM fiscal.contribuinte AS c
+FROM dbo.contribuinte AS c
 WHERE 'CANCELADA' = (
     SELECT TOP (1) n.situacao
-    FROM fiscal.nota_fiscal AS n
-    WHERE n.id_contribuinte_emitente = c.id_contribuinte
+    FROM dbo.nfe AS n
+    WHERE n.id_emitente = c.id_contribuinte
     ORDER BY n.data_emissao DESC
 );
 ```
@@ -326,13 +331,13 @@ WHERE 'CANCELADA' = (
 ### 7.3 Correlação em `UPDATE`/`DELETE`
 
 ```sql
--- Marca como "INATIVO" contribuintes sem nenhuma nota fiscal emitida nos últimos 24 meses
-UPDATE fiscal.contribuinte
-SET regime_tributario = 'INATIVO'
+-- Marca como "INAPTO" contribuintes sem nenhuma nota fiscal emitida nos últimos 24 meses
+UPDATE dbo.contribuinte
+SET situacao_cadastral = 'INAPTO'
 WHERE NOT EXISTS (
     SELECT 1
-    FROM fiscal.nota_fiscal AS n
-    WHERE n.id_contribuinte_emitente = fiscal.contribuinte.id_contribuinte
+    FROM dbo.nfe AS n
+    WHERE n.id_emitente = dbo.contribuinte.id_contribuinte
       AND n.data_emissao >= DATEADD(MONTH, -24, SYSUTCDATETIME())
 );
 ```
@@ -355,9 +360,9 @@ FROM (
         c.regime_tributario,
         COUNT(DISTINCT c.id_contribuinte) AS total_contribuintes,
         AVG(n.valor_total) AS valor_medio
-    FROM fiscal.contribuinte AS c
-    JOIN fiscal.nota_fiscal AS n
-        ON n.id_contribuinte_emitente = c.id_contribuinte
+    FROM dbo.contribuinte AS c
+    JOIN dbo.nfe AS n
+        ON n.id_emitente = c.id_contribuinte
     GROUP BY c.regime_tributario
 ) AS resumo                                     -- alias obrigatório
 WHERE resumo.total_contribuintes > 10
@@ -378,12 +383,12 @@ Assim como o `WHERE` filtra linhas antes do agrupamento, o `HAVING` filtra **gru
 SELECT
     c.regime_tributario,
     AVG(n.valor_total) AS media_regime
-FROM fiscal.contribuinte AS c
-JOIN fiscal.nota_fiscal AS n
-    ON n.id_contribuinte_emitente = c.id_contribuinte
+    FROM dbo.contribuinte AS c
+JOIN dbo.nfe AS n
+    ON n.id_emitente = c.id_contribuinte
 GROUP BY c.regime_tributario
 HAVING AVG(n.valor_total) > (
-    SELECT AVG(valor_total) FROM fiscal.nota_fiscal
+    SELECT AVG(valor_total) FROM dbo.nfe
 );
 ```
 
@@ -402,11 +407,11 @@ SELECT
     c.razao_social,
     top3.chave_acesso,
     top3.valor_total
-FROM fiscal.contribuinte AS c
+FROM dbo.contribuinte AS c
 CROSS APPLY (
     SELECT TOP (3) n.chave_acesso, n.valor_total
-    FROM fiscal.nota_fiscal AS n
-    WHERE n.id_contribuinte_emitente = c.id_contribuinte
+    FROM dbo.nfe AS n
+    WHERE n.id_emitente = c.id_contribuinte
     ORDER BY n.valor_total DESC
 ) AS top3;
 ```
@@ -420,11 +425,11 @@ SELECT
     c.razao_social,
     ultima.chave_acesso,
     ultima.data_emissao
-FROM fiscal.contribuinte AS c
+FROM dbo.contribuinte AS c
 OUTER APPLY (
     SELECT TOP (1) n.chave_acesso, n.data_emissao
-    FROM fiscal.nota_fiscal AS n
-    WHERE n.id_contribuinte_emitente = c.id_contribuinte
+    FROM dbo.nfe AS n
+    WHERE n.id_emitente = c.id_contribuinte
     ORDER BY n.data_emissao DESC
 ) AS ultima;
 ```
@@ -444,36 +449,36 @@ Diferente de `CROSS APPLY`, o `OUTER APPLY` **preserva** contribuintes sem nenhu
 Este é um dos erros mais comuns — e mais silenciosos — envolvendo subconsultas em T-SQL.
 
 ```sql
--- Suponha que id_contribuinte_emitente aceite NULL (ex.: notas de ajuste sem emitente vinculado)
+-- id_destinatario aceita NULL (ex.: consumidor nao identificado)
 SELECT razao_social
-FROM fiscal.contribuinte
+FROM dbo.contribuinte
 WHERE id_contribuinte NOT IN (
-    SELECT id_contribuinte_emitente
-    FROM fiscal.nota_fiscal
+    SELECT id_destinatario
+    FROM dbo.nfe
 );
 ```
 
-**Se a subconsulta retornar sequer um `NULL`** entre os valores de `id_contribuinte_emitente`, a consulta externa inteira **não retorna nenhuma linha** — mesmo que existam contribuintes claramente ausentes da lista. Isso ocorre porque, em lógica de três valores do SQL (`TRUE`/`FALSE`/`UNKNOWN`), comparar qualquer valor com `NULL` usando `<>` resulta em `UNKNOWN`, e o `NOT IN` internamente é avaliado como uma cadeia de `AND (valor <> x1) AND (valor <> x2) AND ...` — bastando um único `UNKNOWN` para que toda a condição deixe de ser `TRUE`.
+**Se a subconsulta retornar sequer um `NULL`** entre os valores de `id_destinatario`, a consulta externa inteira **não retorna nenhuma linha** — mesmo que existam contribuintes claramente ausentes da lista. Isso ocorre porque, em lógica de três valores do SQL (`TRUE`/`FALSE`/`UNKNOWN`), comparar qualquer valor com `NULL` usando `<>` resulta em `UNKNOWN`, e o `NOT IN` internamente é avaliado como uma cadeia de `AND (valor <> x1) AND (valor <> x2) AND ...` — bastando um único `UNKNOWN` para que toda a condição deixe de ser `TRUE`.
 
 **Formas seguras de evitar o problema:**
 
 ```sql
 -- Opção 1: filtrar o NULL explicitamente dentro da subconsulta
 SELECT razao_social
-FROM fiscal.contribuinte
+FROM dbo.contribuinte
 WHERE id_contribuinte NOT IN (
-    SELECT id_contribuinte_emitente
-    FROM fiscal.nota_fiscal
-    WHERE id_contribuinte_emitente IS NOT NULL
+    SELECT id_destinatario
+    FROM dbo.nfe
+    WHERE id_destinatario IS NOT NULL
 );
 
 -- Opção 2 (recomendada): usar NOT EXISTS, imune ao problema
 SELECT c.razao_social
-FROM fiscal.contribuinte AS c
+FROM dbo.contribuinte AS c
 WHERE NOT EXISTS (
     SELECT 1
-    FROM fiscal.nota_fiscal AS n
-    WHERE n.id_contribuinte_emitente = c.id_contribuinte
+    FROM dbo.nfe AS n
+    WHERE n.id_destinatario = c.id_contribuinte
 );
 ```
 
@@ -488,25 +493,25 @@ As três abordagens frequentemente produzem o **mesmo resultado lógico**, mas c
 ```sql
 -- (A) Subconsulta com EXISTS
 SELECT c.razao_social
-FROM fiscal.contribuinte AS c
+FROM dbo.contribuinte AS c
 WHERE EXISTS (
-    SELECT 1 FROM fiscal.nota_fiscal AS n
-    WHERE n.id_contribuinte_emitente = c.id_contribuinte
+    SELECT 1 FROM dbo.nfe AS n
+    WHERE n.id_emitente = c.id_contribuinte
 );
 
 -- (B) JOIN equivalente (exige DISTINCT para não duplicar contribuintes com várias notas)
 SELECT DISTINCT c.razao_social
-FROM fiscal.contribuinte AS c
-JOIN fiscal.nota_fiscal AS n
-    ON n.id_contribuinte_emitente = c.id_contribuinte;
+FROM dbo.contribuinte AS c
+JOIN dbo.nfe AS n
+    ON n.id_emitente = c.id_contribuinte;
 
 -- (C) CTE equivalente
 WITH contribuintes_com_nota AS (
-    SELECT DISTINCT id_contribuinte_emitente AS id_contribuinte
-    FROM fiscal.nota_fiscal
+    SELECT DISTINCT id_emitente AS id_contribuinte
+    FROM dbo.nfe
 )
 SELECT c.razao_social
-FROM fiscal.contribuinte AS c
+FROM dbo.contribuinte AS c
 JOIN contribuintes_com_nota AS ccn
     ON ccn.id_contribuinte = c.id_contribuinte;
 ```
@@ -528,7 +533,7 @@ JOIN contribuintes_com_nota AS ccn
 
 Subconsultas **não são, por definição, mais lentas** que `JOIN`s — o otimizador de consultas do SQL Server frequentemente as reescreve internamente para planos equivalentes. Ainda assim, alguns pontos merecem atenção prática:
 
-- **Índices na coluna de correlação:** uma subconsulta correlacionada (ou um `EXISTS`) que filtra por `n.id_contribuinte_emitente = c.id_contribuinte` se beneficia diretamente de um índice em `fiscal.nota_fiscal(id_contribuinte_emitente)`. Sem esse índice, cada avaliação da subconsulta pode exigir uma varredura completa da tabela (*table scan*).
+- **Índices na coluna de correlação:** uma subconsulta correlacionada (ou um `EXISTS`) que filtra por `n.id_emitente = c.id_contribuinte` se beneficia diretamente de um índice em `dbo.nfe(id_emitente)`. Sem esse índice, cada avaliação da subconsulta pode exigir uma varredura completa da tabela (*table scan*).
 - **`SELECT 1` em `EXISTS`:** não há ganho real em trocar `SELECT 1` por `SELECT *` ou por uma coluna específica dentro de `EXISTS` — o otimizador ignora a lista de colunas nesse contexto, pois só o fato de "existir linha" importa.
 - **Ler o plano de execução (SSMS):** `Ctrl+M` (Include Actual Execution Plan) antes de rodar a consulta permite visualizar se uma subconsulta foi transformada em `Nested Loops`, `Hash Match` ou `Merge Join` — e se algum operador está fazendo *scan* em vez de *seek*.
 - **`TOP (1)` sem `ORDER BY` determinístico:** ao usar `TOP (1)` dentro de uma subconsulta escalar (ex.: [seção 4.2](#42-comparando-com-um-valor-único-no-where)) sem uma coluna que garanta desempate único (como a chave primária como critério secundário), o resultado pode variar entre execuções caso haja empate no critério de ordenação principal.
@@ -545,9 +550,9 @@ WITH media_por_regime AS (
     SELECT
         c.regime_tributario,
         AVG(n.valor_total) AS media_regime
-    FROM fiscal.contribuinte AS c
-    JOIN fiscal.nota_fiscal AS n
-        ON n.id_contribuinte_emitente = c.id_contribuinte
+    FROM dbo.contribuinte AS c
+    JOIN dbo.nfe AS n
+        ON n.id_emitente = c.id_contribuinte
     GROUP BY c.regime_tributario
 )
 SELECT
@@ -556,12 +561,12 @@ SELECT
     ultima_nota.chave_acesso        AS ultima_nota_emitida,
     ultima_nota.valor_total         AS valor_ultima_nota,
     mr.media_regime
-FROM fiscal.contribuinte AS c
+FROM dbo.contribuinte AS c
 -- subconsulta correlacionada via APPLY: última nota de cada contribuinte
 OUTER APPLY (
     SELECT TOP (1) n.chave_acesso, n.valor_total
-    FROM fiscal.nota_fiscal AS n
-    WHERE n.id_contribuinte_emitente = c.id_contribuinte
+    FROM dbo.nfe AS n
+    WHERE n.id_emitente = c.id_contribuinte
     ORDER BY n.data_emissao DESC
 ) AS ultima_nota
 -- CTE reaproveitada para trazer a média do regime do contribuinte
@@ -570,16 +575,16 @@ JOIN media_por_regime AS mr
 WHERE EXISTS (
     -- subconsulta correlacionada: só contribuintes com nota acima da média do próprio regime
     SELECT 1
-    FROM fiscal.nota_fiscal AS n2
-    WHERE n2.id_contribuinte_emitente = c.id_contribuinte
+    FROM dbo.nfe AS n2
+    WHERE n2.id_emitente = c.id_contribuinte
       AND n2.valor_total > mr.media_regime
 )
 AND c.id_contribuinte NOT IN (
     -- subconsulta independente, com filtro de NULL por segurança
-    SELECT id_contribuinte_emitente
-    FROM fiscal.nota_fiscal
+        SELECT id_emitente
+        FROM dbo.nfe
     WHERE situacao = 'CANCELADA'
-      AND id_contribuinte_emitente IS NOT NULL
+            AND id_emitente IS NOT NULL
 )
 ORDER BY mr.media_regime DESC;
 ```
@@ -640,7 +645,7 @@ Essa consulta responde: *"quais contribuintes, que nunca tiveram nota cancelada,
 
 ### Parte IV — Armadilhas e comparação
 
-12. Demonstre, com uma massa de dados de teste contendo ao menos um `NULL` em `id_contribuinte_emitente`, o problema do `NOT IN` descrito na [seção 11](#11-o-perigo-do-not-in-com-null). Em seguida, corrija a consulta com `NOT EXISTS`.
+12. Demonstre, com uma massa de dados de teste contendo ao menos um `NULL` em `id_destinatario`, o problema do `NOT IN` descrito na [seção 11](#11-o-perigo-do-not-in-com-null). Em seguida, corrija a consulta com `NOT EXISTS`.
 13. Reescreva a consulta do exercício 7 usando `LEFT JOIN ... WHERE ... IS NULL` e compare o plano de execução com a versão `NOT EXISTS`.
 
 ### Desafio

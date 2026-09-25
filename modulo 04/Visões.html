@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Visões.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 id="m%C3%B3dulo%3A-vis%C3%B5es-(views)-em-t-sql-(sql-server)" tabindex="-1">Módulo: Visões (Views) em T-SQL (SQL Server)</h1>
+<p><strong>Curso:</strong> Banco de Dados Relacionais aplicado à Administração Tributária
+<strong>Público-alvo:</strong> Profissionais da Secretaria de Estado da Fazenda da Paraíba (SEFAZ-PB)
+<strong>SGBD utilizado:</strong> Microsoft SQL Server (T-SQL) — ferramenta: SQL Server Management Studio (SSMS)
+<strong>Carga horária sugerida:</strong> 4 horas (2h teoria + 2h prática)
+<strong>Pré-requisitos:</strong> domínio de <code>SELECT</code>, <code>JOIN</code>, <code>GROUP BY</code>/<code>HAVING</code>, subconsultas e CTEs (ver <a href="subconsultas.md">subconsultas.md</a>)</p>
+<hr>
+<h2 id="sum%C3%A1rio" tabindex="-1">Sumário</h2>
+<ol>
+<li><a href="#1-objetivos-do-m%C3%B3dulo">Objetivos do Módulo</a></li>
+<li><a href="#2-o-que-%C3%A9-uma-vis%C3%A3o">O que é uma Visão</a></li>
+<li><a href="#3-criando-e-removendo-vis%C3%B5es">Criando e Removendo Visões</a></li>
+<li><a href="#4-consultando-vis%C3%B5es">Consultando Visões</a></li>
+<li><a href="#5-vis%C3%B5es-e-seguran%C3%A7a-de-dados">Visões e Segurança de Dados</a></li>
+<li><a href="#6-vis%C3%B5es-atualiz%C3%A1veis-e-restri%C3%A7%C3%B5es">Visões Atualizáveis e Restrições</a></li>
+<li><a href="#7-with-check-option"><code>WITH CHECK OPTION</code></a></li>
+<li><a href="#8-with-schemabinding"><code>WITH SCHEMABINDING</code></a></li>
+<li><a href="#9-vis%C3%B5es-indexadas-materialized-views">Visões Indexadas (Materialized Views)</a></li>
+<li><a href="#10-information_schema-e-metadados-de-vis%C3%B5es"><code>INFORMATION_SCHEMA</code> e Metadados de Visões</a></li>
+<li><a href="#11-vis%C3%B5es-x-ctes-x-tabelas-tempor%C3%A1rias-quando-usar-cada-uma">Visões x CTEs x Tabelas Temporárias: Quando Usar Cada Uma</a></li>
+<li><a href="#12-desempenho-e-plano-de-execu%C3%A7%C3%A3o">Desempenho e Plano de Execução</a></li>
+<li><a href="#13-cen%C3%A1rio-integrado-painel-de-auditoria-fiscal">Cenário Integrado: Painel de Auditoria Fiscal</a></li>
+<li><a href="#14-boas-pr%C3%A1ticas">Boas Práticas</a></li>
+<li><a href="#15-gloss%C3%A1rio">Glossário</a></li>
+<li><a href="#16-exerc%C3%ADcios">Exercícios</a></li>
+<li><a href="#17-refer%C3%AAncias">Referências</a></li>
+</ol>
+<hr>
+<h2 id="1.-objetivos-do-m%C3%B3dulo" tabindex="-1">1. Objetivos do Módulo</h2>
+<p>Ao final deste módulo, o participante será capaz de:</p>
+<ul>
+<li>Definir o que é uma visão (<em>view</em>) e explicar a diferença entre visão e tabela base.</li>
+<li>Criar, modificar e remover visões com <code>CREATE VIEW</code>, <code>ALTER VIEW</code> e <code>DROP VIEW</code>.</li>
+<li>Utilizar visões para <strong>simplificar consultas complexas</strong> recorrentes no ambiente fiscal.</li>
+<li>Aplicar visões como mecanismo de <strong>controle de acesso</strong> — restringindo quais colunas e linhas cada perfil de usuário pode enxergar.</li>
+<li>Compreender as restrições de <strong>atualização</strong> em visões e usar <code>WITH CHECK OPTION</code> para garantir integridade.</li>
+<li>Usar <code>WITH SCHEMABINDING</code> para proteger a estrutura das tabelas base.</li>
+<li>Criar e consultar <strong>visões indexadas</strong> (<em>indexed views</em>) para acelerar relatórios fiscais agregados.</li>
+<li>Comparar visões com CTEs e tabelas temporárias, escolhendo a abordagem adequada para cada cenário.</li>
+</ul>
+<hr>
+<h2 id="2.-o-que-%C3%A9-uma-vis%C3%A3o" tabindex="-1">2. O que é uma Visão</h2>
+<p>Uma <strong>visão</strong> (<em>view</em>) é um objeto de banco de dados que armazena uma instrução <code>SELECT</code> com um nome — funcionando como uma <strong>tabela virtual</strong>: não armazena dados próprios, mas apresenta o resultado da consulta definidora toda vez que é referenciada.</p>
+<div class="mermaid">flowchart TD
+    U["👤 Consulta do usuário<br/><code>SELECT * FROM dbo.vw_nfe_emitidas_ativas</code>"]
+
+    subgraph CAT["📖 Catálogo do banco de dados"]
+        V["<table><tr><th colspan='3'>🔍 dbo.vw_nfe_emitidas_ativas</th></tr><tr><td><b>chave_acesso</b></td><td><b>valor_total</b></td><td><b>razao_social</b></td></tr><tr><td>2526...</td><td>R$ 8.750,00</td><td>Comercial PB</td></tr><tr><td>2526...</td><td>R$ 13.420,00</td><td>Industria Nordeste</td></tr></table><br/><i>Tabela virtual: resultado do SELECT armazenado no catálogo</i>"]
+    end
+
+    subgraph BASE["🗄️ Tabelas base (dados reais)"]
+        T1[("dbo.nfe")]
+        T2[("dbo.contribuinte")]
+        T3[("dbo.municipio")]
+    end
+
+    U -- "transparente ao usuário" --> V
+    V -- "acessa diretamente" --> T1
+    V -- "acessa diretamente" --> T2
+    V -- "identifica o município" --> T3
+
+    style U fill:#d9f0f0,stroke:#0f766e,stroke-width:2px,color:#172554
+    style V fill:#fef3c7,stroke:#b45309,stroke-width:2px,color:#172554
+    style T1 fill:#dcfce7,stroke:#15803d,stroke-width:2px,color:#172554
+    style T2 fill:#dcfce7,stroke:#15803d,stroke-width:2px,color:#172554
+    style T3 fill:#dcfce7,stroke:#15803d,stroke-width:2px,color:#172554
+    style CAT fill:#f8fafc,stroke:#94a3b8,stroke-width:1px,color:#172554
+    style BASE fill:#f8fafc,stroke:#94a3b8,stroke-width:1px,color:#172554</div><p><strong>Vantagens no contexto da SEFAZ-PB:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Benefício</th>
+<th>Como se aplica na auditoria fiscal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Simplificação</strong></td>
+<td>Auditores consultam<code>vw_notas_com_divergencia</code> sem precisar reescrever o <code>JOIN</code> de 5 tabelas toda vez</td>
+</tr>
+<tr>
+<td><strong>Segurança</strong></td>
+<td>O perfil &quot;consulta pública&quot; enxerga apenas colunas e linhas autorizadas, sem acesso às tabelas base</td>
+</tr>
+<tr>
+<td><strong>Padronização</strong></td>
+<td>A regra de negócio (&quot;nota cancelada = situacao 'C'&quot;) fica centralizada na visão — muda-se em um lugar, vale para todos</td>
+</tr>
+<tr>
+<td><strong>Manutenção</strong></td>
+<td>Alterações no modelo físico das tabelas podem ser absorvidas na visão sem impactar aplicações clientes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>O que uma visão NÃO é:</strong></p>
+<ul>
+<li>Não é uma cópia dos dados — consultar a visão sempre lê as tabelas base em tempo real (exceto visões indexadas, ver <a href="#9-vis%C3%B5es-indexadas-materialized-views">seção 9</a>).</li>
+<li>Não tem <code>ORDER BY</code> garantido — <code>ORDER BY</code> numa visão não garante a ordem de saída; quem define a ordem é o <code>ORDER BY</code> da consulta <strong>externa</strong> que usa a visão.</li>
+<li>Não é uma tabela temporária — visões são objetos permanentes do banco de dados, listados em <code>sys.views</code>.</li>
+</ul>
+<hr>
+<h2 id="3.-criando-e-removendo-vis%C3%B5es" tabindex="-1">3. Criando e Removendo Visões</h2>
+<h3 id="3.1-create-view-%E2%80%94-sintaxe-b%C3%A1sica" tabindex="-1">3.1 <code>CREATE VIEW</code> — sintaxe básica</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> dbo.vw_nfe_emitidas_ativas
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    n.chave_acesso,
+    n.data_emissao,
+    n.valor_total,
+    n.situacao,
+    c.id_contribuinte,
+    c.razao_social,
+    c.cnpj,
+    c.regime_tributario,
+    m.nome <span class="hljs-keyword">AS</span> municipio
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+    <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+<span class="hljs-keyword">JOIN</span> dbo.municipio <span class="hljs-keyword">AS</span> m
+    <span class="hljs-keyword">ON</span> m.id_municipio <span class="hljs-operator">=</span> c.id_municipio
+<span class="hljs-keyword">WHERE</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+  <span class="hljs-keyword">AND</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>;
+</div></code></pre>
+<blockquote>
+<p><strong>Convenção de nomenclatura adotada neste curso:</strong> prefixo <code>vw_</code> para visões, seguido de nome descritivo em minúsculas com underscores. Ex.: <code>vw_notas_emitidas_ativas</code>, <code>vw_divergencias_icms</code>.</p>
+</blockquote>
+<h3 id="3.2-create-or-alter-view-%E2%80%94-idempotente-(sql-server-2016%2B)" tabindex="-1">3.2 <code>CREATE OR ALTER VIEW</code> — idempotente (SQL Server 2016+)</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> dbo.vw_nfe_emitidas_ativas
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    n.chave_acesso,
+    n.data_emissao,
+    n.valor_total,
+    n.situacao,
+    c.id_contribuinte,
+    c.razao_social,
+    c.cnpj,
+    c.regime_tributario,
+    m.nome <span class="hljs-keyword">AS</span> municipio
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+    <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+<span class="hljs-keyword">JOIN</span> dbo.municipio <span class="hljs-keyword">AS</span> m
+    <span class="hljs-keyword">ON</span> m.id_municipio <span class="hljs-operator">=</span> c.id_municipio
+<span class="hljs-keyword">WHERE</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+  <span class="hljs-keyword">AND</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>;
+</div></code></pre>
+<p><code>CREATE OR ALTER VIEW</code> cria a visão se não existir ou a substitui se já existir — eliminando o padrão <code>DROP VIEW IF EXISTS</code> + <code>CREATE VIEW</code> e evitando que permissões concedidas sobre a visão sejam perdidas durante a atualização.</p>
+<h3 id="3.3-alter-view-%E2%80%94-modificar-uma-vis%C3%A3o-existente" tabindex="-1">3.3 <code>ALTER VIEW</code> — modificar uma visão existente</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> dbo.vw_nfe_emitidas_ativas
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    n.chave_acesso,
+    n.data_emissao,
+    n.valor_total,
+    n.valor_icms,        <span class="hljs-comment">-- coluna adicionada</span>
+    n.situacao,
+    c.id_contribuinte,
+    c.razao_social,
+    c.cnpj,
+    c.regime_tributario,
+    m.nome <span class="hljs-keyword">AS</span> municipio
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+    <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+<span class="hljs-keyword">JOIN</span> dbo.municipio <span class="hljs-keyword">AS</span> m
+    <span class="hljs-keyword">ON</span> m.id_municipio <span class="hljs-operator">=</span> c.id_municipio
+<span class="hljs-keyword">WHERE</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+  <span class="hljs-keyword">AND</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>;
+</div></code></pre>
+<p><strong>Importante:</strong> <code>ALTER VIEW</code> <strong>preserva</strong> as permissões já concedidas sobre a visão, ao contrário de <code>DROP</code> + <code>CREATE</code>.</p>
+<h3 id="3.4-drop-view-%E2%80%94-remover-uma-vis%C3%A3o" tabindex="-1">3.4 <code>DROP VIEW</code> — remover uma visão</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Remover uma visão</span>
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">VIEW</span> IF <span class="hljs-keyword">EXISTS</span> dbo.vw_nfe_emitidas_ativas;
+
+<span class="hljs-comment">-- Remover múltiplas visões em um único comando</span>
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">VIEW</span> IF <span class="hljs-keyword">EXISTS</span>
+    dbo.vw_nfe_emitidas_ativas,
+    dbo.vw_divergencias_nfe_efd,
+    dbo.vw_contribuintes_omissos;
+</div></code></pre>
+<p><code>DROP VIEW</code> remove apenas o objeto de visão — <strong>jamais</strong> apaga dados das tabelas base.</p>
+<h3 id="3.5-restri%C3%A7%C3%B5es-sint%C3%A1ticas-do-t-sql-para-vis%C3%B5es" tabindex="-1">3.5 Restrições sintáticas do T-SQL para visões</h3>
+<table>
+<thead>
+<tr>
+<th>Regra</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ORDER BY</code> proibido</td>
+<td>Não é permitido<code>ORDER BY</code> na definição da visão, exceto quando usada com <code>TOP</code> ou <code>OFFSET...FETCH</code></td>
+</tr>
+<tr>
+<td><code>SELECT *</code> não recomendado</td>
+<td>Se uma coluna for adicionada à tabela base, ela<strong>não aparece automaticamente</strong> na visão — o T-SQL &quot;congela&quot; as colunas no momento da criação</td>
+</tr>
+<tr>
+<td>Referências a objetos temporários proibidas</td>
+<td>Visões não podem referenciar tabelas<code>#temp</code></td>
+</tr>
+<tr>
+<td>Múltiplas instruções proibidas</td>
+<td>A definição da visão deve conter exatamente uma instrução<code>SELECT</code></td>
+</tr>
+<tr>
+<td>Não pode ter parâmetros</td>
+<td>Diferente de funções, visões não aceitam parâmetros — para isso use funções com valor de tabela (TVF)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="4.-consultando-vis%C3%B5es" tabindex="-1">4. Consultando Visões</h2>
+<p>Uma vez criada, a visão é utilizada exatamente como uma tabela — em <code>SELECT</code>, <code>JOIN</code>, subconsultas, CTEs, etc.</p>
+<h3 id="4.1-consulta-simples-sobre-a-vis%C3%A3o" tabindex="-1">4.1 Consulta simples sobre a visão</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- O auditor consulta como se fosse uma tabela, sem ver o JOIN interno</span>
+<span class="hljs-keyword">SELECT</span> chave_acesso, data_emissao, valor_total, razao_social
+<span class="hljs-keyword">FROM</span> dbo.vw_nfe_emitidas_ativas
+<span class="hljs-keyword">WHERE</span> valor_total <span class="hljs-operator">&gt;</span> <span class="hljs-number">50000.00</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> valor_total <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<h3 id="4.2-filtrando-e-agregando-sobre-a-vis%C3%A3o" tabindex="-1">4.2 Filtrando e agregando sobre a visão</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Total emitido por regime tributário no mês atual</span>
+<span class="hljs-keyword">SELECT</span>
+    regime_tributario,
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)            <span class="hljs-keyword">AS</span> qtd_notas,
+    <span class="hljs-built_in">SUM</span>(valor_total)    <span class="hljs-keyword">AS</span> total_emitido,
+    <span class="hljs-built_in">AVG</span>(valor_total)    <span class="hljs-keyword">AS</span> ticket_medio
+<span class="hljs-keyword">FROM</span> dbo.vw_nfe_emitidas_ativas
+<span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">MONTH</span>(data_emissao) <span class="hljs-operator">=</span> <span class="hljs-keyword">MONTH</span>(GETDATE())
+  <span class="hljs-keyword">AND</span> <span class="hljs-keyword">YEAR</span>(data_emissao)  <span class="hljs-operator">=</span> <span class="hljs-keyword">YEAR</span>(GETDATE())
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> regime_tributario
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> total_emitido <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<h3 id="4.3-juntando-a-vis%C3%A3o-com-outra-tabela" tabindex="-1">4.3 Juntando a visão com outra tabela</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Notas ativas da visão cruzadas com autos de infração abertos</span>
+<span class="hljs-keyword">SELECT</span>
+    v.chave_acesso,
+    v.razao_social,
+    v.valor_total,
+    ai.numero_auto,
+    ai.data_lavratura
+<span class="hljs-keyword">FROM</span> dbo.vw_nfe_emitidas_ativas <span class="hljs-keyword">AS</span> v
+<span class="hljs-keyword">JOIN</span> dbo.auto_infracao <span class="hljs-keyword">AS</span> ai
+    <span class="hljs-keyword">ON</span> ai.id_contribuinte <span class="hljs-operator">=</span> v.id_contribuinte
+<span class="hljs-keyword">WHERE</span> ai.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;LAVRADO&#x27;</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> ai.data_lavratura <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<h3 id="4.4-vis%C3%A3o-usada-em-subconsulta" tabindex="-1">4.4 Visão usada em subconsulta</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Contribuintes com média de nota acima de R$ 100.000 (usando a visão como tabela derivada)</span>
+<span class="hljs-keyword">SELECT</span> cnpj, razao_social, media_notas
+<span class="hljs-keyword">FROM</span> (
+    <span class="hljs-keyword">SELECT</span>
+        cnpj,
+        razao_social,
+        <span class="hljs-built_in">AVG</span>(valor_total) <span class="hljs-keyword">AS</span> media_notas
+    <span class="hljs-keyword">FROM</span> dbo.vw_nfe_emitidas_ativas
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> cnpj, razao_social
+) <span class="hljs-keyword">AS</span> resumo
+<span class="hljs-keyword">WHERE</span> media_notas <span class="hljs-operator">&gt;</span> <span class="hljs-number">100000.00</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> media_notas <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<hr>
+<h2 id="5.-vis%C3%B5es-e-seguran%C3%A7a-de-dados" tabindex="-1">5. Visões e Segurança de Dados</h2>
+<p>Este é um dos usos mais estratégicos de visões no ambiente fiscal. Através de visões, é possível implementar <strong>controle de acesso em nível de coluna e de linha</strong> sem precisar de lógica na aplicação.</p>
+<h3 id="5.1-seguran%C3%A7a-em-n%C3%ADvel-de-coluna" tabindex="-1">5.1 Segurança em nível de coluna</h3>
+<p>O auditor externo não deve enxergar o CNPJ completo dos contribuintes (dado sensível sujeito à LGPD). Criamos uma visão que mascara o CNPJ:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> dbo.vw_nfe_auditoria_externa
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    n.chave_acesso,
+    n.data_emissao,
+    n.valor_total,
+    n.valor_icms,
+    n.situacao,
+    <span class="hljs-comment">-- CNPJ mascarado: exibe apenas os 8 primeiros dígitos (raiz do CNPJ)</span>
+    <span class="hljs-keyword">LEFT</span>(c.cnpj, <span class="hljs-number">8</span>) <span class="hljs-operator">+</span> <span class="hljs-string">&#x27;******&#x27;</span>                              <span class="hljs-keyword">AS</span> cnpj_raiz,
+    c.razao_social,
+    c.regime_tributario,
+    m.nome <span class="hljs-keyword">AS</span> municipio
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+    <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+<span class="hljs-keyword">JOIN</span> dbo.municipio <span class="hljs-keyword">AS</span> m
+    <span class="hljs-keyword">ON</span> m.id_municipio <span class="hljs-operator">=</span> c.id_municipio
+<span class="hljs-keyword">WHERE</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+  <span class="hljs-keyword">AND</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>;
+</div></code></pre>
+<p>Em seguida, concedemos acesso <strong>somente à visão</strong>, jamais às tabelas base:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Concede permissão de SELECT na visão para o perfil de auditoria externa</span>
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> dbo.vw_nfe_auditoria_externa <span class="hljs-keyword">TO</span> [perfil_auditoria_externa];
+
+<span class="hljs-comment">-- Nega acesso direto às tabelas base (se necessário explicitar)</span>
+DENY <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> dbo.nfe <span class="hljs-keyword">TO</span> [perfil_auditoria_externa];
+DENY <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> dbo.contribuinte <span class="hljs-keyword">TO</span> [perfil_auditoria_externa];
+</div></code></pre>
+<h3 id="5.2-seguran%C3%A7a-em-n%C3%ADvel-de-linha-(row-level-security-via-vis%C3%A3o)" tabindex="-1">5.2 Segurança em nível de linha (Row-Level Security via visão)</h3>
+<p>Cada analista fiscal deve enxergar apenas os contribuintes da sua circunscrição regional:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> dbo.vw_nfe_minha_regiao
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    n.chave_acesso,
+    n.data_emissao,
+    n.valor_total,
+    n.situacao,
+    c.razao_social,
+    c.cnpj,
+    m.nome <span class="hljs-keyword">AS</span> municipio,
+    m.regiao_fiscal
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+    <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+<span class="hljs-keyword">JOIN</span> dbo.municipio <span class="hljs-keyword">AS</span> m
+    <span class="hljs-keyword">ON</span> m.id_municipio <span class="hljs-operator">=</span> c.id_municipio
+<span class="hljs-comment">-- Neste exemplo, o login SQL corresponde à matrícula do auditor.</span>
+<span class="hljs-keyword">WHERE</span> m.regiao_fiscal <span class="hljs-operator">=</span> (
+    <span class="hljs-keyword">SELECT</span> af.regiao_fiscal
+    <span class="hljs-keyword">FROM</span> dbo.auditor_fiscal <span class="hljs-keyword">AS</span> af
+    <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">CONVERT</span>(<span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>), af.matricula) <span class="hljs-operator">=</span> SUSER_SNAME()
+);
+</div></code></pre>
+<blockquote>
+<p><strong>Nota de segurança:</strong> a função <code>SUSER_SNAME()</code> é avaliada em tempo de execução para cada consulta — não é possível burlar o filtro consultando a visão, pois o SQL Server resolve o login antes de executar o plano. Para ambientes com muitos usuários, considere o recurso nativo <strong>Row-Level Security (RLS)</strong> do SQL Server 2016+, que implementa esse padrão de forma mais robusta e centralizada.</p>
+</blockquote>
+<h3 id="5.3-concedendo-e-revogando-permiss%C3%B5es" tabindex="-1">5.3 Concedendo e revogando permissões</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Concede acesso somente leitura à visão operacional</span>
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> dbo.vw_nfe_emitidas_ativas <span class="hljs-keyword">TO</span> [perfil_fiscal_operacional];
+
+<span class="hljs-comment">-- Permite que analistas sênior criem outras visões no schema</span>
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> <span class="hljs-keyword">TO</span> [perfil_analista_senior];
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">ON</span> SCHEMA::dbo <span class="hljs-keyword">TO</span> [perfil_analista_senior];
+
+<span class="hljs-comment">-- Revoga acesso concedido anteriormente</span>
+<span class="hljs-keyword">REVOKE</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ON</span> dbo.vw_nfe_emitidas_ativas <span class="hljs-keyword">FROM</span> [perfil_fiscal_operacional];
+</div></code></pre>
+<hr>
+<h2 id="6.-vis%C3%B5es-atualiz%C3%A1veis-e-restri%C3%A7%C3%B5es" tabindex="-1">6. Visões Atualizáveis e Restrições</h2>
+<p>Embora visões sejam conceitualmente tabelas virtuais, <strong>nem toda visão aceita operações de escrita</strong> (<code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>). O T-SQL permite modificar dados através de uma visão desde que sejam respeitadas determinadas regras.</p>
+<h3 id="6.1-regras-para-vis%C3%B5es-atualiz%C3%A1veis" tabindex="-1">6.1 Regras para visões atualizáveis</h3>
+<p>Uma visão é atualizável quando:</p>
+<table>
+<thead>
+<tr>
+<th>Condição</th>
+<th>Detalhe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A visão referencia<strong>apenas uma tabela base</strong> (sem <code>JOIN</code>)</td>
+<td>Cada modificação pode ser mapeada de volta a uma única tabela</td>
+</tr>
+<tr>
+<td>Não contém<code>DISTINCT</code>, <code>GROUP BY</code>, <code>HAVING</code></td>
+<td>Esses operadores tornam a saída não mapeável para linhas individuais</td>
+</tr>
+<tr>
+<td>Não contém agregações (<code>SUM</code>, <code>AVG</code>, etc.)</td>
+<td>Por mesma razão</td>
+</tr>
+<tr>
+<td>Não contém<code>UNION</code>/<code>INTERSECT</code>/<code>EXCEPT</code></td>
+<td>O mapeamento de volta a tabelas base seria ambíguo</td>
+</tr>
+<tr>
+<td>As colunas da tabela base com<code>NOT NULL</code> sem <code>DEFAULT</code> <strong>estão incluídas</strong> na visão</td>
+<td>Para que um<code>INSERT</code> via visão possa preencher todas as colunas obrigatórias</td>
+</tr>
+</tbody>
+</table>
+<h3 id="6.2-exemplo-%E2%80%94-vis%C3%A3o-atualiz%C3%A1vel-(tabela-%C3%BAnica)" tabindex="-1">6.2 Exemplo — visão atualizável (tabela única)</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> dbo.vw_contribuintes_simples
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    id_contribuinte,
+    razao_social,
+    cnpj,
+    id_municipio,
+    regime_tributario,
+    situacao_cadastral,
+    data_inicio_atividade,
+    cnae_principal
+<span class="hljs-keyword">FROM</span> dbo.contribuinte
+<span class="hljs-keyword">WHERE</span> regime_tributario <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;SIMPLES&#x27;</span>;
+</div></code></pre>
+<p>Esta visão <strong>é atualizável</strong> — referencia apenas <code>dbo.contribuinte</code>:</p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- UPDATE via visão: atualiza a tabela base dbo.contribuinte</span>
+<span class="hljs-keyword">UPDATE</span> dbo.vw_contribuintes_simples
+<span class="hljs-keyword">SET</span> situacao_cadastral <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;SUSPENSO&#x27;</span>
+<span class="hljs-keyword">WHERE</span> cnpj <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;12345678000195&#x27;</span>;
+
+<span class="hljs-comment">-- INSERT via visão: insere na tabela base dbo.contribuinte</span>
+<span class="hljs-keyword">INSERT INTO</span> dbo.vw_contribuintes_simples
+    (id_contribuinte, razao_social, cnpj, id_municipio, regime_tributario,
+     situacao_cadastral, data_inicio_atividade, cnae_principal)
+<span class="hljs-keyword">VALUES</span>
+    (<span class="hljs-number">9999</span>, <span class="hljs-string">&#x27;Padaria Bom Pao Ltda&#x27;</span>, <span class="hljs-string">&#x27;98765432000111&#x27;</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;SIMPLES&#x27;</span>,
+     <span class="hljs-string">&#x27;ATIVO&#x27;</span>, <span class="hljs-string">&#x27;2020-01-01&#x27;</span>, <span class="hljs-string">&#x27;4721102&#x27;</span>);
+</div></code></pre>
+<h3 id="6.3-exemplo-%E2%80%94-vis%C3%A3o-n%C3%A3o-atualiz%C3%A1vel-(join%2C-agrega%C3%A7%C3%A3o)" tabindex="-1">6.3 Exemplo — visão NÃO atualizável (JOIN, agregação)</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Esta visão NÃO aceita UPDATE/INSERT/DELETE diretamente</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> dbo.vw_resumo_por_regime
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    c.regime_tributario,
+    <span class="hljs-built_in">COUNT</span>(<span class="hljs-operator">*</span>)           <span class="hljs-keyword">AS</span> qtd_notas,
+    <span class="hljs-built_in">SUM</span>(n.valor_total) <span class="hljs-keyword">AS</span> total_notas
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">JOIN</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+    <span class="hljs-keyword">ON</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> c.regime_tributario;
+</div></code></pre>
+<p>Tentar <code>UPDATE dbo.vw_resumo_por_regime SET ...</code> resultará no erro:</p>
+<pre class='hljs'><code><div>View or function 'dbo.vw_resumo_por_regime' is not updatable because the
+modification affects multiple base tables.
+</div></code></pre>
+<h3 id="6.4-instead-of-trigger-%E2%80%94-tornando-vis%C3%B5es-complexas-%22atualiz%C3%A1veis%22" tabindex="-1">6.4 <code>INSTEAD OF</code> Trigger — tornando visões complexas &quot;atualizáveis&quot;</h3>
+<p>Para visões com <code>JOIN</code> que precisam aceitar escrita, a solução é criar um <code>INSTEAD OF</code> trigger que intercepta a operação e a traduz manualmente para as tabelas base:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> dbo.trg_vw_nfe_emitidas_ativas_insert
+<span class="hljs-keyword">ON</span> dbo.vw_nfe_emitidas_ativas
+INSTEAD <span class="hljs-keyword">OF</span> <span class="hljs-keyword">INSERT</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+    <span class="hljs-keyword">SET</span> NOCOUNT <span class="hljs-keyword">ON</span>;
+
+    <span class="hljs-comment">-- Redireciona o INSERT para a tabela base correta</span>
+    <span class="hljs-keyword">INSERT INTO</span> dbo.nfe
+        (id_nfe, chave_acesso, numero, serie, data_emissao, id_emitente,
+         tipo_operacao, valor_total, valor_icms, situacao)
+    <span class="hljs-keyword">SELECT</span>
+        (<span class="hljs-keyword">SELECT</span> ISNULL(<span class="hljs-built_in">MAX</span>(id_nfe), <span class="hljs-number">0</span>) <span class="hljs-keyword">FROM</span> dbo.nfe)
+            <span class="hljs-operator">+</span> <span class="hljs-built_in">ROW_NUMBER</span>() <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> i.chave_acesso),
+        i.chave_acesso,
+        <span class="hljs-number">0</span>,
+        <span class="hljs-number">1</span>,
+        i.data_emissao,
+        c.id_contribuinte,
+        <span class="hljs-string">&#x27;1&#x27;</span>,
+        i.valor_total,
+        i.valor_icms,
+        <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+    <span class="hljs-keyword">FROM</span> inserted <span class="hljs-keyword">AS</span> i
+    <span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c <span class="hljs-keyword">ON</span> c.cnpj <span class="hljs-operator">=</span> i.cnpj;
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<hr>
+<h2 id="7.-with-check-option" tabindex="-1">7. <code>WITH CHECK OPTION</code></h2>
+<p><code>WITH CHECK OPTION</code> é uma cláusula que impede que operações de <code>INSERT</code> ou <code>UPDATE</code> através da visão produzam linhas que a própria visão <strong>não enxergaria</strong> — ou seja, garante que os dados inseridos/modificados via visão continuem visíveis por ela após a operação.</p>
+<h3 id="7.1-problema-sem-with-check-option" tabindex="-1">7.1 Problema sem <code>WITH CHECK OPTION</code></h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> dbo.vw_contribuintes_simples_sem_check
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span> id_contribuinte, razao_social, cnpj, regime_tributario
+<span class="hljs-keyword">FROM</span> dbo.contribuinte
+<span class="hljs-keyword">WHERE</span> regime_tributario <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;SIMPLES&#x27;</span>;
+<span class="hljs-comment">-- Sem WITH CHECK OPTION</span>
+
+<span class="hljs-comment">-- Este UPDATE muda o regime para &#x27;Lucro Real&#x27; — a linha SAIRÁ da visão após o update</span>
+<span class="hljs-comment">-- mas o T-SQL permite sem reclamar:</span>
+<span class="hljs-keyword">UPDATE</span> dbo.vw_contribuintes_simples_sem_check
+<span class="hljs-keyword">SET</span> regime_tributario <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;NORMAL&#x27;</span>
+<span class="hljs-keyword">WHERE</span> cnpj <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;12345678000195&#x27;</span>;
+<span class="hljs-comment">-- A linha agora não aparece mais na visão — &quot;desapareceu silenciosamente&quot;</span>
+</div></code></pre>
+<h3 id="7.2-solu%C3%A7%C3%A3o-com-with-check-option" tabindex="-1">7.2 Solução com <code>WITH CHECK OPTION</code></h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> dbo.vw_contribuintes_simples
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span> id_contribuinte, razao_social, cnpj, regime_tributario
+<span class="hljs-keyword">FROM</span> dbo.contribuinte
+<span class="hljs-keyword">WHERE</span> regime_tributario <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;SIMPLES&#x27;</span>
+<span class="hljs-keyword">WITH</span> <span class="hljs-keyword">CHECK</span> OPTION;   <span class="hljs-comment">-- garante que dados modificados via visão permaneçam visíveis por ela</span>
+
+<span class="hljs-comment">-- Agora o mesmo UPDATE é bloqueado com mensagem de erro:</span>
+<span class="hljs-keyword">UPDATE</span> dbo.vw_contribuintes_simples
+<span class="hljs-keyword">SET</span> regime_tributario <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;NORMAL&#x27;</span>
+<span class="hljs-keyword">WHERE</span> cnpj <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;12345678000195&#x27;</span>;
+</div></code></pre>
+<pre class='hljs'><code><div>The attempted insert or update failed because the target view either specifies
+WITH CHECK OPTION or spans a view that specifies WITH CHECK OPTION and one or
+more rows resulting from the operation did not qualify under the CHECK OPTION
+constraint.
+</div></code></pre>
+<p><strong>Regra prática fiscal:</strong> sempre use <code>WITH CHECK OPTION</code> em visões particionadas por critério de negócio (regime, município, circunscrição) que são expostas para escrita — isso evita que um analista &quot;migre&quot; inadvertidamente um contribuinte para fora de sua alçada de visibilidade.</p>
+<hr>
+<h2 id="8.-with-schemabinding" tabindex="-1">8. <code>WITH SCHEMABINDING</code></h2>
+<p><code>WITH SCHEMABINDING</code> vincula a visão ao esquema das tabelas base, <strong>impedindo que as tabelas referenciadas sejam alteradas</strong> (colunas removidas, tabelas excluídas) enquanto a visão existir.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> dbo.vw_nfe_ativas_schemabind
+<span class="hljs-keyword">WITH</span> SCHEMABINDING           <span class="hljs-comment">-- vincula ao schema atual das tabelas base</span>
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    n.chave_acesso,
+    n.data_emissao,
+    n.valor_total,
+    n.situacao,
+    c.razao_social,
+    c.cnpj
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n                     <span class="hljs-comment">-- nome com schema qualificado: obrigatório com SCHEMABINDING</span>
+<span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+    <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+<span class="hljs-keyword">WHERE</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+  <span class="hljs-keyword">AND</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>;
+</div></code></pre>
+<p><strong>Efeito prático:</strong></p>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Tentativa de remover coluna usada pela visão — será bloqueada:</span>
+<span class="hljs-keyword">ALTER TABLE</span> dbo.nfe <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">COLUMN</span> valor_total;
+<span class="hljs-comment">-- Erro: Cannot DROP COLUMN &#x27;valor_total&#x27; because it is referenced by object &#x27;vw_nfe_ativas_schemabind&#x27;.</span>
+</div></code></pre>
+<p><strong>Regras obrigatórias com <code>WITH SCHEMABINDING</code>:</strong></p>
+<ul>
+<li>Todos os objetos referenciados devem usar nomes <strong>qualificados com schema</strong> (<code>dbo.nfe</code>, não apenas <code>nfe</code>).</li>
+<li>Não é permitido usar <code>SELECT *</code> — todas as colunas devem ser nomeadas explicitamente.</li>
+<li><code>WITH SCHEMABINDING</code> é <strong>pré-requisito obrigatório</strong> para criar índices em visões (ver <a href="#9-vis%C3%B5es-indexadas-materialized-views">seção 9</a>).</li>
+</ul>
+<hr>
+<h2 id="9.-vis%C3%B5es-indexadas-(materialized-views)" tabindex="-1">9. Visões Indexadas (Materialized Views)</h2>
+<p>Uma <strong>visão indexada</strong> (<em>indexed view</em>, também chamada de <em>materialized view</em>) é uma visão com <code>WITH SCHEMABINDING</code> sobre a qual é criado um <strong>índice clusterizado</strong> — fazendo com que o resultado da visão seja <strong>armazenado fisicamente</strong> no disco, como uma tabela real.</p>
+<p>Isso é especialmente útil para relatórios fiscais pesados que precisam agregar milhões de notas fiscais repetidamente.</p>
+<h3 id="9.1-pr%C3%A9-requisitos" tabindex="-1">9.1 Pré-requisitos</h3>
+<ul>
+<li>A visão deve ser criada com <code>WITH SCHEMABINDING</code>.</li>
+<li>O primeiro índice criado na visão deve ser <strong>clusterizado e único</strong> (<code>UNIQUE CLUSTERED</code>).</li>
+<li>A definição da visão não pode conter: subconsultas, <code>OUTER JOIN</code>, <code>DISTINCT</code>, <code>TOP</code>, CTEs, funções não determinísticas (<code>GETDATE()</code>, <code>NEWID()</code>), <code>UNION</code>/<code>EXCEPT</code>/<code>INTERSECT</code>, colunas calculadas não determinísticas.</li>
+<li>Antes de criar a visão e seus índices, a sessão deve usar: <code>ANSI_NULLS</code>, <code>ANSI_PADDING</code>, <code>ANSI_WARNINGS</code>, <code>ARITHABORT</code>, <code>CONCAT_NULL_YIELDS_NULL</code> e <code>QUOTED_IDENTIFIER</code> como <code>ON</code>, e <code>NUMERIC_ROUNDABORT</code> como <code>OFF</code>.</li>
+</ul>
+<h3 id="9.2-criando-uma-vis%C3%A3o-indexada-fiscal" tabindex="-1">9.2 Criando uma visão indexada fiscal</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SET</span> ANSI_NULLS <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">SET</span> ANSI_PADDING <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">SET</span> ANSI_WARNINGS <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">SET</span> ARITHABORT <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">SET</span> CONCAT_NULL_YIELDS_NULL <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">SET</span> QUOTED_IDENTIFIER <span class="hljs-keyword">ON</span>;
+<span class="hljs-keyword">SET</span> NUMERIC_ROUNDABORT OFF;
+GO
+
+<span class="hljs-comment">-- Passo 1: criar a visão com SCHEMABINDING e somente agregações suportadas</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> dbo.vw_idx_totais_por_regime
+<span class="hljs-keyword">WITH</span> SCHEMABINDING
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    c.regime_tributario,
+    <span class="hljs-comment">-- COUNT_BIG(*) é obrigatório quando há GROUP BY em visão indexada</span>
+    COUNT_BIG(<span class="hljs-operator">*</span>)                  <span class="hljs-keyword">AS</span> qtd_notas,
+    <span class="hljs-built_in">SUM</span>(n.valor_total)            <span class="hljs-keyword">AS</span> total_emitido,
+    <span class="hljs-built_in">SUM</span>(n.valor_icms)             <span class="hljs-keyword">AS</span> total_icms
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+    <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+<span class="hljs-keyword">WHERE</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+  <span class="hljs-keyword">AND</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> c.regime_tributario;
+
+<span class="hljs-comment">-- Passo 2: criar o índice clusterizado único (materializa os dados)</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">UNIQUE</span> CLUSTERED INDEX idx_vw_totais_por_regime
+    <span class="hljs-keyword">ON</span> dbo.vw_idx_totais_por_regime (regime_tributario);
+
+<span class="hljs-comment">-- Passo 3 (opcional): índice não clusterizado para outras colunas de filtro</span>
+<span class="hljs-keyword">CREATE</span> NONCLUSTERED INDEX idx_vw_totais_total_emitido
+    <span class="hljs-keyword">ON</span> dbo.vw_idx_totais_por_regime (total_emitido <span class="hljs-keyword">DESC</span>);
+</div></code></pre>
+<h3 id="9.3-consultando-a-vis%C3%A3o-indexada" tabindex="-1">9.3 Consultando a visão indexada</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- SQL Server Enterprise/Developer: pode usar a visão indexada automaticamente</span>
+<span class="hljs-comment">-- mesmo em consultas que NÃO referenciam a visão diretamente (query rewrite)</span>
+<span class="hljs-keyword">SELECT</span> regime_tributario, <span class="hljs-built_in">SUM</span>(valor_total)
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+<span class="hljs-keyword">WHERE</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+    <span class="hljs-keyword">AND</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> c.regime_tributario;
+
+<span class="hljs-comment">-- Para forçar o uso da visão indexada explicitamente (qualquer edição):</span>
+<span class="hljs-keyword">SELECT</span> regime_tributario, total_emitido, qtd_notas
+<span class="hljs-keyword">FROM</span> dbo.vw_idx_totais_por_regime <span class="hljs-keyword">WITH</span> (NOEXPAND)
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> total_emitido <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<blockquote>
+<p><strong><code>WITH (NOEXPAND)</code>:</strong> na edição Standard do SQL Server, o otimizador não usa visões indexadas automaticamente. A hint <code>NOEXPAND</code> força a leitura dos dados materializados, evitando que a visão seja &quot;expandida&quot; de volta às tabelas base.</p>
+</blockquote>
+<h3 id="9.4-manuten%C3%A7%C3%A3o-autom%C3%A1tica" tabindex="-1">9.4 Manutenção automática</h3>
+<p>O SQL Server <strong>mantém automaticamente</strong> os dados da visão indexada sempre que as tabelas base são modificadas (INSERT/UPDATE/DELETE) — similar a um índice comum. Há custo extra nas escritas; o benefício compensa em cenários com muitas leituras e poucas escritas, típico de consolidações fiscais noturnas.</p>
+<hr>
+<h2 id="10.-information_schema-e-metadados-de-vis%C3%B5es" tabindex="-1">10. <code>INFORMATION_SCHEMA</code> e Metadados de Visões</h2>
+<p>O SQL Server expõe metadados de visões em diversas visões de sistema (<em>system views</em>) — que são, elas próprias, visões.</p>
+<h3 id="10.1-listar-todas-as-vis%C3%B5es-do-schema-dbo" tabindex="-1">10.1 Listar todas as visões do schema <code>dbo</code></h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    TABLE_SCHEMA    <span class="hljs-keyword">AS</span> schema_nome,
+    TABLE_NAME      <span class="hljs-keyword">AS</span> visao_nome,
+    VIEW_DEFINITION <span class="hljs-keyword">AS</span> definicao_sql
+<span class="hljs-keyword">FROM</span> INFORMATION_SCHEMA.VIEWS
+<span class="hljs-keyword">WHERE</span> TABLE_SCHEMA <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;dbo&#x27;</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> TABLE_NAME;
+</div></code></pre>
+<h3 id="10.2-consultar-via-sys.views-(mais-completo)" tabindex="-1">10.2 Consultar via <code>sys.views</code> (mais completo)</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    v.name                          <span class="hljs-keyword">AS</span> visao_nome,
+    SCHEMA_NAME(v.schema_id)        <span class="hljs-keyword">AS</span> schema_nome,
+    v.create_date                   <span class="hljs-keyword">AS</span> criada_em,
+    v.modify_date                   <span class="hljs-keyword">AS</span> alterada_em,
+    v.is_schema_published,
+    <span class="hljs-comment">-- verifica se tem SCHEMABINDING</span>
+    OBJECTPROPERTY(v.object_id, <span class="hljs-string">&#x27;IsSchemaBound&#x27;</span>) <span class="hljs-keyword">AS</span> tem_schemabinding
+<span class="hljs-keyword">FROM</span> sys.views <span class="hljs-keyword">AS</span> v
+<span class="hljs-keyword">WHERE</span> SCHEMA_NAME(v.schema_id) <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;dbo&#x27;</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> v.name;
+</div></code></pre>
+<h3 id="10.3-ver-a-defini%C3%A7%C3%A3o-de-uma-vis%C3%A3o-espec%C3%ADfica" tabindex="-1">10.3 Ver a definição de uma visão específica</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Opção 1: via função de sistema</span>
+<span class="hljs-keyword">SELECT</span> OBJECT_DEFINITION(OBJECT_ID(<span class="hljs-string">&#x27;dbo.vw_nfe_emitidas_ativas&#x27;</span>));
+
+<span class="hljs-comment">-- Opção 2: via sp_helptext (formata em múltiplas linhas)</span>
+<span class="hljs-keyword">EXEC</span> sp_helptext <span class="hljs-string">&#x27;dbo.vw_nfe_emitidas_ativas&#x27;</span>;
+</div></code></pre>
+<h3 id="10.4-identificar-depend%C3%AAncias-de-uma-vis%C3%A3o" tabindex="-1">10.4 Identificar dependências de uma visão</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Quais tabelas e colunas a visão referencia?</span>
+<span class="hljs-keyword">SELECT</span>
+    referenced_schema_name  <span class="hljs-keyword">AS</span> tabela_schema,
+    referenced_entity_name  <span class="hljs-keyword">AS</span> tabela_nome,
+    referenced_minor_name   <span class="hljs-keyword">AS</span> coluna_nome
+<span class="hljs-keyword">FROM</span> sys.dm_sql_referenced_entities(<span class="hljs-string">&#x27;dbo.vw_nfe_emitidas_ativas&#x27;</span>, <span class="hljs-string">&#x27;OBJECT&#x27;</span>)
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> referenced_entity_name, referenced_minor_name;
+
+<span class="hljs-comment">-- Quais objetos dependem desta tabela (impacto antes de alterar)?</span>
+<span class="hljs-keyword">SELECT</span>
+    referencing_schema_name <span class="hljs-keyword">AS</span> objeto_schema,
+    referencing_entity_name <span class="hljs-keyword">AS</span> objeto_nome,
+    referencing_class_desc  <span class="hljs-keyword">AS</span> tipo_objeto
+<span class="hljs-keyword">FROM</span> sys.dm_sql_referencing_entities(<span class="hljs-string">&#x27;dbo.nfe&#x27;</span>, <span class="hljs-string">&#x27;OBJECT&#x27;</span>)
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> referencing_entity_name;
+</div></code></pre>
+<hr>
+<h2 id="11.-vis%C3%B5es-x-ctes-x-tabelas-tempor%C3%A1rias%3A-quando-usar-cada-uma" tabindex="-1">11. Visões x CTEs x Tabelas Temporárias: Quando Usar Cada Uma</h2>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th>Visão (<code>VIEW</code>)</th>
+<th>CTE (<code>WITH ... AS</code>)</th>
+<th>Tabela Temporária (<code>#temp</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Escopo</strong></td>
+<td>Objeto permanente do banco de dados — existe entre sessões</td>
+<td>Existe apenas dentro da instrução SQL que a define</td>
+<td>Existe durante a sessão (ou conexão) corrente</td>
+</tr>
+<tr>
+<td><strong>Reutilização</strong></td>
+<td>Qualquer consulta, qualquer usuário autorizado</td>
+<td>Apenas dentro da instrução onde foi declarada</td>
+<td>Qualquer instrução na mesma sessão, após a criação</td>
+</tr>
+<tr>
+<td><strong>Armazenamento de dados</strong></td>
+<td>Nenhum (virtual) — exceto visão indexada</td>
+<td>Nenhum (virtual)</td>
+<td>Sim — armazena cópia física em<code>tempdb</code></td>
+</tr>
+<tr>
+<td><strong>Segurança / controle de acesso</strong></td>
+<td>Ideal — permissão granular por objeto</td>
+<td>Não — a permissão necessária é a da consulta subjacente</td>
+<td>Não</td>
+</tr>
+<tr>
+<td><strong>Recursividade</strong></td>
+<td>Não suporta</td>
+<td>Suporta (<code>WITH RECURSIVE</code>)</td>
+<td>Não diretamente</td>
+</tr>
+<tr>
+<td><strong>Desempenho em grandes volumes</strong></td>
+<td>Depende do otimizador (pode expandir)</td>
+<td>Depende do otimizador</td>
+<td>Pode ter vantagem quando o resultado intermediário é reutilizado muitas vezes — o SQL Server materializa</td>
+</tr>
+<tr>
+<td><strong>Índice no resultado intermediário</strong></td>
+<td>Sim (visão indexada)</td>
+<td>Não</td>
+<td>Sim — pode criar índice na<code>#temp</code></td>
+</tr>
+<tr>
+<td><strong>Caso de uso típico na SEFAZ-PB</strong></td>
+<td>Relatórios padronizados, controle de acesso por perfil, simplificação de consultas recorrentes</td>
+<td>Estruturar consultas analíticas complexas dentro de um script</td>
+<td>ETL e processamentos em lote — quando o resultado intermediário precisa de índice para ser consultado repetidamente</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Regra prática:</strong></p>
+<pre class='hljs'><code><div>Pergunta de negócio recorrente, multi-usuário, com controle de acesso → VIEW
+Consulta complexa de uso único, dentro de um script → CTE
+Processamento em lote, resultado intermediário grande consultado N vezes → #TEMP
+</div></code></pre>
+<hr>
+<h2 id="12.-desempenho-e-plano-de-execu%C3%A7%C3%A3o" tabindex="-1">12. Desempenho e Plano de Execução</h2>
+<p>Visões são <strong>transparentes</strong> ao otimizador de consultas: quando o SQL Server executa <code>SELECT * FROM dbo.vw_nfe_emitidas_ativas WHERE valor_total &gt; 10000</code>, ele substitui internamente a visão pela sua definição e otimiza a consulta resultante como um todo — um processo chamado <strong>view expansion</strong> (expansão de visão).</p>
+<p><strong>Consequências práticas:</strong></p>
+<ul>
+<li>Um filtro <code>WHERE</code> aplicado na consulta <strong>sobre</strong> a visão é propagado para dentro da visão pelo otimizador (<em>predicate pushdown</em>) — o SQL Server não precisa primeiro materializar todos os dados da visão para depois filtrar.</li>
+<li>Verificar o plano de execução real (<code>Ctrl+M</code>) confirma se o <em>predicate pushdown</em> ocorreu: o operador de leitura de tabela (<em>Index Seek</em> ou <em>Table Scan</em>) deve mostrar o filtro aplicado sobre a tabela base, não sobre a visão.</li>
+</ul>
+<h3 id="12.1-situa%C3%A7%C3%B5es-que-podem-degradar-desempenho-com-vis%C3%B5es" tabindex="-1">12.1 Situações que podem degradar desempenho com visões</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">-- Exemplo problemático: função não determinística impede pushdown eficiente</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> dbo.vw_nfe_recentes
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span> n.chave_acesso, n.data_emissao, n.valor_total, c.razao_social
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+<span class="hljs-keyword">WHERE</span> n.data_emissao <span class="hljs-operator">&gt;=</span> DATEADD(<span class="hljs-keyword">DAY</span>, <span class="hljs-number">-30</span>, GETDATE());   <span class="hljs-comment">-- range dinâmico</span>
+</div></code></pre>
+<p>Neste caso, cada consulta recalcula a janela de 30 dias — o índice em <code>data_emissao</code> ainda é usado (<em>range seek</em>), mas o intervalo muda a cada execução. Dependendo do volume, pode ser mais eficiente passar a data como parâmetro em uma <strong>função com valor de tabela</strong> (TVF) em vez de uma visão.</p>
+<h3 id="12.2-dicas-de-desempenho-para-vis%C3%B5es" tabindex="-1">12.2 Dicas de desempenho para visões</h3>
+<ul>
+<li>Garanta índices nas colunas de <code>JOIN</code> e <code>WHERE</code> das tabelas base referenciadas pela visão.</li>
+<li>Use <code>WITH SCHEMABINDING</code> + índice clusterizado (visão indexada) para relatórios de consolidação com alto volume de leituras.</li>
+<li>Evite visões que referenciam outras visões com mais de dois níveis de aninhamento — o otimizador pode ter dificuldade em gerar um plano eficiente.</li>
+<li>Para relatórios fiscais mensais pesados, considere <strong>visões indexadas</strong> atualizadas por job noturno, ou <strong>tabelas de resumo</strong> populadas por procedures agendadas.</li>
+</ul>
+<hr>
+<h2 id="13.-cen%C3%A1rio-integrado%3A-painel-de-auditoria-fiscal" tabindex="-1">13. Cenário Integrado: Painel de Auditoria Fiscal</h2>
+<p>O conjunto de visões a seguir forma a camada de acesso do <strong>Painel de Auditoria Fiscal da SEFAZ-PB</strong>, combinando diversas técnicas deste módulo.</p>
+<h3 id="13.1-vis%C3%A3o-base%3A-notas-ativas-com-dados-do-contribuinte" tabindex="-1">13.1 Visão base: notas ativas com dados do contribuinte</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> dbo.vw_nfe_ativas
+<span class="hljs-keyword">WITH</span> SCHEMABINDING
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    n.id_nfe,
+    n.chave_acesso,
+    n.data_emissao,
+    n.valor_total,
+    n.valor_icms,
+    n.numero,
+    n.serie,
+    n.situacao,
+    c.id_contribuinte,
+    c.razao_social,
+    c.cnpj,
+    c.regime_tributario,
+    m.nome <span class="hljs-keyword">AS</span> municipio,
+    m.regiao_fiscal
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+    <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+<span class="hljs-keyword">JOIN</span> dbo.municipio <span class="hljs-keyword">AS</span> m
+    <span class="hljs-keyword">ON</span> m.id_municipio <span class="hljs-operator">=</span> c.id_municipio
+<span class="hljs-keyword">WHERE</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+  <span class="hljs-keyword">AND</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>;
+</div></code></pre>
+<h3 id="13.2-vis%C3%A3o-de-diverg%C3%AAncias-de-icms" tabindex="-1">13.2 Visão de divergências de ICMS</h3>
+<p>Identifica documentos em que o ICMS da NF-e diverge do ICMS escriturado na EFD:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> dbo.vw_divergencias_nfe_efd
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    na.chave_acesso,
+    na.data_emissao,
+    na.razao_social,
+    na.cnpj,
+    na.regime_tributario,
+    na.valor_total,
+    na.valor_icms <span class="hljs-keyword">AS</span> icms_nfe,
+    e.valor_documento <span class="hljs-keyword">AS</span> valor_efd,
+    e.valor_icms <span class="hljs-keyword">AS</span> icms_efd,
+    na.valor_icms <span class="hljs-operator">-</span> e.valor_icms <span class="hljs-keyword">AS</span> diferenca_icms
+<span class="hljs-keyword">FROM</span> dbo.vw_nfe_ativas <span class="hljs-keyword">AS</span> na
+<span class="hljs-keyword">JOIN</span> dbo.efd_c100 <span class="hljs-keyword">AS</span> e
+    <span class="hljs-keyword">ON</span> e.chave_acesso <span class="hljs-operator">=</span> na.chave_acesso
+   <span class="hljs-keyword">AND</span> e.ind_oper <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+   <span class="hljs-keyword">AND</span> e.cod_situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;00&#x27;</span>
+<span class="hljs-keyword">WHERE</span> <span class="hljs-built_in">ABS</span>(na.valor_total <span class="hljs-operator">-</span> e.valor_documento) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0.01</span>
+   <span class="hljs-keyword">OR</span> <span class="hljs-built_in">ABS</span>(na.valor_icms <span class="hljs-operator">-</span> e.valor_icms) <span class="hljs-operator">&gt;</span> <span class="hljs-number">0.01</span>;
+</div></code></pre>
+<h3 id="13.3-vis%C3%A3o-de-contribuintes-omissos" tabindex="-1">13.3 Visão de contribuintes omissos</h3>
+<p>Contribuintes que não emitiram nenhuma nota nos últimos 90 dias:</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> dbo.vw_contribuintes_omissos
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    c.id_contribuinte,
+    c.razao_social,
+    c.cnpj,
+    c.regime_tributario,
+    m.nome <span class="hljs-keyword">AS</span> municipio,
+    c.situacao_cadastral,
+    <span class="hljs-comment">-- data da última nota emitida (NULL se nunca emitiu)</span>
+    (
+                <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">MAX</span>(n.data_emissao)
+                <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+                <span class="hljs-keyword">WHERE</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+                    <span class="hljs-keyword">AND</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+                    <span class="hljs-keyword">AND</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+    ) <span class="hljs-keyword">AS</span> ultima_emissao
+<span class="hljs-keyword">FROM</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+<span class="hljs-keyword">JOIN</span> dbo.municipio <span class="hljs-keyword">AS</span> m <span class="hljs-keyword">ON</span> m.id_municipio <span class="hljs-operator">=</span> c.id_municipio
+<span class="hljs-keyword">WHERE</span> c.situacao_cadastral <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;ATIVO&#x27;</span>
+  <span class="hljs-keyword">AND</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> (
+        <span class="hljs-keyword">SELECT</span> <span class="hljs-number">1</span>
+                <span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+                <span class="hljs-keyword">WHERE</span> n.id_emitente <span class="hljs-operator">=</span> c.id_contribuinte
+                    <span class="hljs-keyword">AND</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+                    <span class="hljs-keyword">AND</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+                    <span class="hljs-keyword">AND</span> n.data_emissao <span class="hljs-operator">&gt;=</span> DATEADD(<span class="hljs-keyword">DAY</span>, <span class="hljs-number">-90</span>, GETDATE())
+  );
+</div></code></pre>
+<h3 id="13.4-vis%C3%A3o-protegida-por-regi%C3%A3o-fiscal" tabindex="-1">13.4 Visão protegida por região fiscal</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">VIEW</span> dbo.vw_divergencias_minha_regiao
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span> d.<span class="hljs-operator">*</span>
+<span class="hljs-keyword">FROM</span> dbo.vw_divergencias_nfe_efd <span class="hljs-keyword">AS</span> d
+<span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+    <span class="hljs-keyword">ON</span> c.cnpj <span class="hljs-operator">=</span> d.cnpj
+<span class="hljs-keyword">JOIN</span> dbo.municipio <span class="hljs-keyword">AS</span> m
+    <span class="hljs-keyword">ON</span> m.id_municipio <span class="hljs-operator">=</span> c.id_municipio
+<span class="hljs-keyword">WHERE</span> m.regiao_fiscal <span class="hljs-operator">=</span> (
+    <span class="hljs-keyword">SELECT</span> af.regiao_fiscal
+    <span class="hljs-keyword">FROM</span> dbo.auditor_fiscal <span class="hljs-keyword">AS</span> af
+    <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">CONVERT</span>(<span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>), af.matricula) <span class="hljs-operator">=</span> SUSER_SNAME()
+);
+</div></code></pre>
+<h3 id="13.5-vis%C3%A3o-indexada-para-consolida%C3%A7%C3%A3o-gerencial" tabindex="-1">13.5 Visão indexada para consolidação gerencial</h3>
+<pre class='hljs'><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> dbo.vw_idx_consolidado_mensal
+<span class="hljs-keyword">WITH</span> SCHEMABINDING
+<span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span>
+    c.regime_tributario,
+    m_dest.uf           <span class="hljs-keyword">AS</span> uf_destino,
+    <span class="hljs-keyword">YEAR</span>(n.data_emissao)   <span class="hljs-keyword">AS</span> ano_emissao,
+    <span class="hljs-keyword">MONTH</span>(n.data_emissao)  <span class="hljs-keyword">AS</span> mes_emissao,
+    COUNT_BIG(<span class="hljs-operator">*</span>)        <span class="hljs-keyword">AS</span> qtd_notas,
+    <span class="hljs-built_in">SUM</span>(n.valor_total)  <span class="hljs-keyword">AS</span> total_emitido,
+    <span class="hljs-built_in">SUM</span>(n.valor_icms)   <span class="hljs-keyword">AS</span> total_icms
+<span class="hljs-keyword">FROM</span> dbo.nfe <span class="hljs-keyword">AS</span> n
+<span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c
+    <span class="hljs-keyword">ON</span> c.id_contribuinte <span class="hljs-operator">=</span> n.id_emitente
+<span class="hljs-keyword">JOIN</span> dbo.contribuinte <span class="hljs-keyword">AS</span> c_dest
+    <span class="hljs-keyword">ON</span> c_dest.id_contribuinte <span class="hljs-operator">=</span> n.id_destinatario
+<span class="hljs-keyword">JOIN</span> dbo.municipio <span class="hljs-keyword">AS</span> m_dest
+    <span class="hljs-keyword">ON</span> m_dest.id_municipio <span class="hljs-operator">=</span> c_dest.id_municipio
+<span class="hljs-keyword">WHERE</span> n.tipo_operacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;1&#x27;</span>
+  <span class="hljs-keyword">AND</span> n.situacao <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;AUTORIZADA&#x27;</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span>
+    c.regime_tributario,
+    m_dest.uf,
+    <span class="hljs-keyword">YEAR</span>(n.data_emissao),
+    <span class="hljs-keyword">MONTH</span>(n.data_emissao);
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">UNIQUE</span> CLUSTERED INDEX idx_consolidado_mensal
+    <span class="hljs-keyword">ON</span> dbo.vw_idx_consolidado_mensal
+    (regime_tributario, uf_destino, ano_emissao, mes_emissao);
+</div></code></pre>
+<p><strong>Consultando o painel consolidado (sem percorrer milhões de notas):</strong></p>
+<pre class='hljs'><code><div><span class="hljs-keyword">SELECT</span>
+    regime_tributario,
+    uf_destino,
+    ano_emissao,
+    mes_emissao,
+    qtd_notas,
+    total_emitido,
+    total_icms,
+    ROUND(total_icms <span class="hljs-operator">*</span> <span class="hljs-number">100.0</span> <span class="hljs-operator">/</span> <span class="hljs-built_in">NULLIF</span>(total_emitido, <span class="hljs-number">0</span>), <span class="hljs-number">2</span>) <span class="hljs-keyword">AS</span> perc_icms
+<span class="hljs-keyword">FROM</span> dbo.vw_idx_consolidado_mensal <span class="hljs-keyword">WITH</span> (NOEXPAND)
+<span class="hljs-keyword">WHERE</span> ano_emissao <span class="hljs-operator">=</span> <span class="hljs-number">2026</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> regime_tributario, uf_destino, mes_emissao;
+</div></code></pre>
+<hr>
+<h2 id="14.-boas-pr%C3%A1ticas" tabindex="-1">14. Boas Práticas</h2>
+<ul>
+<li><strong>Nomeie visões com prefixo <code>vw_</code></strong> e nomes descritivos que comuniquem a intenção (<code>vw_contribuintes_omissos</code>, <code>vw_divergencias_icms</code>) — evite nomes genéricos como <code>vw1</code> ou <code>vw_dados</code>.</li>
+<li><strong>Prefira <code>CREATE OR ALTER VIEW</code></strong> a <code>DROP</code> + <code>CREATE</code> — preserva permissões e evita janelas de indisponibilidade.</li>
+<li><strong>Jamais use <code>SELECT *</code></strong> na definição de uma visão — adicionar colunas na tabela base não as propaga automaticamente para a visão, mas pode causar comportamento inesperado se o <code>SELECT *</code> for depois usado em <code>INSERT ... SELECT</code>.</li>
+<li><strong>Qualifique sempre o schema</strong> nos nomes de objetos dentro da visão (<code>dbo.nfe</code>, não apenas <code>nfe</code>) — obrigatório para <code>WITH SCHEMABINDING</code> e boa prática em geral.</li>
+<li><strong>Use <code>WITH CHECK OPTION</code></strong> em visões particionadas por critério de negócio que permitem escrita — garante que um <code>UPDATE</code> não mova inadvertidamente um registro para fora do escopo da visão.</li>
+<li><strong>Use <code>WITH SCHEMABINDING</code></strong> em visões que fazem parte da camada de relatórios críticos — protege contra alterações acidentais nas tabelas base.</li>
+<li><strong>Documente a intenção de negócio</strong> da visão em um comentário antes do <code>CREATE VIEW</code> ou em um catálogo de objetos — o código SQL não captura &quot;por que esta visão existe&quot;, apenas &quot;o que ela faz&quot;.</li>
+<li><strong>Evite visões aninhadas com mais de dois níveis</strong> — <code>vw_a</code> referenciando <code>vw_b</code> que referencia <code>vw_c</code> dificulta o entendimento do plano de execução e a manutenção.</li>
+<li><strong>Avalie visões indexadas</strong> para agregações que são consultadas com frequência sobre grandes volumes — o custo extra nas escritas geralmente é compensado em ambientes OLAP/relatórios.</li>
+<li><strong>Valide o plano de execução</strong> (<code>Ctrl+M</code>) após criar uma visão usada em consultas críticas — confirme que o otimizador está fazendo <em>predicate pushdown</em> e usando os índices esperados.</li>
+</ul>
+<hr>
+<h2 id="15.-gloss%C3%A1rio" tabindex="-1">15. Glossário</h2>
+<table>
+<thead>
+<tr>
+<th>Termo</th>
+<th>Definição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Visão (View)</strong></td>
+<td>Objeto de banco de dados que armazena uma instrução<code>SELECT</code> nomeada, funcionando como tabela virtual</td>
+</tr>
+<tr>
+<td><strong>Tabela base</strong></td>
+<td>Tabela física que fornece os dados para a visão</td>
+</tr>
+<tr>
+<td><strong>View expansion</strong></td>
+<td>Processo pelo qual o otimizador substitui a referência à visão pela sua definição antes de gerar o plano de execução</td>
+</tr>
+<tr>
+<td><strong>Predicate pushdown</strong></td>
+<td>Técnica do otimizador que propaga filtros da consulta externa para dentro da visão, evitando materialização desnecessária</td>
+</tr>
+<tr>
+<td><strong>Visão indexada (Indexed View)</strong></td>
+<td>Visão com<code>WITH SCHEMABINDING</code> que possui um índice clusterizado, fazendo com que seu resultado seja armazenado fisicamente</td>
+</tr>
+<tr>
+<td><strong><code>WITH SCHEMABINDING</code></strong></td>
+<td>Cláusula que vincula a visão ao schema das tabelas base, impedindo alterações estruturais que quebrariam a visão</td>
+</tr>
+<tr>
+<td><strong><code>WITH CHECK OPTION</code></strong></td>
+<td>Cláusula que garante que<code>INSERT</code>/<code>UPDATE</code> via visão nunca produzam linhas fora do filtro da própria visão</td>
+</tr>
+<tr>
+<td><strong><code>INSTEAD OF</code> Trigger</strong></td>
+<td>Trigger que intercepta operações DML em uma visão e as redireciona manualmente para as tabelas base</td>
+</tr>
+<tr>
+<td><strong><code>NOEXPAND</code></strong></td>
+<td>Hint de tabela que força o uso dos dados materializados de uma visão indexada, sem expandir a definição da visão</td>
+</tr>
+<tr>
+<td><strong>Row-Level Security (RLS)</strong></td>
+<td>Recurso nativo do SQL Server 2016+ para filtrar linhas por usuário, alternativa mais robusta ao filtro por<code>SUSER_SNAME()</code> em visões</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="16.-exerc%C3%ADcios" tabindex="-1">16. Exercícios</h2>
+<h3 id="parte-i-%E2%80%94-cria%C3%A7%C3%A3o-e-manipula%C3%A7%C3%A3o-b%C3%A1sica" tabindex="-1">Parte I — Criação e manipulação básica</h3>
+<ol>
+<li>Crie uma visão <code>dbo.vw_nfe_saidas_ativas</code> que exiba apenas NF-e de saída (<code>tipo_operacao = '1'</code>) autorizadas. Inclua: <code>chave_acesso</code>, <code>data_emissao</code>, <code>valor_total</code>, <code>razao_social</code>, <code>cnpj</code> e <code>municipio</code>.</li>
+<li>Altere a visão criada no exercício anterior para incluir a coluna <code>regime_tributario</code> sem perder as permissões concedidas. Use a instrução correta para isso.</li>
+<li>Liste todos os objetos do schema <code>dbo</code> do tipo visão, exibindo nome, data de criação e se possuem <code>SCHEMABINDING</code>. Use <code>sys.views</code>.</li>
+<li>Exiba a definição (código SQL) da visão criada no exercício 1 usando <code>OBJECT_DEFINITION</code>.</li>
+</ol>
+<h3 id="parte-ii-%E2%80%94-seguran%C3%A7a-e-controle-de-acesso" tabindex="-1">Parte II — Segurança e controle de acesso</h3>
+<ol start="5">
+<li>Crie uma visão <code>dbo.vw_nfe_publica</code> que exiba apenas <code>chave_acesso</code>, <code>data_emissao</code>, <code>valor_total</code>, <code>municipio</code> e <code>regime_tributario</code>, <strong>mascarando o CNPJ</strong> (exibindo somente os 8 primeiros dígitos). Use <code>dbo.nfe</code>, <code>dbo.contribuinte</code> e <code>dbo.municipio</code>.</li>
+<li>Escreva os comandos <code>GRANT</code>/<code>DENY</code> para conceder acesso à <code>dbo.vw_nfe_publica</code> ao perfil <code>[perfil_portal_transparencia]</code> e negar acesso direto à tabela <code>dbo.nfe</code> para o mesmo perfil.</li>
+<li>Crie uma visão <code>dbo.vw_nfe_por_regiao</code> que filtre automaticamente as NF-e pela região fiscal do auditor logado, usando <code>SUSER_SNAME()</code>, <code>dbo.auditor_fiscal (matricula, regiao_fiscal)</code> e <code>dbo.municipio (regiao_fiscal)</code>. Considere que o login SQL corresponde à matrícula do auditor.</li>
+</ol>
+<h3 id="parte-iii-%E2%80%94-with-check-option-e-with-schemabinding" tabindex="-1">Parte III — <code>WITH CHECK OPTION</code> e <code>WITH SCHEMABINDING</code></h3>
+<ol start="8">
+<li>Crie uma visão <code>dbo.vw_contribuintes_mei</code> para contribuintes do regime <code>MEI</code> e tente realizar um <code>UPDATE</code> que mude o regime para <code>SIMPLES</code>. Observe o comportamento <strong>sem</strong> e <strong>com</strong> <code>WITH CHECK OPTION</code>.</li>
+<li>Crie a visão do exercício 8 com <code>WITH SCHEMABINDING</code>. Em seguida, tente executar <code>ALTER TABLE dbo.contribuinte DROP COLUMN regime_tributario</code> e observe o erro gerado. Explique por que isso é útil em produção.</li>
+</ol>
+<h3 id="parte-iv-%E2%80%94-vis%C3%B5es-indexadas-e-desempenho" tabindex="-1">Parte IV — Visões indexadas e desempenho</h3>
+<ol start="10">
+<li>Crie uma visão indexada <code>dbo.vw_idx_totais_municipio</code> que agregue as NF-e de saída autorizadas por município do emitente e mês, com quantidade de notas e total emitido. Use <code>dbo.nfe</code>, <code>dbo.contribuinte</code> e <code>dbo.municipio</code>, crie o índice clusterizado único e consulte-a com <code>WITH (NOEXPAND)</code>.</li>
+<li>Compare o plano de execução (<code>Ctrl+M</code>) de uma consulta de agregação mensal executada:
+<ul>
+<li>(a) Diretamente nas tabelas base com <code>GROUP BY</code>.</li>
+<li>(b) Usando a visão indexada do exercício 10 com <code>WITH (NOEXPAND)</code>.
+Identifique em qual operador está a maior diferença de custo estimado.</li>
+</ul>
+</li>
+<li>Crie uma visão <code>dbo.vw_omissas_simples</code> para contribuintes do regime <code>SIMPLES</code> sem emissão de NF-e de saída autorizada nos últimos 60 dias. Use <code>NOT EXISTS</code> para identificar a ausência de notas.</li>
+</ol>
+<h3 id="desafio" tabindex="-1">Desafio</h3>
+<p>Projete e implemente um <strong>conjunto de visões</strong> para o Painel de Auditoria de Risco Fiscal da SEFAZ-PB, atendendo aos seguintes requisitos:</p>
+<p><strong>Visão 1 — <code>dbo.vw_risco_alto</code>:</strong> contribuintes com pelo menos uma NF-e de saída acima de R$ 500.000 no trimestre vigente e histórico de cancelamento acima de 10% das NF-e emitidas no mesmo período. Use <code>dbo.nfe</code> e <code>dbo.contribuinte</code>.</p>
+<p><strong>Visão 2 — <code>dbo.vw_top10_emissores</code>:</strong> os 10 maiores emitentes de cada regime tributário, por valor total de NF-e de saída autorizadas no mês corrente, usando subconsulta correlacionada ou <code>CROSS APPLY</code> na definição da visão.</p>
+<p><strong>Visão 3 — <code>dbo.vw_painel_gerencial</code> (indexada):</strong> consolidação mensal por regime do emitente e UF do destinatário, com totais de NF-e, valor emitido e ICMS. Calcule o percentual de ICMS na consulta externa e inclua o índice clusterizado na visão.</p>
+<p>Requisitos gerais:</p>
+<ul>
+<li>Todas as visões com <code>WITH SCHEMABINDING</code> onde aplicável.</li>
+<li><code>WITH CHECK OPTION</code> nas visões que permitem escrita.</li>
+<li>Script de <code>GRANT</code> para três perfis: <code>[perfil_auditor_senior]</code>, <code>[perfil_analista_operacional]</code> e <code>[perfil_gestor_tributario]</code> — com permissões distintas para cada visão.</li>
+<li>Exiba o plano de execução da consulta sobre a visão indexada e identifique se o SQL Server usou os dados materializados.</li>
+</ul>
+<hr>
+<h2 id="17.-refer%C3%AAncias" tabindex="-1">17. Referências</h2>
+<ul>
+<li><strong>Microsoft Learn — CREATE VIEW (Transact-SQL)</strong>: referência oficial de sintaxe, restrições e opções de visões no SQL Server (<code>learn.microsoft.com/sql/t-sql/statements/create-view-transact-sql</code>).</li>
+<li><strong>Microsoft Learn — Indexed Views</strong>: documentação completa sobre visões indexadas, pré-requisitos e limitações.</li>
+<li><strong>Microsoft Learn — Row-Level Security</strong>: recurso nativo do SQL Server 2016+ como alternativa ao filtro por <code>SUSER_SNAME()</code> em visões de segurança.</li>
+<li><strong>Microsoft Learn — sys.views (Transact-SQL)</strong>: catálogo de visões de sistema para inspeção de metadados.</li>
+<li><strong>Microsoft Learn — sys.dm_sql_referenced_entities</strong>: DMF para análise de dependências de objetos.</li>
+<li><strong>Itzik Ben-Gan — &quot;T-SQL Fundamentals&quot;</strong> (Microsoft Press): capítulo sobre visões, discutindo atualizabilidade, <code>INSTEAD OF</code> triggers e visões indexadas.</li>
+<li>Consulte também <a href="subconsultas.md">subconsultas.md</a> para revisão de CTEs e subconsultas correlacionadas utilizadas na definição de visões complexas.</li>
+</ul>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+    </body>
+</html>

@@ -49,26 +49,32 @@ Ao final deste módulo, o participante será capaz de:
 
 Uma **visão** (*view*) é um objeto de banco de dados que armazena uma instrução `SELECT` com um nome — funcionando como uma **tabela virtual**: não armazena dados próprios, mas apresenta o resultado da consulta definidora toda vez que é referenciada.
 
-```
-┌─────────────────────────────────────────────┐
-│           Consulta do usuário               │
-│   SELECT * FROM fiscal.vw_notas_pendentes   │
-└─────────────────────────┬───────────────────┘
-                          │ transparente ao usuário
-                          ▼
-┌─────────────────────────────────────────────┐
-│         Definição da visão (catálogo)       │
-│   SELECT n.*, c.razao_social                │
-│   FROM fiscal.nota_fiscal n                 │
-│   JOIN fiscal.contribuinte c ON ...         │
-│   WHERE n.situacao = 'PENDENTE'             │
-└──────────────┬──────────────────────────────┘
-               │ acessa diretamente
-               ▼
-     ┌─────────────────────┐
-     │  fiscal.nota_fiscal  │   ← tabelas base (dados reais)
-     │  fiscal.contribuinte │
-     └─────────────────────┘
+```mermaid
+flowchart TD
+    U["👤 Consulta do usuário<br/><code>SELECT * FROM dbo.vw_nfe_emitidas_ativas</code>"]
+
+    subgraph CAT["📖 Catálogo do banco de dados"]
+        V["<table><tr><th colspan='3'>🔍 dbo.vw_nfe_emitidas_ativas</th></tr><tr><td><b>chave_acesso</b></td><td><b>valor_total</b></td><td><b>razao_social</b></td></tr><tr><td>2526...</td><td>R$ 8.750,00</td><td>Comercial PB</td></tr><tr><td>2526...</td><td>R$ 13.420,00</td><td>Industria Nordeste</td></tr></table><br/><i>Tabela virtual: resultado do SELECT armazenado no catálogo</i>"]
+    end
+
+    subgraph BASE["🗄️ Tabelas base (dados reais)"]
+        T1[("dbo.nfe")]
+        T2[("dbo.contribuinte")]
+        T3[("dbo.municipio")]
+    end
+
+    U -- "transparente ao usuário" --> V
+    V -- "acessa diretamente" --> T1
+    V -- "acessa diretamente" --> T2
+    V -- "identifica o município" --> T3
+
+    style U fill:#d9f0f0,stroke:#0f766e,stroke-width:2px,color:#172554
+    style V fill:#fef3c7,stroke:#b45309,stroke-width:2px,color:#172554
+    style T1 fill:#dcfce7,stroke:#15803d,stroke-width:2px,color:#172554
+    style T2 fill:#dcfce7,stroke:#15803d,stroke-width:2px,color:#172554
+    style T3 fill:#dcfce7,stroke:#15803d,stroke-width:2px,color:#172554
+    style CAT fill:#f8fafc,stroke:#94a3b8,stroke-width:1px,color:#172554
+    style BASE fill:#f8fafc,stroke:#94a3b8,stroke-width:1px,color:#172554
 ```
 
 **Vantagens no contexto da SEFAZ-PB:**
@@ -94,20 +100,25 @@ Uma **visão** (*view*) é um objeto de banco de dados que armazena uma instruç
 ### 3.1 `CREATE VIEW` — sintaxe básica
 
 ```sql
-CREATE VIEW fiscal.vw_notas_emitidas_ativas
+CREATE VIEW dbo.vw_nfe_emitidas_ativas
 AS
 SELECT
-    n.nrchaveacesso      AS chave_acesso,
-    n.dhemissao          AS data_emissao,
-    n.vltotalnota        AS valor_total,
-    n.stnfe              AS situacao,
+    n.chave_acesso,
+    n.data_emissao,
+    n.valor_total,
+    n.situacao,
+    c.id_contribuinte,
     c.razao_social,
     c.cnpj,
-    c.regime_tributario
-FROM fiscal.nota_fiscal AS n
-JOIN fiscal.contribuinte AS c
-    ON c.id_contribuinte = n.id_contribuinte_emitente
-WHERE n.stnfe <> 'C';   -- exclui notas canceladas
+    c.regime_tributario,
+    m.nome AS municipio
+FROM dbo.nfe AS n
+JOIN dbo.contribuinte AS c
+    ON c.id_contribuinte = n.id_emitente
+JOIN dbo.municipio AS m
+    ON m.id_municipio = c.id_municipio
+WHERE n.tipo_operacao = '1'
+  AND n.situacao = 'AUTORIZADA';
 ```
 
 > **Convenção de nomenclatura adotada neste curso:** prefixo `vw_` para visões, seguido de nome descritivo em minúsculas com underscores. Ex.: `vw_notas_emitidas_ativas`, `vw_divergencias_icms`.
@@ -115,20 +126,25 @@ WHERE n.stnfe <> 'C';   -- exclui notas canceladas
 ### 3.2 `CREATE OR ALTER VIEW` — idempotente (SQL Server 2016+)
 
 ```sql
-CREATE OR ALTER VIEW fiscal.vw_notas_emitidas_ativas
+CREATE OR ALTER VIEW dbo.vw_nfe_emitidas_ativas
 AS
 SELECT
-    n.nrchaveacesso      AS chave_acesso,
-    n.dhemissao          AS data_emissao,
-    n.vltotalnota        AS valor_total,
-    n.stnfe              AS situacao,
+    n.chave_acesso,
+    n.data_emissao,
+    n.valor_total,
+    n.situacao,
+    c.id_contribuinte,
     c.razao_social,
     c.cnpj,
-    c.regime_tributario
-FROM fiscal.nota_fiscal AS n
-JOIN fiscal.contribuinte AS c
-    ON c.id_contribuinte = n.id_contribuinte_emitente
-WHERE n.stnfe <> 'C';
+    c.regime_tributario,
+    m.nome AS municipio
+FROM dbo.nfe AS n
+JOIN dbo.contribuinte AS c
+    ON c.id_contribuinte = n.id_emitente
+JOIN dbo.municipio AS m
+    ON m.id_municipio = c.id_municipio
+WHERE n.tipo_operacao = '1'
+  AND n.situacao = 'AUTORIZADA';
 ```
 
 `CREATE OR ALTER VIEW` cria a visão se não existir ou a substitui se já existir — eliminando o padrão `DROP VIEW IF EXISTS` + `CREATE VIEW` e evitando que permissões concedidas sobre a visão sejam perdidas durante a atualização.
@@ -136,21 +152,26 @@ WHERE n.stnfe <> 'C';
 ### 3.3 `ALTER VIEW` — modificar uma visão existente
 
 ```sql
-ALTER VIEW fiscal.vw_notas_emitidas_ativas
+ALTER VIEW dbo.vw_nfe_emitidas_ativas
 AS
 SELECT
-    n.nrchaveacesso      AS chave_acesso,
-    n.dhemissao          AS data_emissao,
-    n.vltotalnota        AS valor_total,
-    n.vlicms             AS valor_icms,    -- coluna adicionada
-    n.stnfe              AS situacao,
+    n.chave_acesso,
+    n.data_emissao,
+    n.valor_total,
+    n.valor_icms,        -- coluna adicionada
+    n.situacao,
+    c.id_contribuinte,
     c.razao_social,
     c.cnpj,
-    c.regime_tributario
-FROM fiscal.nota_fiscal AS n
-JOIN fiscal.contribuinte AS c
-    ON c.id_contribuinte = n.id_contribuinte_emitente
-WHERE n.stnfe <> 'C';
+    c.regime_tributario,
+    m.nome AS municipio
+FROM dbo.nfe AS n
+JOIN dbo.contribuinte AS c
+    ON c.id_contribuinte = n.id_emitente
+JOIN dbo.municipio AS m
+    ON m.id_municipio = c.id_municipio
+WHERE n.tipo_operacao = '1'
+  AND n.situacao = 'AUTORIZADA';
 ```
 
 **Importante:** `ALTER VIEW` **preserva** as permissões já concedidas sobre a visão, ao contrário de `DROP` + `CREATE`.
@@ -159,13 +180,13 @@ WHERE n.stnfe <> 'C';
 
 ```sql
 -- Remover uma visão
-DROP VIEW IF EXISTS fiscal.vw_notas_emitidas_ativas;
+DROP VIEW IF EXISTS dbo.vw_nfe_emitidas_ativas;
 
 -- Remover múltiplas visões em um único comando
 DROP VIEW IF EXISTS
-    fiscal.vw_notas_emitidas_ativas,
-    fiscal.vw_divergencias_icms,
-    fiscal.vw_contribuintes_omissos;
+    dbo.vw_nfe_emitidas_ativas,
+    dbo.vw_divergencias_nfe_efd,
+    dbo.vw_contribuintes_omissos;
 ```
 
 `DROP VIEW` remove apenas o objeto de visão — **jamais** apaga dados das tabelas base.
@@ -192,7 +213,7 @@ Uma vez criada, a visão é utilizada exatamente como uma tabela — em `SELECT`
 ```sql
 -- O auditor consulta como se fosse uma tabela, sem ver o JOIN interno
 SELECT chave_acesso, data_emissao, valor_total, razao_social
-FROM fiscal.vw_notas_emitidas_ativas
+FROM dbo.vw_nfe_emitidas_ativas
 WHERE valor_total > 50000.00
 ORDER BY valor_total DESC;
 ```
@@ -206,7 +227,7 @@ SELECT
     COUNT(*)            AS qtd_notas,
     SUM(valor_total)    AS total_emitido,
     AVG(valor_total)    AS ticket_medio
-FROM fiscal.vw_notas_emitidas_ativas
+FROM dbo.vw_nfe_emitidas_ativas
 WHERE MONTH(data_emissao) = MONTH(GETDATE())
   AND YEAR(data_emissao)  = YEAR(GETDATE())
 GROUP BY regime_tributario
@@ -223,10 +244,10 @@ SELECT
     v.valor_total,
     ai.numero_auto,
     ai.data_lavratura
-FROM fiscal.vw_notas_emitidas_ativas AS v
-JOIN fiscal.auto_infracao AS ai
-    ON ai.chave_acesso_nf = v.chave_acesso
-WHERE ai.situacao = 'ABERTO'
+FROM dbo.vw_nfe_emitidas_ativas AS v
+JOIN dbo.auto_infracao AS ai
+    ON ai.id_contribuinte = v.id_contribuinte
+WHERE ai.situacao = 'LAVRADO'
 ORDER BY ai.data_lavratura DESC;
 ```
 
@@ -240,7 +261,7 @@ FROM (
         cnpj,
         razao_social,
         AVG(valor_total) AS media_notas
-    FROM fiscal.vw_notas_emitidas_ativas
+    FROM dbo.vw_nfe_emitidas_ativas
     GROUP BY cnpj, razao_social
 ) AS resumo
 WHERE media_notas > 100000.00
@@ -258,34 +279,37 @@ Este é um dos usos mais estratégicos de visões no ambiente fiscal. Através d
 O auditor externo não deve enxergar o CNPJ completo dos contribuintes (dado sensível sujeito à LGPD). Criamos uma visão que mascara o CNPJ:
 
 ```sql
-CREATE VIEW fiscal.vw_notas_para_auditoria_externa
+CREATE VIEW dbo.vw_nfe_auditoria_externa
 AS
 SELECT
-    n.nrchaveacesso                                          AS chave_acesso,
-    n.dhemissao                                              AS data_emissao,
-    n.vltotalnota                                            AS valor_total,
-    n.vlicms                                                 AS valor_icms,
-    n.stnfe                                                  AS situacao,
+    n.chave_acesso,
+    n.data_emissao,
+    n.valor_total,
+    n.valor_icms,
+    n.situacao,
     -- CNPJ mascarado: exibe apenas os 8 primeiros dígitos (raiz do CNPJ)
     LEFT(c.cnpj, 8) + '******'                              AS cnpj_raiz,
     c.razao_social,
     c.regime_tributario,
-    c.municipio
-FROM fiscal.nota_fiscal AS n
-JOIN fiscal.contribuinte AS c
-    ON c.id_contribuinte = n.id_contribuinte_emitente
-WHERE n.stnfe <> 'C';
+    m.nome AS municipio
+FROM dbo.nfe AS n
+JOIN dbo.contribuinte AS c
+    ON c.id_contribuinte = n.id_emitente
+JOIN dbo.municipio AS m
+    ON m.id_municipio = c.id_municipio
+WHERE n.tipo_operacao = '1'
+  AND n.situacao = 'AUTORIZADA';
 ```
 
 Em seguida, concedemos acesso **somente à visão**, jamais às tabelas base:
 
 ```sql
 -- Concede permissão de SELECT na visão para o perfil de auditoria externa
-GRANT SELECT ON fiscal.vw_notas_para_auditoria_externa TO [perfil_auditoria_externa];
+GRANT SELECT ON dbo.vw_nfe_auditoria_externa TO [perfil_auditoria_externa];
 
 -- Nega acesso direto às tabelas base (se necessário explicitar)
-DENY SELECT ON fiscal.nota_fiscal TO [perfil_auditoria_externa];
-DENY SELECT ON fiscal.contribuinte TO [perfil_auditoria_externa];
+DENY SELECT ON dbo.nfe TO [perfil_auditoria_externa];
+DENY SELECT ON dbo.contribuinte TO [perfil_auditoria_externa];
 ```
 
 ### 5.2 Segurança em nível de linha (Row-Level Security via visão)
@@ -293,25 +317,27 @@ DENY SELECT ON fiscal.contribuinte TO [perfil_auditoria_externa];
 Cada analista fiscal deve enxergar apenas os contribuintes da sua circunscrição regional:
 
 ```sql
-CREATE VIEW fiscal.vw_notas_minha_circunscricao
+CREATE VIEW dbo.vw_nfe_minha_regiao
 AS
 SELECT
-    n.nrchaveacesso  AS chave_acesso,
-    n.dhemissao      AS data_emissao,
-    n.vltotalnota    AS valor_total,
-    n.stnfe          AS situacao,
+    n.chave_acesso,
+    n.data_emissao,
+    n.valor_total,
+    n.situacao,
     c.razao_social,
     c.cnpj,
-    c.municipio,
-    c.id_circunscricao
-FROM fiscal.nota_fiscal AS n
-JOIN fiscal.contribuinte AS c
-    ON c.id_contribuinte = n.id_contribuinte_emitente
--- SUSER_SNAME() retorna o login do usuário atual — correlação dinâmica por login
-WHERE c.id_circunscricao = (
-    SELECT id_circunscricao
-    FROM fiscal.analista_fiscal
-    WHERE login_windows = SUSER_SNAME()
+    m.nome AS municipio,
+    m.regiao_fiscal
+FROM dbo.nfe AS n
+JOIN dbo.contribuinte AS c
+    ON c.id_contribuinte = n.id_emitente
+JOIN dbo.municipio AS m
+    ON m.id_municipio = c.id_municipio
+-- Neste exemplo, o login SQL corresponde à matrícula do auditor.
+WHERE m.regiao_fiscal = (
+    SELECT af.regiao_fiscal
+    FROM dbo.auditor_fiscal AS af
+    WHERE CONVERT(VARCHAR(20), af.matricula) = SUSER_SNAME()
 );
 ```
 
@@ -321,14 +347,14 @@ WHERE c.id_circunscricao = (
 
 ```sql
 -- Concede acesso somente leitura à visão operacional
-GRANT SELECT ON fiscal.vw_notas_emitidas_ativas TO [perfil_fiscal_operacional];
+GRANT SELECT ON dbo.vw_nfe_emitidas_ativas TO [perfil_fiscal_operacional];
 
 -- Permite que analistas sênior criem outras visões no schema
 GRANT CREATE VIEW TO [perfil_analista_senior];
-GRANT ALTER ON SCHEMA::fiscal TO [perfil_analista_senior];
+GRANT ALTER ON SCHEMA::dbo TO [perfil_analista_senior];
 
 -- Revoga acesso concedido anteriormente
-REVOKE SELECT ON fiscal.vw_notas_emitidas_ativas FROM [perfil_fiscal_operacional];
+REVOKE SELECT ON dbo.vw_nfe_emitidas_ativas FROM [perfil_fiscal_operacional];
 ```
 
 ---
@@ -353,54 +379,58 @@ Uma visão é atualizável quando:
 ### 6.2 Exemplo — visão atualizável (tabela única)
 
 ```sql
-CREATE VIEW fiscal.vw_contribuintes_simples
+CREATE VIEW dbo.vw_contribuintes_simples
 AS
 SELECT
     id_contribuinte,
     razao_social,
     cnpj,
+    id_municipio,
     regime_tributario,
-    municipio,
-    situacao_cadastral
-FROM fiscal.contribuinte
-WHERE regime_tributario = 'Simples Nacional';
+    situacao_cadastral,
+    data_inicio_atividade,
+    cnae_principal
+FROM dbo.contribuinte
+WHERE regime_tributario = 'SIMPLES';
 ```
 
-Esta visão **é atualizável** — referencia apenas `fiscal.contribuinte`:
+Esta visão **é atualizável** — referencia apenas `dbo.contribuinte`:
 
 ```sql
--- UPDATE via visão: atualiza a tabela base fiscal.contribuinte
-UPDATE fiscal.vw_contribuintes_simples
-SET situacao_cadastral = 'IRREGULAR'
+-- UPDATE via visão: atualiza a tabela base dbo.contribuinte
+UPDATE dbo.vw_contribuintes_simples
+SET situacao_cadastral = 'SUSPENSO'
 WHERE cnpj = '12345678000195';
 
--- INSERT via visão: insere na tabela base fiscal.contribuinte
-INSERT INTO fiscal.vw_contribuintes_simples
-    (razao_social, cnpj, regime_tributario, municipio, situacao_cadastral)
+-- INSERT via visão: insere na tabela base dbo.contribuinte
+INSERT INTO dbo.vw_contribuintes_simples
+    (id_contribuinte, razao_social, cnpj, id_municipio, regime_tributario,
+     situacao_cadastral, data_inicio_atividade, cnae_principal)
 VALUES
-    ('Padaria Bom Pão Ltda', '98765432000111', 'Simples Nacional', 'João Pessoa', 'REGULAR');
+    (9999, 'Padaria Bom Pao Ltda', '98765432000111', 1, 'SIMPLES',
+     'ATIVO', '2020-01-01', '4721102');
 ```
 
 ### 6.3 Exemplo — visão NÃO atualizável (JOIN, agregação)
 
 ```sql
 -- Esta visão NÃO aceita UPDATE/INSERT/DELETE diretamente
-CREATE VIEW fiscal.vw_resumo_por_regime
+CREATE VIEW dbo.vw_resumo_por_regime
 AS
 SELECT
     c.regime_tributario,
-    COUNT(*)         AS qtd_contribuintes,
-    SUM(n.vltotalnota) AS total_notas
-FROM fiscal.contribuinte AS c
-JOIN fiscal.nota_fiscal AS n
-    ON n.id_contribuinte_emitente = c.id_contribuinte
+    COUNT(*)           AS qtd_notas,
+    SUM(n.valor_total) AS total_notas
+FROM dbo.contribuinte AS c
+JOIN dbo.nfe AS n
+    ON n.id_emitente = c.id_contribuinte
 GROUP BY c.regime_tributario;
 ```
 
-Tentar `UPDATE fiscal.vw_resumo_por_regime SET ...` resultará no erro:
+Tentar `UPDATE dbo.vw_resumo_por_regime SET ...` resultará no erro:
 
 ```
-View or function 'fiscal.vw_resumo_por_regime' is not updatable because the
+View or function 'dbo.vw_resumo_por_regime' is not updatable because the
 modification affects multiple base tables.
 ```
 
@@ -409,23 +439,31 @@ modification affects multiple base tables.
 Para visões com `JOIN` que precisam aceitar escrita, a solução é criar um `INSTEAD OF` trigger que intercepta a operação e a traduz manualmente para as tabelas base:
 
 ```sql
-CREATE TRIGGER fiscal.trg_vw_notas_ativas_insert
-ON fiscal.vw_notas_emitidas_ativas
+CREATE TRIGGER dbo.trg_vw_nfe_emitidas_ativas_insert
+ON dbo.vw_nfe_emitidas_ativas
 INSTEAD OF INSERT
 AS
 BEGIN
     SET NOCOUNT ON;
 
     -- Redireciona o INSERT para a tabela base correta
-    INSERT INTO fiscal.nota_fiscal (nrchaveacesso, dhemissao, vltotalnota, stnfe, id_contribuinte_emitente)
+    INSERT INTO dbo.nfe
+        (id_nfe, chave_acesso, numero, serie, data_emissao, id_emitente,
+         tipo_operacao, valor_total, valor_icms, situacao)
     SELECT
+        (SELECT ISNULL(MAX(id_nfe), 0) FROM dbo.nfe)
+            + ROW_NUMBER() OVER (ORDER BY i.chave_acesso),
         i.chave_acesso,
+        0,
+        1,
         i.data_emissao,
+        c.id_contribuinte,
+        '1',
         i.valor_total,
-        'A',   -- situacao padrão para novas notas
-        c.id_contribuinte
+        i.valor_icms,
+        'AUTORIZADA'
     FROM inserted AS i
-    JOIN fiscal.contribuinte AS c ON c.cnpj = i.cnpj;
+    JOIN dbo.contribuinte AS c ON c.cnpj = i.cnpj;
 END;
 ```
 
@@ -438,17 +476,17 @@ END;
 ### 7.1 Problema sem `WITH CHECK OPTION`
 
 ```sql
-CREATE VIEW fiscal.vw_contribuintes_simples_sem_check
+CREATE VIEW dbo.vw_contribuintes_simples_sem_check
 AS
 SELECT id_contribuinte, razao_social, cnpj, regime_tributario
-FROM fiscal.contribuinte
-WHERE regime_tributario = 'Simples Nacional';
+FROM dbo.contribuinte
+WHERE regime_tributario = 'SIMPLES';
 -- Sem WITH CHECK OPTION
 
 -- Este UPDATE muda o regime para 'Lucro Real' — a linha SAIRÁ da visão após o update
 -- mas o T-SQL permite sem reclamar:
-UPDATE fiscal.vw_contribuintes_simples_sem_check
-SET regime_tributario = 'Lucro Real'
+UPDATE dbo.vw_contribuintes_simples_sem_check
+SET regime_tributario = 'NORMAL'
 WHERE cnpj = '12345678000195';
 -- A linha agora não aparece mais na visão — "desapareceu silenciosamente"
 ```
@@ -456,16 +494,16 @@ WHERE cnpj = '12345678000195';
 ### 7.2 Solução com `WITH CHECK OPTION`
 
 ```sql
-CREATE VIEW fiscal.vw_contribuintes_simples
+CREATE VIEW dbo.vw_contribuintes_simples
 AS
 SELECT id_contribuinte, razao_social, cnpj, regime_tributario
-FROM fiscal.contribuinte
-WHERE regime_tributario = 'Simples Nacional'
+FROM dbo.contribuinte
+WHERE regime_tributario = 'SIMPLES'
 WITH CHECK OPTION;   -- garante que dados modificados via visão permaneçam visíveis por ela
 
 -- Agora o mesmo UPDATE é bloqueado com mensagem de erro:
-UPDATE fiscal.vw_contribuintes_simples
-SET regime_tributario = 'Lucro Real'
+UPDATE dbo.vw_contribuintes_simples
+SET regime_tributario = 'NORMAL'
 WHERE cnpj = '12345678000195';
 ```
 
@@ -485,33 +523,34 @@ constraint.
 `WITH SCHEMABINDING` vincula a visão ao esquema das tabelas base, **impedindo que as tabelas referenciadas sejam alteradas** (colunas removidas, tabelas excluídas) enquanto a visão existir.
 
 ```sql
-CREATE VIEW fiscal.vw_notas_ativas_schemabind
+CREATE VIEW dbo.vw_nfe_ativas_schemabind
 WITH SCHEMABINDING           -- vincula ao schema atual das tabelas base
 AS
 SELECT
-    n.nrchaveacesso  AS chave_acesso,
-    n.dhemissao      AS data_emissao,
-    n.vltotalnota    AS valor_total,
-    n.stnfe          AS situacao,
+    n.chave_acesso,
+    n.data_emissao,
+    n.valor_total,
+    n.situacao,
     c.razao_social,
     c.cnpj
-FROM fiscal.nota_fiscal AS n          -- nome com schema qualificado: obrigatório com SCHEMABINDING
-JOIN fiscal.contribuinte AS c
-    ON c.id_contribuinte = n.id_contribuinte_emitente
-WHERE n.stnfe <> 'C';
+FROM dbo.nfe AS n                     -- nome com schema qualificado: obrigatório com SCHEMABINDING
+JOIN dbo.contribuinte AS c
+    ON c.id_contribuinte = n.id_emitente
+WHERE n.tipo_operacao = '1'
+  AND n.situacao = 'AUTORIZADA';
 ```
 
 **Efeito prático:**
 
 ```sql
 -- Tentativa de remover coluna usada pela visão — será bloqueada:
-ALTER TABLE fiscal.nota_fiscal DROP COLUMN vltotalnota;
--- Erro: Cannot DROP COLUMN 'vltotalnota' because it is referenced by object 'vw_notas_ativas_schemabind'.
+ALTER TABLE dbo.nfe DROP COLUMN valor_total;
+-- Erro: Cannot DROP COLUMN 'valor_total' because it is referenced by object 'vw_nfe_ativas_schemabind'.
 ```
 
 **Regras obrigatórias com `WITH SCHEMABINDING`:**
 
-- Todos os objetos referenciados devem usar nomes **qualificados com schema** (`fiscal.nota_fiscal`, não apenas `nota_fiscal`).
+- Todos os objetos referenciados devem usar nomes **qualificados com schema** (`dbo.nfe`, não apenas `nfe`).
 - Não é permitido usar `SELECT *` — todas as colunas devem ser nomeadas explicitamente.
 - `WITH SCHEMABINDING` é **pré-requisito obrigatório** para criar índices em visões (ver [seção 9](#9-visões-indexadas-materialized-views)).
 
@@ -528,34 +567,44 @@ Isso é especialmente útil para relatórios fiscais pesados que precisam agrega
 - A visão deve ser criada com `WITH SCHEMABINDING`.
 - O primeiro índice criado na visão deve ser **clusterizado e único** (`UNIQUE CLUSTERED`).
 - A definição da visão não pode conter: subconsultas, `OUTER JOIN`, `DISTINCT`, `TOP`, CTEs, funções não determinísticas (`GETDATE()`, `NEWID()`), `UNION`/`EXCEPT`/`INTERSECT`, colunas calculadas não determinísticas.
-- `SET ANSI_NULLS ON` e `SET QUOTED_IDENTIFIER ON` devem estar ativos na sessão.
+- Antes de criar a visão e seus índices, a sessão deve usar: `ANSI_NULLS`, `ANSI_PADDING`, `ANSI_WARNINGS`, `ARITHABORT`, `CONCAT_NULL_YIELDS_NULL` e `QUOTED_IDENTIFIER` como `ON`, e `NUMERIC_ROUNDABORT` como `OFF`.
 
 ### 9.2 Criando uma visão indexada fiscal
 
 ```sql
+SET ANSI_NULLS ON;
+SET ANSI_PADDING ON;
+SET ANSI_WARNINGS ON;
+SET ARITHABORT ON;
+SET CONCAT_NULL_YIELDS_NULL ON;
+SET QUOTED_IDENTIFIER ON;
+SET NUMERIC_ROUNDABORT OFF;
+GO
+
 -- Passo 1: criar a visão com SCHEMABINDING e somente agregações suportadas
-CREATE VIEW fiscal.vw_idx_totais_por_regime
+CREATE VIEW dbo.vw_idx_totais_por_regime
 WITH SCHEMABINDING
 AS
 SELECT
     c.regime_tributario,
     -- COUNT_BIG(*) é obrigatório quando há GROUP BY em visão indexada
     COUNT_BIG(*)                  AS qtd_notas,
-    SUM(n.vltotalnota)            AS total_emitido,
-    SUM(n.vlicms)                 AS total_icms
-FROM fiscal.nota_fiscal AS n
-JOIN fiscal.contribuinte AS c
-    ON c.id_contribuinte = n.id_contribuinte_emitente
-WHERE n.stnfe <> 'C'
+    SUM(n.valor_total)            AS total_emitido,
+    SUM(n.valor_icms)             AS total_icms
+FROM dbo.nfe AS n
+JOIN dbo.contribuinte AS c
+    ON c.id_contribuinte = n.id_emitente
+WHERE n.tipo_operacao = '1'
+  AND n.situacao = 'AUTORIZADA'
 GROUP BY c.regime_tributario;
 
 -- Passo 2: criar o índice clusterizado único (materializa os dados)
 CREATE UNIQUE CLUSTERED INDEX idx_vw_totais_por_regime
-    ON fiscal.vw_idx_totais_por_regime (regime_tributario);
+    ON dbo.vw_idx_totais_por_regime (regime_tributario);
 
 -- Passo 3 (opcional): índice não clusterizado para outras colunas de filtro
 CREATE NONCLUSTERED INDEX idx_vw_totais_total_emitido
-    ON fiscal.vw_idx_totais_por_regime (total_emitido DESC);
+    ON dbo.vw_idx_totais_por_regime (total_emitido DESC);
 ```
 
 ### 9.3 Consultando a visão indexada
@@ -563,15 +612,16 @@ CREATE NONCLUSTERED INDEX idx_vw_totais_total_emitido
 ```sql
 -- SQL Server Enterprise/Developer: pode usar a visão indexada automaticamente
 -- mesmo em consultas que NÃO referenciam a visão diretamente (query rewrite)
-SELECT regime_tributario, SUM(vltotalnota)
-FROM fiscal.nota_fiscal AS n
-JOIN fiscal.contribuinte AS c ON c.id_contribuinte = n.id_contribuinte_emitente
-WHERE n.stnfe <> 'C'
+SELECT regime_tributario, SUM(valor_total)
+FROM dbo.nfe AS n
+JOIN dbo.contribuinte AS c ON c.id_contribuinte = n.id_emitente
+WHERE n.tipo_operacao = '1'
+    AND n.situacao = 'AUTORIZADA'
 GROUP BY c.regime_tributario;
 
 -- Para forçar o uso da visão indexada explicitamente (qualquer edição):
 SELECT regime_tributario, total_emitido, qtd_notas
-FROM fiscal.vw_idx_totais_por_regime WITH (NOEXPAND)
+FROM dbo.vw_idx_totais_por_regime WITH (NOEXPAND)
 ORDER BY total_emitido DESC;
 ```
 
@@ -587,7 +637,7 @@ O SQL Server **mantém automaticamente** os dados da visão indexada sempre que 
 
 O SQL Server expõe metadados de visões em diversas visões de sistema (*system views*) — que são, elas próprias, visões.
 
-### 10.1 Listar todas as visões do schema fiscal
+### 10.1 Listar todas as visões do schema `dbo`
 
 ```sql
 SELECT
@@ -595,7 +645,7 @@ SELECT
     TABLE_NAME      AS visao_nome,
     VIEW_DEFINITION AS definicao_sql
 FROM INFORMATION_SCHEMA.VIEWS
-WHERE TABLE_SCHEMA = 'fiscal'
+WHERE TABLE_SCHEMA = 'dbo'
 ORDER BY TABLE_NAME;
 ```
 
@@ -611,7 +661,7 @@ SELECT
     -- verifica se tem SCHEMABINDING
     OBJECTPROPERTY(v.object_id, 'IsSchemaBound') AS tem_schemabinding
 FROM sys.views AS v
-WHERE SCHEMA_NAME(v.schema_id) = 'fiscal'
+WHERE SCHEMA_NAME(v.schema_id) = 'dbo'
 ORDER BY v.name;
 ```
 
@@ -619,10 +669,10 @@ ORDER BY v.name;
 
 ```sql
 -- Opção 1: via função de sistema
-SELECT OBJECT_DEFINITION(OBJECT_ID('fiscal.vw_notas_emitidas_ativas'));
+SELECT OBJECT_DEFINITION(OBJECT_ID('dbo.vw_nfe_emitidas_ativas'));
 
 -- Opção 2: via sp_helptext (formata em múltiplas linhas)
-EXEC sp_helptext 'fiscal.vw_notas_emitidas_ativas';
+EXEC sp_helptext 'dbo.vw_nfe_emitidas_ativas';
 ```
 
 ### 10.4 Identificar dependências de uma visão
@@ -633,7 +683,7 @@ SELECT
     referenced_schema_name  AS tabela_schema,
     referenced_entity_name  AS tabela_nome,
     referenced_minor_name   AS coluna_nome
-FROM sys.dm_sql_referenced_entities('fiscal.vw_notas_emitidas_ativas', 'OBJECT')
+FROM sys.dm_sql_referenced_entities('dbo.vw_nfe_emitidas_ativas', 'OBJECT')
 ORDER BY referenced_entity_name, referenced_minor_name;
 
 -- Quais objetos dependem desta tabela (impacto antes de alterar)?
@@ -641,7 +691,7 @@ SELECT
     referencing_schema_name AS objeto_schema,
     referencing_entity_name AS objeto_nome,
     referencing_class_desc  AS tipo_objeto
-FROM sys.dm_sql_referencing_entities('fiscal.nota_fiscal', 'OBJECT')
+FROM sys.dm_sql_referencing_entities('dbo.nfe', 'OBJECT')
 ORDER BY referencing_entity_name;
 ```
 
@@ -673,7 +723,7 @@ Processamento em lote, resultado intermediário grande consultado N vezes → #T
 
 ## 12. Desempenho e Plano de Execução
 
-Visões são **transparentes** ao otimizador de consultas: quando o SQL Server executa `SELECT * FROM fiscal.vw_notas_emitidas_ativas WHERE valor_total > 10000`, ele substitui internamente a visão pela sua definição e otimiza a consulta resultante como um todo — um processo chamado **view expansion** (expansão de visão).
+Visões são **transparentes** ao otimizador de consultas: quando o SQL Server executa `SELECT * FROM dbo.vw_nfe_emitidas_ativas WHERE valor_total > 10000`, ele substitui internamente a visão pela sua definição e otimiza a consulta resultante como um todo — um processo chamado **view expansion** (expansão de visão).
 
 **Consequências práticas:**
 
@@ -684,15 +734,15 @@ Visões são **transparentes** ao otimizador de consultas: quando o SQL Server e
 
 ```sql
 -- Exemplo problemático: função não determinística impede pushdown eficiente
-CREATE VIEW fiscal.vw_notas_recentes
+CREATE VIEW dbo.vw_nfe_recentes
 AS
-SELECT n.nrchaveacesso, n.dhemissao, n.vltotalnota, c.razao_social
-FROM fiscal.nota_fiscal AS n
-JOIN fiscal.contribuinte AS c ON c.id_contribuinte = n.id_contribuinte_emitente
-WHERE n.dhemissao >= DATEADD(DAY, -30, GETDATE());   -- range dinâmico
+SELECT n.chave_acesso, n.data_emissao, n.valor_total, c.razao_social
+FROM dbo.nfe AS n
+JOIN dbo.contribuinte AS c ON c.id_contribuinte = n.id_emitente
+WHERE n.data_emissao >= DATEADD(DAY, -30, GETDATE());   -- range dinâmico
 ```
 
-Neste caso, cada consulta recalcula a janela de 30 dias — o índice em `dhemissao` ainda é usado (*range seek*), mas o intervalo muda a cada execução. Dependendo do volume, pode ser mais eficiente passar a data como parâmetro em uma **função com valor de tabela** (TVF) em vez de uma visão.
+Neste caso, cada consulta recalcula a janela de 30 dias — o índice em `data_emissao` ainda é usado (*range seek*), mas o intervalo muda a cada execução. Dependendo do volume, pode ser mais eficiente passar a data como parâmetro em uma **função com valor de tabela** (TVF) em vez de uma visão.
 
 ### 12.2 Dicas de desempenho para visões
 
@@ -710,35 +760,39 @@ O conjunto de visões a seguir forma a camada de acesso do **Painel de Auditoria
 ### 13.1 Visão base: notas ativas com dados do contribuinte
 
 ```sql
-CREATE VIEW fiscal.vw_notas_ativas
+CREATE VIEW dbo.vw_nfe_ativas
 WITH SCHEMABINDING
 AS
 SELECT
-    n.nrchaveacesso          AS chave_acesso,
-    n.dhemissao              AS data_emissao,
-    n.vltotalnota            AS valor_total,
-    n.vlicms                 AS valor_icms,
-    n.vlbasecalculo          AS base_calculo_icms,
-    n.stnfe                  AS situacao,
-    n.cdmodelo               AS modelo_nf,
+    n.id_nfe,
+    n.chave_acesso,
+    n.data_emissao,
+    n.valor_total,
+    n.valor_icms,
+    n.numero,
+    n.serie,
+    n.situacao,
     c.id_contribuinte,
     c.razao_social,
     c.cnpj,
     c.regime_tributario,
-    c.municipio,
-    c.id_circunscricao
-FROM fiscal.nota_fiscal AS n
-JOIN fiscal.contribuinte AS c
-    ON c.id_contribuinte = n.id_contribuinte_emitente
-WHERE n.stnfe <> 'C';
+    m.nome AS municipio,
+    m.regiao_fiscal
+FROM dbo.nfe AS n
+JOIN dbo.contribuinte AS c
+    ON c.id_contribuinte = n.id_emitente
+JOIN dbo.municipio AS m
+    ON m.id_municipio = c.id_municipio
+WHERE n.tipo_operacao = '1'
+  AND n.situacao = 'AUTORIZADA';
 ```
 
 ### 13.2 Visão de divergências de ICMS
 
-Identifica notas onde o ICMS declarado diverge do esperado pela alíquota do regime:
+Identifica documentos em que o ICMS da NF-e diverge do ICMS escriturado na EFD:
 
 ```sql
-CREATE OR ALTER VIEW fiscal.vw_divergencias_icms
+CREATE OR ALTER VIEW dbo.vw_divergencias_nfe_efd
 AS
 SELECT
     na.chave_acesso,
@@ -747,22 +801,17 @@ SELECT
     na.cnpj,
     na.regime_tributario,
     na.valor_total,
-    na.base_calculo_icms,
-    na.valor_icms                                            AS icms_declarado,
-    -- alíquota esperada por regime (tabela de parâmetros fiscais)
-    pf.aliquota_icms                                         AS aliquota_esperada,
-    ROUND(na.base_calculo_icms * pf.aliquota_icms / 100, 2) AS icms_esperado,
-    -- diferença absoluta
-    na.valor_icms
-        - ROUND(na.base_calculo_icms * pf.aliquota_icms / 100, 2) AS diferenca_icms
-FROM fiscal.vw_notas_ativas AS na
-JOIN fiscal.parametro_fiscal AS pf
-    ON pf.regime_tributario = na.regime_tributario
--- filtra apenas notas com diferença superior a R$ 10,00 (tolerância operacional)
-WHERE ABS(
-        na.valor_icms
-        - ROUND(na.base_calculo_icms * pf.aliquota_icms / 100, 2)
-      ) > 10.00;
+    na.valor_icms AS icms_nfe,
+    e.valor_documento AS valor_efd,
+    e.valor_icms AS icms_efd,
+    na.valor_icms - e.valor_icms AS diferenca_icms
+FROM dbo.vw_nfe_ativas AS na
+JOIN dbo.efd_c100 AS e
+    ON e.chave_acesso = na.chave_acesso
+   AND e.ind_oper = '1'
+   AND e.cod_situacao = '00'
+WHERE ABS(na.valor_total - e.valor_documento) > 0.01
+   OR ABS(na.valor_icms - e.valor_icms) > 0.01;
 ```
 
 ### 13.3 Visão de contribuintes omissos
@@ -770,74 +819,86 @@ WHERE ABS(
 Contribuintes que não emitiram nenhuma nota nos últimos 90 dias:
 
 ```sql
-CREATE OR ALTER VIEW fiscal.vw_contribuintes_omissos
+CREATE OR ALTER VIEW dbo.vw_contribuintes_omissos
 AS
 SELECT
     c.id_contribuinte,
     c.razao_social,
     c.cnpj,
     c.regime_tributario,
-    c.municipio,
+    m.nome AS municipio,
     c.situacao_cadastral,
     -- data da última nota emitida (NULL se nunca emitiu)
     (
-        SELECT MAX(n.dhemissao)
-        FROM fiscal.nota_fiscal AS n
-        WHERE n.id_contribuinte_emitente = c.id_contribuinte
-          AND n.stnfe <> 'C'
+                SELECT MAX(n.data_emissao)
+                FROM dbo.nfe AS n
+                WHERE n.id_emitente = c.id_contribuinte
+                    AND n.tipo_operacao = '1'
+                    AND n.situacao = 'AUTORIZADA'
     ) AS ultima_emissao
-FROM fiscal.contribuinte AS c
-WHERE c.situacao_cadastral = 'REGULAR'
+FROM dbo.contribuinte AS c
+JOIN dbo.municipio AS m ON m.id_municipio = c.id_municipio
+WHERE c.situacao_cadastral = 'ATIVO'
   AND NOT EXISTS (
         SELECT 1
-        FROM fiscal.nota_fiscal AS n
-        WHERE n.id_contribuinte_emitente = c.id_contribuinte
-          AND n.stnfe <> 'C'
-          AND n.dhemissao >= DATEADD(DAY, -90, GETDATE())
+                FROM dbo.nfe AS n
+                WHERE n.id_emitente = c.id_contribuinte
+                    AND n.tipo_operacao = '1'
+                    AND n.situacao = 'AUTORIZADA'
+                    AND n.data_emissao >= DATEADD(DAY, -90, GETDATE())
   );
 ```
 
-### 13.4 Visão protegida por perfil de circunscrição
+### 13.4 Visão protegida por região fiscal
 
 ```sql
-CREATE OR ALTER VIEW fiscal.vw_divergencias_minha_area
+CREATE OR ALTER VIEW dbo.vw_divergencias_minha_regiao
 AS
 SELECT d.*
-FROM fiscal.vw_divergencias_icms AS d
-JOIN fiscal.contribuinte AS c
+FROM dbo.vw_divergencias_nfe_efd AS d
+JOIN dbo.contribuinte AS c
     ON c.cnpj = d.cnpj
-WHERE c.id_circunscricao = (
-    SELECT af.id_circunscricao
-    FROM fiscal.analista_fiscal AS af
-    WHERE af.login_windows = SUSER_SNAME()
+JOIN dbo.municipio AS m
+    ON m.id_municipio = c.id_municipio
+WHERE m.regiao_fiscal = (
+    SELECT af.regiao_fiscal
+    FROM dbo.auditor_fiscal AS af
+    WHERE CONVERT(VARCHAR(20), af.matricula) = SUSER_SNAME()
 );
 ```
 
 ### 13.5 Visão indexada para consolidação gerencial
 
 ```sql
-CREATE VIEW fiscal.vw_idx_consolidado_mensal
+CREATE VIEW dbo.vw_idx_consolidado_mensal
 WITH SCHEMABINDING
 AS
 SELECT
     c.regime_tributario,
-    YEAR(n.dhemissao)   AS ano_emissao,
-    MONTH(n.dhemissao)  AS mes_emissao,
+    m_dest.uf           AS uf_destino,
+    YEAR(n.data_emissao)   AS ano_emissao,
+    MONTH(n.data_emissao)  AS mes_emissao,
     COUNT_BIG(*)        AS qtd_notas,
-    SUM(n.vltotalnota)  AS total_emitido,
-    SUM(n.vlicms)       AS total_icms
-FROM fiscal.nota_fiscal AS n
-JOIN fiscal.contribuinte AS c
-    ON c.id_contribuinte = n.id_contribuinte_emitente
-WHERE n.stnfe <> 'C'
+    SUM(n.valor_total)  AS total_emitido,
+    SUM(n.valor_icms)   AS total_icms
+FROM dbo.nfe AS n
+JOIN dbo.contribuinte AS c
+    ON c.id_contribuinte = n.id_emitente
+JOIN dbo.contribuinte AS c_dest
+    ON c_dest.id_contribuinte = n.id_destinatario
+JOIN dbo.municipio AS m_dest
+    ON m_dest.id_municipio = c_dest.id_municipio
+WHERE n.tipo_operacao = '1'
+  AND n.situacao = 'AUTORIZADA'
 GROUP BY
     c.regime_tributario,
-    YEAR(n.dhemissao),
-    MONTH(n.dhemissao);
+    m_dest.uf,
+    YEAR(n.data_emissao),
+    MONTH(n.data_emissao);
 
 CREATE UNIQUE CLUSTERED INDEX idx_consolidado_mensal
-    ON fiscal.vw_idx_consolidado_mensal
-    (regime_tributario, ano_emissao, mes_emissao);
+    ON dbo.vw_idx_consolidado_mensal
+    (regime_tributario, uf_destino, ano_emissao, mes_emissao);
 ```
 
 **Consultando o painel consolidado (sem percorrer milhões de notas):**
@@ -845,15 +906,16 @@ CREATE UNIQUE CLUSTERED INDEX idx_consolidado_mensal
 ```sql
 SELECT
     regime_tributario,
+    uf_destino,
     ano_emissao,
     mes_emissao,
     qtd_notas,
     total_emitido,
     total_icms,
     ROUND(total_icms * 100.0 / NULLIF(total_emitido, 0), 2) AS perc_icms
-FROM fiscal.vw_idx_consolidado_mensal WITH (NOEXPAND)
+FROM dbo.vw_idx_consolidado_mensal WITH (NOEXPAND)
 WHERE ano_emissao = 2026
-ORDER BY regime_tributario, mes_emissao;
+ORDER BY regime_tributario, uf_destino, mes_emissao;
 ```
 
 ---
@@ -863,7 +925,7 @@ ORDER BY regime_tributario, mes_emissao;
 - **Nomeie visões com prefixo `vw_`** e nomes descritivos que comuniquem a intenção (`vw_contribuintes_omissos`, `vw_divergencias_icms`) — evite nomes genéricos como `vw1` ou `vw_dados`.
 - **Prefira `CREATE OR ALTER VIEW`** a `DROP` + `CREATE` — preserva permissões e evita janelas de indisponibilidade.
 - **Jamais use `SELECT *`** na definição de uma visão — adicionar colunas na tabela base não as propaga automaticamente para a visão, mas pode causar comportamento inesperado se o `SELECT *` for depois usado em `INSERT ... SELECT`.
-- **Qualifique sempre o schema** nos nomes de objetos dentro da visão (`fiscal.nota_fiscal`, não apenas `nota_fiscal`) — obrigatório para `WITH SCHEMABINDING` e boa prática em geral.
+- **Qualifique sempre o schema** nos nomes de objetos dentro da visão (`dbo.nfe`, não apenas `nfe`) — obrigatório para `WITH SCHEMABINDING` e boa prática em geral.
 - **Use `WITH CHECK OPTION`** em visões particionadas por critério de negócio que permitem escrita — garante que um `UPDATE` não mova inadvertidamente um registro para fora do escopo da visão.
 - **Use `WITH SCHEMABINDING`** em visões que fazem parte da camada de relatórios críticos — protege contra alterações acidentais nas tabelas base.
 - **Documente a intenção de negócio** da visão em um comentário antes do `CREATE VIEW` ou em um catálogo de objetos — o código SQL não captura "por que esta visão existe", apenas "o que ela faz".
@@ -895,40 +957,40 @@ ORDER BY regime_tributario, mes_emissao;
 
 ### Parte I — Criação e manipulação básica
 
-1. Crie uma visão `fiscal.vw_nfce_ativas` que exiba apenas as NFC-e (modelo 65) com situação diferente de cancelada. Inclua: `chave_acesso`, `data_emissao`, `valor_total`, `razao_social`, `cnpj` e `municipio`.
+1. Crie uma visão `dbo.vw_nfe_saidas_ativas` que exiba apenas NF-e de saída (`tipo_operacao = '1'`) autorizadas. Inclua: `chave_acesso`, `data_emissao`, `valor_total`, `razao_social`, `cnpj` e `municipio`.
 2. Altere a visão criada no exercício anterior para incluir a coluna `regime_tributario` sem perder as permissões concedidas. Use a instrução correta para isso.
-3. Liste todos os objetos do schema `fiscal` do tipo visão, exibindo nome, data de criação e se possuem `SCHEMABINDING`. Use `sys.views`.
+3. Liste todos os objetos do schema `dbo` do tipo visão, exibindo nome, data de criação e se possuem `SCHEMABINDING`. Use `sys.views`.
 4. Exiba a definição (código SQL) da visão criada no exercício 1 usando `OBJECT_DEFINITION`.
 
 ### Parte II — Segurança e controle de acesso
 
-5. Crie uma visão `fiscal.vw_nfe_publica` que exiba apenas `chave_acesso`, `data_emissao`, `valor_total`, `municipio` e `regime_tributario`, **mascarando o CNPJ** (exibindo somente os 8 primeiros dígitos). Essa visão deve ser usada para compartilhamento público de dados agregados.
-6. Escreva os comandos `GRANT`/`DENY` para conceder acesso à `vw_nfe_publica` ao perfil `[perfil_portal_transparencia]` e negar acesso direto à tabela `fiscal.nota_fiscal` para o mesmo perfil.
-7. Crie uma visão `fiscal.vw_notas_por_municipio` que filtre automaticamente as notas pelo município do analista logado, usando `SUSER_SNAME()` e uma tabela fictícia `fiscal.analista_municipal (login_windows, municipio)`.
+5. Crie uma visão `dbo.vw_nfe_publica` que exiba apenas `chave_acesso`, `data_emissao`, `valor_total`, `municipio` e `regime_tributario`, **mascarando o CNPJ** (exibindo somente os 8 primeiros dígitos). Use `dbo.nfe`, `dbo.contribuinte` e `dbo.municipio`.
+6. Escreva os comandos `GRANT`/`DENY` para conceder acesso à `dbo.vw_nfe_publica` ao perfil `[perfil_portal_transparencia]` e negar acesso direto à tabela `dbo.nfe` para o mesmo perfil.
+7. Crie uma visão `dbo.vw_nfe_por_regiao` que filtre automaticamente as NF-e pela região fiscal do auditor logado, usando `SUSER_SNAME()`, `dbo.auditor_fiscal (matricula, regiao_fiscal)` e `dbo.municipio (regiao_fiscal)`. Considere que o login SQL corresponde à matrícula do auditor.
 
 ### Parte III — `WITH CHECK OPTION` e `WITH SCHEMABINDING`
 
-8. Crie uma visão `fiscal.vw_contribuintes_mei` para contribuintes do regime "MEI" e tente realizar um `UPDATE` que mude o regime para "Simples Nacional". Observe o comportamento **sem** e **com** `WITH CHECK OPTION`.
-9. Crie a visão do exercício 8 com `WITH SCHEMABINDING`. Em seguida, tente executar `ALTER TABLE fiscal.contribuinte DROP COLUMN regime_tributario` e observe o erro gerado. Explique por que isso é útil em produção.
+8. Crie uma visão `dbo.vw_contribuintes_mei` para contribuintes do regime `MEI` e tente realizar um `UPDATE` que mude o regime para `SIMPLES`. Observe o comportamento **sem** e **com** `WITH CHECK OPTION`.
+9. Crie a visão do exercício 8 com `WITH SCHEMABINDING`. Em seguida, tente executar `ALTER TABLE dbo.contribuinte DROP COLUMN regime_tributario` e observe o erro gerado. Explique por que isso é útil em produção.
 
 ### Parte IV — Visões indexadas e desempenho
 
-10. Crie uma visão indexada `fiscal.vw_idx_totais_municipio` que agregue, por município e mês, a quantidade de notas e o total emitido. Crie o índice clusterizado único. Consulte-a com `WITH (NOEXPAND)`.
+10. Crie uma visão indexada `dbo.vw_idx_totais_municipio` que agregue as NF-e de saída autorizadas por município do emitente e mês, com quantidade de notas e total emitido. Use `dbo.nfe`, `dbo.contribuinte` e `dbo.municipio`, crie o índice clusterizado único e consulte-a com `WITH (NOEXPAND)`.
 11. Compare o plano de execução (`Ctrl+M`) de uma consulta de agregação mensal executada:
     - (a) Diretamente nas tabelas base com `GROUP BY`.
     - (b) Usando a visão indexada do exercício 10 com `WITH (NOEXPAND)`.
       Identifique em qual operador está a maior diferença de custo estimado.
-12. Crie uma visão `fiscal.vw_omissas_simples` para contribuintes do Simples Nacional sem emissão de NF nos últimos 60 dias. Use `NOT EXISTS` para identificar a ausência de notas.
+12. Crie uma visão `dbo.vw_omissas_simples` para contribuintes do regime `SIMPLES` sem emissão de NF-e de saída autorizada nos últimos 60 dias. Use `NOT EXISTS` para identificar a ausência de notas.
 
 ### Desafio
 
 Projete e implemente um **conjunto de visões** para o Painel de Auditoria de Risco Fiscal da SEFAZ-PB, atendendo aos seguintes requisitos:
 
-**Visão 1 — `fiscal.vw_risco_alto`:** contribuintes com pelo menos uma nota de valor acima de R$ 500.000 no trimestre vigente E com histórico de cancelamento acima de 10% das notas emitidas no mesmo período.
+**Visão 1 — `dbo.vw_risco_alto`:** contribuintes com pelo menos uma NF-e de saída acima de R$ 500.000 no trimestre vigente e histórico de cancelamento acima de 10% das NF-e emitidas no mesmo período. Use `dbo.nfe` e `dbo.contribuinte`.
 
-**Visão 2 — `fiscal.vw_top10_emissores`:** os 10 maiores emissores de cada regime tributário (por valor total emitido no mês corrente), usando subconsulta correlacionada ou `CROSS APPLY` na definição da visão.
+**Visão 2 — `dbo.vw_top10_emissores`:** os 10 maiores emitentes de cada regime tributário, por valor total de NF-e de saída autorizadas no mês corrente, usando subconsulta correlacionada ou `CROSS APPLY` na definição da visão.
 
-**Visão 3 — `fiscal.vw_painel_gerencial` (indexada):** consolidação mensal por regime e UF de destino, com totais de notas, valor emitido, ICMS e percentual de ICMS sobre o valor emitido. Inclua índice clusterizado.
+**Visão 3 — `dbo.vw_painel_gerencial` (indexada):** consolidação mensal por regime do emitente e UF do destinatário, com totais de NF-e, valor emitido e ICMS. Calcule o percentual de ICMS na consulta externa e inclua o índice clusterizado na visão.
 
 Requisitos gerais:
 

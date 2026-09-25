@@ -71,106 +71,115 @@ Get-Content 'C:\projetos\bancodedados\modulo_05\roteiro_integrador_bdfisc\p50_ab
 
 **A armadilha:** se o separador estiver incorreto, a contagem de colunas e a carga em massa podem falhar antes mesmo do `BULK INSERT`.
 
-### Estrutura do CSV
+## 4. Estrutura de staging com os nomes originais do CSV
 
-Os primeiros registros apresentam o padrão abaixo:
-
-```text
-"CODIGO"|"EAN"|"REGISTRO ANVISA"|"NCM"|"CEST"|"NOME"|"LABORATORIO"|"TIPO"|"CLASSE TERAPEUTICA"|...
-"245746"|"7891317158705"|"4707603680023"|"21069090"|""|"20 BI"|"MOMENTA"|"O"|"PRODUTOS PROBIOTICOS"|...
-```
-
-Observações:
-
-- o separador é `|` e não `,`;
-- a linha de cabeçalho existe e deve ser ignorada no `BULK INSERT`;
-- há valores numéricos com vírgula decimal (`29,39`, `38,42`), então a conversão deve ser feita na etapa de normalização;
-- alguns campos de texto podem conter acentos e símbolos especiais, por isso a codificação deve ser consistente.
-
----
-
-## 3. Cenário de uso fiscal
-
-### Caso de uso proposto: auditoria de preços e variação de medicamentos
-
-O objetivo é verificar se os preços de venda praticados por laboratório e produto estão coerentes com a data de vigência, com a composição e com a variação de períodos anteriores.
-
-### Regras de auditoria
-
-1. Identificar produtos com variação de preço acima do esperado em curto intervalo.
-2. Verificar se a mesma apresentação do mesmo produto foi reajustada sem justificativa.
-3. Analisar registros com `DATA_REFERENCIA` ou `DATA_VIGENCIA` inconsistentes.
-4. Detectar `vPF` e `vPMC` divergentes em relação aos percentuais de tabela.
-5. Verificar produtos com laboratórios repetidos e preços anômalos.
-6. Validar divergência entre arquivo de origem e data de referência.
-
-### Exemplo de evidência fiscal
-
-- produto com mesmo código e laboratório;
-- o mesmo medicamento aparece em meses consecutivos;
-- o valor do preço de venda muda de `R$ 29,39` para `R$ 38,42` em um intervalo curto;
-- o impacto pode ser classificado como revisão de tarifa ou anomalia de mercado.
-
----
-
-## 4. Estrutura de staging recomendada
-
-Crie um schema para guardar o dado bruto antes da limpeza.
+O cabeçalho de `p50_abcfarma_utf8.csv` possui 95 colunas. A tabela abaixo preserva os nomes do arquivo e a ordem original. Os colchetes são necessários nos nomes que contêm espaços, `%`, `/`, parênteses ou caracteres especiais.
 
 ```sql
-CREATE SCHEMA staging;
+IF SCHEMA_ID('staging') IS NULL
+    EXEC ('CREATE SCHEMA staging');
+GO
+
+IF OBJECT_ID('staging.abcfarma_raw', 'U') IS NOT NULL
+    DROP TABLE staging.abcfarma_raw;
 GO
 
 CREATE TABLE staging.abcfarma_raw (
-    CODIGO NVARCHAR(200) NULL,
-    EAN NVARCHAR(200) NULL,
-    REGISTRO_ANVISA NVARCHAR(200) NULL,
-    NCM NVARCHAR(50) NULL,
-    CEST NVARCHAR(50) NULL,
-    NOME NVARCHAR(500) NULL,
-    LABORATORIO NVARCHAR(200) NULL,
-    TIPO NVARCHAR(50) NULL,
-    CLASSE_TERAPEUTICA NVARCHAR(500) NULL,
-    COMPOSICAO NVARCHAR(1000) NULL,
-    TARJA NVARCHAR(50) NULL,
-    UNIDADE_DE_VENDA NVARCHAR(100) NULL,
-    CNPJ_LABORATORIO NVARCHAR(50) NULL,
-    APRESENTACAO NVARCHAR(200) NULL,
-    LISTAPISC OFINS NVARCHAR(50) NULL,
-    RESTRHOSP NVARCHAR(50) NULL,
-    CNPJ_DECLARANTE NVARCHAR(50) NULL,
-    NOME_DECLARANTE NVARCHAR(500) NULL,
-    PICMS NVARCHAR(50) NULL,
-    VPF NVARCHAR(50) NULL,
-    VPMC NVARCHAR(50) NULL,
-    VPMCEMBFRAC NVARCHAR(50) NULL,
-    VPMCEMBMULT NVARCHAR(50) NULL,
-    CODIGO_LABORATORIO NVARCHAR(50) NULL,
-    LABORATORIO_2 NVARCHAR(200) NULL,
-    DESCRICAO NVARCHAR(1000) NULL,
-    COMPOSICAO_2 NVARCHAR(1000) NULL,
-    REGIME_PRECO NVARCHAR(100) NULL,
-    LISTA_LCCT NVARCHAR(200) NULL,
-    PF_20 NVARCHAR(50) NULL,
-    PMC_20 NVARCHAR(50) NULL,
-    FRA_20 NVARCHAR(50) NULL,
-    DATA_VIGENCIA NVARCHAR(50) NULL,
-    NOVO NVARCHAR(50) NULL,
-    VARIACAO_PRECO NVARCHAR(200) NULL,
-    REFERENCIA NVARCHAR(200) NULL,
-    ATC NVARCHAR(200) NULL,
-    CLASSE_TERAPEUTICA_2 NVARCHAR(500) NULL,
-    PORTARIA_344_98 NVARCHAR(100) NULL,
-    TISS_TUSS NVARCHAR(100) NULL,
-    CONFAZ_87 NVARCHAR(100) NULL,
-    CAP NVARCHAR(100) NULL,
-    GGREM NVARCHAR(100) NULL,
-    DCB NVARCHAR(100) NULL,
-    CAS NVARCHAR(100) NULL,
-    ARQUIVO_ORIGEM NVARCHAR(200) NULL,
-    DATA_REFERENCIA NVARCHAR(50) NULL,
-    ANO_PASTA NVARCHAR(20) NULL,
-    ORIGEM_ARQUIVO NVARCHAR(50) NULL
+    [CODIGO] NVARCHAR(200) NULL,
+    [EAN] NVARCHAR(200) NULL,
+    [REGISTRO ANVISA] NVARCHAR(200) NULL,
+    [NCM] NVARCHAR(50) NULL,
+    [CEST] NVARCHAR(50) NULL,
+    [NOME] NVARCHAR(500) NULL,
+    [LABORATORIO] NVARCHAR(200) NULL,
+    [TIPO] NVARCHAR(50) NULL,
+    [CLASSE TERAPEUTICA] NVARCHAR(500) NULL,
+    [COMPOSICAO] NVARCHAR(1000) NULL,
+    [TARJA] NVARCHAR(100) NULL,
+    [UNIDADE DE VENDA] NVARCHAR(200) NULL,
+    [CNPJ_LABORATORIO] NVARCHAR(50) NULL,
+    [apresentacao] NVARCHAR(200) NULL,
+    [listaPisCofins] NVARCHAR(50) NULL,
+    [restrHosp] NVARCHAR(50) NULL,
+    [CNPJ_DECLARANTE] NVARCHAR(50) NULL,
+    [NOME_DECLARANTE] NVARCHAR(500) NULL,
+    [pICMS] NVARCHAR(50) NULL,
+    [vPF] NVARCHAR(50) NULL,
+    [vPMC] NVARCHAR(50) NULL,
+    [vPMCEmbFrac] NVARCHAR(50) NULL,
+    [vPMCEmbMult] NVARCHAR(50) NULL,
+    [CODIGO LABORATORIO] NVARCHAR(50) NULL,
+    [LABORATÓRIO] NVARCHAR(200) NULL,
+    [DESCRIÇÃO] NVARCHAR(1000) NULL,
+    [COMPOSIÇÃO] NVARCHAR(1000) NULL,
+    [REGIME PREÇO] NVARCHAR(100) NULL,
+    [LISTA (LCCT)] NVARCHAR(200) NULL,
+    [PF 20%] NVARCHAR(50) NULL,
+    [PMC 20%] NVARCHAR(50) NULL,
+    [FRA 20%] NVARCHAR(50) NULL,
+    [PF 18%] NVARCHAR(50) NULL,
+    [PMC 18%] NVARCHAR(50) NULL,
+    [FRA 18%] NVARCHAR(50) NULL,
+    [PF 17%] NVARCHAR(50) NULL,
+    [PMC 17%] NVARCHAR(50) NULL,
+    [FRA 17%] NVARCHAR(50) NULL,
+    [PF 17,5%] NVARCHAR(50) NULL,
+    [PMC 17,5%] NVARCHAR(50) NULL,
+    [FRA 17,5%] NVARCHAR(50) NULL,
+    [PF 12%] NVARCHAR(50) NULL,
+    [PMC 12%] NVARCHAR(50) NULL,
+    [FRA 12%] NVARCHAR(50) NULL,
+    [PF 17% ALC] NVARCHAR(50) NULL,
+    [PMC 17% ALC] NVARCHAR(50) NULL,
+    [FRA 17% ALC] NVARCHAR(50) NULL,
+    [PF 17,5% ALC] NVARCHAR(50) NULL,
+    [PMC 17,5% ALC] NVARCHAR(50) NULL,
+    [FRA 17,5% ALC] NVARCHAR(50) NULL,
+    [PF 18% ALC] NVARCHAR(50) NULL,
+    [PMC 18% ALC] NVARCHAR(50) NULL,
+    [FRA 18% ALC] NVARCHAR(50) NULL,
+    [PF 0%] NVARCHAR(50) NULL,
+    [PMC 0%] NVARCHAR(50) NULL,
+    [FRA 0%] NVARCHAR(50) NULL,
+    [PERCENTUAL IPI] NVARCHAR(50) NULL,
+    [DATA VIGENCIA] NVARCHAR(50) NULL,
+    [NOVO_1] NVARCHAR(50) NULL,
+    [VARIAÇÃO DE PREÇO] NVARCHAR(200) NULL,
+    [REFERÊNCIA] NVARCHAR(200) NULL,
+    [ATC] NVARCHAR(200) NULL,
+    [CLASSE TERAPÊUTICA] NVARCHAR(500) NULL,
+    [PORTARIA 344/98] NVARCHAR(100) NULL,
+    [TISS/TUSS] NVARCHAR(100) NULL,
+    [CONFAZ 87] NVARCHAR(100) NULL,
+    [CAP] NVARCHAR(100) NULL,
+    [NOVO] NVARCHAR(50) NULL,
+    [GGREM] NVARCHAR(50) NULL,
+    [DCB] NVARCHAR(50) NULL,
+    [CAS] NVARCHAR(50) NULL,
+    [PF 22%] NVARCHAR(50) NULL,
+    [PMC 22%] NVARCHAR(50) NULL,
+    [PF 21%] NVARCHAR(50) NULL,
+    [PMC 21%] NVARCHAR(50) NULL,
+    [PF 19%] NVARCHAR(50) NULL,
+    [PMC 19%] NVARCHAR(50) NULL,
+    [PF 19% ALC] NVARCHAR(50) NULL,
+    [PMC 19% ALC] NVARCHAR(50) NULL,
+    [PF 20% ALC] NVARCHAR(50) NULL,
+    [PMC 20% ALC] NVARCHAR(50) NULL,
+    [PF 20,5%] NVARCHAR(50) NULL,
+    [PMC 20,5%] NVARCHAR(50) NULL,
+    [PF 19,5%] NVARCHAR(50) NULL,
+    [PMC 19,5%] NVARCHAR(50) NULL,
+    [PF 19,5% ALC] NVARCHAR(50) NULL,
+    [PMC 19,5% ALC] NVARCHAR(50) NULL,
+    [PF 23%] NVARCHAR(50) NULL,
+    [PMC 23%] NVARCHAR(50) NULL,
+    [PF 22,5%] NVARCHAR(50) NULL,
+    [PMC 22,5%] NVARCHAR(50) NULL,
+    [ARQUIVO_ORIGEM] NVARCHAR(200) NULL,
+    [DATA_REFERENCIA] NVARCHAR(50) NULL,
+    [ANO_PASTA] NVARCHAR(20) NULL,
+    [ORIGEM_ARQUIVO] NVARCHAR(50) NULL
 );
 GO
 ```
@@ -183,9 +192,11 @@ O comando deve ignorar a primeira linha do cabeçalho, usar `|` como delimitador
 
 ```sql
 BULK INSERT staging.abcfarma_raw
-FROM 'C:\dados\staging\p50_abcfarma_utf8.csv'
+FROM 'C:\temp\p50_abcfarma_utf8.csv'
 WITH (
+    FORMAT          = 'CSV', 
     FIELDTERMINATOR = '|',
+    FIELDQUOTE      = '"',             -- resolve a quebra de linha embutida
     ROWTERMINATOR = '\n',
     FIRSTROW = 2,
     DATAFILETYPE = 'char',
@@ -210,59 +221,309 @@ Antes de inserir os dados definitivos, é importante padronizar campos numérico
 ```sql
 CREATE TABLE dbo.abcfarma_normalizado (
     Id BIGINT IDENTITY(1,1) PRIMARY KEY,
-    CODIGO INT NULL,
-    EAN NVARCHAR(30) NULL,
-    REGISTRO_ANVISA NVARCHAR(30) NULL,
-    NOME NVARCHAR(500) NULL,
-    LABORATORIO NVARCHAR(200) NULL,
-    CLASSE_TERAPEUTICA NVARCHAR(500) NULL,
-    COMPOSICAO NVARCHAR(1000) NULL,
-    TARJA NVARCHAR(50) NULL,
-    VPF DECIMAL(18,4) NULL,
-    VPMC DECIMAL(18,4) NULL,
-    DATA_REFERENCIA DATE NULL,
-    ARQUIVO_ORIGEM NVARCHAR(200) NULL,
-    ORIGEM_ARQUIVO NVARCHAR(50) NULL
+    [CODIGO] INT NULL,
+    [EAN] NVARCHAR(30) NULL,
+    [REGISTRO ANVISA] NVARCHAR(30) NULL,
+    [NCM] NVARCHAR(50) NULL,
+    [CEST] NVARCHAR(50) NULL,
+    [NOME] NVARCHAR(500) NULL,
+    [LABORATORIO] NVARCHAR(200) NULL,
+    [TIPO] NVARCHAR(50) NULL,
+    [CLASSE TERAPEUTICA] NVARCHAR(500) NULL,
+    [COMPOSICAO] NVARCHAR(1000) NULL,
+    [TARJA] NVARCHAR(50) NULL,
+    [UNIDADE DE VENDA] NVARCHAR(200) NULL,
+    [CNPJ_LABORATORIO] NVARCHAR(50) NULL,
+    [apresentacao] NVARCHAR(200) NULL,
+    [listaPisCofins] NVARCHAR(50) NULL,
+    [restrHosp] NVARCHAR(50) NULL,
+    [CNPJ_DECLARANTE] NVARCHAR(50) NULL,
+    [NOME_DECLARANTE] NVARCHAR(500) NULL,
+    [pICMS] NVARCHAR(50) NULL,
+    [vPF] DECIMAL(18,4) NULL,
+    [vPMC] DECIMAL(18,4) NULL,
+    [vPMCEmbFrac] NVARCHAR(50) NULL,
+    [vPMCEmbMult] NVARCHAR(50) NULL,
+    [CODIGO LABORATORIO] NVARCHAR(50) NULL,
+    [LABORATÓRIO] NVARCHAR(200) NULL,
+    [DESCRIÇÃO] NVARCHAR(1000) NULL,
+    [COMPOSIÇÃO] NVARCHAR(1000) NULL,
+    [REGIME PREÇO] NVARCHAR(100) NULL,
+    [LISTA (LCCT)] NVARCHAR(200) NULL,
+    [PF 20%] NVARCHAR(50) NULL,
+    [PMC 20%] NVARCHAR(50) NULL,
+    [FRA 20%] NVARCHAR(50) NULL,
+    [PF 18%] NVARCHAR(50) NULL,
+    [PMC 18%] NVARCHAR(50) NULL,
+    [FRA 18%] NVARCHAR(50) NULL,
+    [PF 17%] NVARCHAR(50) NULL,
+    [PMC 17%] NVARCHAR(50) NULL,
+    [FRA 17%] NVARCHAR(50) NULL,
+    [PF 17,5%] NVARCHAR(50) NULL,
+    [PMC 17,5%] NVARCHAR(50) NULL,
+    [FRA 17,5%] NVARCHAR(50) NULL,
+    [PF 12%] NVARCHAR(50) NULL,
+    [PMC 12%] NVARCHAR(50) NULL,
+    [FRA 12%] NVARCHAR(50) NULL,
+    [PF 17% ALC] NVARCHAR(50) NULL,
+    [PMC 17% ALC] NVARCHAR(50) NULL,
+    [FRA 17% ALC] NVARCHAR(50) NULL,
+    [PF 17,5% ALC] NVARCHAR(50) NULL,
+    [PMC 17,5% ALC] NVARCHAR(50) NULL,
+    [FRA 17,5% ALC] NVARCHAR(50) NULL,
+    [PF 18% ALC] NVARCHAR(50) NULL,
+    [PMC 18% ALC] NVARCHAR(50) NULL,
+    [FRA 18% ALC] NVARCHAR(50) NULL,
+    [PF 0%] NVARCHAR(50) NULL,
+    [PMC 0%] NVARCHAR(50) NULL,
+    [FRA 0%] NVARCHAR(50) NULL,
+    [PERCENTUAL IPI] NVARCHAR(50) NULL,
+    [DATA VIGENCIA] NVARCHAR(50) NULL,
+    [NOVO_1] NVARCHAR(50) NULL,
+    [VARIAÇÃO DE PREÇO] NVARCHAR(200) NULL,
+    [REFERÊNCIA] NVARCHAR(200) NULL,
+    [ATC] NVARCHAR(200) NULL,
+    [CLASSE TERAPÊUTICA] NVARCHAR(500) NULL,
+    [PORTARIA 344/98] NVARCHAR(100) NULL,
+    [TISS/TUSS] NVARCHAR(100) NULL,
+    [CONFAZ 87] NVARCHAR(100) NULL,
+    [CAP] NVARCHAR(100) NULL,
+    [NOVO] NVARCHAR(50) NULL,
+    [GGREM] NVARCHAR(50) NULL,
+    [DCB] NVARCHAR(50) NULL,
+    [CAS] NVARCHAR(50) NULL,
+    [PF 22%] NVARCHAR(50) NULL,
+    [PMC 22%] NVARCHAR(50) NULL,
+    [PF 21%] NVARCHAR(50) NULL,
+    [PMC 21%] NVARCHAR(50) NULL,
+    [PF 19%] NVARCHAR(50) NULL,
+    [PMC 19%] NVARCHAR(50) NULL,
+    [PF 19% ALC] NVARCHAR(50) NULL,
+    [PMC 19% ALC] NVARCHAR(50) NULL,
+    [PF 20% ALC] NVARCHAR(50) NULL,
+    [PMC 20% ALC] NVARCHAR(50) NULL,
+    [PF 20,5%] NVARCHAR(50) NULL,
+    [PMC 20,5%] NVARCHAR(50) NULL,
+    [PF 19,5%] NVARCHAR(50) NULL,
+    [PMC 19,5%] NVARCHAR(50) NULL,
+    [PF 19,5% ALC] NVARCHAR(50) NULL,
+    [PMC 19,5% ALC] NVARCHAR(50) NULL,
+    [PF 23%] NVARCHAR(50) NULL,
+    [PMC 23%] NVARCHAR(50) NULL,
+    [PF 22,5%] NVARCHAR(50) NULL,
+    [PMC 22,5%] NVARCHAR(50) NULL,
+    [ARQUIVO_ORIGEM] NVARCHAR(200) NULL,
+    [DATA_REFERENCIA] DATE NULL,
+    [ANO_PASTA] NVARCHAR(20) NULL,
+    [ORIGEM_ARQUIVO] NVARCHAR(50) NULL
 );
 GO
 ```
 
 ### Exemplo de transformação
 
+> A tabela de normalização foi ajustada para manter todos os campos definidos na seção anterior, preservando a estrutura original do CSV e aplicando conversão somente nos campos que exigem tipagem mais precisa.
+
 ```sql
 INSERT INTO dbo.abcfarma_normalizado (
-    CODIGO,
-    EAN,
-    REGISTRO_ANVISA,
-    NOME,
-    LABORATORIO,
-    CLASSE_TERAPEUTICA,
-    COMPOSICAO,
-    TARJA,
-    VPF,
-    VPMC,
-    DATA_REFERENCIA,
-    ARQUIVO_ORIGEM,
-    ORIGEM_ARQUIVO
+    [CODIGO],
+    [EAN],
+    [REGISTRO ANVISA],
+    [NCM],
+    [CEST],
+    [NOME],
+    [LABORATORIO],
+    [TIPO],
+    [CLASSE TERAPEUTICA],
+    [COMPOSICAO],
+    [TARJA],
+    [UNIDADE DE VENDA],
+    [CNPJ_LABORATORIO],
+    [apresentacao],
+    [listaPisCofins],
+    [restrHosp],
+    [CNPJ_DECLARANTE],
+    [NOME_DECLARANTE],
+    [pICMS],
+    [vPF],
+    [vPMC],
+    [vPMCEmbFrac],
+    [vPMCEmbMult],
+    [CODIGO LABORATORIO],
+    [LABORATÓRIO],
+    [DESCRIÇÃO],
+    [COMPOSIÇÃO],
+    [REGIME PREÇO],
+    [LISTA (LCCT)],
+    [PF 20%],
+    [PMC 20%],
+    [FRA 20%],
+    [PF 18%],
+    [PMC 18%],
+    [FRA 18%],
+    [PF 17%],
+    [PMC 17%],
+    [FRA 17%],
+    [PF 17,5%],
+    [PMC 17,5%],
+    [FRA 17,5%],
+    [PF 12%],
+    [PMC 12%],
+    [FRA 12%],
+    [PF 17% ALC],
+    [PMC 17% ALC],
+    [FRA 17% ALC],
+    [PF 17,5% ALC],
+    [PMC 17,5% ALC],
+    [FRA 17,5% ALC],
+    [PF 18% ALC],
+    [PMC 18% ALC],
+    [FRA 18% ALC],
+    [PF 0%],
+    [PMC 0%],
+    [FRA 0%],
+    [PERCENTUAL IPI],
+    [DATA VIGENCIA],
+    [NOVO_1],
+    [VARIAÇÃO DE PREÇO],
+    [REFERÊNCIA],
+    [ATC],
+    [CLASSE TERAPÊUTICA],
+    [PORTARIA 344/98],
+    [TISS/TUSS],
+    [CONFAZ 87],
+    [CAP],
+    [NOVO],
+    [GGREM],
+    [DCB],
+    [CAS],
+    [PF 22%],
+    [PMC 22%],
+    [PF 21%],
+    [PMC 21%],
+    [PF 19%],
+    [PMC 19%],
+    [PF 19% ALC],
+    [PMC 19% ALC],
+    [PF 20% ALC],
+    [PMC 20% ALC],
+    [PF 20,5%],
+    [PMC 20,5%],
+    [PF 19,5%],
+    [PMC 19,5%],
+    [PF 19,5% ALC],
+    [PMC 19,5% ALC],
+    [PF 23%],
+    [PMC 23%],
+    [PF 22,5%],
+    [PMC 22,5%],
+    [ARQUIVO_ORIGEM],
+    [DATA_REFERENCIA],
+    [ANO_PASTA],
+    [ORIGEM_ARQUIVO]
 )
 SELECT
-    TRY_CONVERT(INT, LTRIM(RTRIM(CODIGO))) AS CODIGO,
-    LTRIM(RTRIM(EAN)) AS EAN,
-    LTRIM(RTRIM(REGISTRO_ANVISA)) AS REGISTRO_ANVISA,
-    LTRIM(RTRIM(NOME)) AS NOME,
-    LTRIM(RTRIM(LABORATORIO)) AS LABORATORIO,
-    LTRIM(RTRIM(CLASSE_TERAPEUTICA)) AS CLASSE_TERAPEUTICA,
-    LTRIM(RTRIM(COMPOSICAO)) AS COMPOSICAO,
-    LTRIM(RTRIM(TARJA)) AS TARJA,
-    TRY_CONVERT(DECIMAL(18,4), REPLACE(REPLACE(VPF, '.', ''), ',', '.')) AS VPF,
-    TRY_CONVERT(DECIMAL(18,4), REPLACE(REPLACE(VPMC, '.', ''), ',', '.')) AS VPMC,
-    TRY_CONVERT(DATE, DATA_REFERENCIA) AS DATA_REFERENCIA,
-    LTRIM(RTRIM(ARQUIVO_ORIGEM)) AS ARQUIVO_ORIGEM,
-    LTRIM(RTRIM(ORIGEM_ARQUIVO)) AS ORIGEM_ARQUIVO
+    TRY_CONVERT(INT, LTRIM(RTRIM([CODIGO]))) AS [CODIGO],
+    LTRIM(RTRIM([EAN])) AS [EAN],
+    LTRIM(RTRIM([REGISTRO ANVISA])) AS [REGISTRO ANVISA],
+    LTRIM(RTRIM([NCM])) AS [NCM],
+    LTRIM(RTRIM([CEST])) AS [CEST],
+    LTRIM(RTRIM([NOME])) AS [NOME],
+    LTRIM(RTRIM([LABORATORIO])) AS [LABORATORIO],
+    LTRIM(RTRIM([TIPO])) AS [TIPO],
+    LTRIM(RTRIM([CLASSE TERAPEUTICA])) AS [CLASSE TERAPEUTICA],
+    LTRIM(RTRIM([COMPOSICAO])) AS [COMPOSICAO],
+    LTRIM(RTRIM([TARJA])) AS [TARJA],
+    LTRIM(RTRIM([UNIDADE DE VENDA])) AS [UNIDADE DE VENDA],
+    LTRIM(RTRIM([CNPJ_LABORATORIO])) AS [CNPJ_LABORATORIO],
+    LTRIM(RTRIM([apresentacao])) AS [apresentacao],
+    LTRIM(RTRIM([listaPisCofins])) AS [listaPisCofins],
+    LTRIM(RTRIM([restrHosp])) AS [restrHosp],
+    LTRIM(RTRIM([CNPJ_DECLARANTE])) AS [CNPJ_DECLARANTE],
+    LTRIM(RTRIM([NOME_DECLARANTE])) AS [NOME_DECLARANTE],
+    LTRIM(RTRIM([pICMS])) AS [pICMS],
+    TRY_CONVERT(DECIMAL(18,4), REPLACE(REPLACE([vPF], '.', ''), ',', '.')) AS [vPF],
+    TRY_CONVERT(DECIMAL(18,4), REPLACE(REPLACE([vPMC], '.', ''), ',', '.')) AS [vPMC],
+    LTRIM(RTRIM([vPMCEmbFrac])) AS [vPMCEmbFrac],
+    LTRIM(RTRIM([vPMCEmbMult])) AS [vPMCEmbMult],
+    LTRIM(RTRIM([CODIGO LABORATORIO])) AS [CODIGO LABORATORIO],
+    LTRIM(RTRIM([LABORATÓRIO])) AS [LABORATÓRIO],
+    LTRIM(RTRIM([DESCRIÇÃO])) AS [DESCRIÇÃO],
+    LTRIM(RTRIM([COMPOSIÇÃO])) AS [COMPOSIÇÃO],
+    LTRIM(RTRIM([REGIME PREÇO])) AS [REGIME PREÇO],
+    LTRIM(RTRIM([LISTA (LCCT)])) AS [LISTA (LCCT)],
+    LTRIM(RTRIM([PF 20%])) AS [PF 20%],
+    LTRIM(RTRIM([PMC 20%])) AS [PMC 20%],
+    LTRIM(RTRIM([FRA 20%])) AS [FRA 20%],
+    LTRIM(RTRIM([PF 18%])) AS [PF 18%],
+    LTRIM(RTRIM([PMC 18%])) AS [PMC 18%],
+    LTRIM(RTRIM([FRA 18%])) AS [FRA 18%],
+    LTRIM(RTRIM([PF 17%])) AS [PF 17%],
+    LTRIM(RTRIM([PMC 17%])) AS [PMC 17%],
+    LTRIM(RTRIM([FRA 17%])) AS [FRA 17%],
+    LTRIM(RTRIM([PF 17,5%])) AS [PF 17,5%],
+    LTRIM(RTRIM([PMC 17,5%])) AS [PMC 17,5%],
+    LTRIM(RTRIM([FRA 17,5%])) AS [FRA 17,5%],
+    LTRIM(RTRIM([PF 12%])) AS [PF 12%],
+    LTRIM(RTRIM([PMC 12%])) AS [PMC 12%],
+    LTRIM(RTRIM([FRA 12%])) AS [FRA 12%],
+    LTRIM(RTRIM([PF 17% ALC])) AS [PF 17% ALC],
+    LTRIM(RTRIM([PMC 17% ALC])) AS [PMC 17% ALC],
+    LTRIM(RTRIM([FRA 17% ALC])) AS [FRA 17% ALC],
+    LTRIM(RTRIM([PF 17,5% ALC])) AS [PF 17,5% ALC],
+    LTRIM(RTRIM([PMC 17,5% ALC])) AS [PMC 17,5% ALC],
+    LTRIM(RTRIM([FRA 17,5% ALC])) AS [FRA 17,5% ALC],
+    LTRIM(RTRIM([PF 18% ALC])) AS [PF 18% ALC],
+    LTRIM(RTRIM([PMC 18% ALC])) AS [PMC 18% ALC],
+    LTRIM(RTRIM([FRA 18% ALC])) AS [FRA 18% ALC],
+    LTRIM(RTRIM([PF 0%])) AS [PF 0%],
+    LTRIM(RTRIM([PMC 0%])) AS [PMC 0%],
+    LTRIM(RTRIM([FRA 0%])) AS [FRA 0%],
+    LTRIM(RTRIM([PERCENTUAL IPI])) AS [PERCENTUAL IPI],
+    LTRIM(RTRIM([DATA VIGENCIA])) AS [DATA VIGENCIA],
+    LTRIM(RTRIM([NOVO_1])) AS [NOVO_1],
+    LTRIM(RTRIM([VARIAÇÃO DE PREÇO])) AS [VARIAÇÃO DE PREÇO],
+    LTRIM(RTRIM([REFERÊNCIA])) AS [REFERÊNCIA],
+    LTRIM(RTRIM([ATC])) AS [ATC],
+    LTRIM(RTRIM([CLASSE TERAPÊUTICA])) AS [CLASSE TERAPÊUTICA],
+    LTRIM(RTRIM([PORTARIA 344/98])) AS [PORTARIA 344/98],
+    LTRIM(RTRIM([TISS/TUSS])) AS [TISS/TUSS],
+    LTRIM(RTRIM([CONFAZ 87])) AS [CONFAZ 87],
+    LTRIM(RTRIM([CAP])) AS [CAP],
+    LTRIM(RTRIM([NOVO])) AS [NOVO],
+    LTRIM(RTRIM([GGREM])) AS [GGREM],
+    LTRIM(RTRIM([DCB])) AS [DCB],
+    LTRIM(RTRIM([CAS])) AS [CAS],
+    LTRIM(RTRIM([PF 22%])) AS [PF 22%],
+    LTRIM(RTRIM([PMC 22%])) AS [PMC 22%],
+    LTRIM(RTRIM([PF 21%])) AS [PF 21%],
+    LTRIM(RTRIM([PMC 21%])) AS [PMC 21%],
+    LTRIM(RTRIM([PF 19%])) AS [PF 19%],
+    LTRIM(RTRIM([PMC 19%])) AS [PMC 19%],
+    LTRIM(RTRIM([PF 19% ALC])) AS [PF 19% ALC],
+    LTRIM(RTRIM([PMC 19% ALC])) AS [PMC 19% ALC],
+    LTRIM(RTRIM([PF 20% ALC])) AS [PF 20% ALC],
+    LTRIM(RTRIM([PMC 20% ALC])) AS [PMC 20% ALC],
+    LTRIM(RTRIM([PF 20,5%])) AS [PF 20,5%],
+    LTRIM(RTRIM([PMC 20,5%])) AS [PMC 20,5%],
+    LTRIM(RTRIM([PF 19,5%])) AS [PF 19,5%],
+    LTRIM(RTRIM([PMC 19,5%])) AS [PMC 19,5%],
+    LTRIM(RTRIM([PF 19,5% ALC])) AS [PF 19,5% ALC],
+    LTRIM(RTRIM([PMC 19,5% ALC])) AS [PMC 19,5% ALC],
+    LTRIM(RTRIM([PF 23%])) AS [PF 23%],
+    LTRIM(RTRIM([PMC 23%])) AS [PMC 23%],
+    LTRIM(RTRIM([PF 22,5%])) AS [PF 22,5%],
+    LTRIM(RTRIM([PMC 22,5%])) AS [PMC 22,5%],
+    LTRIM(RTRIM([ARQUIVO_ORIGEM])) AS [ARQUIVO_ORIGEM],
+    TRY_CONVERT(DATE, [DATA_REFERENCIA]) AS [DATA_REFERENCIA],
+    LTRIM(RTRIM([ANO_PASTA])) AS [ANO_PASTA],
+    LTRIM(RTRIM([ORIGEM_ARQUIVO])) AS [ORIGEM_ARQUIVO]
 FROM staging.abcfarma_raw
-WHERE LTRIM(RTRIM(CODIGO)) IS NOT NULL
-  AND LTRIM(RTRIM(CODIGO)) <> '';
+WHERE LTRIM(RTRIM([CODIGO])) IS NOT NULL
+  AND LTRIM(RTRIM([CODIGO])) <> '';
 ```
+
+A estrutura acima garante que a tabela de normalização mantenha a abrangência completa do arquivo original e que a limpeza aconteça sem perder colunas relevantes para auditoria, comparação de preços e cruzamento com a base fiscal.
 
 ### Funções de limpeza úteis
 
@@ -316,7 +577,8 @@ Esse resultado deve ser tratado como exceção de qualidade ou de preenchimento 
 Como `TB_512` possui a data do documento e o código do item, é possível comparar o preço máximo informado em documentos consecutivos do mesmo produto.
 
 ```sql
-WITH historico AS (
+CREATE OR ALTER VIEW dbo.vw_abcfarma_historico_preco_maximo
+AS
     SELECT
         REG0_IE,
         REG0200_COD_ITEM,
@@ -331,8 +593,13 @@ WITH historico AS (
         ) AS PRECO_ANTERIOR
     FROM fisc.TB_512_PR_EFD_REGISTRO_C173_OPERACOES_COM_MEDICAMENTOS
     WHERE C100_DT_DOC IS NOT NULL
-      AND C173_VL_TAB_MAX IS NOT NULL
-)
+        AND C173_VL_TAB_MAX IS NOT NULL;
+GO
+```
+
+A visão encapsula o cálculo do preço anterior. Assim, outras consultas e relatórios podem reutilizar o histórico sem repetir a função de janela.
+
+```sql
 SELECT
     REG0_IE,
     REG0200_COD_ITEM,
@@ -347,7 +614,7 @@ SELECT
         THEN 'AUDITAR'
         ELSE 'NORMAL'
     END AS ALERTA
-FROM historico
+FROM dbo.vw_abcfarma_historico_preco_maximo
 WHERE PRECO_ANTERIOR IS NOT NULL
   AND ABS(C173_VL_TAB_MAX - PRECO_ANTERIOR) > 10
 ORDER BY C100_DT_DOC DESC;
@@ -524,30 +791,135 @@ BEGIN
     SET NOCOUNT ON;
 
     BEGIN TRY
-        TRUNCATE TABLE staging.abcfarma_raw;
+        IF SCHEMA_ID('staging') IS NULL
+            EXEC ('CREATE SCHEMA staging');
 
-        BULK INSERT staging.abcfarma_raw
-        FROM @ArquivoCSV
-        WITH (
-            FIELDTERMINATOR = '|',
-            ROWTERMINATOR = '\n',
-            FIRSTROW = 2,
-            DATAFILETYPE = 'char',
-            CODEPAGE = '65001',
-            TABLOCK,
-            MAXERRORS = 100
+        IF OBJECT_ID('staging.abcfarma_raw', 'U') IS NOT NULL
+            DROP TABLE staging.abcfarma_raw;
+
+        CREATE TABLE staging.abcfarma_raw (
+            CODIGO NVARCHAR(200) NULL,
+            EAN NVARCHAR(200) NULL,
+            REGISTRO_ANVISA NVARCHAR(200) NULL,
+            COL_04 NVARCHAR(200) NULL,
+            COL_05 NVARCHAR(200) NULL,
+            NOME NVARCHAR(500) NULL,
+            LABORATORIO NVARCHAR(200) NULL,
+            COL_08 NVARCHAR(200) NULL,
+            CLASSE_TERAPEUTICA NVARCHAR(500) NULL,
+            COMPOSICAO NVARCHAR(1000) NULL,
+            TARJA NVARCHAR(100) NULL,
+            COL_12 NVARCHAR(200) NULL,
+            COL_13 NVARCHAR(200) NULL,
+            COL_14 NVARCHAR(200) NULL,
+            COL_15 NVARCHAR(200) NULL,
+            COL_16 NVARCHAR(200) NULL,
+            COL_17 NVARCHAR(200) NULL,
+            COL_18 NVARCHAR(200) NULL,
+            COL_19 NVARCHAR(200) NULL,
+            VPF NVARCHAR(50) NULL,
+            VPMC NVARCHAR(50) NULL,
+            COL_22 NVARCHAR(200) NULL,
+            COL_23 NVARCHAR(200) NULL,
+            COL_24 NVARCHAR(200) NULL,
+            COL_25 NVARCHAR(200) NULL,
+            COL_26 NVARCHAR(200) NULL,
+            COL_27 NVARCHAR(200) NULL,
+            COL_28 NVARCHAR(200) NULL,
+            COL_29 NVARCHAR(200) NULL,
+            COL_30 NVARCHAR(200) NULL,
+            COL_31 NVARCHAR(200) NULL,
+            COL_32 NVARCHAR(200) NULL,
+            COL_33 NVARCHAR(200) NULL,
+            COL_34 NVARCHAR(200) NULL,
+            COL_35 NVARCHAR(200) NULL,
+            COL_36 NVARCHAR(200) NULL,
+            COL_37 NVARCHAR(200) NULL,
+            COL_38 NVARCHAR(200) NULL,
+            COL_39 NVARCHAR(200) NULL,
+            COL_40 NVARCHAR(200) NULL,
+            COL_41 NVARCHAR(200) NULL,
+            COL_42 NVARCHAR(200) NULL,
+            COL_43 NVARCHAR(200) NULL,
+            COL_44 NVARCHAR(200) NULL,
+            COL_45 NVARCHAR(200) NULL,
+            COL_46 NVARCHAR(200) NULL,
+            COL_47 NVARCHAR(200) NULL,
+            COL_48 NVARCHAR(200) NULL,
+            COL_49 NVARCHAR(200) NULL,
+            COL_50 NVARCHAR(200) NULL,
+            COL_51 NVARCHAR(200) NULL,
+            COL_52 NVARCHAR(200) NULL,
+            COL_53 NVARCHAR(200) NULL,
+            COL_54 NVARCHAR(200) NULL,
+            COL_55 NVARCHAR(200) NULL,
+            COL_56 NVARCHAR(200) NULL,
+            COL_57 NVARCHAR(200) NULL,
+            COL_58 NVARCHAR(200) NULL,
+            COL_59 NVARCHAR(200) NULL,
+            COL_60 NVARCHAR(200) NULL,
+            COL_61 NVARCHAR(200) NULL,
+            COL_62 NVARCHAR(200) NULL,
+            COL_63 NVARCHAR(200) NULL,
+            COL_64 NVARCHAR(200) NULL,
+            COL_65 NVARCHAR(200) NULL,
+            COL_66 NVARCHAR(200) NULL,
+            COL_67 NVARCHAR(200) NULL,
+            COL_68 NVARCHAR(200) NULL,
+            COL_69 NVARCHAR(200) NULL,
+            COL_70 NVARCHAR(200) NULL,
+            COL_71 NVARCHAR(200) NULL,
+            COL_72 NVARCHAR(200) NULL,
+            COL_73 NVARCHAR(200) NULL,
+            COL_74 NVARCHAR(200) NULL,
+            COL_75 NVARCHAR(200) NULL,
+            COL_76 NVARCHAR(200) NULL,
+            COL_77 NVARCHAR(200) NULL,
+            COL_78 NVARCHAR(200) NULL,
+            COL_79 NVARCHAR(200) NULL,
+            COL_80 NVARCHAR(200) NULL,
+            COL_81 NVARCHAR(200) NULL,
+            COL_82 NVARCHAR(200) NULL,
+            COL_83 NVARCHAR(200) NULL,
+            COL_84 NVARCHAR(200) NULL,
+            COL_85 NVARCHAR(200) NULL,
+            COL_86 NVARCHAR(200) NULL,
+            COL_87 NVARCHAR(200) NULL,
+            COL_88 NVARCHAR(200) NULL,
+            COL_89 NVARCHAR(200) NULL,
+            COL_90 NVARCHAR(200) NULL,
+            COL_91 NVARCHAR(200) NULL,
+            ARQUIVO_ORIGEM NVARCHAR(200) NULL,
+            DATA_REFERENCIA NVARCHAR(50) NULL,
+            ANO_PASTA NVARCHAR(20) NULL,
+            ORIGEM_ARQUIVO NVARCHAR(50) NULL
         );
+
+        DECLARE @SQLBulkInsert NVARCHAR(MAX) =
+            N'BULK INSERT staging.abcfarma_raw
+              FROM ''' + REPLACE(@ArquivoCSV, '''', '''''') + N'''
+              WITH (
+                  FIELDTERMINATOR = ''|'',
+                  ROWTERMINATOR = ''\n'',
+                  FIRSTROW = 2,
+                  DATAFILETYPE = ''char'',
+                  CODEPAGE = ''65001'',
+                  TABLOCK,
+                  MAXERRORS = 100
+              );';
+
+        EXEC sys.sp_executesql @SQLBulkInsert;
 
         ;WITH base AS (
             SELECT
                 TRY_CONVERT(INT, LTRIM(RTRIM(CODIGO))) AS CODIGO,
                 LTRIM(RTRIM(EAN)) AS EAN,
-                LTRIM(RTRIM(REGISTRO_ANVISA)) AS REGISTRO_ANVISA,
+                LTRIM(RTRIM([REGISTRO ANVISA])) AS REGISTRO_ANVISA,
                 LTRIM(RTRIM(NOME)) AS NOME,
                 LTRIM(RTRIM(LABORATORIO)) AS LABORATORIO,
-                LTRIM(RTRIM(CLASSE_TERAPEUTICA)) AS CLASSE_TERAPEUTICA,
+                LTRIM(RTRIM([CLASSE TERAPEUTICA])) AS CLASSE_TERAPEUTICA,
                 LTRIM(RTRIM(COMPOSICAO)) AS COMPOSICAO,
-                LTRIM(RTRIM(TARJA)) AS TARJA,
+                LTRIM(RTRIM([TARJA])) AS TARJA,
                 TRY_CONVERT(DECIMAL(18,4), REPLACE(REPLACE(VPF, '.', ''), ',', '.')) AS VPF,
                 TRY_CONVERT(DECIMAL(18,4), REPLACE(REPLACE(VPMC, '.', ''), ',', '.')) AS VPMC,
                 TRY_CONVERT(DATE, DATA_REFERENCIA) AS DATA_REFERENCIA,
